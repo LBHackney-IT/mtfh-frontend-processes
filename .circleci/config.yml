@@ -1,0 +1,365 @@
+version: 2.1
+
+orbs:
+  aws-s3: circleci/aws-s3@2.0.0
+  aws-cli: circleci/aws-cli@2.0.0
+  aws_assume_role: lbh-hackit/aws_assume_role@0.1.0
+
+parameters:
+  run_development_workflow:
+    description: This will run by default when a code commit or merge is performed
+    default: true
+    type: boolean
+
+  run_staging_workflow:
+    default: false
+    type: boolean
+
+  run_production_workflow:
+    default: false
+    type: boolean
+
+  e2e_test_failure:
+    description: Run the failure workflow if the e2e tests fail downstream
+    default: false
+    type: boolean
+
+references:
+  workspace_root: &workspace_root "~"
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
+
+executors:
+  node-executor:
+    docker:
+      - image: circleci/node:14.15.4-browsers
+  docker-terraform:
+    docker:
+      - image: "hashicorp/terraform:light"
+  docker-python:
+    docker:
+      - image: circleci/python:3.7
+  cimg-base:
+    docker:
+      - image: cimg/base:2021.05
+
+commands:
+  assume-role-and-persist-workspace:
+    description: "Assume deployment role and persist credentials across jobs"
+    parameters:
+      aws-account:
+        type: string
+    steps:
+      - checkout
+      - aws_assume_role/assume_role:
+          account: <<parameters.aws-account>>
+          profile_name: default
+          role: "LBH_Circle_CI_Deployment_Role"
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .aws
+
+  terraform-init-then-apply:
+    description: "Initialize and apply the terraform configuration"
+    parameters:
+      environment:
+        type: string
+    steps:
+      - *attach_workspace
+      - checkout
+      - run:
+          name: get and init
+          command: |
+            cd ./terraform/<<parameters.environment>>/
+            terraform get -update=true
+            terraform init
+      - run:
+          name: apply
+          command: |
+            cd ./terraform/<<parameters.environment>>/
+            terraform apply -auto-approve
+jobs:
+  install-dependencies:
+    executor: node-executor
+    steps:
+      - *attach_workspace
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - ./node_modules
+      - persist_to_workspace:
+          root: *workspace_root
+          paths: .
+  lint-and-test:
+    executor: node-executor
+    steps:
+      - *attach_workspace
+      - run:
+          name: Run linter
+          command: yarn lint
+      - run:
+          name: Run unit lint-and-test
+          command: yarn test:ci
+          environment:
+            NODE_OPTIONS: --max_old_space_size=4096
+  build-deploy-development:
+    executor: node-executor
+    environment:
+      aws-region: eu-west-2
+    parameters:
+      stage:
+        type: string
+    steps:
+      - *attach_workspace
+      - aws-cli/install
+      - run:
+          name: build
+          command: |
+            export APP_ENV=development
+            export APP_CDN=$(aws ssm get-parameter --name /tl-housing/<<parameters.stage>>/processes-app-url --query Parameter.Value --output text)
+            yarn build
+      - run:
+          name: Deploy to S3
+          command: |
+            aws s3 sync dist s3://lbh-tl-housing-processes-frontend-development.hackney.gov.uk/ --exclude "*.json"
+            aws s3 sync dist s3://lbh-tl-housing-processes-frontend-development.hackney.gov.uk/ --include "*.json" --cache-control "public, must-revalidate, max-age=0"
+
+  build-deploy-staging:
+    executor: node-executor
+    environment:
+      aws-region: eu-west-2
+    parameters:
+      stage:
+        type: string
+    steps:
+      - *attach_workspace
+      - aws-cli/install
+      - run:
+          name: build
+          command: |
+            export APP_ENV=staging
+            export APP_CDN=$(aws ssm get-parameter --name /tl-housing/<<parameters.stage>>/processes-app-url --query Parameter.Value --output text)
+            yarn build
+      - run:
+          name: Deploy to S3
+          command: |
+            aws s3 sync dist s3://lbh-tl-housing-processes-frontend-staging.hackney.gov.uk/ --exclude "*.json"
+            aws s3 sync dist s3://lbh-tl-housing-processes-frontend-staging.hackney.gov.uk/ --include "*.json" --cache-control "public, must-revalidate, max-age=0"
+
+  build-deploy-production:
+    executor: node-executor
+    environment:
+      aws-region: eu-west-2
+    parameters:
+      stage:
+        type: string
+    steps:
+      - *attach_workspace
+      - aws-cli/install
+      - run:
+          name: build
+          command: |
+            export APP_ENV=production
+            export APP_CDN=$(aws ssm get-parameter --name /tl-housing/<<parameters.stage>>/processes-app-url --query Parameter.Value --output text)
+            yarn build
+      - run:
+          name: Deploy to S3
+          command: |
+            aws s3 sync dist s3://lbh-tl-housing-processes-frontend-production.hackney.gov.uk/ --exclude "*.json"
+            aws s3 sync dist s3://lbh-tl-housing-processes-frontend-production.hackney.gov.uk/ --include "*.json" --cache-control "public, must-revalidate, max-age=0"
+
+  assume-role-development:
+    executor: docker-python
+    steps:
+      - assume-role-and-persist-workspace:
+          aws-account: $AWS_ACCOUNT_DEVELOPMENT
+
+  assume-role-staging:
+    executor: docker-python
+    steps:
+      - assume-role-and-persist-workspace:
+          aws-account: $AWS_ACCOUNT_STAGING
+
+  assume-role-production:
+    executor: docker-python
+    steps:
+      - assume-role-and-persist-workspace:
+          aws-account: $AWS_ACCOUNT_PRODUCTION
+
+  terraform-init-and-apply-to-development:
+    executor: docker-terraform
+    steps:
+      - terraform-init-then-apply:
+          environment: "development"
+
+  terraform-init-and-apply-to-staging:
+    executor: docker-terraform
+    steps:
+      - terraform-init-then-apply:
+          environment: "staging"
+
+  terraform-init-and-apply-to-production:
+    executor: docker-terraform
+    steps:
+      - terraform-init-then-apply:
+          environment: "production"
+
+  trigger-e2e-pipeline:
+    executor: cimg-base
+    steps:
+      - run: |
+          case << pipeline.parameters.run_development_workflow >> in
+          (true) export DEPLOYMENT_ENVIRONMENT='development_environment' ;;
+          esac
+          case << pipeline.parameters.run_staging_workflow >> in
+          (true) export DEPLOYMENT_ENVIRONMENT='staging_environment' ;;
+          esac
+          case << pipeline.parameters.run_production_workflow >> in
+          (true) export DEPLOYMENT_ENVIRONMENT='production_environment' ;;
+          esac
+          curl --location --request POST 'https://circleci.com/api/v2/project/gh/LBHackney-IT/mtfh-tl-e2e-tests/pipeline' \
+          --header 'Circle-Token: '"$CIRCLE_TOKEN"'' \
+          --header 'Content-Type: application/json' \
+          --data '{"branch": "master", "parameters": {"run_workflow_ci": false, "external_trigger": true, "upstream_pipeline_name":  "<< pipeline.project.git_url >>", '\""$DEPLOYMENT_ENVIRONMENT"\"': true}}'
+
+  failure-downstream:
+    executor: cimg-base
+    steps:
+      - run: |
+          echo downstream e2e tests have failed! Please check the e2e pipeline: ;
+          echo -e 'https://circleci.com/api/v2/project/gh/LBHackney-IT/mtfh-tl-e2e-tests/pipeline' ;
+          exit 1
+workflows:
+  version: 2
+  continuous-delivery-development:
+    when: << pipeline.parameters.run_development_workflow >>
+    jobs:
+      - install-dependencies
+      - lint-and-test:
+          requires:
+            - install-dependencies
+      - assume-role-development:
+          context: api-assume-role-housing-development-context
+          requires:
+            - lint-and-test
+          filters:
+            branches:
+              only: main
+      - terraform-init-and-apply-to-development:
+          requires:
+            - assume-role-development
+          filters:
+            branches:
+              only: main
+      - build-deploy-development:
+          stage: "development"
+          requires:
+            - terraform-init-and-apply-to-development
+          filters:
+            branches:
+              only: main
+      - trigger-e2e-pipeline:
+          context: mtfh-mfe-e2e-tests
+          requires:
+            - build-deploy-development
+          filters:
+            branches:
+              only: main
+
+  continuous-delivery-staging:
+    when: << pipeline.parameters.run_staging_workflow >>
+    jobs:
+      - permit-deploy-staging:
+          type: approval
+          filters:
+            branches:
+              only: main
+      - install-dependencies:
+          requires:
+            - permit-deploy-staging
+      - lint-and-test:
+          requires:
+            - install-dependencies
+      - assume-role-staging:
+          context: api-assume-role-housing-staging-context
+          requires:
+            - lint-and-test
+          filters:
+            branches:
+              only: main
+      - terraform-init-and-apply-to-staging:
+          requires:
+            - assume-role-staging
+          filters:
+            branches:
+              only: main
+      - build-deploy-staging:
+          stage: "staging"
+          requires:
+            - terraform-init-and-apply-to-staging
+          filters:
+            branches:
+              only: main
+      - trigger-e2e-pipeline:
+          context: mtfh-mfe-e2e-tests
+          requires:
+            - build-deploy-staging
+          filters:
+            branches:
+              only: main
+
+  continuous-delivery-production:
+    when: << pipeline.parameters.run_production_workflow >>
+    jobs:
+      - permit-production-terraform-release:
+          type: approval
+          filters:
+            branches:
+              only: main
+      - install-dependencies:
+          requires:
+            - permit-production-terraform-release
+      - lint-and-test:
+          requires:
+            - install-dependencies
+      - assume-role-production:
+          context: api-assume-role-housing-production-context
+          requires:
+            - lint-and-test
+          filters:
+            branches:
+              only: main
+      - terraform-init-and-apply-to-production:
+          requires:
+            - assume-role-production
+          filters:
+            branches:
+              only: main
+      - build-deploy-production:
+          stage: "production"
+          requires:
+            - terraform-init-and-apply-to-production
+          filters:
+            branches:
+              only: main
+      - trigger-e2e-pipeline:
+          context: mtfh-mfe-e2e-tests
+          requires:
+            - build-deploy-production
+          filters:
+            branches:
+              only: main
+
+  e2e-tests-failure:
+    when: << pipeline.parameters.e2e_test_failure >>
+    jobs:
+      - failure-downstream:
+          context: mtfh-mfe-e2e-tests

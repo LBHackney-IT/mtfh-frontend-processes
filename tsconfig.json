@@ -1,0 +1,16 @@
+{
+  "extends": "ts-config-single-spa",
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "declaration": true,
+    "declarationDir": "dist",
+    "baseUrl": "src",
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true
+  },
+  "include": ["src/**/*"]
+}

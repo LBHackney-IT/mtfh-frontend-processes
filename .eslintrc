@@ -1,0 +1,9 @@
+{
+  "extends": "@hackney/eslint-config",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  }
+}
