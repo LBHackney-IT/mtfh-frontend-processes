@@ -1,0 +1,11 @@
+@import "~lbh-frontend/lbh/base";
+
+.mtfh-processes-menu {
+  @include lbh-body-m();
+  &__description {
+    max-width: 600px;
+  }
+  &__list {
+    list-style: none;
+  }
+}
