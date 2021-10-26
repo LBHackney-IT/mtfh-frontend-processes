@@ -7,7 +7,7 @@ import { locale } from "./services";
 
 test("it shows invalid if no id in url", () => {
   render(<App />, { url: "/", path: "/" });
-  expect(screen.getByText("404")).toBeInTheDocument();
+  screen.getByText("404");
 });
 
 test("renders the process menu view and contains correct back button path", () => {
