@@ -14,6 +14,10 @@ module.exports = (webpackConfigEnv, argv) => {
     entry: {
       processes: defaultConfig.entry,
     },
+    output: {
+      filename: "[name].[contenthash].js",
+      uniqueName: "tenure",
+    },
     module: {
       rules: [
         {
