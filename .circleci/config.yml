@@ -107,7 +107,7 @@ jobs:
           command: yarn lint
       - run:
           name: Run unit lint-and-test
-          command: yarn test:ci
+          command: yarn test
           environment:
             NODE_OPTIONS: --max_old_space_size=4096
   build-deploy-development:
