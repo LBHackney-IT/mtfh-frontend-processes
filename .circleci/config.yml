@@ -107,7 +107,7 @@ jobs:
           command: yarn lint
       - run:
           name: Run unit lint-and-test
-          command: yarn test:ci
+          command: yarn test
           environment:
             NODE_OPTIONS: --max_old_space_size=4096
   build-deploy-development:
@@ -214,29 +214,27 @@ jobs:
 
   trigger-e2e-pipeline:
     executor: cimg-base
+    resource_class: small
+    parameters:
+      stage:
+        type: string
     steps:
       - run: |
-          case << pipeline.parameters.run_development_workflow >> in
-          (true) export DEPLOYMENT_ENVIRONMENT='development_environment' ;;
-          esac
-          case << pipeline.parameters.run_staging_workflow >> in
-          (true) export DEPLOYMENT_ENVIRONMENT='staging_environment' ;;
-          esac
-          case << pipeline.parameters.run_production_workflow >> in
-          (true) export DEPLOYMENT_ENVIRONMENT='production_environment' ;;
-          esac
-          curl --location --request POST 'https://circleci.com/api/v2/project/gh/LBHackney-IT/mtfh-tl-e2e-tests/pipeline' \
-          --header 'Circle-Token: '"$CIRCLE_TOKEN"'' \
-          --header 'Content-Type: application/json' \
-          --data '{"branch": "master", "parameters": {"run_workflow_ci": false, "external_trigger": true, "upstream_pipeline_name":  "<< pipeline.project.git_url >>", '\""$DEPLOYMENT_ENVIRONMENT"\"': true}}'
+              export DEPLOYMENT_ENVIRONMENT='<<parameters.stage>>_environment'
+              curl --location --request POST 'https://circleci.com/api/v2/project/gh/LBHackney-IT/mtfh-tl-e2e-tests/pipeline' \
+              --header 'Circle-Token: '"$CIRCLE_TOKEN"'' \
+              --header 'Content-Type: application/json' \
+              --data '{"branch": "master", "parameters": {"run_workflow_ci": false, "external_trigger": true, "upstream_pipeline_name": "<< pipeline.project.git_url >>", '\""$DEPLOYMENT_ENVIRONMENT"\"': true}}'
 
   failure-downstream:
     executor: cimg-base
+    resource_class: small
     steps:
       - run: |
-          echo downstream e2e tests have failed! Please check the e2e pipeline: ;
-          echo -e 'https://circleci.com/api/v2/project/gh/LBHackney-IT/mtfh-tl-e2e-tests/pipeline' ;
-          exit 1
+              echo downstream e2e tests have failed! Please check the e2e pipeline: ;
+              echo -e 'https://circleci.com/api/v2/project/gh/LBHackney-IT/mtfh-tl-e2e-tests/pipeline' ;
+              exit 1
+
 workflows:
   version: 2
   continuous-delivery-development:
@@ -268,6 +266,7 @@ workflows:
               only: main
       - trigger-e2e-pipeline:
           context: mtfh-mfe-e2e-tests
+          stage: "development"
           requires:
             - build-deploy-development
           filters:
@@ -310,6 +309,7 @@ workflows:
               only: main
       - trigger-e2e-pipeline:
           context: mtfh-mfe-e2e-tests
+          stage: "staging"
           requires:
             - build-deploy-staging
           filters:
@@ -352,6 +352,7 @@ workflows:
               only: main
       - trigger-e2e-pipeline:
           context: mtfh-mfe-e2e-tests
+          stage: "production"
           requires:
             - build-deploy-production
           filters:
