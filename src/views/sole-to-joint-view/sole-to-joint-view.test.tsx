@@ -9,7 +9,7 @@ test("it renders sole-to-joint start view", () => {
     url: "/processes/:entityType/:id/sole-to-joint/start",
     path: "/processes/:entityType/:id/:process/:processKey",
   });
-  screen.getByText(locale.processes.soleToJoint.title);
+  expect(screen.getByText(locale.processes.soleToJoint.title)).toBeInTheDocument();
 });
 
 test("it renders a 404 if route not found", () => {
@@ -17,5 +17,5 @@ test("it renders a 404 if route not found", () => {
     url: "/processes/:entityType/:id/sole-to-joint/unknown-path",
     path: "/processes/:entityType/:id/:process/:processKey/",
   });
-  screen.getByText("404");
+  expect(screen.getByText("404")).toBeInTheDocument();
 });
