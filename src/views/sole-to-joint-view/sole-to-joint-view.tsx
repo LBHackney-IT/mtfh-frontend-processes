@@ -1,16 +1,17 @@
-import { Route, Switch } from "react-router-dom";
+import { useRouteMatch } from "react-router-dom";
 
 import { SoleToJointInitiate } from "../../components/sole-to-joint";
 
+export interface MatchParams {
+  processId: string;
+}
+
 export const SoleToJointView = () => {
-  return (
-    <Switch>
-      <Route exact path="/processes/:entityType/:id/sole-to-joint/start">
-        <SoleToJointInitiate />
-      </Route>
-      <Route>
-        <div>404</div>
-      </Route>
-    </Switch>
-  );
+  const { params } = useRouteMatch<MatchParams>();
+
+  if (!params.processId) {
+    return <SoleToJointInitiate />;
+  }
+
+  return null;
 };
