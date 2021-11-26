@@ -21,6 +21,11 @@ const locale = {
       reportOvergrownGarden: "Report overgrown garden",
     },
   },
+  processes: {
+    soleToJoint: {
+      title: "Sole tenant requests a joint tenure",
+    },
+  },
 };
 
 export default locale;

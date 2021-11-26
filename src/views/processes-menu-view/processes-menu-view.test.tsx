@@ -6,7 +6,7 @@ import { ProcessesMenuView } from "./processes-menu-view";
 
 test("it renders processes menu view correctly", () => {
   const { container } = render(<ProcessesMenuView />);
-  screen.getByText(locale.backButton);
-  screen.getByText(locale.title);
+  expect(screen.getByText(locale.backButton)).toBeInTheDocument();
+  expect(screen.getByText(locale.title)).toBeInTheDocument();
   expect(container).toMatchSnapshot();
 });
