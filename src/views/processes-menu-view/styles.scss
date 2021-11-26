@@ -8,4 +8,24 @@
   &__list {
     list-style: none;
   }
+  &__process-list {
+    list-style: none;
+    li {
+      margin: 1rem;
+    }
+  }
+  &__link {
+    label {
+      color: lbh-colour("lbh-link");
+      text-decoration: underline;
+
+      &:hover {
+        color: lbh-colour("lbh-link-hover");
+      }
+
+      &:before {
+        color: lbh-colour("lbh-black");
+      }
+    }
+  }
 }
