@@ -33,6 +33,10 @@ describe("feature toggle on", () => {
     const processLink = await screen.findByText(locale.processes.soleToJoint.title);
 
     expect(processLink).toBeInTheDocument();
+
+    processLink.click();
+
+    expect(window.location.pathname).toContain("/processes/sole-to-joint");
   });
 
   test("it opens an external link in a new tab", async () => {
