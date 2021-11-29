@@ -8,4 +8,10 @@
   &__list {
     list-style: none;
   }
+  &__process-list {
+    list-style: none;
+    li {
+      margin: 1rem 0;
+    }
+  }
 }

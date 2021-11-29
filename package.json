@@ -76,7 +76,7 @@
     "webpack-merge": "5.7.3"
   },
   "dependencies": {
-    "@mtfh/common": "https://github.com/LBHackney-IT/mtfh-common.git",
+    "@mtfh/common": "https://github.com/LBHackney-IT/mtfh-frontend-common.git",
     "lbh-frontend": "^3.6.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
