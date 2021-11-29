@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { Fragment } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 import { locale } from "../../services";
 
-import { Heading, Layout, Link, Radio } from "@mtfh/common/lib/components";
+import {
+  Heading,
+  Layout,
+  Link,
+  Radio,
+  RadioConditional,
+  RadioGroup,
+} from "@mtfh/common/lib/components";
 import "./styles.scss";
 import { useFeatureToggle } from "@mtfh/common/lib/hooks";
 
@@ -76,56 +83,48 @@ const LegacyMenu = ({ items }) => {
 };
 
 const Menu = ({ items }) => {
-  const [expanded, setExpanded] = useState<number>();
-
-  const handleChange = (item: MenuItemsProps, index: number) => {
+  const handleChange = (item: MenuItemsProps) => {
     if (!item.processes) {
       window.open(item.link, "_blank");
     }
-    setExpanded(index);
   };
 
   return (
-    <ul className="mtfh-processes-menu__list">
-      {items.map((item, index) => (
-        <li key={index}>
-          {item.processes ? (
-            <>
-              <Radio
-                onChange={() => handleChange(item, index)}
-                id={index}
-                name="process-menu-radios"
-                className="mtfh-processes-menu__link"
-              >
-                {item.label}
-              </Radio>
-              {expanded === index && (
-                <div className="govuk-radios__conditional">
-                  <ul className="mtfh-processes-menu__process-list">
-                    {item.processes.map((process, pIndex) => (
-                      <li key={pIndex}>
-                        <Link variant="link" as={RouterLink} to={process.link}>
-                          {process.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </>
-          ) : (
+    <RadioGroup>
+      {items.map((item, index) =>
+        item.processes ? (
+          <Fragment key={index}>
             <Radio
-              onChange={() => handleChange(item, index)}
               id={index}
               name="process-menu-radios"
-              className="mtfh-processes-menu__link"
+              conditionalId={`conditional-${index}`}
             >
-              {item.label}
+              <span className="mtfh-processes-menu__link">{item.label}</span>
             </Radio>
-          )}
-        </li>
-      ))}
-    </ul>
+            <RadioConditional id={`conditional-${index}`}>
+              <ul className="mtfh-processes-menu__process-list">
+                {item.processes.map((process, pIndex) => (
+                  <li key={pIndex}>
+                    <Link variant="link" as={RouterLink} to={process.link}>
+                      {process.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </RadioConditional>
+          </Fragment>
+        ) : (
+          <Radio
+            key={index}
+            onChange={() => handleChange(item)}
+            id={index}
+            name="process-menu-radios"
+          >
+            <span className="mtfh-processes-menu__link">{item.label}</span>
+          </Radio>
+        ),
+      )}
+    </RadioGroup>
   );
 };
 

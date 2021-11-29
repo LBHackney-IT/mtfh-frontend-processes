@@ -11,21 +11,11 @@
   &__process-list {
     list-style: none;
     li {
-      margin: 1rem;
+      margin: 1rem 0;
     }
   }
   &__link {
-    label {
-      color: lbh-colour("lbh-link");
-      text-decoration: underline;
-
-      &:hover {
-        color: lbh-colour("lbh-link-hover");
-      }
-
-      &:before {
-        color: lbh-colour("lbh-black");
-      }
-    }
+    color: lbh-colour("lbh-link");
+    text-decoration: underline;
   }
 }
