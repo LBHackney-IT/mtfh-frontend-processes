@@ -1,16 +1,8 @@
-import { Fragment } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 import { locale } from "../../services";
 
-import {
-  Heading,
-  Layout,
-  Link,
-  Radio,
-  RadioConditional,
-  RadioGroup,
-} from "@mtfh/common/lib/components";
+import { Details, Heading, Layout, Link } from "@mtfh/common/lib/components";
 import "./styles.scss";
 import { useFeatureToggle } from "@mtfh/common/lib/hooks";
 
@@ -83,25 +75,12 @@ const LegacyMenu = ({ items }) => {
 };
 
 const Menu = ({ items }) => {
-  const handleChange = (item: MenuItemsProps) => {
-    if (!item.processes) {
-      window.open(item.link, "_blank");
-    }
-  };
-
   return (
-    <RadioGroup>
-      {items.map((item, index) =>
-        item.processes ? (
-          <Fragment key={index}>
-            <Radio
-              id={index}
-              name="process-menu-radios"
-              conditionalId={`conditional-${index}`}
-            >
-              <span className="mtfh-processes-menu__link">{item.label}</span>
-            </Radio>
-            <RadioConditional id={`conditional-${index}`}>
+    <ul className="mtfh-processes-menu__list">
+      {items.map((item, index) => (
+        <li key={index}>
+          {item.processes ? (
+            <Details title={item.label}>
               <ul className="mtfh-processes-menu__process-list">
                 {item.processes.map((process, pIndex) => (
                   <li key={pIndex}>
@@ -111,20 +90,15 @@ const Menu = ({ items }) => {
                   </li>
                 ))}
               </ul>
-            </RadioConditional>
-          </Fragment>
-        ) : (
-          <Radio
-            key={index}
-            onChange={() => handleChange(item)}
-            id={index}
-            name="process-menu-radios"
-          >
-            <span className="mtfh-processes-menu__link">{item.label}</span>
-          </Radio>
-        ),
-      )}
-    </RadioGroup>
+            </Details>
+          ) : (
+            <Link variant="link" isExternal href={item.link}>
+              {item.label}
+            </Link>
+          )}
+        </li>
+      ))}
+    </ul>
   );
 };
 

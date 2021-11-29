@@ -25,7 +25,7 @@ describe("feature toggle on", () => {
     });
   });
 
-  test("it renders expanded process list", async () => {
+  test("it renders expanded process list and redirects to process on click", async () => {
     render(<ProcessesMenuView />);
     const input = screen.getByText(locale.menu.menuItems.changeToTenancy);
     userEvent.click(input);
@@ -40,10 +40,11 @@ describe("feature toggle on", () => {
   });
 
   test("it opens an external link in a new tab", async () => {
-    global.open = jest.fn();
     render(<ProcessesMenuView />);
-    const input = screen.getByText(locale.menu.menuItems.findLegalReferral);
-    userEvent.click(input);
-    expect(global.open).toBeCalledWith(menuItems[2].link, "_blank");
+
+    const processLink = screen.getByText(locale.menu.menuItems.findLegalReferral);
+
+    expect(processLink).toHaveAttribute("href", `${menuItems[2].link}`);
+    expect(processLink).toHaveAttribute("target", "_blank");
   });
 });
