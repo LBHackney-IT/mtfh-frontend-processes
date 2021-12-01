@@ -13,7 +13,10 @@ export const menuItems: MenuItemsProps[] = [
     label: menu.menuItems.changeToTenancy,
     link: "https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform",
     processes: [
-      { label: locale.processes.soleToJoint.title, link: "/processes/sole-to-joint" },
+      {
+        label: locale.processes.soleToJoint.title,
+        link: "/processes/sole-to-joint/start",
+      },
     ],
   },
   {
@@ -74,7 +77,7 @@ const LegacyMenu = ({ items }) => {
   );
 };
 
-const Menu = ({ items }) => {
+const Menu = ({ items, id, entityType }) => {
   return (
     <ul className="mtfh-processes-menu__list">
       {items.map((item, index) => (
@@ -84,7 +87,11 @@ const Menu = ({ items }) => {
               <ul className="mtfh-processes-menu__process-list">
                 {item.processes.map((process, pIndex) => (
                   <li key={pIndex}>
-                    <Link variant="link" as={RouterLink} to={process.link}>
+                    <Link
+                      variant="link"
+                      as={RouterLink}
+                      to={`${process.link}/${entityType}/${id}`}
+                    >
                       {process.label}
                     </Link>
                   </li>
@@ -114,7 +121,7 @@ export const ProcessesMenuView = () => {
       <Heading as="h1">{title}</Heading>
       <div className="mtfh-processes-menu__description">{menu.description()}</div>
       {hasEnhancedProcessMenu ? (
-        <Menu items={menuItems} />
+        <Menu items={menuItems} id={id} entityType={entityType} />
       ) : (
         <LegacyMenu items={menuItems} />
       )}

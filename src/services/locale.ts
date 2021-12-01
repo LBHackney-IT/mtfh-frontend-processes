@@ -1,8 +1,42 @@
 import reactHtmlParser from "react-html-parser";
 
+import { AssetAddress } from "@mtfh/common/lib/api/asset/v1";
+
 const locale = {
   backButton: "Back",
+  cancel: "Cancel",
   title: "Processes",
+  loadingText: "Submitting...",
+  components: {
+    startProcess: {
+      buttonLabel: "Start process",
+      thirdPartyHeading: "Sharing information with third parties",
+    },
+    entitySummary: {
+      tenurePaymentRef: "Tenure payment ref",
+      address: (assetAddress: AssetAddress): string => {
+        const {
+          postPreamble,
+          addressLine1,
+          addressLine2,
+          addressLine3,
+          addressLine4,
+          postCode,
+        } = assetAddress;
+
+        return [
+          postPreamble,
+          addressLine1,
+          addressLine2,
+          addressLine3,
+          addressLine4,
+          postCode,
+        ]
+          .filter((addressLine) => !!addressLine)
+          .join(" ");
+      },
+    },
+  },
   menu: {
     description: () =>
       reactHtmlParser(

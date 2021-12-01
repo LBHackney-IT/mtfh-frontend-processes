@@ -1,0 +1,13 @@
+.start-process {
+  &__actions {
+    display: flex;
+    align-items: center;
+  }
+  &__start-button {
+    margin-right: 2rem;
+    margin-top: 0;
+  }
+  &__cancel-link {
+    margin-top: 0;
+  }
+}
