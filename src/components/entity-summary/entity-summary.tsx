@@ -101,13 +101,12 @@ interface EntitySummaryProps {
 }
 
 export const EntitySummary = ({ id, type }: EntitySummaryProps) => {
-  if (type === "tenure") {
-    return <TenureSummary id={id} />;
-  }
+  const Components = {
+    tenure: TenureSummary,
+    property: AssetsSummary,
+    person: PersonSummary,
+  };
+  const Component = Components[type];
 
-  if (type === "property") {
-    return <AssetsSummary id={id} />;
-  }
-
-  return <PersonSummary id={id} />;
+  return <Component id={id} />;
 };

@@ -1,5 +1,178 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`feature toggle on it renders processes menu view correctly 1`] = `
+<div>
+  <div
+    class="mtfh-layout mtfh-layout--narrow mtfh-processes-menu"
+    data-testid="processes-menu"
+  >
+    <div
+      id="content"
+    />
+    <div
+      class="mtfh-layout__container"
+    >
+      <div
+        class="mtfh-layout__main"
+      >
+        <a
+          class="govuk-back-link lbh-back-link lbh-link--no-visited-state"
+          href="/undefined/undefined"
+        >
+          Back
+        </a>
+        <h1
+          class="lbh-heading-h1"
+        >
+          Processes
+        </h1>
+        <div
+          class="mtfh-processes-menu__description"
+        >
+          <p>
+            Start a process by selecting a process category below. 
+            <br />
+             Where a process is not yet supported in 
+            <strong>
+              Manage My Home
+            </strong>
+             these links will open the appropriate interim Google form.
+          </p>
+        </div>
+        <ul
+          class="mtfh-processes-menu__list"
+        >
+          <li>
+            <details
+              class="govuk-details lbh-details"
+              data-module="govuk-details"
+              data-testid="mtfh-details"
+              id="mtfh-details"
+            >
+              <summary
+                class="govuk-details__summary"
+              >
+                <span
+                  class="govuk-details__summary-text"
+                >
+                  Changes to a tenancy
+                </span>
+              </summary>
+              <div
+                class="govuk-details__text"
+              >
+                <ul
+                  class="mtfh-processes-menu__process-list"
+                >
+                  <li>
+                    <a
+                      class="govuk-link lbh-link lbh-link--no-visited-state"
+                      href="/processes/sole-to-joint/start/undefined/undefined"
+                    >
+                      Sole tenant requests a joint tenure
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </details>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfyXscVvgCBhbBBe7ADpV6cUqJoKrrTbU0YYRB_uXS2J4AHMQ/viewform"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Record a tenancy / audit homecheck
+            </a>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/spreadsheets/d/1fd6FwBXvBo2DmX8qZaXUr7hX9sE6Zr7HZsPlA_OO8Hs/edit#gid=1251146140"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Find legal referral response
+            </a>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLScpHsoJQgq112HIMbW06YAFpggijwQuODJM483HGbX_PMfCMw/viewform"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Request a legal referral
+            </a>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfRSMia4FeT6WPjrmRlsLpOXyJ4tFs3Sv_O0toxUbv_FmIjKw/viewform"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Record notice served
+            </a>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLScPXSs4-xxTH2N5dUwtfmEl5mpu7kxZ6mHe86Qy_rlDNu-GbA/viewform"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Rehousing
+            </a>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLScxrWFLF7M7A3B1yzY-LZFXkV0P0qv6igcQ4wEgWHQk8DaUCw/viewform"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Person
+            </a>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSceU2H-VWi2ewaEiOAkOWULVFU2DoPSen8SRPyJrmQtRpEhfQ/viewform?gxids=7628"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Report Japanese knotweed
+            </a>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfLmlLraDyOfqYhdjkOfkNWWlHUUep05G5n0GN-ewizN0Fbuw/viewform?gxids=7628"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Report overgrown tree
+            </a>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSc3mOUUEQhdRiDsS0k9XDWlfGJG0CEFAC2rnC1sYmM-idt-Nw/viewform?gxids=7628"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Report overgrown garden
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+`;
+
 exports[`it renders processes menu view correctly 1`] = `
 <div>
   <div
@@ -79,7 +252,7 @@ exports[`it renders processes menu view correctly 1`] = `
               rel="noopener noreferrer"
               target="_blank"
             >
-              Request a legal referral 
+              Request a legal referral
             </a>
           </li>
           <li>

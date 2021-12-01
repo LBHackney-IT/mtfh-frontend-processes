@@ -3,7 +3,7 @@
 exports[`it renders sole-to-joint start process view 1`] = `
 <div>
   <div
-    class="mtfh-layout"
+    class="mtfh-layout mtfh-layout--right"
     data-testid="sole-to-joint-start"
   >
     <div
@@ -24,10 +24,10 @@ exports[`it renders sole-to-joint start process view 1`] = `
       class="mtfh-layout__container"
     >
       <div
-        class="mtfh-layout__aside mtfh-layout__aside--right"
+        class="mtfh-layout__aside"
       />
       <div
-        class="mtfh-layout__main mtfh-layout__main__aside--right"
+        class="mtfh-layout__main"
       >
         <h2
           class="lbh-heading-h2 entity-summary__tenure"
@@ -78,7 +78,9 @@ exports[`it renders sole-to-joint start process view 1`] = `
             >
               Joint tenants are both responsible, together and individually, for keeping to these tenure conditions and payments to the London borough of Hackney. Applying for a joint tenancy is at the discretion of the Housing team.
             </p>
-            <h4>
+            <h4
+              class="lbh-heading-h4"
+            >
               Things to consider if joint tenants separate
             </h4>
             <p
@@ -95,10 +97,18 @@ exports[`it renders sole-to-joint start process view 1`] = `
               class="lbh-list lbh-list--bullet"
             >
               <li>
-                When can they end a joint tenure
+                <p
+                  class="lbh-body-m"
+                >
+                  When can they end a joint tenure
+                </p>
               </li>
               <li>
-                What will happen if they end a joint tenure but one of the tenants remains at the property
+                <p
+                  class="lbh-body-m"
+                >
+                  What will happen if they end a joint tenure but one of the tenants remains at the property
+                </p>
               </li>
             </ul>
             <p

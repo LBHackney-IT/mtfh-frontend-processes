@@ -2,16 +2,13 @@ import { Link as RouterLink, useParams } from "react-router-dom";
 
 import { EntitySummary, StartProcess } from "../../components";
 import { locale, processes } from "../../services";
+import { EntityType, IProcess } from "../../types";
 
 import { ErrorSummary, Layout, Link } from "@mtfh/common/lib/components";
 
-function snakeToCamel(string: string) {
-  return string.replace(/(-\w)/g, (arr) => arr[1].toUpperCase());
-}
-
 interface ParamProps {
   entityId: string;
-  entityType: "tenure" | "property" | "person";
+  entityType: EntityType;
   processName: string;
 }
 
@@ -22,7 +19,9 @@ export const StartProcessView = () => {
     return null;
   };
 
-  const process = processes[snakeToCamel(processName)];
+  const process = Object.values(processes).find(
+    (process) => process.urlPath === processName,
+  );
 
   if (!process) {
     return (
@@ -34,7 +33,7 @@ export const StartProcessView = () => {
     );
   }
 
-  const { startProcess, name } = process;
+  const { startProcess, title }: IProcess = process;
 
   const backLink = `/processes/${entityType}/${entityId}`;
 
@@ -47,7 +46,7 @@ export const StartProcessView = () => {
           <Link as={RouterLink} to={backLink} variant="back-link">
             {locale.backButton}
           </Link>
-          <h1 className="lbh-heading-h1">{name}</h1>
+          <h1 className="lbh-heading-h1">{title}</h1>
         </>
       }
       side={<SideBar />}

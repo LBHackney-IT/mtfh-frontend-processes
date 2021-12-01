@@ -4,6 +4,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
 import { locale } from "../../services";
+import { IStartProcess } from "../../types";
 
 import { Button, Checkbox, Link } from "@mtfh/common/lib/components";
 
@@ -12,12 +13,7 @@ import "./styles.scss";
 const { components } = locale;
 
 interface StartProcessProps {
-  process: {
-    thirdPartyCondition: string;
-    ThirdPartyContent: any;
-    riskHeading: string;
-    RiskContent: any;
-  };
+  process: IStartProcess;
   backLink: string;
   processName: string;
 }
@@ -51,14 +47,14 @@ export const StartProcess = ({ processName, process, backLink }: StartProcessPro
           {hasThirdPartyContent && (
             <>
               <h3>{components.startProcess.thirdPartyHeading}</h3>
-              <ThirdPartyContent />
+              {ThirdPartyContent && <ThirdPartyContent />}
               <Checkbox onChange={properties.handleChange} id="condition">
                 {thirdPartyCondition}
               </Checkbox>
             </>
           )}
-          <h3>{riskHeading}</h3>
-          <RiskContent />
+          {riskHeading && <h3>{riskHeading}</h3>}
+          {RiskContent && <RiskContent />}
           <div className="start-process__actions">
             <Button
               disabled={!properties.isValid}
