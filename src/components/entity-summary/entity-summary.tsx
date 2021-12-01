@@ -3,14 +3,24 @@ import { locale } from "../../services";
 import { useAsset } from "@mtfh/common/lib/api/asset/v1";
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
-import { Center, Spinner } from "@mtfh/common/lib/components";
+import { Center, ErrorSummary, Spinner } from "@mtfh/common/lib/components";
 
 import "./styles.scss";
 
 const { components } = locale;
 
 const TenureSummary = ({ id }: { id: string }) => {
-  const { data: tenure } = useTenure(id);
+  const { error, data: tenure } = useTenure(id);
+
+  if (error) {
+    return (
+      <ErrorSummary
+        id="entity-summary"
+        title={locale.errors.unableToFetchRecord}
+        description={locale.errors.unableToFetchRecordDescription}
+      />
+    );
+  }
 
   if (!tenure) {
     return (
@@ -30,7 +40,17 @@ const TenureSummary = ({ id }: { id: string }) => {
 };
 
 const AssetsSummary = ({ id }: { id: string }) => {
-  const { data: asset } = useAsset(id);
+  const { error, data: asset } = useAsset(id);
+
+  if (error) {
+    return (
+      <ErrorSummary
+        id="entity-summary"
+        title={locale.errors.unableToFetchRecord}
+        description={locale.errors.unableToFetchRecordDescription}
+      />
+    );
+  }
 
   if (!asset) {
     return (
@@ -48,7 +68,17 @@ const AssetsSummary = ({ id }: { id: string }) => {
 };
 
 const PersonSummary = ({ id }: { id: string }) => {
-  const { data: person } = usePerson(id);
+  const { error, data: person } = usePerson(id);
+
+  if (error) {
+    return (
+      <ErrorSummary
+        id="entity-summary"
+        title={locale.errors.unableToFetchRecord}
+        description={locale.errors.unableToFetchRecordDescription}
+      />
+    );
+  }
 
   if (!person) {
     return (
@@ -67,7 +97,7 @@ const PersonSummary = ({ id }: { id: string }) => {
 
 interface EntitySummaryProps {
   id: string;
-  type: "tenure" | "assets" | "person";
+  type: "tenure" | "property" | "person";
 }
 
 export const EntitySummary = ({ id, type }: EntitySummaryProps) => {
@@ -75,7 +105,7 @@ export const EntitySummary = ({ id, type }: EntitySummaryProps) => {
     return <TenureSummary id={id} />;
   }
 
-  if (type === "assets") {
+  if (type === "property") {
     return <AssetsSummary id={id} />;
   }
 

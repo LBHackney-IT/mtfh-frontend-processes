@@ -5,6 +5,13 @@ import { AssetAddress } from "@mtfh/common/lib/api/asset/v1";
 const locale = {
   backButton: "Back",
   cancel: "Cancel",
+  errors: {
+    unableToFetchRecord: "There was a problem retrieving the record",
+    unableToFetchRecordDescription:
+      "Please try again. If the issue persists, please contact support.",
+    unableToFindProcess: "Invalid Process",
+    unableToFindProcessDescription: "We have been unable to find a process of this name.",
+  },
   title: "Processes",
   loadingText: "Submitting...",
   components: {

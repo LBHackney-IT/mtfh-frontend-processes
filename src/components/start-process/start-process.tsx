@@ -1,4 +1,4 @@
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useHistory } from "react-router-dom";
 
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
@@ -19,6 +19,7 @@ interface StartProcessProps {
     RiskContent: any;
   };
   backLink: string;
+  processName: string;
 }
 
 export const schema = Yup.object({
@@ -27,7 +28,8 @@ export const schema = Yup.object({
 
 export type FormData = Yup.Asserts<typeof schema>;
 
-export const StartProcess = ({ process, backLink }: StartProcessProps) => {
+export const StartProcess = ({ processName, process, backLink }: StartProcessProps) => {
+  const history = useHistory();
   const { thirdPartyCondition, ThirdPartyContent, riskHeading, RiskContent } = process;
   const hasThirdPartyContent = !!thirdPartyCondition;
 
@@ -40,7 +42,9 @@ export const StartProcess = ({ process, backLink }: StartProcessProps) => {
       validateOnMount
       validateOnBlur={false}
       validationSchema={schema}
-      onSubmit={async () => {}}
+      onSubmit={() => {
+        history.push(`/processes/${processName}/generated-id`);
+      }}
     >
       {(properties) => (
         <Form>

@@ -3,7 +3,7 @@ import { Link as RouterLink, useParams } from "react-router-dom";
 import { EntitySummary, StartProcess } from "../../components";
 import { locale, processes } from "../../services";
 
-import { Layout, Link } from "@mtfh/common/lib/components";
+import { ErrorSummary, Layout, Link } from "@mtfh/common/lib/components";
 
 function snakeToCamel(string: string) {
   return string.replace(/(-\w)/g, (arr) => arr[1].toUpperCase());
@@ -11,7 +11,7 @@ function snakeToCamel(string: string) {
 
 interface ParamProps {
   entityId: string;
-  entityType: "tenure" | "assets" | "person";
+  entityType: "tenure" | "property" | "person";
   processName: string;
 }
 
@@ -24,7 +24,15 @@ export const StartProcessView = () => {
 
   const process = processes[snakeToCamel(processName)];
 
-  if (!process) return null;
+  if (!process) {
+    return (
+      <ErrorSummary
+        id="start-process-view"
+        title={locale.errors.unableToFindProcess}
+        description={locale.errors.unableToFindProcessDescription}
+      />
+    );
+  }
 
   const { startProcess, name } = process;
 
@@ -46,7 +54,11 @@ export const StartProcessView = () => {
     >
       <>
         <EntitySummary type={entityType} id={entityId} />
-        <StartProcess process={startProcess} backLink={backLink} />
+        <StartProcess
+          processName={processName}
+          process={startProcess}
+          backLink={backLink}
+        />
       </>
     </Layout>
   );
