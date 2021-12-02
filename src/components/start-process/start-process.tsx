@@ -6,7 +6,7 @@ import * as Yup from "yup";
 import { locale } from "../../services";
 import { IStartProcess } from "../../types";
 
-import { Button, Checkbox, Link } from "@mtfh/common/lib/components";
+import { Button, Checkbox, InlineField, Link } from "@mtfh/common/lib/components";
 
 import "./styles.scss";
 
@@ -55,9 +55,9 @@ export const StartProcess = ({ processName, process, backLink }: StartProcessPro
             <>
               <h3>{components.startProcess.thirdPartyHeading}</h3>
               {renderComponent(thirdPartyComponent)}
-              <Checkbox onChange={properties.handleChange} id="condition">
-                {thirdPartyCondition}
-              </Checkbox>
+              <InlineField name="condition" type="checkbox">
+                <Checkbox id="condition">{thirdPartyCondition}</Checkbox>
+              </InlineField>
             </>
           )}
           {riskHeading && <h3>{riskHeading}</h3>}

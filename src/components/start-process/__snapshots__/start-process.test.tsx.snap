@@ -19,7 +19,9 @@ exports[`Renders without risk content 1`] = `
       <input
         class="govuk-checkboxes__input"
         id="condition"
+        name="condition"
         type="checkbox"
+        value="false"
       />
       <label
         class="govuk-label govuk-checkboxes__label"

@@ -55,7 +55,9 @@ exports[`it renders sole-to-joint start process view 1`] = `
             <input
               class="govuk-checkboxes__input"
               id="condition"
+              name="condition"
               type="checkbox"
+              value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
