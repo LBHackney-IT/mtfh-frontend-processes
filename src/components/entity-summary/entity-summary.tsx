@@ -108,5 +108,7 @@ export const EntitySummary = ({ id, type }: EntitySummaryProps) => {
   };
   const Component = Components[type];
 
+  if (!Component) return null;
+
   return <Component id={id} />;
 };
