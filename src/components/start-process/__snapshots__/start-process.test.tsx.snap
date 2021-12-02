@@ -1,0 +1,178 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Renders without risk content 1`] = `
+<div>
+  <form
+    action="#"
+  >
+    <h3>
+      Sharing information with third parties
+    </h3>
+    <p
+      class="lbh-body-m"
+    >
+      By starting this process the tenant and proposed tenant must agree that information relating to this application will be shared with third parties, for instance to perform a credit check.
+    </p>
+    <div
+      class="govuk-checkboxes__item"
+    >
+      <input
+        class="govuk-checkboxes__input"
+        id="condition"
+        name="condition"
+        type="checkbox"
+        value="false"
+      />
+      <label
+        class="govuk-label govuk-checkboxes__label"
+        for="condition"
+      >
+        I have explained to the tenant and proposed tenant that their information will be shared with third parties.
+      </label>
+    </div>
+    <div
+      class="start-process__actions"
+    >
+      <button
+        class="govuk-button lbh-button lbh-button--chevron start-process__start-button"
+        type="submit"
+      >
+        Start process
+        <svg
+          fill="none"
+          height="22"
+          viewBox="0 0 20 22"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M0 0H8.54573L20 10H11.4543L0 0Z"
+            fill="white"
+            fill-rule="evenodd"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M0 22L8.54573 22L20 10H11.4543L0 22Z"
+            fill="#96CCAE"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
+      <a
+        class="govuk-link lbh-link lbh-link--no-visited-state start-process__cancel-link"
+        href="/back-link"
+      >
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
+`;
+
+exports[`Renders without third party content 1`] = `
+<div>
+  <form
+    action="#"
+  >
+    <h3>
+      Sole to joint tenure application risks
+    </h3>
+    <div>
+      <p
+        class="lbh-body-m"
+      >
+        A joint tenancy is when two or more adults (aged 18 or over) are named on the tenure agreement. Joint tenants have equal rights and responsibilities under the tenure agreement for the duration of the tenancy.
+      </p>
+      <p
+        class="lbh-body-m"
+      >
+        Joint tenants are both responsible, together and individually, for keeping to these tenure conditions and payments to the London borough of Hackney. Applying for a joint tenancy is at the discretion of the Housing team.
+      </p>
+      <h4
+        class="lbh-heading-h4"
+      >
+        Things to consider if joint tenants separate
+      </h4>
+      <p
+        class="lbh-body-m"
+      >
+        If a joint tenants relationship ends, discussions should be made about what will happen to the tenure.
+      </p>
+      <p
+        class="lbh-body-m"
+      >
+        The tenant and proposed tenant need to understand:
+      </p>
+      <ul
+        class="lbh-list lbh-list--bullet"
+      >
+        <li>
+          <p
+            class="lbh-body-m"
+          >
+            When can they end a joint tenure
+          </p>
+        </li>
+        <li>
+          <p
+            class="lbh-body-m"
+          >
+            What will happen if they end a joint tenure but one of the tenants remains at the property
+          </p>
+        </li>
+      </ul>
+      <p
+        class="lbh-body-m"
+      >
+        This information is available on the
+         
+        <a
+          class="govuk-link lbh-link"
+          href="https://hackney.gov.uk/your-tenancy-agreement"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          terms and conditions of the tenancy
+        </a>
+      </p>
+    </div>
+    <div
+      class="start-process__actions"
+    >
+      <button
+        class="govuk-button lbh-button lbh-button--chevron start-process__start-button"
+        type="submit"
+      >
+        Start process
+        <svg
+          fill="none"
+          height="22"
+          viewBox="0 0 20 22"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M0 0H8.54573L20 10H11.4543L0 0Z"
+            fill="white"
+            fill-rule="evenodd"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M0 22L8.54573 22L20 10H11.4543L0 22Z"
+            fill="#96CCAE"
+            fill-rule="evenodd"
+          />
+        </svg>
+      </button>
+      <a
+        class="govuk-link lbh-link lbh-link--no-visited-state start-process__cancel-link"
+        href="/back-link"
+      >
+        Cancel
+      </a>
+    </div>
+  </form>
+</div>
+`;
