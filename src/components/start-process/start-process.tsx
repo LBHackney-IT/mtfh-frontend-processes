@@ -66,7 +66,7 @@ export const StartProcess = ({
         validationSchema={schema}
         onSubmit={async () => {
           try {
-            const response = await addProcess({ targetID: targetId }, "soletojoint");
+            const response = await addProcess({ targetID: targetId }, processName);
             history.push(`/processes/${processName}/${response.id}`);
           } catch (e: any) {
             setGlobalError(e.response?.status || 500);
