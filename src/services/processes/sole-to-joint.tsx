@@ -52,9 +52,8 @@ const startProcess: IStartProcess = {
   },
 };
 
-export const soleToJoint: IProcess = {
-  id: "soleToJoint",
-  urlPath: "sole-to-joint",
+export const soletojoint: IProcess = {
+  processName: "soletojoint",
   title: "Sole tenant requests a joint tenure",
   startProcess,
 };

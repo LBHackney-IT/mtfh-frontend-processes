@@ -6,6 +6,7 @@ import * as Yup from "yup";
 import { locale } from "../../services";
 import { IStartProcess } from "../../types";
 
+import { addProcess } from "@mtfh/common/lib/api/process/v1";
 import { Button, Checkbox, InlineField, Link } from "@mtfh/common/lib/components";
 
 import "./styles.scss";
@@ -16,6 +17,7 @@ interface StartProcessProps {
   process: IStartProcess;
   backLink: string;
   processName: string;
+  targetId: string;
 }
 
 export const schema = Yup.object({
@@ -24,7 +26,12 @@ export const schema = Yup.object({
 
 export type FormData = Yup.Asserts<typeof schema>;
 
-export const StartProcess = ({ processName, process, backLink }: StartProcessProps) => {
+export const StartProcess = ({
+  processName,
+  process,
+  backLink,
+  targetId,
+}: StartProcessProps) => {
   const history = useHistory();
   const { thirdPartyCondition, thirdPartyComponent, riskHeading, riskComponent } =
     process;
@@ -45,8 +52,10 @@ export const StartProcess = ({ processName, process, backLink }: StartProcessPro
       validateOnMount
       validateOnBlur={false}
       validationSchema={schema}
-      onSubmit={() => {
-        history.push(`/processes/${processName}/generated-id`);
+      onSubmit={async () => {
+        const response = await addProcess({ targetID: targetId }, "soletojoint");
+        console.log("response: ", response);
+        history.push(`/processes/${processName}/${response.id}`);
       }}
     >
       {(properties) => (

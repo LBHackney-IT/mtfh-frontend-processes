@@ -7,13 +7,13 @@ import { StartProcessView } from "./views/start-process-view";
 export default function App(): JSX.Element {
   return (
     <Switch>
-      <Route exact path="/processes/:processName/start/:entityType/:entityId">
+      <Route exact path="/processes/:processName/start/:targetType/:targetId">
         <StartProcessView />
       </Route>
-      <Route path="/processes/sole-to-joint/:processId">
+      <Route path="/processes/soletojoint/:processId">
         <SoleToJointView />
       </Route>
-      <Route path="/processes/:entityType/:id">
+      <Route path="/processes/:targetType/:id">
         <ProcessesMenuView />
       </Route>
       <Route>

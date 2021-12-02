@@ -67,7 +67,7 @@ exports[`feature toggle on it renders processes menu view correctly 1`] = `
                   <li>
                     <a
                       class="govuk-link lbh-link lbh-link--no-visited-state"
-                      href="/processes/sole-to-joint/start/undefined/undefined"
+                      href="/processes/soletojoint/start/undefined/undefined"
                     >
                       Sole tenant requests a joint tenure
                     </a>
