@@ -32,3 +32,37 @@ test("it enables form once checkbox is selected", async () => {
 
   expect(window.location.pathname).toContain("/processes/sole-to-joint/generated-id");
 });
+
+test("Renders without third party content", async () => {
+  const { thirdPartyComponent, thirdPartyCondition, ...rest } =
+    processes.soleToJoint.startProcess;
+
+  const { container } = render(
+    <StartProcess
+      process={rest}
+      backLink="back-link"
+      processName={processes.soleToJoint.urlPath}
+    />,
+  );
+
+  await waitFor(() =>
+    expect(
+      screen.queryByText(locale.components.startProcess.thirdPartyHeading),
+    ).not.toBeInTheDocument(),
+  );
+
+  expect(container).toMatchSnapshot();
+});
+
+test("Renders without risk content", async () => {
+  const { riskComponent, riskHeading, ...rest } = processes.soleToJoint.startProcess;
+
+  const { container } = render(
+    <StartProcess
+      process={rest}
+      backLink="back-link"
+      processName={processes.soleToJoint.urlPath}
+    />,
+  );
+  await waitFor(() => expect(container).toMatchSnapshot());
+});

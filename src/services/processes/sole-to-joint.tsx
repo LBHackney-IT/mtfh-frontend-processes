@@ -3,7 +3,7 @@ import { IProcess, IStartProcess } from "../../types";
 import { Heading, Link, List, Text } from "@mtfh/common/lib/components";
 
 const startProcess: IStartProcess = {
-  ThirdPartyContent: () => {
+  thirdPartyComponent: () => {
     return (
       <Text>
         By starting this process the tenant and proposed tenant must agree that
@@ -15,7 +15,7 @@ const startProcess: IStartProcess = {
   thirdPartyCondition:
     "I have explained to the tenant and proposed tenant that their information will be shared with third parties.",
   riskHeading: "Sole to joint tenure application risks",
-  RiskContent: () => {
+  riskComponent: () => {
     return (
       <div>
         <Text>

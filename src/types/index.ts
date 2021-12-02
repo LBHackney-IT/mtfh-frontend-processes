@@ -1,8 +1,8 @@
 export interface IStartProcess {
   thirdPartyCondition?: string;
-  ThirdPartyContent?: React.FC;
+  thirdPartyComponent?: React.FC;
   riskHeading?: string;
-  RiskContent?: React.FC;
+  riskComponent?: React.FC;
 }
 
 export interface IProcess {

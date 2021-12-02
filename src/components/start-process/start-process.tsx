@@ -26,13 +26,20 @@ export type FormData = Yup.Asserts<typeof schema>;
 
 export const StartProcess = ({ processName, process, backLink }: StartProcessProps) => {
   const history = useHistory();
-  const { thirdPartyCondition, ThirdPartyContent, riskHeading, RiskContent } = process;
-  const hasThirdPartyContent = !!thirdPartyCondition;
+  const { thirdPartyCondition, thirdPartyComponent, riskHeading, riskComponent } =
+    process;
+  const hasthirdPartyComponent = thirdPartyCondition && thirdPartyComponent;
+
+  const renderComponent = (component) => {
+    if (!component) return null;
+    const Component = component;
+    return <Component />;
+  };
 
   return (
     <Formik<FormData>
       initialValues={{
-        condition: !hasThirdPartyContent,
+        condition: !hasthirdPartyComponent,
       }}
       validateOnChange
       validateOnMount
@@ -44,17 +51,17 @@ export const StartProcess = ({ processName, process, backLink }: StartProcessPro
     >
       {(properties) => (
         <Form>
-          {hasThirdPartyContent && (
+          {hasthirdPartyComponent && (
             <>
               <h3>{components.startProcess.thirdPartyHeading}</h3>
-              {ThirdPartyContent && <ThirdPartyContent />}
+              {renderComponent(thirdPartyComponent)}
               <Checkbox onChange={properties.handleChange} id="condition">
                 {thirdPartyCondition}
               </Checkbox>
             </>
           )}
           {riskHeading && <h3>{riskHeading}</h3>}
-          {RiskContent && <RiskContent />}
+          {renderComponent(riskComponent)}
           <div className="start-process__actions">
             <Button
               disabled={!properties.isValid}
