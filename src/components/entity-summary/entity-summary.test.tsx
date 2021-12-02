@@ -103,3 +103,13 @@ test("it renders an error if property details can't be fetched", async () => {
     screen.findByText(locale.errors.unableToFetchRecordDescription),
   ).resolves.toBeInTheDocument();
 });
+
+test("it does not throw if incorrect type is passed", async () => {
+  expect(() => {
+    // @ts-ignore
+    render(<EntitySummary id={mockAssetV1.id} type="other" />, {
+      url: `/processes/soletojoint/start/property/${mockAssetV1.id}`,
+      path: "/processes/:processName/start/:targetType/:targetId",
+    });
+  }).not.toThrow();
+});

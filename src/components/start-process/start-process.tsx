@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link as RouterLink, useHistory } from "react-router-dom";
 
 import { Form, Formik } from "formik";
@@ -7,7 +8,13 @@ import { locale } from "../../services";
 import { IStartProcess } from "../../types";
 
 import { addProcess } from "@mtfh/common/lib/api/process/v1";
-import { Button, Checkbox, InlineField, Link } from "@mtfh/common/lib/components";
+import {
+  Button,
+  Checkbox,
+  InlineField,
+  Link,
+  StatusErrorSummary,
+} from "@mtfh/common/lib/components";
 
 import "./styles.scss";
 
@@ -33,6 +40,7 @@ export const StartProcess = ({
   targetId,
 }: StartProcessProps) => {
   const history = useHistory();
+  const [globalError, setGlobalError] = useState<number>();
   const { thirdPartyCondition, thirdPartyComponent, riskHeading, riskComponent } =
     process;
   const hasthirdPartyComponent = thirdPartyCondition && thirdPartyComponent;
@@ -44,50 +52,58 @@ export const StartProcess = ({
   };
 
   return (
-    <Formik<FormData>
-      initialValues={{
-        condition: !hasthirdPartyComponent,
-      }}
-      validateOnChange
-      validateOnMount
-      validateOnBlur={false}
-      validationSchema={schema}
-      onSubmit={async () => {
-        const response = await addProcess({ targetID: targetId }, "soletojoint");
-        console.log("response: ", response);
-        history.push(`/processes/${processName}/${response.id}`);
-      }}
-    >
-      {(properties) => (
-        <Form>
-          {hasthirdPartyComponent && (
-            <>
-              <h3>{components.startProcess.thirdPartyHeading}</h3>
-              {renderComponent(thirdPartyComponent)}
-              <InlineField name="condition" type="checkbox">
-                <Checkbox id="condition">{thirdPartyCondition}</Checkbox>
-              </InlineField>
-            </>
-          )}
-          {riskHeading && <h3>{riskHeading}</h3>}
-          {renderComponent(riskComponent)}
-          <div className="start-process__actions">
-            <Button
-              disabled={!properties.isValid}
-              isLoading={properties.isSubmitting}
-              loadingText={locale.loadingText}
-              type="submit"
-              className="start-process__start-button"
-              variant="chevron"
-            >
-              {components.startProcess.buttonLabel}
-            </Button>
-            <Link className="start-process__cancel-link" as={RouterLink} to={backLink}>
-              {locale.cancel}
-            </Link>
-          </div>
-        </Form>
+    <>
+      {globalError && (
+        <StatusErrorSummary id="start-process-global-error" code={globalError} />
       )}
-    </Formik>
+      <Formik<FormData>
+        initialValues={{
+          condition: !hasthirdPartyComponent,
+        }}
+        validateOnChange
+        validateOnMount
+        validateOnBlur={false}
+        validationSchema={schema}
+        onSubmit={async () => {
+          try {
+            const response = await addProcess({ targetID: targetId }, "soletojoint");
+            history.push(`/processes/${processName}/${response.id}`);
+          } catch (e: any) {
+            setGlobalError(e.response?.status || 500);
+          }
+        }}
+      >
+        {(properties) => (
+          <Form>
+            {hasthirdPartyComponent && (
+              <>
+                <h3>{components.startProcess.thirdPartyHeading}</h3>
+                {renderComponent(thirdPartyComponent)}
+                <InlineField name="condition" type="checkbox">
+                  <Checkbox id="condition">{thirdPartyCondition}</Checkbox>
+                </InlineField>
+              </>
+            )}
+            {riskHeading && <h3>{riskHeading}</h3>}
+            {renderComponent(riskComponent)}
+            <div className="start-process__actions">
+              <Button
+                disabled={!properties.isValid}
+                isLoading={properties.isSubmitting}
+                loadingText={locale.loadingText}
+                type="submit"
+                className="start-process__start-button"
+                variant="chevron"
+              >
+                {components.startProcess.buttonLabel}
+              </Button>
+              <Link className="start-process__cancel-link" as={RouterLink} to={backLink}>
+                {locale.cancel}
+              </Link>
+            </div>
+          </Form>
+        )}
+      </Formik>
+    </>
   );
 };
