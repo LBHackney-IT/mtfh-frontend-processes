@@ -4,10 +4,10 @@ import { screen, waitFor } from "@testing-library/react";
 import { locale } from "../../services";
 import { StartProcessView } from "./start-process-view";
 
-test("it renders sole-to-joint start process view", async () => {
+test("it renders soletojoint start process view", async () => {
   const { container } = render(<StartProcessView />, {
-    url: "/processes/sole-to-joint/start/tenure/8f6ff46b-6a92-0311-1ef6-61508321e65f",
-    path: "/processes/:processName/start/:entityType/:entityId",
+    url: "/processes/soletojoint/start/tenure/8f6ff46b-6a92-0311-1ef6-61508321e65f",
+    path: "/processes/:processName/start/:targetType/:targetId",
   });
 
   await expect(
@@ -22,7 +22,7 @@ test("it renders sole-to-joint start process view", async () => {
 test("it renders an error if an invalid process name is passed", async () => {
   render(<StartProcessView />, {
     url: "/processes/invalid-process-name/start/tenure/8f6ff46b-6a92-0311-1ef6-61508321e65f",
-    path: "/processes/:processName/start/:entityType/:entityId",
+    path: "/processes/:processName/start/:targetType/:targetId",
   });
 
   await expect(

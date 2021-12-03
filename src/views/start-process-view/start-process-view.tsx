@@ -2,25 +2,25 @@ import { Link as RouterLink, useParams } from "react-router-dom";
 
 import { EntitySummary, StartProcess } from "../../components";
 import { locale, processes } from "../../services";
-import { EntityType, IProcess } from "../../types";
+import { IProcess, TargetType } from "../../types";
 
 import { ErrorSummary, Layout, Link } from "@mtfh/common/lib/components";
 
 interface ParamProps {
-  entityId: string;
-  entityType: EntityType;
+  targetId: string;
+  targetType: TargetType;
   processName: string;
 }
 
 export const StartProcessView = () => {
-  const { entityId, entityType, processName } = useParams<ParamProps>();
+  const { targetId, targetType, processName } = useParams<ParamProps>();
 
   const SideBar = () => {
     return null;
   };
 
   const process = Object.values(processes).find(
-    (process) => process.urlPath === processName,
+    (process) => process.processName === processName,
   );
 
   if (!process) {
@@ -35,7 +35,7 @@ export const StartProcessView = () => {
 
   const { startProcess, title }: IProcess = process;
 
-  const backLink = `/processes/${entityType}/${entityId}`;
+  const backLink = `/processes/${targetType}/${targetId}`;
 
   return (
     <Layout
@@ -52,8 +52,9 @@ export const StartProcessView = () => {
       side={<SideBar />}
     >
       <>
-        <EntitySummary type={entityType} id={entityId} />
+        <EntitySummary type={targetType} id={targetId} />
         <StartProcess
+          targetId={targetId}
           processName={processName}
           process={startProcess}
           backLink={backLink}

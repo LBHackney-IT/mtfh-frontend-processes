@@ -9,7 +9,7 @@ import { $configuration } from "@mtfh/common/lib/configuration";
 
 test("it renders legacy process list", async () => {
   const { container } = render(
-    <ProcessMenu id={mockActiveTenureV1.id} entityType="tenure" />,
+    <ProcessMenu id={mockActiveTenureV1.id} targetType="tenure" />,
   );
   expect(container).toMatchSnapshot();
 });
@@ -26,21 +26,21 @@ describe("feature toggle on", () => {
   });
 
   test("it renders expanded process list and redirects to process on click", async () => {
-    render(<ProcessMenu id={mockActiveTenureV1.id} entityType="tenure" />);
+    render(<ProcessMenu id={mockActiveTenureV1.id} targetType="tenure" />);
     const input = screen.getByText(menu[0].label);
     userEvent.click(input);
 
-    const processLink = await screen.findByText(processes.soleToJoint.title);
+    const processLink = await screen.findByText(processes.soletojoint.title);
 
     expect(processLink).toBeInTheDocument();
 
     processLink.click();
 
-    expect(window.location.pathname).toContain("/processes/sole-to-joint");
+    expect(window.location.pathname).toContain("/processes/soletojoint");
   });
 
   test("it opens an external link in a new tab", async () => {
-    render(<ProcessMenu id={mockActiveTenureV1.id} entityType="tenure" />);
+    render(<ProcessMenu id={mockActiveTenureV1.id} targetType="tenure" />);
 
     const processLink = screen.getByText(menu[2].label);
 

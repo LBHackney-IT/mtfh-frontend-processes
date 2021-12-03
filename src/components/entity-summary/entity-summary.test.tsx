@@ -15,8 +15,8 @@ import { EntitySummary } from "./entity-summary";
 
 test("it renders tenure summary details", async () => {
   render(<EntitySummary id={mockActiveTenureV1.id} type="tenure" />, {
-    url: `/processes/sole-to-joint/start/tenure/${mockActiveTenureV1.id}`,
-    path: "/processes/:processName/start/:entityType/:entityId",
+    url: `/processes/soletojoint/start/tenure/${mockActiveTenureV1.id}`,
+    path: "/processes/:processName/start/:targetType/:targetId",
   });
 
   await expect(
@@ -35,8 +35,8 @@ test("it renders tenure summary details", async () => {
 test("it renders an error if tenure details can't be fetched", async () => {
   server.use(getTenureV1("error", 500));
   render(<EntitySummary id={mockActiveTenureV1.id} type="tenure" />, {
-    url: `/processes/sole-to-joint/start/tenure/${mockActiveTenureV1.id}`,
-    path: "/processes/:processName/start/:entityType/:entityId",
+    url: `/processes/soletojoint/start/tenure/${mockActiveTenureV1.id}`,
+    path: "/processes/:processName/start/:targetType/:targetId",
   });
 
   await expect(
@@ -49,8 +49,8 @@ test("it renders an error if tenure details can't be fetched", async () => {
 
 test("it renders person summary details", async () => {
   render(<EntitySummary id={mockPersonV1.id} type="person" />, {
-    url: `/processes/sole-to-joint/start/person/${mockPersonV1.id}`,
-    path: "/processes/:processName/start/:entityType/:entityId",
+    url: `/processes/soletojoint/start/person/${mockPersonV1.id}`,
+    path: "/processes/:processName/start/:targetType/:targetId",
   });
 
   await expect(
@@ -65,8 +65,8 @@ test("it renders person summary details", async () => {
 test("it renders an error if person details can't be fetched", async () => {
   server.use(getPersonV1("error", 500));
   render(<EntitySummary id={mockPersonV1.id} type="person" />, {
-    url: `/processes/sole-to-joint/start/person/${mockPersonV1.id}`,
-    path: "/processes/:processName/start/:entityType/:entityId",
+    url: `/processes/soletojoint/start/person/${mockPersonV1.id}`,
+    path: "/processes/:processName/start/:targetType/:targetId",
   });
 
   await expect(
@@ -79,8 +79,8 @@ test("it renders an error if person details can't be fetched", async () => {
 
 test("it renders property summary details", async () => {
   render(<EntitySummary id={mockAssetV1.id} type="property" />, {
-    url: `/processes/sole-to-joint/start/property/${mockAssetV1.id}`,
-    path: "/processes/:processName/start/:entityType/:entityId",
+    url: `/processes/soletojoint/start/property/${mockAssetV1.id}`,
+    path: "/processes/:processName/start/:targetType/:targetId",
   });
   await expect(
     screen.findByText(locale.components.entitySummary.address(mockAssetV1.assetAddress), {
@@ -92,8 +92,8 @@ test("it renders property summary details", async () => {
 test("it renders an error if property details can't be fetched", async () => {
   server.use(getAssetV1("error", 500));
   render(<EntitySummary id={mockAssetV1.id} type="property" />, {
-    url: `/processes/sole-to-joint/start/property/${mockAssetV1.id}`,
-    path: "/processes/:processName/start/:entityType/:entityId",
+    url: `/processes/soletojoint/start/property/${mockAssetV1.id}`,
+    path: "/processes/:processName/start/:targetType/:targetId",
   });
 
   await expect(
@@ -102,4 +102,14 @@ test("it renders an error if property details can't be fetched", async () => {
   await expect(
     screen.findByText(locale.errors.unableToFetchRecordDescription),
   ).resolves.toBeInTheDocument();
+});
+
+test("it does not throw if incorrect type is passed", async () => {
+  expect(() => {
+    // @ts-ignore
+    render(<EntitySummary id={mockAssetV1.id} type="other" />, {
+      url: `/processes/soletojoint/start/property/${mockAssetV1.id}`,
+      path: "/processes/:processName/start/:targetType/:targetId",
+    });
+  }).not.toThrow();
 });

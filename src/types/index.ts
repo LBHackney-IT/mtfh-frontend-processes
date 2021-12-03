@@ -6,10 +6,9 @@ export interface IStartProcess {
 }
 
 export interface IProcess {
-  id: string;
-  urlPath: string;
+  processName: string;
   title: string;
   startProcess: IStartProcess;
 }
 
-export type EntityType = "tenure" | "property" | "person";
+export type TargetType = "tenure" | "property" | "person";

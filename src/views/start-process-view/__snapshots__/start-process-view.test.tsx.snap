@@ -1,10 +1,10 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`it renders sole-to-joint start process view 1`] = `
+exports[`it renders soletojoint start process view 1`] = `
 <div>
   <div
     class="mtfh-layout mtfh-layout--right"
-    data-testid="sole-to-joint-start"
+    data-testid="soletojoint-start"
   >
     <div
       id="content"

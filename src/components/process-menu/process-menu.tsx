@@ -1,7 +1,7 @@
 import { Link as RouterLink } from "react-router-dom";
 
 import { menu } from "../../services";
-import { EntityType } from "../../types";
+import { TargetType } from "../../types";
 
 import { Details, Link } from "@mtfh/common/lib/components";
 import { useFeatureToggle } from "@mtfh/common/lib/hooks";
@@ -20,7 +20,7 @@ const LegacyMenu = ({ items }) => {
   );
 };
 
-const Menu = ({ items, id, entityType }) => {
+const Menu = ({ items, id, targetType }) => {
   return (
     <ul className="mtfh-processes-menu__list">
       {items.map((item, index) => (
@@ -33,7 +33,7 @@ const Menu = ({ items, id, entityType }) => {
                     <Link
                       variant="link"
                       as={RouterLink}
-                      to={`${process.link}/${entityType}/${id}`}
+                      to={`${process.link}/${targetType}/${id}`}
                     >
                       {process.label}
                     </Link>
@@ -54,14 +54,14 @@ const Menu = ({ items, id, entityType }) => {
 
 interface ProcessMenuProps {
   id: string;
-  entityType: EntityType;
+  targetType: TargetType;
 }
 
-export const ProcessMenu = ({ id, entityType }: ProcessMenuProps) => {
+export const ProcessMenu = ({ id, targetType }: ProcessMenuProps) => {
   const hasEnhancedProcessMenu = useFeatureToggle("MMH.EnhancedProcessMenu");
 
   return hasEnhancedProcessMenu ? (
-    <Menu items={menu} id={id} entityType={entityType} />
+    <Menu items={menu} id={id} targetType={targetType} />
   ) : (
     <LegacyMenu items={menu} />
   );

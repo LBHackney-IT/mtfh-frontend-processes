@@ -10,7 +10,7 @@ const getProcessLink = (processName: string) => {
   const process = processes[processName];
   return {
     label: process.title,
-    link: `/processes/${process.urlPath}/start`,
+    link: `/processes/${process.processName}/start`,
   };
 };
 
@@ -18,7 +18,7 @@ const menu: MenuProps[] = [
   {
     label: "Changes to a tenancy",
     link: "https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform",
-    processes: [getProcessLink(processes.soleToJoint.id)],
+    processes: [getProcessLink(processes.soletojoint.processName)],
   },
   {
     label: "Record a tenancy / audit homecheck",
