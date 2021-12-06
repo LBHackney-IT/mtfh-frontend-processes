@@ -6,10 +6,16 @@ const locale = {
   backButton: "Back",
   next: "Next",
   cancel: "Cancel",
-  selectProcessDescription: () =>
-    reactHtmlParser(
-      "<p>Start a process by selecting a process category below. <br /> Where a process is not yet supported in <strong>Manage My Home</strong> these links will open the appropriate interim Google form.</p>",
-    ),
+  selectTenants: {
+    noHouseholdMembersOver18:
+      "There are no household members over the age of 18 associated to this.",
+  },
+  processesMenu: {
+    selectProcessDescription: () =>
+      reactHtmlParser(
+        "<p>Start a process by selecting a process category below. <br /> Where a process is not yet supported in <strong>Manage My Home</strong> these links will open the appropriate interim Google form.</p>",
+      ),
+  },
   errors: {
     unableToFetchRecord: "There was a problem retrieving the record",
     unableToFetchRecordDescription:

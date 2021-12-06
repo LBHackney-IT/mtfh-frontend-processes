@@ -25,6 +25,7 @@ import {
   StatusErrorSummary,
   Text,
 } from "@mtfh/common/lib/components";
+import { isUnderAge } from "@mtfh/common/lib/utils";
 
 interface SelectTenantsViewProps {
   processConfig: IProcess;
@@ -59,6 +60,10 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
       </Center>
     );
   }
+
+  const filteredHouseholdmembers = tenure.householdMembers.filter(
+    (member) => !isUnderAge(member.dateOfBirth, 18),
+  );
 
   const SideBar = () => null;
 
@@ -95,28 +100,33 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
       >
         {(properties) => (
           <Form>
-            <FormGroup
-              id="select-tenant"
-              name="tenant"
-              label={stateConfig.selectTenantLabel}
-              required
-              hint={stateConfig.selectTenantHint}
-            >
-              <RadioGroup>
-                {tenure.householdMembers.map((householdMember, index) => (
-                  <InlineField key={index} name="tenant" type="radio">
-                    <Radio
-                      id={`select-tenant-${householdMember.id}`}
-                      value={householdMember.id}
-                    >
-                      {householdMember.fullName}
-                    </Radio>
-                  </InlineField>
-                ))}
-              </RadioGroup>
-            </FormGroup>
+            {filteredHouseholdmembers.length === 0 && (
+              <Text>{locale.selectTenants.noHouseholdMembersOver18}</Text>
+            )}
+            {filteredHouseholdmembers.length > 0 && (
+              <FormGroup
+                id="select-tenant"
+                name="tenant"
+                label={stateConfig.selectTenantLabel}
+                required
+                hint={stateConfig.selectTenantHint}
+              >
+                <RadioGroup>
+                  {filteredHouseholdmembers.map((householdMember, index) => (
+                    <InlineField key={index} name="tenant" type="radio">
+                      <Radio
+                        id={`select-tenant-${householdMember.id}`}
+                        value={householdMember.id}
+                      >
+                        {householdMember.fullName}
+                      </Radio>
+                    </InlineField>
+                  ))}
+                </RadioGroup>
+              </FormGroup>
+            )}
             <Text>
-              {stateConfig.addToTenureText}
+              {stateConfig.addToTenureText}{" "}
               <Link
                 as={RouterLink}
                 to={`/tenure/${process.targetId}/edit/person`}

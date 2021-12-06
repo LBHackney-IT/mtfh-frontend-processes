@@ -8,7 +8,7 @@ import { Heading, Layout, Link } from "@mtfh/common/lib/components";
 
 import "./styles.scss";
 
-const { selectProcessDescription, title, backButton } = locale;
+const { processesMenu, title, backButton } = locale;
 
 export const ProcessesMenuView = () => {
   const { id, targetType } = useParams<{ id: string; targetType: TargetType }>();
@@ -19,7 +19,9 @@ export const ProcessesMenuView = () => {
         {backButton}
       </Link>
       <Heading as="h1">{title}</Heading>
-      <div className="mtfh-processes-menu__description">{selectProcessDescription()}</div>
+      <div className="mtfh-processes-menu__description">
+        {processesMenu.selectProcessDescription()}
+      </div>
       <ProcessMenu id={id} targetType={targetType} />
     </Layout>
   );

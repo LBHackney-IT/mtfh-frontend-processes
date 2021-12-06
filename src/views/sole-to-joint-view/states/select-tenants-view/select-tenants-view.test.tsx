@@ -16,6 +16,14 @@ const mockProcessSelectTenants = {
   currentState: { ...mockProcessV1.currentState, stateName: "SelectTenants" },
 };
 
+const tenureWithTenantsOver18 = {
+  ...mockActiveTenureV1,
+  householdMembers: mockActiveTenureV1.householdMembers.map((member) => ({
+    ...member,
+    dateOfBirth: "2000-06-20T07:50:46.026Z",
+  })),
+};
+
 describe("select-tenants-view", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -61,6 +69,7 @@ describe("select-tenants-view", () => {
   });
 
   test("it enables form once radio is selected", async () => {
+    server.use(getTenureV1(tenureWithTenantsOver18));
     render(
       <SelectTenantsView
         processConfig={processes.soletojoint}
@@ -85,8 +94,26 @@ describe("select-tenants-view", () => {
     });
   });
 
+  test("it displays a message if there are no household members over 18", async () => {
+    render(
+      <SelectTenantsView
+        processConfig={processes.soletojoint}
+        process={mockProcessSelectTenants}
+      />,
+      {
+        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+        path: "/processes/soletojoint/:processId",
+      },
+    );
+
+    await expect(
+      screen.findByText(locale.selectTenants.noHouseholdMembersOver18),
+    ).resolves.toBeInTheDocument();
+  });
+
   test("it displays an error if there's an issue with patching", async () => {
     server.use(patchProcessV1("error", 500));
+    server.use(getTenureV1(tenureWithTenantsOver18));
     render(
       <SelectTenantsView
         processConfig={processes.soletojoint}
