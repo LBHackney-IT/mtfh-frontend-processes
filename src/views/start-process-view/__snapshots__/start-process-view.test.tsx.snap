@@ -30,13 +30,17 @@ exports[`it renders soletojoint start process view 1`] = `
         class="mtfh-layout__main"
       >
         <h2
-          class="lbh-heading-h2 entity-summary__tenure"
+          class="lbh-heading-h2 entity-summary__tenure-heading"
         >
-          Tenure payment ref
-           
-          mt0xzvjp6g
-          <br />
-          72251 Champlin Trafficway, 99647
+          <div>
+            Tenure payment ref
+             
+            mt0xzvjp6g
+             
+          </div>
+          <div>
+            72251 Champlin Trafficway, 99647
+          </div>
         </h2>
         <form
           action="#"

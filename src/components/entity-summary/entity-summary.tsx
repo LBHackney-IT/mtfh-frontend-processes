@@ -3,7 +3,7 @@ import { locale } from "../../services";
 import { useAsset } from "@mtfh/common/lib/api/asset/v1";
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
-import { Center, ErrorSummary, Spinner } from "@mtfh/common/lib/components";
+import { Center, ErrorSummary, Heading, Spinner } from "@mtfh/common/lib/components";
 
 import "./styles.scss";
 
@@ -31,11 +31,12 @@ const TenureSummary = ({ id }: { id: string }) => {
   }
 
   return (
-    <h2 className="lbh-heading-h2 entity-summary__tenure">
-      {components.entitySummary.tenurePaymentRef} {tenure?.paymentReference}
-      <br />
-      {tenure?.tenuredAsset?.fullAddress}
-    </h2>
+    <Heading className="entity-summary__tenure-heading" variant="h2">
+      <div>
+        {components.entitySummary.tenurePaymentRef} {tenure?.paymentReference}{" "}
+      </div>
+      <div>{tenure?.tenuredAsset?.fullAddress}</div>
+    </Heading>
   );
 };
 

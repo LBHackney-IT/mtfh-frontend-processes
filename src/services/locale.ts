@@ -4,6 +4,7 @@ import { AssetAddress } from "@mtfh/common/lib/api/asset/v1";
 
 const locale = {
   backButton: "Back",
+  next: "Next",
   cancel: "Cancel",
   selectProcessDescription: () =>
     reactHtmlParser(

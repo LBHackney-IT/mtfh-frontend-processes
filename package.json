@@ -75,7 +75,7 @@
     "webpack-merge": "5.7.3"
   },
   "dependencies": {
-    "@hackney/mtfh-test-utils": "^1.8.7",
+    "@hackney/mtfh-test-utils": "^1.8.8",
     "@mtfh/common": "https://github.com/LBHackney-IT/mtfh-frontend-common.git",
     "formik": "^2.2.9",
     "lbh-frontend": "^3.6.1",

@@ -1,3 +1,5 @@
+export type TargetType = "tenure" | "property" | "person";
+
 export interface IStartProcess {
   thirdPartyCondition?: string;
   thirdPartyComponent?: React.FC;
@@ -8,7 +10,7 @@ export interface IStartProcess {
 export interface IProcess {
   processName: string;
   title: string;
+  targetType: TargetType;
   startProcess: IStartProcess;
+  states: { [stateName: string]: any };
 }
-
-export type TargetType = "tenure" | "property" | "person";
