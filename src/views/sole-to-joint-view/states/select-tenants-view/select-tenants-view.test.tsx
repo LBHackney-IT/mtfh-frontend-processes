@@ -107,7 +107,7 @@ describe("select-tenants-view", () => {
     );
 
     await expect(
-      screen.findByText(locale.selectTenants.noHouseholdMembersOver18),
+      screen.findByText(locale.views.selectTenants.noHouseholdMembersOver18),
     ).resolves.toBeInTheDocument();
   });
 

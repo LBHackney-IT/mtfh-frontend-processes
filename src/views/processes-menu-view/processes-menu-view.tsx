@@ -8,7 +8,8 @@ import { Heading, Layout, Link } from "@mtfh/common/lib/components";
 
 import "./styles.scss";
 
-const { processesMenu, title, backButton } = locale;
+const { views, title, backButton } = locale;
+const { processesMenu } = views;
 
 export const ProcessesMenuView = () => {
   const { id, targetType } = useParams<{ id: string; targetType: TargetType }>();
