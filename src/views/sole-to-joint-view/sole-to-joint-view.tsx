@@ -4,7 +4,47 @@ import { locale, processes } from "../../services";
 import { CheckEligibilityView, SelectTenantsView } from "./states";
 
 import { useProcess } from "@mtfh/common/lib/api/process/v1";
-import { Center, ErrorSummary, Spinner } from "@mtfh/common/lib/components";
+import {
+  Center,
+  ErrorSummary,
+  Layout,
+  Spinner,
+  Step,
+  Stepper,
+} from "@mtfh/common/lib/components";
+
+const { views } = locale;
+const { soleToJoint } = views;
+
+const steps = [
+  <Step key="step-select-tenant">{soleToJoint.steps.selectTenant}</Step>,
+  <Step key="step-personal-details">{soleToJoint.steps.checkEligibility}</Step>,
+  <Step key="step-supporting-documents">{soleToJoint.steps.supportingDocuments}</Step>,
+  <Step key="step-breach-of-tenure-check">{soleToJoint.steps.breachOfTenureCheck}</Step>,
+  <Step key="step-estate-safety-team-checks">
+    {soleToJoint.steps.estateSafetyTeamChecks}
+  </Step>,
+  <Step key="step-housing-officer-review">{soleToJoint.steps.housingOfficerReview}</Step>,
+];
+
+const getActiveStep = (stateName: string, states) => {
+  if (stateName === states.selectTenants.stateName) {
+    return 0;
+  }
+  if (stateName === states.checkEligibility.stateName) {
+    return 1;
+  }
+  return 0;
+};
+
+const SideBar = ({ stateName, states }) => (
+  <Stepper
+    data-testid="mtfh-stepper-sole-to-joint"
+    activeStep={getActiveStep(stateName, states)}
+  >
+    {steps}
+  </Stepper>
+);
 
 export const SoleToJointView = () => {
   const { processId } = useParams<{ processId: string }>();
@@ -40,13 +80,30 @@ export const SoleToJointView = () => {
   const { states } = processConfig;
   const { selectTenants, checkEligibility } = states;
 
-  if (stateName === selectTenants.stateName) {
-    return <SelectTenantsView processConfig={processConfig} process={process} />;
+  const components = {
+    [selectTenants.stateName]: SelectTenantsView,
+    [checkEligibility.stateName]: CheckEligibilityView,
+  };
+
+  const Component = components[stateName];
+
+  if (!Component) {
+    return (
+      <ErrorSummary
+        id="sole-to-joint-view"
+        title={locale.errors.unableToFindState}
+        description={locale.errors.unableToFindStateDescription}
+      />
+    );
   }
 
-  if (stateName === checkEligibility.stateName) {
-    return <CheckEligibilityView processConfig={processConfig} process={process} />;
-  }
-
-  return null;
+  return (
+    <Layout
+      data-testid="soletojoint"
+      sidePosition="right"
+      side={<SideBar stateName={stateName} states={states} />}
+    >
+      <Component processConfig={processConfig} process={process} />
+    </Layout>
+  );
 };

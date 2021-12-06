@@ -17,7 +17,6 @@ import {
   FormGroup,
   Heading,
   InlineField,
-  Layout,
   Link,
   Radio,
   RadioGroup,
@@ -26,6 +25,9 @@ import {
   Text,
 } from "@mtfh/common/lib/components";
 import { isUnderAge } from "@mtfh/common/lib/utils";
+
+const { views } = locale;
+const { selectTenants } = views;
 
 interface SelectTenantsViewProps {
   processConfig: IProcess;
@@ -65,14 +67,8 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
     (member) => !isUnderAge(member.dateOfBirth, 18),
   );
 
-  const SideBar = () => null;
-
   return (
-    <Layout
-      data-testid="soletojoint-SelectTenants"
-      sidePosition="right"
-      side={<SideBar />}
-    >
+    <div data-testid="soletojoint-SelectTenants">
       <Heading variant="h1">{processConfig.title}</Heading>
       <EntitySummary id={process.targetId} type={processConfig.targetType} />
       {globalError && (
@@ -101,7 +97,7 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
         {(properties) => (
           <Form>
             {filteredHouseholdmembers.length === 0 && (
-              <Text>{locale.selectTenants.noHouseholdMembersOver18}</Text>
+              <Text>{selectTenants.noHouseholdMembersOver18}</Text>
             )}
             {filteredHouseholdmembers.length > 0 && (
               <FormGroup
@@ -149,6 +145,6 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
           </Form>
         )}
       </Formik>
-    </Layout>
+    </div>
   );
 };
