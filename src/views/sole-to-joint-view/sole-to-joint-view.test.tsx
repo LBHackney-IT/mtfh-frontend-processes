@@ -1,28 +1,14 @@
-import { getProcessV1, mockProcessV1, render, server } from "@hackney/mtfh-test-utils";
+import { getProcessV1, render, server } from "@hackney/mtfh-test-utils";
 import { screen, within } from "@testing-library/react";
 
 import { locale } from "../../services";
+import {
+  mockProcessAutomatedChecksFailed,
+  mockProcessAutomatedChecksPassed,
+  mockProcessInvalidState,
+  mockProcessSelectTenants,
+} from "../../test-utils";
 import { SoleToJointView } from "./sole-to-joint-view";
-
-const mockProcessSelectTenants = {
-  ...mockProcessV1,
-  currentState: { ...mockProcessV1.currentState, stateName: "SelectTenants" },
-};
-
-const mockProcessAutomatedChecksFailed = {
-  ...mockProcessV1,
-  currentState: { ...mockProcessV1.currentState, stateName: "AutomatedChecksFailed" },
-};
-
-const mockProcessAutomatedChecksPassed = {
-  ...mockProcessV1,
-  currentState: { ...mockProcessV1.currentState, stateName: "AutomatedChecksPassed" },
-};
-
-const mockProcessInvalidState = {
-  ...mockProcessV1,
-  currentState: { ...mockProcessV1.currentState, stateName: "InvalidState" },
-};
 
 test("it renders soletojoint view for SelectTenants", async () => {
   server.use(getProcessV1(mockProcessSelectTenants));

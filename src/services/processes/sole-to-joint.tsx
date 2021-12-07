@@ -1,4 +1,5 @@
 import { IProcess, IStartProcess } from "../../types";
+import locale from "../locale";
 
 import { Heading, Link, List, Text } from "@mtfh/common/lib/components";
 
@@ -52,34 +53,20 @@ const startProcess: IStartProcess = {
   },
 };
 
-const selectTenants = {
-  stateName: "SelectTenants",
-  trigger: "CheckEligibility",
-  selectTenantHint:
-    "This person will be asked for proof of relationship e.g. marriage or civil partnership certificate.",
-  selectTenantLabel: "Who do you want to add as a joint tenant?",
-  addToTenureText: "If the person you want to add is not listed you must first",
-  addToTenureLink: "add them to the tenure",
-};
-
-const automatedChecksFailed = {
-  stateName: "AutomatedChecksFailed",
-  trigger: "ExitApplication",
-};
-
-const automatedChecksPassed = {
-  stateName: "AutomatedChecksPassed",
-  trigger: "CheckManualEligibility",
-};
-
 export const soletojoint: IProcess = {
   processName: "soletojoint",
   targetType: "tenure",
-  title: "Sole tenant requests a joint tenure",
+  title: locale.views.soleToJoint.title,
   startProcess,
   states: {
-    selectTenants,
-    automatedChecksFailed,
-    automatedChecksPassed,
+    selectTenants: { stateName: "SelectTenants", trigger: "CheckEligibility" },
+    automatedChecksFailed: {
+      stateName: "AutomatedChecksFailed",
+      trigger: "ExitApplication",
+    },
+    automatedChecksPassed: {
+      stateName: "AutomatedChecksPassed",
+      trigger: "CheckManualEligibility",
+    },
   },
 };

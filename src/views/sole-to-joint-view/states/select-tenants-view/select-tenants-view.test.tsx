@@ -1,7 +1,6 @@
 import {
   getTenureV1,
   mockActiveTenureV1,
-  mockProcessV1,
   patchProcessV1,
   render,
   server,
@@ -9,12 +8,8 @@ import {
 import { fireEvent, screen, waitFor } from "@testing-library/react";
 
 import { locale, processes } from "../../../../services";
+import { mockProcessSelectTenants } from "../../../../test-utils";
 import { SelectTenantsView } from "./select-tenants-view";
-
-const mockProcessSelectTenants = {
-  ...mockProcessV1,
-  currentState: { ...mockProcessV1.currentState, stateName: "SelectTenants" },
-};
 
 const tenureWithTenantsOver18 = {
   ...mockActiveTenureV1,
