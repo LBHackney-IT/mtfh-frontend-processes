@@ -31,7 +31,10 @@ const getActiveStep = (stateName: string, states) => {
   if (stateName === states.selectTenants.stateName) {
     return 0;
   }
-  if (stateName === states.checkEligibility.stateName) {
+  if (
+    stateName === states.automatedChecksPassed.stateName ||
+    stateName === states.automatedChecksFailed.stateName
+  ) {
     return 1;
   }
   return 0;
@@ -78,11 +81,12 @@ export const SoleToJointView = () => {
   const { stateName } = currentState;
 
   const { states } = processConfig;
-  const { selectTenants, checkEligibility } = states;
+  const { selectTenants, automatedChecksFailed, automatedChecksPassed } = states;
 
   const components = {
     [selectTenants.stateName]: SelectTenantsView,
-    [checkEligibility.stateName]: CheckEligibilityView,
+    [automatedChecksFailed.stateName]: CheckEligibilityView,
+    [automatedChecksPassed.stateName]: CheckEligibilityView,
   };
 
   const Component = components[stateName];

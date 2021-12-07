@@ -54,6 +54,7 @@ const startProcess: IStartProcess = {
 
 const selectTenants = {
   stateName: "SelectTenants",
+  trigger: "CheckEligibility",
   selectTenantHint:
     "This person will be asked for proof of relationship e.g. marriage or civil partnership certificate.",
   selectTenantLabel: "Who do you want to add as a joint tenant?",
@@ -61,8 +62,14 @@ const selectTenants = {
   addToTenureLink: "add them to the tenure",
 };
 
-const checkEligibility = {
-  stateName: "CheckEligibility",
+const automatedChecksFailed = {
+  stateName: "AutomatedChecksFailed",
+  trigger: "ExitApplication",
+};
+
+const automatedChecksPassed = {
+  stateName: "AutomatedChecksPassed",
+  trigger: "CheckManualEligibility",
 };
 
 export const soletojoint: IProcess = {
@@ -72,6 +79,7 @@ export const soletojoint: IProcess = {
   startProcess,
   states: {
     selectTenants,
-    checkEligibility,
+    automatedChecksFailed,
+    automatedChecksPassed,
   },
 };

@@ -79,14 +79,16 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
         validateOnChange
         validateOnBlur={false}
         validationSchema={schema}
-        onSubmit={async () => {
+        onSubmit={async (data) => {
           try {
             await editProcess({
               id: process.id,
-              processTrigger: processConfig.states.checkEligibility.stateName,
+              processTrigger: stateConfig.trigger,
               processName: process?.processName,
               etag: process.etag || "",
-              formData: {},
+              formData: {
+                tenant: data.tenant,
+              },
               documents: [],
             });
           } catch (e: any) {

@@ -9,9 +9,14 @@ const mockProcessSelectTenants = {
   currentState: { ...mockProcessV1.currentState, stateName: "SelectTenants" },
 };
 
-const mockProcessCheckEligibility = {
+const mockProcessAutomatedChecksFailed = {
   ...mockProcessV1,
-  currentState: { ...mockProcessV1.currentState, stateName: "CheckEligibility" },
+  currentState: { ...mockProcessV1.currentState, stateName: "AutomatedChecksFailed" },
+};
+
+const mockProcessAutomatedChecksPassed = {
+  ...mockProcessV1,
+  currentState: { ...mockProcessV1.currentState, stateName: "AutomatedChecksPassed" },
 };
 
 const mockProcessInvalidState = {
@@ -48,8 +53,24 @@ test("it renders stepper component", async () => {
   expect(steps).toMatchSnapshot();
 });
 
-test("it renders soletojoint view for CheckEligibility", async () => {
-  server.use(getProcessV1(mockProcessCheckEligibility));
+test("it renders soletojoint view for AutomatedChecksFailed", async () => {
+  server.use(getProcessV1(mockProcessAutomatedChecksFailed));
+  render(<SoleToJointView />, {
+    url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+    path: "/processes/soletojoint/:processId",
+  });
+  await expect(
+    screen.findByTestId("soletojoint-CheckEligibility"),
+  ).resolves.toBeInTheDocument();
+
+  const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
+  const steps = within(stepper).getAllByRole("listitem");
+  expect(steps[0].className).not.toContain("active");
+  expect(steps[1].className).toContain("active");
+});
+
+test("it renders soletojoint view for AutomatedChecksPassed", async () => {
+  server.use(getProcessV1(mockProcessAutomatedChecksPassed));
   render(<SoleToJointView />, {
     url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
     path: "/processes/soletojoint/:processId",
