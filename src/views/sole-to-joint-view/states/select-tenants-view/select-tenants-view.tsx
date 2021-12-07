@@ -87,7 +87,7 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
               processName: process?.processName,
               etag: process.etag || "",
               formData: {
-                tenant: data.tenant,
+                incomingTenantId: data.tenant,
               },
               documents: [],
             });
