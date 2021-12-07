@@ -6,8 +6,10 @@ const locale = {
   backButton: "Back",
   next: "Next",
   cancel: "Cancel",
+  cancelProcess: "Cancel process",
   views: {
     soleToJoint: {
+      title: "Sole tenant requests a joint tenure",
       steps: {
         selectTenant: "Select person",
         checkEligibility: "Eligibility Checks",
@@ -18,6 +20,11 @@ const locale = {
       },
     },
     selectTenants: {
+      selectTenantHint:
+        "This person will be asked for proof of relationship e.g. marriage or civil partnership certificate.",
+      selectTenantLabel: "Who do you want to add as a joint tenant?",
+      addToTenureText: "If the person you want to add is not listed you must first",
+      addToTenureLink: "add them to the tenure",
       noHouseholdMembersOver18:
         "There are no household members over the age of 18 associated to this.",
     },
@@ -26,6 +33,12 @@ const locale = {
         reactHtmlParser(
           "<p>Start a process by selecting a process category below. <br /> Where a process is not yet supported in <strong>Manage My Home</strong> these links will open the appropriate interim Google form.</p>",
         ),
+    },
+    checkEligibility: {
+      autoCheckIntro:
+        "Manage My Home has used tenure, person and property information to automatically check eligibility for this application.",
+      passedChecks: "Passed automatic eligibilty checks",
+      failedChecks: "Not eligible for a sole to joint tenure",
     },
   },
   errors: {

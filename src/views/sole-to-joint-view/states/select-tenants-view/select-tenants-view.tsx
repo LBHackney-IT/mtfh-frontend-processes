@@ -105,9 +105,9 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
               <FormGroup
                 id="select-tenant"
                 name="tenant"
-                label={stateConfig.selectTenantLabel}
+                label={selectTenants.selectTenantLabel}
                 required
-                hint={stateConfig.selectTenantHint}
+                hint={selectTenants.selectTenantHint}
               >
                 <RadioGroup>
                   {filteredHouseholdmembers.map((householdMember, index) => (
@@ -124,13 +124,13 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
               </FormGroup>
             )}
             <Text>
-              {stateConfig.addToTenureText}{" "}
+              {selectTenants.addToTenureText}{" "}
               <Link
                 as={RouterLink}
                 to={`/tenure/${process.targetId}/edit/person`}
                 isExternal
               >
-                {stateConfig.addToTenureLink}
+                {selectTenants.addToTenureLink}
               </Link>
               .
             </Text>

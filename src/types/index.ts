@@ -12,5 +12,5 @@ export interface IProcess {
   title: string;
   targetType: TargetType;
   startProcess: IStartProcess;
-  states: { [stateName: string]: any };
+  states: { [stateName: string]: { stateName: string; trigger: string } };
 }
