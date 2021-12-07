@@ -1,4 +1,4 @@
-import { getTenureV1, patchProcessV1, render, server } from "@hackney/mtfh-test-utils";
+import { getTenureV1, render, server } from "@hackney/mtfh-test-utils";
 import { screen } from "@testing-library/react";
 
 import { locale, processes } from "../../../../services";
@@ -74,27 +74,5 @@ test("it renders an error if tenure details can't be fetched", async () => {
   ).resolves.toBeInTheDocument();
   await expect(
     screen.findByText(locale.errors.unableToFetchRecordDescription),
-  ).resolves.toBeInTheDocument();
-});
-
-test("it displays an error if there's an issue with patching", async () => {
-  server.use(patchProcessV1("error", 500));
-  render(
-    <CheckEligibilityView
-      processConfig={processes.soletojoint}
-      process={mockProcessAutomatedChecksFailed}
-    />,
-    {
-      url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-      path: "/processes/soletojoint/:processId",
-    },
-  );
-
-  const cancelButton = await screen.findByText(locale.cancelProcess);
-
-  cancelButton.click();
-
-  await expect(
-    screen.findByText("There was a problem with completing the action"),
   ).resolves.toBeInTheDocument();
 });
