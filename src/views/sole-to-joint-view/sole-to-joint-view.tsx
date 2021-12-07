@@ -21,9 +21,7 @@ const steps = [
   <Step key="step-personal-details">{soleToJoint.steps.checkEligibility}</Step>,
   <Step key="step-supporting-documents">{soleToJoint.steps.supportingDocuments}</Step>,
   <Step key="step-breach-of-tenure-check">{soleToJoint.steps.breachOfTenureCheck}</Step>,
-  <Step key="step-estate-safety-team-checks">
-    {soleToJoint.steps.estateSafetyTeamChecks}
-  </Step>,
+  <Step key="step-tenure-investigation">{soleToJoint.steps.tenureInvestigation}</Step>,
   <Step key="step-housing-officer-review">{soleToJoint.steps.housingOfficerReview}</Step>,
 ];
 

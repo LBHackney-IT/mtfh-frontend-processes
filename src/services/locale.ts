@@ -13,7 +13,7 @@ const locale = {
         checkEligibility: "Eligibility Checks",
         supportingDocuments: "Supporting documents",
         breachOfTenureCheck: "Breach of tenure check",
-        estateSafetyTeamChecks: "Estate Safety team checks",
+        tenureInvestigation: "Tenure Investigation",
         housingOfficerReview: "Housing Officer review",
       },
     },
