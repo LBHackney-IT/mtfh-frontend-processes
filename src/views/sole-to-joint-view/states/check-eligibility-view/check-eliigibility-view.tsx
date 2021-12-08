@@ -48,19 +48,19 @@ export const CheckEligibilityView = ({
   }
 
   const { currentState } = process;
-  const { stateName } = currentState;
+  const { state } = currentState;
 
   return (
     <div data-testid="soletojoint-CheckEligibility">
       <Heading variant="h1">{processConfig.title}</Heading>
       <EntitySummary id={process.targetId} type={processConfig.targetType} />
       <Text>{checkEligibility.autoCheckIntro}</Text>
-      {stateName === automatedChecksPassed.stateName && (
+      {state === automatedChecksPassed.state && (
         <Box variant="success">
           <StatusHeading variant="success" title={checkEligibility.passedChecks} />
         </Box>
       )}
-      {stateName === automatedChecksFailed.stateName && (
+      {state === automatedChecksFailed.state && (
         <>
           <Box variant="warning">
             <StatusHeading variant="warning" title={checkEligibility.failedChecks} />

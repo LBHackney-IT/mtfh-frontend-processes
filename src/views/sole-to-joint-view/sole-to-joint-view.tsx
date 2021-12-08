@@ -25,23 +25,23 @@ const steps = [
   <Step key="step-housing-officer-review">{soleToJoint.steps.housingOfficerReview}</Step>,
 ];
 
-const getActiveStep = (stateName: string, states) => {
-  if (stateName === states.selectTenants.stateName) {
+const getActiveStep = (state: string, states) => {
+  if (state === states.selectTenants.state) {
     return 0;
   }
   if (
-    stateName === states.automatedChecksPassed.stateName ||
-    stateName === states.automatedChecksFailed.stateName
+    state === states.automatedChecksPassed.state ||
+    state === states.automatedChecksFailed.state
   ) {
     return 1;
   }
   return 0;
 };
 
-const SideBar = ({ stateName, states }) => (
+const SideBar = ({ state, states }) => (
   <Stepper
     data-testid="mtfh-stepper-sole-to-joint"
-    activeStep={getActiveStep(stateName, states)}
+    activeStep={getActiveStep(state, states)}
   >
     {steps}
   </Stepper>
@@ -76,18 +76,18 @@ export const SoleToJointView = () => {
   }
 
   const { currentState } = process;
-  const { stateName } = currentState;
+  const { state } = currentState;
 
   const { states } = processConfig;
   const { selectTenants, automatedChecksFailed, automatedChecksPassed } = states;
 
   const components = {
-    [selectTenants.stateName]: SelectTenantsView,
-    [automatedChecksFailed.stateName]: CheckEligibilityView,
-    [automatedChecksPassed.stateName]: CheckEligibilityView,
+    [selectTenants.state]: SelectTenantsView,
+    [automatedChecksFailed.state]: CheckEligibilityView,
+    [automatedChecksPassed.state]: CheckEligibilityView,
   };
 
-  const Component = components[stateName];
+  const Component = components[state];
 
   if (!Component) {
     return (
@@ -103,7 +103,7 @@ export const SoleToJointView = () => {
     <Layout
       data-testid="soletojoint"
       sidePosition="right"
-      side={<SideBar stateName={stateName} states={states} />}
+      side={<SideBar state={state} states={states} />}
     >
       <Component processConfig={processConfig} process={process} />
     </Layout>
