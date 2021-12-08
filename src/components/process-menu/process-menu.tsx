@@ -60,8 +60,25 @@ interface ProcessMenuProps {
 export const ProcessMenu = ({ id, targetType }: ProcessMenuProps) => {
   const hasEnhancedProcessMenu = useFeatureToggle("MMH.EnhancedProcessMenu");
 
+  const filteredMenuByEntityType = menu
+    .map((item) => {
+      return {
+        ...item,
+        ...(item.processes && {
+          processes: item.processes.filter(
+            (process) => process.targetType === targetType,
+          ),
+        }),
+      };
+    })
+    .filter(
+      (item) =>
+        !Array.isArray(item.processes) ||
+        (Array.isArray(item.processes) && item.processes.length),
+    );
+
   return hasEnhancedProcessMenu ? (
-    <Menu items={menu} id={id} targetType={targetType} />
+    <Menu items={filteredMenuByEntityType} id={id} targetType={targetType} />
   ) : (
     <LegacyMenu items={menu} />
   );
