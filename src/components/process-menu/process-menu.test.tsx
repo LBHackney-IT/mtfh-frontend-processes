@@ -54,7 +54,7 @@ describe("feature toggle on", () => {
     expect(screen.queryByText(processes.soletojoint.title)).toBeInTheDocument();
   });
 
-  test("it only shows soletojoint for the specified targetType property", async () => {
+  test("it does not show soletojoint for the specified targetType property", async () => {
     render(<ProcessMenu id={mockActiveTenureV1.id} targetType="property" />);
 
     expect(screen.queryByText(processes.soletojoint.title)).not.toBeInTheDocument();
