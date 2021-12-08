@@ -47,4 +47,16 @@ describe("feature toggle on", () => {
     expect(processLink).toHaveAttribute("href", `${menu[2].link}`);
     expect(processLink).toHaveAttribute("target", "_blank");
   });
+
+  test("it only shows soletojoint for the specified targetType tenure", async () => {
+    render(<ProcessMenu id={mockActiveTenureV1.id} targetType="tenure" />);
+
+    expect(screen.queryByText(processes.soletojoint.title)).toBeInTheDocument();
+  });
+
+  test("it does not show soletojoint for the specified targetType property", async () => {
+    render(<ProcessMenu id={mockActiveTenureV1.id} targetType="property" />);
+
+    expect(screen.queryByText(processes.soletojoint.title)).not.toBeInTheDocument();
+  });
 });

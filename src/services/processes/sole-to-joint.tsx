@@ -59,13 +59,13 @@ export const soletojoint: IProcess = {
   title: locale.views.soleToJoint.title,
   startProcess,
   states: {
-    selectTenants: { stateName: "SelectTenants", trigger: "CheckEligibility" },
+    selectTenants: { state: "SelectTenants", trigger: "CheckEligibility" },
     automatedChecksFailed: {
-      stateName: "AutomatedChecksFailed",
+      state: "AutomatedChecksFailed",
       trigger: "ExitApplication",
     },
     automatedChecksPassed: {
-      stateName: "AutomatedChecksPassed",
+      state: "AutomatedChecksPassed",
       trigger: "CheckManualEligibility",
     },
   },

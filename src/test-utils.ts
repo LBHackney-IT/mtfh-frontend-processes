@@ -20,20 +20,20 @@ beforeEach(() => {
 
 export const mockProcessSelectTenants = {
   ...mockProcessV1,
-  currentState: { ...mockProcessV1.currentState, stateName: "SelectTenants" },
+  currentState: { ...mockProcessV1.currentState, state: "SelectTenants" },
 };
 
 export const mockProcessAutomatedChecksFailed = {
   ...mockProcessV1,
-  currentState: { ...mockProcessV1.currentState, stateName: "AutomatedChecksFailed" },
+  currentState: { ...mockProcessV1.currentState, state: "AutomatedChecksFailed" },
 };
 
 export const mockProcessAutomatedChecksPassed = {
   ...mockProcessV1,
-  currentState: { ...mockProcessV1.currentState, stateName: "AutomatedChecksPassed" },
+  currentState: { ...mockProcessV1.currentState, state: "AutomatedChecksPassed" },
 };
 
 export const mockProcessInvalidState = {
   ...mockProcessV1,
-  currentState: { ...mockProcessV1.currentState, stateName: "InvalidState" },
+  currentState: { ...mockProcessV1.currentState, state: "InvalidState" },
 };

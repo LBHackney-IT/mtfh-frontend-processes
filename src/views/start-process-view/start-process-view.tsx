@@ -41,14 +41,12 @@ export const StartProcessView = () => {
     <Layout
       data-testid={`${processName}-start`}
       sidePosition="right"
-      top={
-        <>
-          <Link as={RouterLink} to={backLink} variant="back-link">
-            {locale.backButton}
-          </Link>
-          <h1 className="lbh-heading-h1">{title}</h1>
-        </>
+      backLink={
+        <Link as={RouterLink} to={backLink} variant="back-link">
+          {locale.backButton}
+        </Link>
       }
+      top={<h1 className="lbh-heading-h1">{title}</h1>}
       side={<SideBar />}
     >
       <>
