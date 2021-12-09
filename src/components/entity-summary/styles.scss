@@ -1,5 +1,5 @@
 .entity-summary {
-  &__tenure {
-    line-height: 4.25rem;
+  &__tenure-heading * + * {
+    margin-top: 20px;
   }
 }

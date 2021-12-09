@@ -6,15 +6,15 @@ exports[`it renders soletojoint start process view 1`] = `
     class="mtfh-layout mtfh-layout--right"
     data-testid="soletojoint-start"
   >
-    <div
-      id="content"
-    />
     <a
       class="govuk-back-link lbh-back-link lbh-link--no-visited-state"
       href="/processes/tenure/8f6ff46b-6a92-0311-1ef6-61508321e65f"
     >
       Back
     </a>
+    <div
+      id="content"
+    />
     <h1
       class="lbh-heading-h1"
     >
@@ -30,13 +30,17 @@ exports[`it renders soletojoint start process view 1`] = `
         class="mtfh-layout__main"
       >
         <h2
-          class="lbh-heading-h2 entity-summary__tenure"
+          class="lbh-heading-h2 entity-summary__tenure-heading"
         >
-          Tenure payment ref
-           
-          mt0xzvjp6g
-          <br />
-          72251 Champlin Trafficway, 99647
+          <div>
+            Tenure payment ref
+             
+            mt0xzvjp6g
+             
+          </div>
+          <div>
+            72251 Champlin Trafficway, 99647
+          </div>
         </h2>
         <form
           action="#"

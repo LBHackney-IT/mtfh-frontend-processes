@@ -2,13 +2,14 @@ import * as processes from "./processes";
 
 interface MenuProps {
   label: string;
-  link?: string;
-  processes?: { label: string; link: string }[];
+  link: string;
+  processes?: { label: string; link: string; targetType: string }[];
 }
 
 const getProcessLink = (processName: string) => {
   const process = processes[processName];
   return {
+    targetType: process.targetType,
     label: process.title,
     link: `/processes/${process.processName}/start`,
   };

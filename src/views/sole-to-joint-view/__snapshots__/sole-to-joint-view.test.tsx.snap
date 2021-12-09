@@ -1,0 +1,240 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders stepper component 1`] = `
+Array [
+  <li
+    class="mtfh-stepper__step mtfh-stepper__step--active"
+  >
+    <div
+      class="mtfh-stepper__header"
+    >
+      <h4
+        class="lbh-heading-h4 mtfh-stepper__title"
+      >
+        <span
+          class="mtfh-stepper__circle mtfh-stepper__circle--number"
+        >
+          <span
+            class="mtfh-stepper__circle-inner"
+          >
+            <span
+              class="mtfh-stepper__circle-background"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Step
+              </span>
+              1
+            </span>
+          </span>
+        </span>
+        <span>
+          <button
+            class="mtfh-stepper__button mtfh-stepper__button--title"
+          >
+            <span>
+              Select person
+            </span>
+          </button>
+        </span>
+      </h4>
+    </div>
+  </li>,
+  <li
+    class="mtfh-stepper__step"
+  >
+    <div
+      class="mtfh-stepper__header"
+    >
+      <h4
+        class="lbh-heading-h4 mtfh-stepper__title"
+      >
+        <span
+          class="mtfh-stepper__circle mtfh-stepper__circle--number"
+        >
+          <span
+            class="mtfh-stepper__circle-inner"
+          >
+            <span
+              class="mtfh-stepper__circle-background"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Step
+              </span>
+              2
+            </span>
+          </span>
+        </span>
+        <span>
+          <button
+            class="mtfh-stepper__button mtfh-stepper__button--title"
+          >
+            <span>
+              Eligibility Checks
+            </span>
+          </button>
+        </span>
+      </h4>
+    </div>
+  </li>,
+  <li
+    class="mtfh-stepper__step"
+  >
+    <div
+      class="mtfh-stepper__header"
+    >
+      <h4
+        class="lbh-heading-h4 mtfh-stepper__title"
+      >
+        <span
+          class="mtfh-stepper__circle mtfh-stepper__circle--number"
+        >
+          <span
+            class="mtfh-stepper__circle-inner"
+          >
+            <span
+              class="mtfh-stepper__circle-background"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Step
+              </span>
+              3
+            </span>
+          </span>
+        </span>
+        <span>
+          <button
+            class="mtfh-stepper__button mtfh-stepper__button--title"
+          >
+            <span>
+              Supporting documents
+            </span>
+          </button>
+        </span>
+      </h4>
+    </div>
+  </li>,
+  <li
+    class="mtfh-stepper__step"
+  >
+    <div
+      class="mtfh-stepper__header"
+    >
+      <h4
+        class="lbh-heading-h4 mtfh-stepper__title"
+      >
+        <span
+          class="mtfh-stepper__circle mtfh-stepper__circle--number"
+        >
+          <span
+            class="mtfh-stepper__circle-inner"
+          >
+            <span
+              class="mtfh-stepper__circle-background"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Step
+              </span>
+              4
+            </span>
+          </span>
+        </span>
+        <span>
+          <button
+            class="mtfh-stepper__button mtfh-stepper__button--title"
+          >
+            <span>
+              Breach of tenure check
+            </span>
+          </button>
+        </span>
+      </h4>
+    </div>
+  </li>,
+  <li
+    class="mtfh-stepper__step"
+  >
+    <div
+      class="mtfh-stepper__header"
+    >
+      <h4
+        class="lbh-heading-h4 mtfh-stepper__title"
+      >
+        <span
+          class="mtfh-stepper__circle mtfh-stepper__circle--number"
+        >
+          <span
+            class="mtfh-stepper__circle-inner"
+          >
+            <span
+              class="mtfh-stepper__circle-background"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Step
+              </span>
+              5
+            </span>
+          </span>
+        </span>
+        <span>
+          <button
+            class="mtfh-stepper__button mtfh-stepper__button--title"
+          >
+            <span>
+              Tenure Investigation
+            </span>
+          </button>
+        </span>
+      </h4>
+    </div>
+  </li>,
+  <li
+    class="mtfh-stepper__step"
+  >
+    <div
+      class="mtfh-stepper__header"
+    >
+      <h4
+        class="lbh-heading-h4 mtfh-stepper__title"
+      >
+        <span
+          class="mtfh-stepper__circle mtfh-stepper__circle--number"
+        >
+          <span
+            class="mtfh-stepper__circle-inner"
+          >
+            <span
+              class="mtfh-stepper__circle-background"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Step
+              </span>
+              6
+            </span>
+          </span>
+        </span>
+        <span>
+          <button
+            class="mtfh-stepper__button mtfh-stepper__button--title"
+          >
+            <span>
+              Housing Officer review
+            </span>
+          </button>
+        </span>
+      </h4>
+    </div>
+  </li>,
+]
+`;

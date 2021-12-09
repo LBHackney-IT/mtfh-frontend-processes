@@ -1,4 +1,5 @@
 import { IProcess, IStartProcess } from "../../types";
+import locale from "../locale";
 
 import { Heading, Link, List, Text } from "@mtfh/common/lib/components";
 
@@ -54,6 +55,18 @@ const startProcess: IStartProcess = {
 
 export const soletojoint: IProcess = {
   processName: "soletojoint",
-  title: "Sole tenant requests a joint tenure",
+  targetType: "tenure",
+  title: locale.views.soleToJoint.title,
   startProcess,
+  states: {
+    selectTenants: { state: "SelectTenants", trigger: "CheckEligibility" },
+    automatedChecksFailed: {
+      state: "AutomatedChecksFailed",
+      trigger: "ExitApplication",
+    },
+    automatedChecksPassed: {
+      state: "AutomatedChecksPassed",
+      trigger: "CheckManualEligibility",
+    },
+  },
 };

@@ -17,7 +17,7 @@ exports[`feature toggle on it renders processes menu view correctly 1`] = `
       >
         <a
           class="govuk-back-link lbh-back-link lbh-link--no-visited-state"
-          href="/undefined/undefined"
+          href="/tenure/1234"
         >
           Back
         </a>
@@ -67,7 +67,7 @@ exports[`feature toggle on it renders processes menu view correctly 1`] = `
                   <li>
                     <a
                       class="govuk-link lbh-link lbh-link--no-visited-state"
-                      href="/processes/soletojoint/start/undefined/undefined"
+                      href="/processes/soletojoint/start/tenure/1234"
                     >
                       Sole tenant requests a joint tenure
                     </a>
@@ -190,7 +190,7 @@ exports[`it renders processes menu view correctly 1`] = `
       >
         <a
           class="govuk-back-link lbh-back-link lbh-link--no-visited-state"
-          href="/undefined/undefined"
+          href="/tenure/1234"
         >
           Back
         </a>
