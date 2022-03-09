@@ -36,10 +36,17 @@ exports[`it renders soletojoint start process view 1`] = `
             Tenure payment ref
              
             mt0xzvjp6g
-             
           </div>
           <div>
             72251 Champlin Trafficway, 99647
+          </div>
+          <div>
+            <a
+              class="govuk-link lbh-link lbh-link--no-visited-state"
+              href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+            >
+              Global Web Consultant Alverta Denesik
+            </a>
           </div>
         </h2>
         <form
