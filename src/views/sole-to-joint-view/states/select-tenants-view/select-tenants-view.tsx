@@ -67,6 +67,8 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
     (member) => !isUnderAge(member.dateOfBirth, 18),
   );
 
+  const tenant = tenure?.householdMembers?.find((e) => e.isResponsible);
+
   return (
     <div data-testid="soletojoint-SelectTenants">
       <Heading variant="h1">{processConfig.title}</Heading>
@@ -87,6 +89,7 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
               processName: process?.processName,
               etag: process.etag || "",
               formData: {
+                tenantId: tenant?.id,
                 incomingTenantId: data.tenant,
               },
               documents: [],

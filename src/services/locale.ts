@@ -14,9 +14,12 @@ const locale = {
         selectTenant: "Select person",
         checkEligibility: "Eligibility Checks",
         supportingDocuments: "Supporting documents",
-        breachOfTenureCheck: "Breach of tenure check",
-        tenureInvestigation: "Tenure Investigation",
-        housingOfficerReview: "Housing Officer review",
+        finish: "Finish",
+      },
+      actions: {
+        reassignCase: "Reassign case",
+        cancelProcess: "Cancel process",
+        caseActivityHistory: "Case activity history",
       },
     },
     selectTenants: {
