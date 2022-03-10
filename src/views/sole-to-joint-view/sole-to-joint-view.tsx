@@ -5,6 +5,7 @@ import { CheckEligibilityView, SelectTenantsView } from "./states";
 
 import { useProcess } from "@mtfh/common/lib/api/process/v1";
 import {
+  Button,
   Center,
   ErrorSummary,
   Layout,
@@ -19,10 +20,7 @@ const { soleToJoint } = views;
 const steps = [
   <Step key="step-select-tenant">{soleToJoint.steps.selectTenant}</Step>,
   <Step key="step-personal-details">{soleToJoint.steps.checkEligibility}</Step>,
-  <Step key="step-supporting-documents">{soleToJoint.steps.supportingDocuments}</Step>,
-  <Step key="step-breach-of-tenure-check">{soleToJoint.steps.breachOfTenureCheck}</Step>,
-  <Step key="step-tenure-investigation">{soleToJoint.steps.tenureInvestigation}</Step>,
-  <Step key="step-housing-officer-review">{soleToJoint.steps.housingOfficerReview}</Step>,
+  <Step key="step-supporting-documents">{soleToJoint.steps.finish}</Step>,
 ];
 
 const getActiveStep = (state: string, states) => {
@@ -39,12 +37,17 @@ const getActiveStep = (state: string, states) => {
 };
 
 const SideBar = ({ state, states }) => (
-  <Stepper
-    data-testid="mtfh-stepper-sole-to-joint"
-    activeStep={getActiveStep(state, states)}
-  >
-    {steps}
-  </Stepper>
+  <>
+    <Stepper
+      data-testid="mtfh-stepper-sole-to-joint"
+      activeStep={getActiveStep(state, states)}
+    >
+      {steps}
+    </Stepper>
+    <Button>{soleToJoint.actions.reassignCase}</Button>
+    <Button>{soleToJoint.actions.cancelProcess}</Button>
+    <Button variant="secondary">{soleToJoint.actions.caseActivityHistory}</Button>
+  </>
 );
 
 export const SoleToJointView = () => {
