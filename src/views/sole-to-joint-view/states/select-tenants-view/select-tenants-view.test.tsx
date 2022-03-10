@@ -29,6 +29,7 @@ describe("select-tenants-view", () => {
       <SelectTenantsView
         processConfig={processes.soletojoint}
         process={mockProcessSelectTenants}
+        mutate={() => {}}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -48,6 +49,7 @@ describe("select-tenants-view", () => {
       <SelectTenantsView
         processConfig={processes.soletojoint}
         process={mockProcessSelectTenants}
+        mutate={() => {}}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -69,6 +71,7 @@ describe("select-tenants-view", () => {
       <SelectTenantsView
         processConfig={processes.soletojoint}
         process={mockProcessSelectTenants}
+        mutate={() => {}}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -94,6 +97,7 @@ describe("select-tenants-view", () => {
       <SelectTenantsView
         processConfig={processes.soletojoint}
         process={mockProcessSelectTenants}
+        mutate={() => {}}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -113,6 +117,7 @@ describe("select-tenants-view", () => {
       <SelectTenantsView
         processConfig={processes.soletojoint}
         process={mockProcessSelectTenants}
+        mutate={() => {}}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
