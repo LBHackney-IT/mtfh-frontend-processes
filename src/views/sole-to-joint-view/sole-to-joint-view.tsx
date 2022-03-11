@@ -55,7 +55,11 @@ export const SoleToJointView = () => {
 
   const processConfig = processes.soletojoint;
 
-  const { data: process, error } = useProcess({
+  const {
+    data: process,
+    error,
+    mutate,
+  } = useProcess({
     id: processId,
     processName: processConfig.processName,
   });
@@ -108,7 +112,7 @@ export const SoleToJointView = () => {
       sidePosition="right"
       side={<SideBar state={state} states={states} />}
     >
-      <Component processConfig={processConfig} process={process} />
+      <Component processConfig={processConfig} process={process} mutate={mutate} />
     </Layout>
   );
 };

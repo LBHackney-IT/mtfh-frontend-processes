@@ -32,6 +32,7 @@ const { selectTenants } = views;
 interface SelectTenantsViewProps {
   processConfig: IProcess;
   process: Process;
+  mutate: () => void;
 }
 
 export const schema = Yup.object({
@@ -40,7 +41,11 @@ export const schema = Yup.object({
 
 export type FormData = Yup.Asserts<typeof schema>;
 
-export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewProps) => {
+export const SelectTenantsView = ({
+  processConfig,
+  process,
+  mutate,
+}: SelectTenantsViewProps) => {
   const stateConfig = processConfig.states.selectTenants;
   const { data: tenure, error } = useTenure(process.targetId);
   const [globalError, setGlobalError] = useState<number>();
@@ -94,6 +99,7 @@ export const SelectTenantsView = ({ processConfig, process }: SelectTenantsViewP
               },
               documents: [],
             });
+            mutate();
           } catch (e: any) {
             setGlobalError(e.response?.status || 500);
           }
