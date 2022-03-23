@@ -63,6 +63,11 @@ export const CheckEligibilityView = ({
       )}
       {state === automatedChecksFailed.state && (
         <>
+          <Heading variant="h5">
+            This is an automated check based on the data the system has. At this stage,
+            the system does not have all the data required to make a decision, so these
+            results are for guidance only and do not reflect accurate information.
+          </Heading>
           <Box variant="warning">
             <StatusHeading variant="warning" title={checkEligibility.failedChecks} />
             <div style={{ marginLeft: "60px" }}>
