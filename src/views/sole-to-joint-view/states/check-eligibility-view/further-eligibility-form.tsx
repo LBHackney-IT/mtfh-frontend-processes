@@ -11,22 +11,29 @@ import {
   RadioGroup,
 } from "@mtfh/common/lib/components";
 
-export const FurtherEligibilityForm = (): JSX.Element => {
+export const FurtherEligibilityForm = ({
+  process,
+  processConfig,
+  mutate,
+}): JSX.Element => {
+  const stateConfig = processConfig.states.automatedChecksPassed;
+  console.log(processConfig);
   return (
     <Formik
       initialValues={{ br11: null, br12: null, br13: null, br14: null, br15: null }}
       onSubmit={async (values) => {
         try {
           await editProcess({
-            id: "85f1d03a-77d1-4647-8881-90356723170c",
-            processTrigger: "CheckManualEligibility",
-            processName: "soleToJoint",
+            id: process.id,
+            processTrigger: stateConfig.trigger,
+            processName: process?.processName,
+            etag: process.etag || "",
             formData: values,
             documents: [],
           });
+          mutate();
         } catch (e: any) {
-          //   setGlobalError(e.response?.status || 500);
-          console.log(e);
+          console.log(e.response?.status || 500);
         }
       }}
     >

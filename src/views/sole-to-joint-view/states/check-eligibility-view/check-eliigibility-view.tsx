@@ -20,6 +20,7 @@ import {
 interface CheckEligibilityViewProps {
   processConfig: IProcess;
   process: Process;
+  mutate: () => void;
 }
 
 const { views } = locale;
@@ -58,6 +59,7 @@ const TickBulletPoint = ({ text }) => {
 export const CheckEligibilityView = ({
   processConfig,
   process,
+  mutate,
 }: CheckEligibilityViewProps) => {
   const { automatedChecksFailed, automatedChecksPassed } = processConfig.states;
   const { data: tenure, error } = useTenure(process.targetId);
@@ -109,7 +111,11 @@ export const CheckEligibilityView = ({
             <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
           </Box>
 
-          <FurtherEligibilityForm />
+          <FurtherEligibilityForm
+            process={process}
+            processConfig={processConfig}
+            mutate={mutate}
+          />
         </>
       )}
       {state === automatedChecksFailed.state && (
