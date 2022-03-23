@@ -86,12 +86,18 @@ export const SoleToJointView = () => {
   const { state } = currentState;
 
   const { states } = processConfig;
-  const { selectTenants, automatedChecksFailed, automatedChecksPassed } = states;
+  const {
+    selectTenants,
+    automatedChecksFailed,
+    automatedChecksPassed,
+    manualChecksFailed,
+  } = states;
 
   const components = {
     [selectTenants.state]: SelectTenantsView,
     [automatedChecksFailed.state]: CheckEligibilityView,
     [automatedChecksPassed.state]: CheckEligibilityView,
+    [manualChecksFailed.state]: CheckEligibilityView,
   };
 
   const Component = components[state];

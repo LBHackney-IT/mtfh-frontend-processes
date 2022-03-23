@@ -28,9 +28,6 @@ test("it renders CheckEligibility passed checks view correctly", async () => {
   await expect(
     screen.findByText(locale.views.checkEligibility.autoCheckIntro),
   ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.checkEligibility.passedChecks),
-  ).resolves.toBeInTheDocument();
 });
 
 test("it renders CheckEligibility failed checks view correctly", async () => {
