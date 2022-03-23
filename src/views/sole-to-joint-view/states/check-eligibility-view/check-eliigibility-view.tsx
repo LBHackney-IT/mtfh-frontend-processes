@@ -6,6 +6,7 @@ import { Process } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
   Box,
+  Button,
   Center,
   ErrorSummary,
   Heading,
@@ -89,7 +90,9 @@ export const CheckEligibilityView = ({
                   Inactive or pending tenures cannot be changed to a joint tenancy
                 </Text>
                 <Text size="sm">Applicant has rent arrears over £500</Text>
-                <Text size="sm">Applicant has a live notice of seeking possession</Text>
+                <Text size="sm">
+                  Applicant has a live notice of seeking possession for arrears
+                </Text>
                 <Text size="sm">Proposed tenants must be over 18 years of age</Text>
                 <Text size="sm">
                   Proposed tenant is not a tenure holder or household member within the
@@ -98,6 +101,7 @@ export const CheckEligibilityView = ({
               </List>
             </div>
           </Box>
+          <Button>Close case</Button>
         </>
       )}
     </div>
