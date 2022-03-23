@@ -24,6 +24,36 @@ interface CheckEligibilityViewProps {
 const { views } = locale;
 const { checkEligibility } = views;
 
+const TickIcon = () => {
+  return (
+    <svg
+      width="32"
+      height="32"
+      viewBox="0 0 45 45"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+        fill="#00664F"
+      />
+    </svg>
+  );
+};
+
+const TickBulletPoint = ({ text }) => {
+  return (
+    <div style={{ display: "flex", alignItems: "center", margin: "0 0 0 -7px" }}>
+      <TickIcon />
+      <Text size="sm" style={{ margin: 0 }}>
+        {text}
+      </Text>
+    </div>
+  );
+};
+
 export const CheckEligibilityView = ({
   processConfig,
   process,
@@ -58,9 +88,32 @@ export const CheckEligibilityView = ({
       <EntitySummary id={process.targetId} type={processConfig.targetType} />
       <Text>{checkEligibility.autoCheckIntro}</Text>
       {state === automatedChecksPassed.state && (
-        <Box variant="success">
-          <StatusHeading variant="success" title={checkEligibility.passedChecks} />
-        </Box>
+        <>
+          <Heading variant="h5">
+            This is an automated check based on the data the system has. At this stage,
+            the system does not have all the data required to make a decision, so these
+            results are for guidance only and do not reflect accurate information.
+          </Heading>
+          <Box variant="success">
+            <Heading variant="h4" style={{ marginBottom: "0.5em" }}>
+              {checkEligibility.passedChecks}
+            </Heading>
+            <TickBulletPoint text="Applicant is a named tenure holder on the tenure" />
+            <TickBulletPoint text="Applicant is currently a sole tenant" />
+            <TickBulletPoint text="Secure tenures can be changed from a sole to joint tenancy" />
+            <TickBulletPoint text="Tenant's tenure is active" />
+            <TickBulletPoint text="Applicant does not have rent arrears over £500" />
+            <TickBulletPoint text="The tenant does not have a live notice seeking possession" />
+            <TickBulletPoint text="The proposed tenant is over 18 years of age" />
+            <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
+          </Box>
+          <Box>
+            <Heading variant="h4" style={{ marginBottom: "0.5em" }}>
+              Further eligibility questions
+            </Heading>
+          </Box>
+          <Button>Next</Button>
+        </>
       )}
       {state === automatedChecksFailed.state && (
         <>
@@ -73,7 +126,7 @@ export const CheckEligibilityView = ({
             <StatusHeading variant="warning" title={checkEligibility.failedChecks} />
             <div style={{ marginLeft: "60px" }}>
               <Text size="sm">
-                All criteria must be passed in order for the applicant to be eligible.{" "}
+                All criteria must be passed in order for the applicant to be eligible.
                 <br />
                 Applicant has failed one or more of the checks listed below.
               </Text>
