@@ -65,28 +65,32 @@ export const CheckEligibilityView = ({
         <>
           <Box variant="warning">
             <StatusHeading variant="warning" title={checkEligibility.failedChecks} />
-            <Text size="sm">
-              All criteria must be passed in order for the applicant to be eligible.{" "}
-              <br />
-              Applicant has failed one or more of the checks listed below.
-            </Text>
-            <Heading variant="h5">Failed criteria</Heading>
-            <List variant="bullets">
-              <Text size="sm">Applicant is not a named tenure holder on the tenure</Text>
-              <Text size="sm">Applicant is already a joint tenant</Text>
+            <div style={{ marginLeft: "60px" }}>
               <Text size="sm">
-                Only secure tenures can be changed from a sole to a joint tenancy
+                All criteria must be passed in order for the applicant to be eligible.{" "}
+                <br />
+                Applicant has failed one or more of the checks listed below.
               </Text>
-              <Text size="sm">
-                Inactive or pending tenures cannot be changed to a joint tenancy
-              </Text>
-              <Text size="sm">Applicant has a live notice of seeking possession</Text>
-              <Text size="sm">Proposed tenants must be over 18 years of age</Text>
-              <Text size="sm">
-                Proposed tenant is not a tenure holder or household member within the
-                London Borough of Hackney
-              </Text>
-            </List>
+              <Heading variant="h5">Failed criteria</Heading>
+              <List variant="bullets">
+                <Text size="sm">
+                  Applicant is not a named tenure holder on the tenure
+                </Text>
+                <Text size="sm">Applicant is already a joint tenant</Text>
+                <Text size="sm">
+                  Only secure tenures can be changed from a sole to a joint tenancy
+                </Text>
+                <Text size="sm">
+                  Inactive or pending tenures cannot be changed to a joint tenancy
+                </Text>
+                <Text size="sm">Applicant has a live notice of seeking possession</Text>
+                <Text size="sm">Proposed tenants must be over 18 years of age</Text>
+                <Text size="sm">
+                  Proposed tenant is not a tenure holder or household member within the
+                  London Borough of Hackney
+                </Text>
+              </List>
+            </div>
           </Box>
         </>
       )}
