@@ -88,6 +88,7 @@ export const CheckEligibilityView = ({
                 <Text size="sm">
                   Inactive or pending tenures cannot be changed to a joint tenancy
                 </Text>
+                <Text size="sm">Applicant has rent arrears over £500</Text>
                 <Text size="sm">Applicant has a live notice of seeking possession</Text>
                 <Text size="sm">Proposed tenants must be over 18 years of age</Text>
                 <Text size="sm">
