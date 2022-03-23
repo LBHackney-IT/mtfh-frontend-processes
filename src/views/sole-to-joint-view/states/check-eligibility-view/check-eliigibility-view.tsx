@@ -1,6 +1,7 @@
 import { EntitySummary } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
+import { FurtherEligibilityForm } from "./further-eligibility-form";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
@@ -107,12 +108,8 @@ export const CheckEligibilityView = ({
             <TickBulletPoint text="The proposed tenant is over 18 years of age" />
             <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
           </Box>
-          <Box>
-            <Heading variant="h4" style={{ marginBottom: "0.5em" }}>
-              Further eligibility questions
-            </Heading>
-          </Box>
-          <Button>Next</Button>
+
+          <FurtherEligibilityForm />
         </>
       )}
       {state === automatedChecksFailed.state && (
