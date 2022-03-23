@@ -29,9 +29,13 @@ const getActiveStep = (state: string, states) => {
   }
   if (
     state === states.automatedChecksPassed.state ||
-    state === states.automatedChecksFailed.state
+    state === states.automatedChecksFailed.state ||
+    state === states.manualChecksFailed.state
   ) {
     return 1;
+  }
+  if (state === states.manualChecksPassed.state) {
+    return 2;
   }
   return 0;
 };
@@ -91,6 +95,7 @@ export const SoleToJointView = () => {
     automatedChecksFailed,
     automatedChecksPassed,
     manualChecksFailed,
+    manualChecksPassed,
   } = states;
 
   const components = {
@@ -98,6 +103,7 @@ export const SoleToJointView = () => {
     [automatedChecksFailed.state]: CheckEligibilityView,
     [automatedChecksPassed.state]: CheckEligibilityView,
     [manualChecksFailed.state]: CheckEligibilityView,
+    [manualChecksPassed.state]: CheckEligibilityView,
   };
 
   const Component = components[state];

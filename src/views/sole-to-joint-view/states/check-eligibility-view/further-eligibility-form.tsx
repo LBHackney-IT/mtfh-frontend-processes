@@ -109,12 +109,12 @@ export const FurtherEligibilityForm = ({
               required
             >
               <RadioGroup>
-                <InlineField name="br14" type="radio">
+                <InlineField name="br15" type="radio">
                   <Radio id="person-form-type-tenure-holder" value="true">
                     Yes
                   </Radio>
                 </InlineField>
-                <InlineField name="br14" type="radio">
+                <InlineField name="br15" type="radio">
                   <Radio id="person-form-type-household-member" value="false">
                     No
                   </Radio>
@@ -128,12 +128,12 @@ export const FurtherEligibilityForm = ({
               required
             >
               <RadioGroup>
-                <InlineField name="br15" type="radio">
+                <InlineField name="br16" type="radio">
                   <Radio id="person-form-type-tenure-holder" value="true">
                     Yes
                   </Radio>
                 </InlineField>
-                <InlineField name="br15" type="radio">
+                <InlineField name="br16" type="radio">
                   <Radio id="person-form-type-household-member" value="false">
                     No (proposed tenant will be asked for proof e.g. passport or
                     immigration status documentation)
