@@ -68,5 +68,13 @@ export const soletojoint: IProcess = {
       state: "AutomatedChecksPassed",
       trigger: "CheckManualEligibility",
     },
+    manualChecksFailed: {
+      state: "ManualChecksFailed",
+      trigger: "CheckManualEligibility",
+    },
+    manualChecksPassed: {
+      state: "ManualChecksPassed",
+      trigger: "CheckManualEligibility",
+    },
   },
 };

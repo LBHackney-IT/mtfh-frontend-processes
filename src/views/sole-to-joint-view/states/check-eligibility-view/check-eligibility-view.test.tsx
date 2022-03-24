@@ -13,6 +13,7 @@ test("it renders CheckEligibility passed checks view correctly", async () => {
     <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={mockProcessAutomatedChecksPassed}
+      mutate={() => {}}
     />,
     {
       url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -37,6 +38,7 @@ test("it renders CheckEligibility failed checks view correctly", async () => {
     <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={mockProcessAutomatedChecksFailed}
+      mutate={() => {}}
     />,
     {
       url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -62,6 +64,7 @@ test("it renders an error if tenure details can't be fetched", async () => {
     <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={mockProcessAutomatedChecksPassed}
+      mutate={() => {}}
     />,
     {
       url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
