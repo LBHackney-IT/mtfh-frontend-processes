@@ -5,7 +5,12 @@ import userEvent from "@testing-library/user-event";
 import { menu, processes } from "../../services";
 import { ProcessMenu } from "./process-menu";
 
+import * as assetV1 from "@mtfh/common/lib/api/asset/v1/service";
+import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
+import * as tenureV1 from "@mtfh/common/lib/api/tenure/v1/service";
+import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
 import { $configuration } from "@mtfh/common/lib/configuration";
+import { AxiosSWRResponse } from "@mtfh/common/lib/http";
 
 test("it renders legacy process list", async () => {
   const { container } = render(
@@ -58,5 +63,48 @@ describe("feature toggle on", () => {
     render(<ProcessMenu id={mockActiveTenureV1.id} targetType="property" />);
 
     expect(screen.queryByText(processes.soletojoint.title)).not.toBeInTheDocument();
+  });
+
+  describe("prepopulate query", () => {
+    test("Request a Legal referral has the correct query", () => {
+      const tenure = {
+        householdMembers: [
+          {
+            fullName: "Test0 Test",
+            isResponsible: false,
+          },
+          {
+            fullName: "Test1 Test",
+            isResponsible: true,
+          },
+          {
+            fullName: "Test2 Test",
+            isResponsible: true,
+          },
+        ],
+        tenuredAsset: {
+          propertyReference: "004567124",
+        },
+      } as Tenure;
+      const asset = {
+        assetAddress: {
+          addressLine1: "10 Address Street",
+          postCode: "E8 1DY",
+        },
+      } as Asset;
+
+      jest.spyOn(tenureV1, "useTenure").mockReturnValue({
+        data: tenure,
+      } as AxiosSWRResponse<Tenure>);
+
+      jest.spyOn(assetV1, "useAsset").mockReturnValue({
+        data: asset,
+      } as AxiosSWRResponse<Asset>);
+
+      const { container } = render(
+        <ProcessMenu id={mockActiveTenureV1.id} targetType="tenure" />,
+      );
+      expect(container).toMatchSnapshot();
+    });
   });
 });

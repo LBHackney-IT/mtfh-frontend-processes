@@ -3,6 +3,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { menu } from "../../services";
 import { TargetType } from "../../types";
 
+import { useAsset } from "@mtfh/common/lib/api/asset/v1";
+import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import { Details, Link } from "@mtfh/common/lib/components";
 import { useFeatureToggle } from "@mtfh/common/lib/hooks";
 
@@ -60,10 +62,25 @@ interface ProcessMenuProps {
 export const ProcessMenu = ({ id, targetType }: ProcessMenuProps) => {
   const hasEnhancedProcessMenu = useFeatureToggle("MMH.EnhancedProcessMenu");
 
+  const { data: tenure } = useTenure(id);
+  const { data: asset } = useAsset(tenure?.tenuredAsset?.id || null);
+  const queryData = {
+    tenure,
+    asset,
+  };
+
   const filteredMenuByEntityType = menu
     .map((item) => {
+      let link = item.link;
+      if (item.getPplQuery) {
+        const query = item.getPplQuery(queryData);
+        if (query.length > 0) {
+          link = `${link}?${query}`;
+        }
+      }
       return {
         ...item,
+        link,
         ...(item.processes && {
           processes: item.processes.filter(
             (process) => process.targetType === targetType,
