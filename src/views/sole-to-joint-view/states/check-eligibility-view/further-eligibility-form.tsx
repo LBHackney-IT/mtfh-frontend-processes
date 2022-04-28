@@ -142,12 +142,7 @@ export const FurtherEligibilityForm = ({
               </RadioGroup>
             </FormGroup>
           </Box>
-          <Button
-            type="submit"
-            //   isDisabled={Object.keys(props.touched).length !== 4}
-          >
-            Next
-          </Button>
+          <Button type="submit">Next</Button>
         </Form>
       )}
     </Formik>
