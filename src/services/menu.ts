@@ -1,9 +1,13 @@
 import * as processes from "./processes";
 
+import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
+import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
+
 interface MenuProps {
   label: string;
   link: string;
   processes?: { label: string; link: string; targetType: string }[];
+  getPplQuery?: (context: any) => string;
 }
 
 const getProcessLink = (processName: string) => {
@@ -13,6 +17,27 @@ const getProcessLink = (processName: string) => {
     label: process.title,
     link: `/processes/${process.processName}/start`,
   };
+};
+
+const getPplQueryForRequestALegalReferral = ({ tenure, asset }): string => {
+  if (!tenure || !asset) {
+    return "";
+  }
+  const {
+    householdMembers,
+    tenuredAsset: { propertyReference },
+  } = tenure as Tenure;
+  const {
+    assetAddress: { addressLine1, postCode },
+  } = asset as Asset;
+  const tenantNames = householdMembers
+    .filter((member) => member.isResponsible)
+    .map((member) => member.fullName)
+    .join(", ");
+  const address = addressLine1;
+  const query = `usp=pp_url&entry.1699199605=${tenantNames}&entry.2086190845=${address}&entry.1956036523=${postCode}&entry.1140527432=${propertyReference}`;
+  const encodedQuery = encodeURI(query);
+  return encodedQuery;
 };
 
 const menu: MenuProps[] = [
@@ -32,6 +57,7 @@ const menu: MenuProps[] = [
   {
     label: "Request a legal referral",
     link: "https://docs.google.com/forms/d/e/1FAIpQLScpHsoJQgq112HIMbW06YAFpggijwQuODJM483HGbX_PMfCMw/viewform",
+    getPplQuery: getPplQueryForRequestALegalReferral,
   },
   {
     label: "Record notice served",
