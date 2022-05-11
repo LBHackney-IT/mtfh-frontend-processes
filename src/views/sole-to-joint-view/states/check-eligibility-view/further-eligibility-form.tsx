@@ -17,10 +17,17 @@ export const FurtherEligibilityForm = ({
   mutate,
 }): JSX.Element => {
   const stateConfig = processConfig.states.automatedChecksPassed;
-  console.log(processConfig);
   return (
     <Formik
-      initialValues={{ br11: null, br12: null, br13: null, br14: null, br15: null }}
+      initialValues={{
+        br11: null,
+        br12: null,
+        br13: null,
+        br14: null,
+        br15: null,
+        br7: null,
+        br8: null,
+      }}
       onSubmit={async (values) => {
         try {
           await editProcess({
@@ -137,6 +144,44 @@ export const FurtherEligibilityForm = ({
                   <Radio id="person-form-type-household-member" value="false">
                     No (proposed tenant will be asked for proof e.g. passport or
                     immigration status documentation)
+                  </Radio>
+                </InlineField>
+              </RadioGroup>
+            </FormGroup>
+            <FormGroup
+              id="person-form-seeking-possesion"
+              label="Does the tenant have a live notice seeking possesion?"
+              error={props.errors.br7}
+              required
+            >
+              <RadioGroup>
+                <InlineField name="br7" type="radio">
+                  <Radio id="person-form-seeking-possesion-yes" value="true">
+                    Yes
+                  </Radio>
+                </InlineField>
+                <InlineField name="br7" type="radio">
+                  <Radio id="person-form-seeking-possesion-no" value="false">
+                    No
+                  </Radio>
+                </InlineField>
+              </RadioGroup>
+            </FormGroup>
+            <FormGroup
+              id="person-form-rent-arrears"
+              label="Does the tenant have rent arrears over £500?"
+              error={props.errors.br8}
+              required
+            >
+              <RadioGroup>
+                <InlineField name="br8" type="radio">
+                  <Radio id="person-form-rent-arrears-yes" value="true">
+                    Yes
+                  </Radio>
+                </InlineField>
+                <InlineField name="br8" type="radio">
+                  <Radio id="person-form-rent-arrears-no" value="false">
+                    No
                   </Radio>
                 </InlineField>
               </RadioGroup>
