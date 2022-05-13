@@ -20,8 +20,6 @@ const { components } = locale;
 const TenureSummary = ({ id }: { id: string }) => {
   const { error, data: tenure } = useTenure(id);
 
-  const tennant = tenure?.householdMembers.find((m) => m.isResponsible);
-
   if (error) {
     return (
       <ErrorSummary
@@ -39,6 +37,8 @@ const TenureSummary = ({ id }: { id: string }) => {
       </Center>
     );
   }
+
+  const tennant = tenure.householdMembers.find((m) => m.isResponsible);
 
   return (
     <Heading className="entity-summary__tenure-heading" variant="h2">

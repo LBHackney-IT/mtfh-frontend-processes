@@ -1,7 +1,11 @@
 import { EntitySummary } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
+import { BreachCheckForm } from "./breach-check-form";
+import { BreachChecksFailedView } from "./breach-checks-view";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
+import { RequestDcoumentsView } from "./request-dcouments-view";
+import { EligibilityChecksPassedBox, TickBulletPoint } from "./shared";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
@@ -21,53 +25,29 @@ interface CheckEligibilityViewProps {
   processConfig: IProcess;
   process: Process;
   mutate: () => void;
+  optional?: any;
 }
 
 const { views } = locale;
 const { checkEligibility } = views;
 
-const TickIcon = () => {
-  return (
-    <svg
-      width="32"
-      height="32"
-      viewBox="0 0 45 45"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
-        fill="#00664F"
-      />
-    </svg>
-  );
-};
-
-const TickBulletPoint = ({ text }) => {
-  return (
-    <div style={{ display: "flex", alignItems: "center", margin: "0 0 0 -7px" }}>
-      <TickIcon />
-      <Text size="sm" style={{ margin: 0 }}>
-        {text}
-      </Text>
-    </div>
-  );
-};
-
-export const CheckEligibilityView = ({
+export const CheckEliigibilityView = ({
   processConfig,
   process,
   mutate,
+  optional,
 }: CheckEligibilityViewProps) => {
   const {
     automatedChecksFailed,
     automatedChecksPassed,
     manualChecksFailed,
     manualChecksPassed,
+    breachChecksFailed,
+    breachChecksPassed,
+    processCancelled,
   } = processConfig.states;
   const { data: tenure, error } = useTenure(process.targetId);
+  const { furtherEligibilitySubmitted, setFurtherEligibilitySubmitted } = optional;
 
   if (error) {
     return (
@@ -87,6 +67,8 @@ export const CheckEligibilityView = ({
     );
   }
 
+  const tenant = tenure?.householdMembers.find((m) => m.isResponsible);
+
   const { currentState } = process;
   const { state } = currentState;
 
@@ -94,8 +76,11 @@ export const CheckEligibilityView = ({
     <div data-testid="soletojoint-CheckEligibility">
       <Heading variant="h1">{processConfig.title}</Heading>
       <EntitySummary id={process.targetId} type={processConfig.targetType} />
-      <Text>{checkEligibility.autoCheckIntro}</Text>
-      {state === manualChecksPassed.state && (
+      {state !== breachChecksPassed.state && (
+        <Text>{checkEligibility.autoCheckIntro}</Text>
+      )}
+      {state === breachChecksPassed.state && <EligibilityChecksPassedBox />}
+      {state === manualChecksPassed.state && furtherEligibilitySubmitted && (
         <>
           <Heading variant="h3">Next Steps:</Heading>
           <Text size="sm">
@@ -112,6 +97,13 @@ export const CheckEligibilityView = ({
           </List>
           <Button>Close</Button>
         </>
+      )}
+      {state === manualChecksPassed.state && !furtherEligibilitySubmitted && (
+        <BreachCheckForm
+          process={process}
+          processConfig={processConfig}
+          mutate={mutate}
+        />
       )}
       {(state === automatedChecksPassed.state || state === manualChecksFailed.state) && (
         <>
@@ -137,7 +129,10 @@ export const CheckEligibilityView = ({
             <FurtherEligibilityForm
               process={process}
               processConfig={processConfig}
-              mutate={mutate}
+              onSuccessfulSubmit={() => {
+                mutate();
+                setFurtherEligibilitySubmitted(true);
+              }}
             />
           )}
           {state === manualChecksFailed.state && (
@@ -218,6 +213,16 @@ export const CheckEligibilityView = ({
           </Box>
           <Button>Close case</Button>
         </>
+      )}
+      {[breachChecksFailed.state, processCancelled.state].includes(state) && (
+        <BreachChecksFailedView
+          process={process}
+          processConfig={processConfig}
+          mutate={mutate}
+        />
+      )}
+      {state === breachChecksPassed.state && tenant && (
+        <RequestDcoumentsView tenant={tenant} />
       )}
     </div>
   );

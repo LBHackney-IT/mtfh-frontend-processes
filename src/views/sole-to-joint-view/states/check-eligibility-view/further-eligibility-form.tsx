@@ -14,7 +14,7 @@ import {
 export const FurtherEligibilityForm = ({
   process,
   processConfig,
-  mutate,
+  onSuccessfulSubmit,
 }): JSX.Element => {
   const stateConfig = processConfig.states.automatedChecksPassed;
   return (
@@ -38,7 +38,7 @@ export const FurtherEligibilityForm = ({
             formData: values,
             documents: [],
           });
-          mutate();
+          onSuccessfulSubmit();
         } catch (e: any) {
           console.log(e.response?.status || 500);
         }

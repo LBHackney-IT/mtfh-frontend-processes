@@ -1,7 +1,8 @@
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 import { locale, processes } from "../../services";
-import { CheckEligibilityView, SelectTenantsView } from "./states";
+import { CheckEliigibilityView, SelectTenantsView } from "./states";
 
 import { useProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -17,10 +18,16 @@ import {
 const { views } = locale;
 const { soleToJoint } = views;
 
-const steps = [
+const finishStep = <Step key="step-finish">{soleToJoint.steps.finish}</Step>;
+
+const allSteps = [
   <Step key="step-select-tenant">{soleToJoint.steps.selectTenant}</Step>,
   <Step key="step-personal-details">{soleToJoint.steps.checkEligibility}</Step>,
-  <Step key="step-supporting-documents">{soleToJoint.steps.finish}</Step>,
+  <Step key="step-breach-of-tenancy">{soleToJoint.steps.breachOfTenancy}</Step>,
+  <Step key="step-request-documents">{soleToJoint.steps.requestDocuments}</Step>,
+  <Step key="step-review-documents">{soleToJoint.steps.reviewDocuments}</Step>,
+  <Step key="step-submit-case">{soleToJoint.steps.submitCase}</Step>,
+  finishStep,
 ];
 
 const getActiveStep = (state: string, states) => {
@@ -28,31 +35,64 @@ const getActiveStep = (state: string, states) => {
     return 0;
   }
   if (
-    state === states.automatedChecksPassed.state ||
-    state === states.automatedChecksFailed.state ||
-    state === states.manualChecksFailed.state
+    [
+      states.automatedChecksPassed.state,
+      states.automatedChecksFailed.state,
+      states.manualChecksFailed.state,
+    ].includes(state)
   ) {
     return 1;
   }
-  if (state === states.manualChecksPassed.state) {
+  if (
+    [
+      states.manualChecksPassed.state,
+      states.breachChecksFailed.state,
+      states.processCancelled.state,
+    ].includes(state)
+  ) {
     return 2;
+  }
+  if (state === states.breachChecksPassed.state) {
+    return 3;
   }
   return 0;
 };
 
-const SideBar = ({ state, states }) => (
-  <>
-    <Stepper
-      data-testid="mtfh-stepper-sole-to-joint"
-      activeStep={getActiveStep(state, states)}
-    >
-      {steps}
-    </Stepper>
-    <Button>{soleToJoint.actions.reassignCase}</Button>
-    <Button>{soleToJoint.actions.cancelProcess}</Button>
-    <Button variant="secondary">{soleToJoint.actions.caseActivityHistory}</Button>
-  </>
-);
+interface SideBarProps {
+  state: any;
+  states: any;
+  furtherEligibilitySubmitted: boolean;
+}
+
+const SideBar = (props: SideBarProps) => {
+  const { state, states, furtherEligibilitySubmitted = false } = props;
+
+  let activeStep = getActiveStep(state, states);
+  let steps: typeof allSteps;
+  let startIndex = 0;
+  if (activeStep > 2 || (!furtherEligibilitySubmitted && activeStep === 2)) {
+    steps = allSteps.slice(2);
+    activeStep = activeStep - 2;
+    startIndex = 3;
+  } else {
+    steps = allSteps.slice(0, 2);
+    steps.push(finishStep);
+  }
+  return (
+    <>
+      <Stepper
+        data-testid="mtfh-stepper-sole-to-joint"
+        activeStep={activeStep}
+        startIndex={startIndex}
+      >
+        {steps}
+      </Stepper>
+      <Button>{soleToJoint.actions.reassignCase}</Button>
+      <Button>{soleToJoint.actions.cancelProcess}</Button>
+      <Button variant="secondary">{soleToJoint.actions.caseActivityHistory}</Button>
+    </>
+  );
+};
 
 export const SoleToJointView = () => {
   const { processId } = useParams<{ processId: string }>();
@@ -67,6 +107,9 @@ export const SoleToJointView = () => {
     id: processId,
     processName: processConfig.processName,
   });
+
+  const [furtherEligibilitySubmitted, setFurtherEligibilitySubmitted] =
+    useState<boolean>(false);
 
   if (error) {
     return (
@@ -96,14 +139,20 @@ export const SoleToJointView = () => {
     automatedChecksPassed,
     manualChecksFailed,
     manualChecksPassed,
+    breachChecksPassed,
+    breachChecksFailed,
+    processCancelled,
   } = states;
 
   const components = {
     [selectTenants.state]: SelectTenantsView,
-    [automatedChecksFailed.state]: CheckEligibilityView,
-    [automatedChecksPassed.state]: CheckEligibilityView,
-    [manualChecksFailed.state]: CheckEligibilityView,
-    [manualChecksPassed.state]: CheckEligibilityView,
+    [automatedChecksFailed.state]: CheckEliigibilityView,
+    [automatedChecksPassed.state]: CheckEliigibilityView,
+    [manualChecksFailed.state]: CheckEliigibilityView,
+    [manualChecksPassed.state]: CheckEliigibilityView,
+    [breachChecksFailed.state]: CheckEliigibilityView,
+    [breachChecksPassed.state]: CheckEliigibilityView,
+    [processCancelled.state]: CheckEliigibilityView,
   };
 
   const Component = components[state];
@@ -122,9 +171,20 @@ export const SoleToJointView = () => {
     <Layout
       data-testid="soletojoint"
       sidePosition="right"
-      side={<SideBar state={state} states={states} />}
+      side={
+        <SideBar
+          state={state}
+          states={states}
+          furtherEligibilitySubmitted={furtherEligibilitySubmitted}
+        />
+      }
     >
-      <Component processConfig={processConfig} process={process} mutate={mutate} />
+      <Component
+        processConfig={processConfig}
+        process={process}
+        mutate={mutate}
+        optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
+      />
     </Layout>
   );
 };
