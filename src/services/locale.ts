@@ -15,6 +15,10 @@ const locale = {
         checkEligibility: "Eligibility Checks",
         supportingDocuments: "Supporting documents",
         finish: "Finish",
+        breachOfTenancy: "Breach of tenure check",
+        requestDocuments: "Request Documents",
+        reviewDocuments: "Review Documents",
+        submitCase: "Submit case",
       },
       actions: {
         reassignCase: "Reassign case",
@@ -41,6 +45,12 @@ const locale = {
       autoCheckIntro:
         "Manage My Home has used tenure, person and property information to automatically check eligibility for this application.",
       passedChecks: "Passed automatic eligibilty checks",
+      failedChecks: "Not eligible for a sole to joint tenure",
+    },
+    breachOfTenancy: {
+      autoCheckIntro:
+        "Manage My Home has used tenure, person and property information to automatically check eligibility for this application.",
+      passedChecks: "Eligibility checks passed",
       failedChecks: "Not eligible for a sole to joint tenure",
     },
   },

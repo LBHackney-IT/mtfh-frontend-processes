@@ -76,5 +76,17 @@ export const soletojoint: IProcess = {
       state: "ManualChecksPassed",
       trigger: "CheckManualEligibility",
     },
+    breachChecksFailed: {
+      state: "BreachChecksFailed",
+      trigger: "CancelProcess",
+    },
+    breachChecksPassed: {
+      state: "BreachChecksPassed",
+      trigger: "CheckTenancyBreach",
+    },
+    processCancelled: {
+      state: "ProcessCancelled",
+      trigger: "",
+    },
   },
 };
