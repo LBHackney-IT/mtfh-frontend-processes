@@ -53,6 +53,21 @@ test("it renders stepper component", async () => {
   expect(steps).toMatchSnapshot();
 });
 
+test("it renders sidebar buttons", async () => {
+  server.use(getProcessV1(mockProcessSelectTenants));
+  // @ts-ignore
+  useStateMock.mockImplementation(() => [false, jest.fn()]);
+  render(<SoleToJointView />, options);
+
+  const { soleToJoint } = locale.views;
+  await Promise.all(
+    Object.keys(soleToJoint.actions).map(async (key) => {
+      const button = await screen.findByText(soleToJoint.actions[key]);
+      expect(button.className).toContain("secondary");
+    }),
+  );
+});
+
 test("it renders soletojoint view for AutomatedChecksFailed", async () => {
   server.use(getProcessV1(mockProcessAutomatedChecksFailed));
   // @ts-ignore

@@ -87,8 +87,8 @@ const SideBar = (props: SideBarProps) => {
       >
         {steps}
       </Stepper>
-      <Button>{soleToJoint.actions.reassignCase}</Button>
-      <Button>{soleToJoint.actions.cancelProcess}</Button>
+      <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
+      <Button variant="secondary">{soleToJoint.actions.cancelProcess}</Button>
       <Button variant="secondary">{soleToJoint.actions.caseActivityHistory}</Button>
     </>
   );
