@@ -55,7 +55,7 @@ exports[`feature toggle on it renders processes menu view correctly 1`] = `
                 <span
                   class="govuk-details__summary-text"
                 >
-                  Changes to a tenancy
+                  Sole to Joint
                 </span>
               </summary>
               <div
@@ -75,6 +75,16 @@ exports[`feature toggle on it renders processes menu view correctly 1`] = `
                 </ul>
               </div>
             </details>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Other tenancy changes
+            </a>
           </li>
           <li>
             <a
@@ -222,7 +232,17 @@ exports[`it renders processes menu view correctly 1`] = `
               rel="noopener noreferrer"
               target="_blank"
             >
-              Changes to a tenancy
+              Sole to Joint
+            </a>
+          </li>
+          <li>
+            <a
+              class="govuk-link lbh-link"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              Other tenancy changes
             </a>
           </li>
           <li>

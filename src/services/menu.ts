@@ -40,11 +40,32 @@ const getPplQueryForRequestALegalReferral = ({ tenure, asset }): string => {
   return encodedQuery;
 };
 
+const getPplQueryTenancyChange = ({ tenure }): string => {
+  if (!tenure) {
+    return "";
+  }
+  const {
+    householdMembers,
+    paymentReference,
+    tenuredAsset: { fullAddress, propertyReference },
+  } = tenure as Tenure;
+
+  const tenant = householdMembers.find((member) => member.isResponsible);
+  const query = `usp=pp_url&entry.1942863541=${tenant?.fullName}&entry.1090481808=${fullAddress}&entry.321634337=${propertyReference}&entry.582205322=${paymentReference}`;
+  const encodedQuery = encodeURI(query);
+  return encodedQuery;
+};
+
 const menu: MenuProps[] = [
   {
-    label: "Changes to a tenancy",
+    label: "Sole to Joint",
     link: "https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform",
     processes: [getProcessLink(processes.soletojoint.processName)],
+  },
+  {
+    label: "Other tenancy changes",
+    link: "https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform",
+    getPplQuery: getPplQueryTenancyChange,
   },
   {
     label: "Record a tenancy / audit homecheck",
