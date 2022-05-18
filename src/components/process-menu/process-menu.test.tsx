@@ -106,5 +106,30 @@ describe("feature toggle on", () => {
       );
       expect(container).toMatchSnapshot();
     });
+
+    test("Other tenancy changes has the correct query", () => {
+      const tenure = {
+        paymentReference: "2083027608",
+        householdMembers: [
+          {
+            fullName: "Test1 Test",
+            isResponsible: true,
+          },
+        ],
+        tenuredAsset: {
+          propertyReference: "004567124",
+          fullAddress: "10 Address Street E8 1DY",
+        },
+      } as Tenure;
+
+      jest.spyOn(tenureV1, "useTenure").mockReturnValue({
+        data: tenure,
+      } as AxiosSWRResponse<Tenure>);
+
+      const { container } = render(
+        <ProcessMenu id={mockActiveTenureV1.id} targetType="tenure" />,
+      );
+      expect(container).toMatchSnapshot();
+    });
   });
 });
