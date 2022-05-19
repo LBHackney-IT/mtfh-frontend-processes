@@ -59,34 +59,46 @@ export const soletojoint: IProcess = {
   title: locale.views.soleToJoint.title,
   startProcess,
   states: {
-    selectTenants: { state: "SelectTenants", trigger: "CheckAutomatedEligibility" },
+    selectTenants: {
+      state: "SelectTenants",
+      triggers: { checkAutomatedEligibility: "CheckAutomatedEligibility" },
+    },
     automatedChecksFailed: {
       state: "AutomatedChecksFailed",
-      trigger: "ExitApplication",
+      triggers: { exitApplication: "ExitApplication" },
     },
     automatedChecksPassed: {
       state: "AutomatedChecksPassed",
-      trigger: "CheckManualEligibility",
+      triggers: { checkManualEligibility: "CheckManualEligibility" },
     },
     manualChecksFailed: {
       state: "ManualChecksFailed",
-      trigger: "CheckManualEligibility",
+      triggers: { checkManualEligibility: "CheckManualEligibility" },
     },
     manualChecksPassed: {
       state: "ManualChecksPassed",
-      trigger: "CheckManualEligibility",
+      triggers: { checkTenancyBreach: "CheckTenancyBreach" },
     },
     breachChecksFailed: {
       state: "BreachChecksFailed",
-      trigger: "CancelProcess",
+      triggers: { cancelProcess: "CancelProcess" },
     },
     breachChecksPassed: {
       state: "BreachChecksPassed",
-      trigger: "CheckTenancyBreach",
+      triggers: {
+        requestDocumentsDes: "RequestDocumentsDes",
+        requestDocumentsAppointment: "RequestDocumentsAppointment",
+      },
+    },
+    documentsRequestedDes: {
+      state: "DocumentsRequestedDes",
+      triggers: {
+        requestDocumentsAppointment: "RequestDocumentsAppointment",
+      },
     },
     processCancelled: {
       state: "ProcessCancelled",
-      trigger: "",
+      triggers: {},
     },
   },
 };
