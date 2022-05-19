@@ -12,7 +12,7 @@ import {
 } from "@mtfh/common/lib/components";
 
 export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element => {
-  const stateConfig = processConfig.states.breachChecksPassed;
+  const stateConfig = processConfig.states.manualChecksPassed;
   return (
     <Formik
       initialValues={{ br18: null, br5: null, br10: null, br17: null }}
@@ -20,7 +20,7 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
         try {
           await editProcess({
             id: process.id,
-            processTrigger: stateConfig.trigger,
+            processTrigger: stateConfig.triggers.checkTenancyBreach,
             processName: process?.processName,
             etag: process.etag || "",
             formData: values,

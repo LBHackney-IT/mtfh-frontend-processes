@@ -222,7 +222,12 @@ export const CheckEliigibilityView = ({
         />
       )}
       {state === breachChecksPassed.state && tenant && (
-        <RequestDcoumentsView tenant={tenant} />
+        <RequestDcoumentsView
+          process={process}
+          processConfig={processConfig}
+          mutate={mutate}
+          tenant={tenant}
+        />
       )}
     </div>
   );

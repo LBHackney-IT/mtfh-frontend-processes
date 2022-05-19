@@ -79,7 +79,7 @@ export const BreachChecksFailedView = ({
               try {
                 await editProcess({
                   id: process.id,
-                  processTrigger: breachChecksFailed.trigger,
+                  processTrigger: breachChecksFailed.triggers.cancelProcess,
                   processName: process?.processName,
                   etag: process.etag || "",
                   formData: values,

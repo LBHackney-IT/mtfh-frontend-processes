@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Form, Formik } from "formik";
 
 import { BulletWithExplanation } from "./shared";
 
@@ -6,18 +6,30 @@ import {
   splitContactDetailsByType,
   useContactDetails,
 } from "@mtfh/common/lib/api/contact-details/v2";
+import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import { HouseholdMember } from "@mtfh/common/lib/api/tenure/v1/types";
-import { Button, Checkbox, Heading, List, Text } from "@mtfh/common/lib/components";
+import {
+  Button,
+  Heading,
+  InlineField,
+  List,
+  Radio,
+  RadioGroup,
+  Text,
+} from "@mtfh/common/lib/components";
 
 export interface RequestDcoumentsViewProps {
   tenant: HouseholdMember;
+  process: any;
+  processConfig: any;
+  mutate: any;
 }
 
 export const RequestDcoumentsView = (props: RequestDcoumentsViewProps) => {
-  const { tenant } = props;
+  const { tenant, process, processConfig, mutate } = props;
+  const stateConfig = processConfig.states.breachChecksPassed;
   const { data: contacts } = useContactDetails(tenant.id);
   const { emails, phones } = splitContactDetailsByType(contacts?.results || []);
-  const [confirmed, setConfirmed] = useState<boolean>(false);
 
   return (
     <>
@@ -61,12 +73,58 @@ export const RequestDcoumentsView = (props: RequestDcoumentsViewProps) => {
         Email:
         <span style={{ marginLeft: "1em" }}>{emails?.[0]?.contactInformation.value}</span>
       </Text>
-      <Checkbox id="condition" onChange={() => setConfirmed(!confirmed)}>
-        I have made an appointment to check supporting documents
-      </Checkbox>
-      <Button type="submit" disabled={!confirmed}>
-        Next
-      </Button>
+      <Formik
+        initialValues={{ requestType: undefined }}
+        onSubmit={async (values) => {
+          let formData = {};
+          if (values.requestType === "manual") {
+            formData = {};
+          }
+          try {
+            await editProcess({
+              id: process.id,
+              processTrigger: stateConfig.triggers.requestDocumentsDes,
+              processName: process?.processName,
+              etag: process.etag || "",
+              formData,
+              documents: [],
+            });
+            mutate();
+          } catch (e: any) {
+            console.log(e.response?.status || 500);
+          }
+        }}
+      >
+        {(props) => {
+          const {
+            values: { requestType },
+          } = props;
+          const buttonDisabled = requestType === undefined;
+          return (
+            <Form
+              noValidate
+              id="request-documents-form"
+              className="request-documents-form"
+            >
+              <RadioGroup>
+                <InlineField name="requestType" type="radio">
+                  <Radio id="requestType-automatic" value="automatic">
+                    Request documents electronically
+                  </Radio>
+                </InlineField>
+                <InlineField name="requestType" type="radio">
+                  <Radio id="requestType-manual" value="manual">
+                    I have made an appointment to check supporting documents
+                  </Radio>
+                </InlineField>
+              </RadioGroup>
+              <Button type="submit" disabled={buttonDisabled}>
+                Next
+              </Button>
+            </Form>
+          );
+        }}
+      </Formik>
     </>
   );
 };

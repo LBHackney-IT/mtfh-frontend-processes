@@ -90,7 +90,7 @@ export const SelectTenantsView = ({
           try {
             await editProcess({
               id: process.id,
-              processTrigger: stateConfig.trigger,
+              processTrigger: stateConfig.triggers.checkAutomatedEligibility,
               processName: process?.processName,
               etag: process.etag || "",
               formData: {
