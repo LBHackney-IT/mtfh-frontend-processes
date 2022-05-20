@@ -94,9 +94,23 @@ export const ProcessMenu = ({ id, targetType }: ProcessMenuProps) => {
         (Array.isArray(item.processes) && item.processes.length),
     );
 
+  const legacyMenu = menu.map((item) => {
+    let link = item.link;
+    if (item.getPplQuery) {
+      const query = item.getPplQuery(queryData);
+      if (query.length > 0) {
+        link = `${link}?${query}`;
+      }
+    }
+    return {
+      ...item,
+      link,
+    };
+  });
+
   return hasEnhancedProcessMenu ? (
     <Menu items={filteredMenuByEntityType} id={id} targetType={targetType} />
   ) : (
-    <LegacyMenu items={menu} />
+    <LegacyMenu items={legacyMenu} />
   );
 };
