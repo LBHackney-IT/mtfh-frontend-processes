@@ -5,6 +5,7 @@ import { BreachCheckForm } from "./breach-check-form";
 import { BreachChecksFailedView } from "./breach-checks-view";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
 import { RequestDcoumentsView } from "./request-dcouments-view";
+import { ReviewDocumentsView } from "./review-documents-view";
 import { EligibilityChecksPassedBox, TickBulletPoint } from "./shared";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -44,6 +45,7 @@ export const CheckEliigibilityView = ({
     manualChecksPassed,
     breachChecksFailed,
     breachChecksPassed,
+    documentsRequestedDes,
     processCancelled,
   } = processConfig.states;
   const { data: tenure, error } = useTenure(process.targetId);
@@ -227,6 +229,13 @@ export const CheckEliigibilityView = ({
           processConfig={processConfig}
           mutate={mutate}
           tenant={tenant}
+        />
+      )}
+      {state === documentsRequestedDes.state && tenant && (
+        <ReviewDocumentsView
+          process={process}
+          processConfig={processConfig}
+          mutate={mutate}
         />
       )}
     </div>

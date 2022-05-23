@@ -55,11 +55,10 @@ export const EligibilityChecksPassedBox = () => {
   return (
     <Box variant="success">
       <StatusHeading variant="success" title={breachOfTenancy.passedChecks} />
-      <Heading variant="h4">Passed automatic eligibility checks</Heading>
 
       {!expanded && (
         <div
-          style={{ paddingLeft: "25px" }}
+          style={{ paddingLeft: 60, marginTop: 17.5 }}
           className="govuk-link lbh-link lbh-link--no-visited-state"
         >
           <Link as={RouterLink} to="#" variant="link" onClick={() => setExpanded(true)}>
@@ -69,6 +68,7 @@ export const EligibilityChecksPassedBox = () => {
       )}
       {expanded && (
         <>
+          <Heading variant="h4">Passed automatic eligibility checks</Heading>
           <div style={{ paddingLeft: "25px" }}>
             <TickBulletPoint text="Applicant is a named tenure holder on the tenure" />
             <TickBulletPoint text="Applicant is currently a sole tenant" />

@@ -141,6 +141,7 @@ export const SoleToJointView = () => {
     manualChecksPassed,
     breachChecksPassed,
     breachChecksFailed,
+    documentsRequestedDes,
     processCancelled,
   } = states;
 
@@ -152,6 +153,7 @@ export const SoleToJointView = () => {
     [manualChecksPassed.state]: CheckEliigibilityView,
     [breachChecksFailed.state]: CheckEliigibilityView,
     [breachChecksPassed.state]: CheckEliigibilityView,
+    [documentsRequestedDes.state]: CheckEliigibilityView,
     [processCancelled.state]: CheckEliigibilityView,
   };
 

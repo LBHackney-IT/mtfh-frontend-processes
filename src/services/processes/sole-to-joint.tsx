@@ -93,7 +93,9 @@ export const soletojoint: IProcess = {
     documentsRequestedDes: {
       state: "DocumentsRequestedDes",
       triggers: {
+        reviewDocuments: "ReviewDocuments",
         requestDocumentsAppointment: "RequestDocumentsAppointment",
+        cancelProcess: "CancelProcess",
       },
     },
     processCancelled: {

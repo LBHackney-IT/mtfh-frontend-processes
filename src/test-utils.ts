@@ -52,3 +52,8 @@ export const mockBreachChecksPassedState = {
   ...mockProcessV1,
   currentState: { ...mockProcessV1.currentState, state: "BreachChecksPassed" },
 };
+
+export const mockDocumentsRequestedDes = {
+  ...mockProcessV1,
+  currentState: { ...mockProcessV1.currentState, state: "DocumentsRequestedDes" },
+};
