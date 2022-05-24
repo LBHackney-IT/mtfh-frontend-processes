@@ -2,9 +2,13 @@ import React from "react";
 
 import { patchProcessV1, render, server } from "@hackney/mtfh-test-utils";
 import { fireEvent, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { locale, processes } from "../../../../services";
-import { mockDocumentsRequestedDes } from "../../../../test-utils";
+import {
+  mockDocumentsRequestedAppointment,
+  mockDocumentsRequestedDes,
+} from "../../../../test-utils";
 import { ReviewDocumentsView } from "./review-documents-view";
 
 describe("review-documents-view", () => {
@@ -43,10 +47,28 @@ describe("review-documents-view", () => {
       locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
     );
     fireEvent.click(checkbox);
-    await screen.findByText(locale.bookAppointment);
+    const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
+    expect(bookAppointmentButton).toBeDisabled();
   });
 
-  test("it displays an error if there's an issue with book appointment", async () => {
+  test("it enables book appointment once change button is clicked", async () => {
+    render(
+      <ReviewDocumentsView
+        processConfig={processes.soletojoint}
+        process={mockDocumentsRequestedAppointment}
+        mutate={() => {}}
+      />,
+    );
+
+    await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
+    const changeButton = screen.getByText(locale.change);
+    fireEvent.click(changeButton);
+    const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
+    expect(bookAppointmentButton).toBeDisabled();
+  });
+
+  test("it disables book appointment if date is not in future", async () => {
+    const user = userEvent.setup();
     server.use(patchProcessV1("error", 500));
     render(
       <ReviewDocumentsView
@@ -55,14 +77,33 @@ describe("review-documents-view", () => {
         mutate={() => {}}
       />,
     );
-
     const checkbox = screen.getByLabelText(
       locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
     );
     fireEvent.click(checkbox);
+    await typeDateTime(user, "2000");
     const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
-    fireEvent.click(bookAppointmentButton);
+    expect(bookAppointmentButton).toBeDisabled();
+  });
 
+  test("it displays an error if there's an issue with book appointment", async () => {
+    const user = userEvent.setup();
+    server.use(patchProcessV1("error", 500));
+    render(
+      <ReviewDocumentsView
+        processConfig={processes.soletojoint}
+        process={mockDocumentsRequestedDes}
+        mutate={() => {}}
+      />,
+    );
+    const checkbox = screen.getByLabelText(
+      locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
+    );
+    fireEvent.click(checkbox);
+    await typeDateTime(user, "2099");
+    const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
+    expect(bookAppointmentButton).toBeEnabled();
+    user.click(bookAppointmentButton);
     await expect(
       screen.findByText("There was a problem with completing the action"),
     ).resolves.toBeInTheDocument();
@@ -79,20 +120,7 @@ describe("review-documents-view", () => {
 
     const nextButton = await screen.findByText(locale.next);
     await expect(nextButton).toBeDisabled();
-
-    fireEvent.click(
-      screen.getByLabelText(locale.views.reviewDocuments.seenPhotographicId),
-    );
-    fireEvent.click(screen.getByLabelText(locale.views.reviewDocuments.seenSecondId));
-    fireEvent.click(
-      screen.getByLabelText(locale.views.reviewDocuments.seenProofOfRelationship),
-    );
-    fireEvent.click(
-      screen.getByLabelText(locale.views.reviewDocuments.isNotInImmigrationControl),
-    );
-    fireEvent.click(
-      screen.getByLabelText(locale.views.reviewDocuments.incomingTenantLivingInProperty),
-    );
+    selectAllCheckBoxes();
     await expect(nextButton).toBeEnabled();
   });
 });
@@ -108,6 +136,15 @@ test("it displays an error if there's an issue with book appointment", async () 
   );
 
   const nextButton = await screen.findByText(locale.next);
+  selectAllCheckBoxes();
+  expect(nextButton).toBeEnabled();
+  nextButton.click();
+  await expect(
+    screen.findByText("There was a problem with completing the action"),
+  ).resolves.toBeInTheDocument();
+});
+
+function selectAllCheckBoxes() {
   fireEvent.click(screen.getByLabelText(locale.views.reviewDocuments.seenPhotographicId));
   fireEvent.click(screen.getByLabelText(locale.views.reviewDocuments.seenSecondId));
   fireEvent.click(
@@ -119,9 +156,13 @@ test("it displays an error if there's an issue with book appointment", async () 
   fireEvent.click(
     screen.getByLabelText(locale.views.reviewDocuments.incomingTenantLivingInProperty),
   );
-  expect(nextButton).toBeEnabled();
-  nextButton.click();
-  await expect(
-    screen.findByText("There was a problem with completing the action"),
-  ).resolves.toBeInTheDocument();
-});
+}
+
+async function typeDateTime(user, year) {
+  await user.type(screen.getByPlaceholderText(/dd/i), "01");
+  await user.type(screen.getByPlaceholderText(/mm/i), "01");
+  await user.type(screen.getByPlaceholderText(/yy/i), year);
+  await user.type(screen.getAllByPlaceholderText(/00/i)[0], "01");
+  await user.type(screen.getAllByPlaceholderText(/00/i)[1], "01");
+  await user.type(screen.getByPlaceholderText(/am/i), "am");
+}

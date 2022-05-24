@@ -22,7 +22,7 @@ import {
   Text,
   TimeField,
 } from "@mtfh/common/lib/components";
-import { isFutureDate } from "@mtfh/common/lib/utils";
+import { dateToString, isFutureDate } from "@mtfh/common/lib/utils";
 
 const { views } = locale;
 const { reviewDocuments } = views;
@@ -31,13 +31,33 @@ interface ReviewDocumentsViewProps {
   process: Process;
   mutate: () => void;
 }
+function getAppointmentDateTime({
+  day,
+  month,
+  year,
+  hour,
+  minute,
+  amPm,
+}: {
+  day: string;
+  month: string;
+  year: string;
+  hour: string;
+  minute: string;
+  amPm: string;
+}) {
+  return parse(
+    `${year}-${month}-${day} ${hour}:${minute} ${amPm.toUpperCase()}`,
+    "yyyy-MM-dd hh:mm a",
+    new Date(),
+  );
+}
 
 export const ReviewDocumentsView = ({
   processConfig,
   process,
   mutate,
 }: ReviewDocumentsViewProps) => {
-  const [needAppointment, setNeedAppointment] = useState<boolean>(false);
   const [seenPhotographicId, setSeenPhotographicId] = useState<boolean>(false);
   const [seenSecondId, setSeenSecondId] = useState<boolean>(false);
   const [isNotInImmigrationControl, setIsNotInImmigrationControl] =
@@ -55,7 +75,6 @@ export const ReviewDocumentsView = ({
       processConfig.states.documentsAppointmentRescheduled,
   };
   const stateConfig = stateConfigs[process.currentState.state];
-  const formData = process.currentState.processData.formData;
   const [globalError, setGlobalError] = useState<number>();
 
   return (
@@ -76,123 +95,14 @@ export const ReviewDocumentsView = ({
           </Link>
         </div>
       </Box>
-      {[
-        states.documentsRequestedAppointment.state,
-        states.documentsAppointmentRescheduled.state,
-      ].includes(process.currentState.state) && !needAppointment ? (
-        <Box>
-          <StatusHeading variant="base" title={reviewDocuments.appointmentScheduled} />
-          <Text style={{ marginLeft: 60 }}>
-            Date: {format(new Date(formData.appointmentDateTime), "eeee do MMMM yyyy")}
-            <br />
-            Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}
-          </Text>
-          <LinkButton style={{ marginLeft: 60 }} onClick={() => setNeedAppointment(true)}>
-            {locale.change}
-          </LinkButton>
-        </Box>
-      ) : (
-        <Formik
-          initialValues={{ day: "", month: "", year: "", hour: "", minute: "", amPm: "" }}
-          onSubmit={async (values) => {
-            const appointmentDateTime = parse(
-              `${values.year}-${values.month}-${values.day} ${values.hour}:${
-                values.minute
-              } ${values.amPm.toUpperCase()}`,
-              "yyyy-MM-dd hh:mm a",
-              new Date(),
-            );
-            const processTrigger =
-              process.currentState.state ===
-              processConfig.states.documentsRequestedAppointment.state
-                ? processConfig.states.documentsRequestedAppointment.triggers
-                    .rescheduleDocumentsAppointment
-                : processConfig.states.documentsRequestedDes.triggers
-                    .requestDocumentsAppointment;
-            try {
-              await editProcess({
-                id: process.id,
-                processTrigger,
-                processName: process?.processName,
-                etag: process.etag || "",
-                formData: {
-                  appointmentDateTime,
-                },
-                documents: [],
-              });
-              setNeedAppointment(!needAppointment);
-              mutate();
-            } catch (e: any) {
-              setGlobalError(e.response?.status || 500);
-            }
-          }}
-        >
-          {(props) => {
-            return (
-              <Form
-                noValidate
-                id="request-appointment-form"
-                className="request-appointment-form"
-              >
-                <Checkbox
-                  id="condition"
-                  checked={needAppointment}
-                  onChange={() => setNeedAppointment(!needAppointment)}
-                >
-                  I need to make an appointment to check supporting documents
-                </Checkbox>
-                {needAppointment && (
-                  <>
-                    <div style={{ display: "flex" }}>
-                      <DateField
-                        id="appointment-form-date"
-                        className="mtfh-appointment-form__date"
-                        label="Date"
-                        dayLabel=""
-                        monthLabel=""
-                        yearLabel=""
-                        dayProps={{ name: "day", placeholder: "dd" }}
-                        monthProps={{ name: "month", placeholder: "mm" }}
-                        yearProps={{ name: "year", placeholder: "yy" }}
-                        style={{ marginTop: "1.5em", width: "100%" }}
-                        required
-                      />
-                      <TimeField
-                        id="appointment-form-time"
-                        className="mtfh-appointment-form__time"
-                        label="Time"
-                        hourLabel=""
-                        minuteLabel=""
-                        amPmLabel=""
-                        hourProps={{ name: "hour", placeholder: "00" }}
-                        minuteProps={{ name: "minute", placeholder: "00" }}
-                        amPmProps={{ name: "amPm", placeholder: "am" }}
-                        style={{ marginTop: "1.5em", width: "100%" }}
-                        required
-                      />
-                    </div>
-                    <Button
-                      type="submit"
-                      disabled={
-                        !isFutureDate(
-                          `${props.values.year}-${props.values.month}-${
-                            props.values.day
-                          } ${props.values.hour}:${
-                            props.values.minute
-                          } ${props.values.amPm.toUpperCase()}`,
-                        )
-                      }
-                      style={{ width: 222 }}
-                    >
-                      {locale.bookAppointment}
-                    </Button>
-                  </>
-                )}
-              </Form>
-            );
-          }}
-        </Formik>
-      )}
+
+      <ReviewDocumentsAppointmentForm
+        stateConfig={stateConfig}
+        processConfig={processConfig}
+        process={process}
+        mutate={mutate}
+        setGlobalError={setGlobalError}
+      />
 
       <div style={{ paddingBottom: 35 }} />
 
@@ -293,5 +203,183 @@ export const ReviewDocumentsView = ({
         Close case
       </Button>
     </div>
+  );
+};
+
+interface ReviewDocumentsAppointmentFormProps {
+  processConfig: IProcess;
+  process: Process;
+  mutate: () => void;
+  stateConfig: {
+    [key: string]: any;
+  };
+  setGlobalError: any;
+}
+
+export const ReviewDocumentsAppointmentForm = ({
+  processConfig,
+  process,
+  mutate,
+  stateConfig,
+  setGlobalError,
+}: ReviewDocumentsAppointmentFormProps): JSX.Element => {
+  const [needAppointment, setNeedAppointment] = useState<boolean>(false);
+
+  const { states } = processConfig;
+  const formData = process.currentState.processData.formData as {
+    appointmentDateTime: string;
+  };
+
+  return [
+    states.documentsRequestedAppointment.state,
+    states.documentsAppointmentRescheduled.state,
+  ].includes(process.currentState.state) && !needAppointment ? (
+    <Box>
+      <StatusHeading variant="base" title={reviewDocuments.appointmentScheduled} />
+      <Text style={{ marginLeft: 60 }}>
+        Date: {format(new Date(formData.appointmentDateTime), "eeee do MMMM yyyy")}
+        <br />
+        Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}
+      </Text>
+      <LinkButton style={{ marginLeft: 60 }} onClick={() => setNeedAppointment(true)}>
+        {locale.change}
+      </LinkButton>
+    </Box>
+  ) : (
+    <BookAppointmentForm
+      processConfig={processConfig}
+      stateConfig={stateConfig}
+      process={process}
+      mutate={mutate}
+      setGlobalError={setGlobalError}
+      needAppointment={needAppointment}
+      setNeedAppointment={setNeedAppointment}
+    />
+  );
+};
+
+export const BookAppointmentForm = ({
+  processConfig,
+  stateConfig,
+  process,
+  mutate,
+  setGlobalError,
+  needAppointment,
+  setNeedAppointment,
+}): JSX.Element => {
+  const [bookAppointmentDisabled, setBookAppointmentDisabled] = useState<boolean>(true);
+
+  const { states } = processConfig;
+
+  return (
+    <Formik
+      initialValues={{ day: "", month: "", year: "", hour: "", minute: "", amPm: "" }}
+      onSubmit={async (values) => {
+        const appointmentDateTime = getAppointmentDateTime(values);
+        const processTrigger = [
+          states.documentsRequestedAppointment.state,
+          states.documentsAppointmentRescheduled.state,
+        ].includes(process.currentState.state)
+          ? stateConfig.triggers.rescheduleDocumentsAppointment
+          : stateConfig.triggers.requestDocumentsAppointment;
+        try {
+          await editProcess({
+            id: process.id,
+            processTrigger,
+            processName: process?.processName,
+            etag: process.etag || "",
+            formData: {
+              appointmentDateTime,
+            },
+            documents: [],
+          });
+          setNeedAppointment(!needAppointment);
+          mutate();
+        } catch (e: any) {
+          setGlobalError(e.response?.status || 500);
+        }
+      }}
+      validateOnBlur
+      validate={(values) => {
+        if (
+          !values.day ||
+          !values.month ||
+          !values.year ||
+          !values.hour ||
+          !values.minute ||
+          !values.amPm ||
+          !["am", "pm"].includes(values.amPm)
+        ) {
+          setBookAppointmentDisabled(true);
+          return;
+        }
+        if (
+          !isFutureDate(
+            dateToString(getAppointmentDateTime(values), "yyyy-MM-dd'T'HH:mm:ss"),
+          )
+        ) {
+          setBookAppointmentDisabled(true);
+          return;
+        }
+        setBookAppointmentDisabled(false);
+      }}
+    >
+      {() => {
+        return (
+          <Form
+            noValidate
+            id="request-appointment-form"
+            className="request-appointment-form"
+          >
+            <Checkbox
+              id="condition"
+              checked={needAppointment}
+              onChange={() => setNeedAppointment(!needAppointment)}
+            >
+              I need to make an appointment to check supporting documents
+            </Checkbox>
+            {needAppointment && (
+              <>
+                <div style={{ display: "flex" }}>
+                  <DateField
+                    id="appointment-form-date"
+                    className="mtfh-appointment-form__date"
+                    label="Date"
+                    dayLabel=""
+                    monthLabel=""
+                    yearLabel=""
+                    dayProps={{ name: "day", placeholder: "dd" }}
+                    monthProps={{ name: "month", placeholder: "mm" }}
+                    yearProps={{ name: "year", placeholder: "yy" }}
+                    style={{ marginTop: "1.5em", width: "100%" }}
+                    required
+                  />
+                  <TimeField
+                    id="appointment-form-time"
+                    className="mtfh-appointment-form__time"
+                    label="Time"
+                    hourLabel=""
+                    minuteLabel=""
+                    amPmLabel=""
+                    hourProps={{ name: "hour", placeholder: "00" }}
+                    minuteProps={{ name: "minute", placeholder: "00" }}
+                    amPmProps={{ name: "amPm", placeholder: "am" }}
+                    style={{ marginTop: "1.5em", width: "100%" }}
+                    required
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  disabled={bookAppointmentDisabled}
+                  style={{ width: 222 }}
+                >
+                  {locale.bookAppointment}
+                </Button>
+              </>
+            )}
+          </Form>
+        );
+      }}
+    </Formik>
   );
 };
