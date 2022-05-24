@@ -8,6 +8,7 @@ const locale = {
   next: "Next",
   cancel: "Cancel",
   cancelProcess: "Cancel process",
+  change: "Change",
   views: {
     soleToJoint: {
       title: "Sole tenant requests a joint tenure",

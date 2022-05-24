@@ -77,6 +77,7 @@
   "dependencies": {
     "@hackney/mtfh-test-utils": "^1.8.9",
     "@mtfh/common": "https://github.com/LBHackney-IT/mtfh-frontend-common.git",
+    "date-fns": "2.23.0",
     "formik": "^2.2.9",
     "lbh-frontend": "^3.6.1",
     "react": "17.0.2",

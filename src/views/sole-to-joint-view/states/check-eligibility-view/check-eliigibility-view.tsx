@@ -46,6 +46,8 @@ export const CheckEliigibilityView = ({
     breachChecksFailed,
     breachChecksPassed,
     documentsRequestedDes,
+    documentsRequestedAppointment,
+    documentsAppointmentRescheduled,
     processCancelled,
   } = processConfig.states;
   const { data: tenure, error } = useTenure(process.targetId);
@@ -231,13 +233,18 @@ export const CheckEliigibilityView = ({
           tenant={tenant}
         />
       )}
-      {state === documentsRequestedDes.state && tenant && (
-        <ReviewDocumentsView
-          process={process}
-          processConfig={processConfig}
-          mutate={mutate}
-        />
-      )}
+      {[
+        documentsRequestedAppointment.state,
+        documentsRequestedDes.state,
+        documentsAppointmentRescheduled.state,
+      ].includes(state) &&
+        tenant && (
+          <ReviewDocumentsView
+            process={process}
+            processConfig={processConfig}
+            mutate={mutate}
+          />
+        )}
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import { format, parse } from "date-fns";
 import { Form, Formik } from "formik";
 
 import { locale } from "../../../../services";
@@ -21,7 +22,7 @@ import {
   Text,
   TimeField,
 } from "@mtfh/common/lib/components";
-import { isFutureDate, stringToDate } from "@mtfh/common/lib/utils";
+import { isFutureDate } from "@mtfh/common/lib/utils";
 
 const { views } = locale;
 const { reviewDocuments } = views;
@@ -37,7 +38,6 @@ export const ReviewDocumentsView = ({
   mutate,
 }: ReviewDocumentsViewProps) => {
   const [needAppointment, setNeedAppointment] = useState<boolean>(false);
-  const [appointment] = useState<boolean>(false);
   const [seenPhotographicId, setSeenPhotographicId] = useState<boolean>(false);
   const [seenSecondId, setSeenSecondId] = useState<boolean>(false);
   const [isNotInImmigrationControl, setIsNotInImmigrationControl] =
@@ -46,7 +46,16 @@ export const ReviewDocumentsView = ({
   const [incomingTenantLivingInProperty, setIncomingTenantLivingInProperty] =
     useState<boolean>(false);
 
-  const stateConfig = processConfig.states.documentsRequestedDes;
+  const { states } = processConfig;
+  const stateConfigs = {
+    [states.documentsRequestedDes.state]: processConfig.states.documentsRequestedDes,
+    [states.documentsRequestedAppointment.state]:
+      processConfig.states.documentsRequestedAppointment,
+    [states.documentsAppointmentRescheduled.state]:
+      processConfig.states.documentsAppointmentRescheduled,
+  };
+  const stateConfig = stateConfigs[process.currentState.state];
+  const formData = process.currentState.processData.formData;
   const [globalError, setGlobalError] = useState<number>();
 
   return (
@@ -67,30 +76,43 @@ export const ReviewDocumentsView = ({
           </Link>
         </div>
       </Box>
-      {appointment ? (
+      {[
+        states.documentsRequestedAppointment.state,
+        states.documentsAppointmentRescheduled.state,
+      ].includes(process.currentState.state) && !needAppointment ? (
         <Box>
           <StatusHeading variant="base" title={reviewDocuments.appointmentScheduled} />
           <Text style={{ marginLeft: 60 }}>
-            Date: Friday 5th November 2021
+            Date: {format(new Date(formData.appointmentDateTime), "eeee do MMMM yyyy")}
             <br />
-            Time: 11:00 am
+            Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}
           </Text>
-          <LinkButton style={{ marginLeft: 60 }}>Change</LinkButton>
+          <LinkButton style={{ marginLeft: 60 }} onClick={() => setNeedAppointment(true)}>
+            {locale.change}
+          </LinkButton>
         </Box>
       ) : (
         <Formik
           initialValues={{ day: "", month: "", year: "", hour: "", minute: "", amPm: "" }}
           onSubmit={async (values) => {
-            const appointmentDateTime = stringToDate(
+            const appointmentDateTime = parse(
               `${values.year}-${values.month}-${values.day} ${values.hour}:${
                 values.minute
               } ${values.amPm.toUpperCase()}`,
               "yyyy-MM-dd hh:mm a",
+              new Date(),
             );
+            const processTrigger =
+              process.currentState.state ===
+              processConfig.states.documentsRequestedAppointment.state
+                ? processConfig.states.documentsRequestedAppointment.triggers
+                    .rescheduleDocumentsAppointment
+                : processConfig.states.documentsRequestedDes.triggers
+                    .requestDocumentsAppointment;
             try {
               await editProcess({
                 id: process.id,
-                processTrigger: stateConfig.triggers.requestDocumentsAppointment,
+                processTrigger,
                 processName: process?.processName,
                 etag: process.etag || "",
                 formData: {
@@ -98,6 +120,7 @@ export const ReviewDocumentsView = ({
                 },
                 documents: [],
               });
+              setNeedAppointment(!needAppointment);
               mutate();
             } catch (e: any) {
               setGlobalError(e.response?.status || 500);
@@ -161,7 +184,7 @@ export const ReviewDocumentsView = ({
                       }
                       style={{ width: 222 }}
                     >
-                      Book Appointment
+                      {locale.bookAppointment}
                     </Button>
                   </>
                 )}
