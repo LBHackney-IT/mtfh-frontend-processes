@@ -120,7 +120,7 @@ export const ReviewDocumentsView = ({
                 </Checkbox>
                 {needAppointment && (
                   <>
-                    <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <div style={{ display: "flex" }}>
                       <DateField
                         id="appointment-form-date"
                         className="mtfh-appointment-form__date"
@@ -131,7 +131,7 @@ export const ReviewDocumentsView = ({
                         dayProps={{ name: "day", placeholder: "dd" }}
                         monthProps={{ name: "month", placeholder: "mm" }}
                         yearProps={{ name: "year", placeholder: "yy" }}
-                        style={{ marginTop: "1.5em" }}
+                        style={{ marginTop: "1.5em", width: "100%" }}
                         required
                       />
                       <TimeField
@@ -144,6 +144,7 @@ export const ReviewDocumentsView = ({
                         hourProps={{ name: "hour", placeholder: "00" }}
                         minuteProps={{ name: "minute", placeholder: "00" }}
                         amPmProps={{ name: "amPm", placeholder: "am" }}
+                        style={{ marginTop: "1.5em", width: "100%" }}
                         required
                       />
                     </div>

@@ -55,6 +55,9 @@ const getActiveStep = (state: string, states) => {
   if (state === states.breachChecksPassed.state) {
     return 3;
   }
+  if (state === states.documentsRequestedDes.state) {
+    return 4;
+  }
   return 0;
 };
 
