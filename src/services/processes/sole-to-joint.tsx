@@ -110,7 +110,7 @@ export const soletojoint: IProcess = {
       state: "DocumentsAppointmentRescheduled",
       triggers: {
         reviewDocuments: "ReviewDocuments",
-        rescheduleDocumentsAppointment: "RescheduleDocumentsAppointmssent",
+        rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
         cancelProcess: "CancelProcess",
       },
     },
