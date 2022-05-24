@@ -4,9 +4,11 @@ import { AssetAddress } from "@mtfh/common/lib/api/asset/v1";
 
 const locale = {
   backButton: "Back",
+  bookAppointment: "Book Appointment",
   next: "Next",
   cancel: "Cancel",
   cancelProcess: "Cancel process",
+  change: "Change",
   views: {
     soleToJoint: {
       title: "Sole tenant requests a joint tenure",
@@ -52,6 +54,23 @@ const locale = {
         "Manage My Home has used tenure, person and property information to automatically check eligibility for this application.",
       passedChecks: "Eligibility checks passed",
       failedChecks: "Not eligible for a sole to joint tenure",
+    },
+    reviewDocuments: {
+      passedChecks: "Eligibility checks passed",
+      documentsRequested: "Documents requested",
+      checkSupportingDocumentsAppointment:
+        "I need to make an appointment to check supporting documents",
+      appointmentScheduled: "Office appointment scheduled",
+      seenPhotographicId:
+        "I confirm that an outcome letter has been sent to the resident",
+      seenSecondId:
+        "I confirm I have seen a second form of ID (does not have to be photographic)",
+      isNotInImmigrationControl:
+        "I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996",
+      seenProofOfRelationship:
+        "I confirm I have seen proof of relationship to the existing tenant",
+      incomingTenantLivingInProperty:
+        "I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months",
     },
   },
   errors: {

@@ -52,3 +52,30 @@ export const mockBreachChecksPassedState = {
   ...mockProcessV1,
   currentState: { ...mockProcessV1.currentState, state: "BreachChecksPassed" },
 };
+
+export const mockDocumentsRequestedDes = {
+  ...mockProcessV1,
+  currentState: { ...mockProcessV1.currentState, state: "DocumentsRequestedDes" },
+};
+
+export const mockDocumentsRequestedAppointment = {
+  ...mockProcessV1,
+  currentState: {
+    ...mockProcessV1.currentState,
+    state: "DocumentsRequestedAppointment",
+    processData: {
+      formData: {
+        appointmentDateTime: "2022-10-12T08:59:00.000Z",
+      },
+      documents: [],
+    },
+  },
+};
+
+export const mockDocumentsAppointmentRescheduled = {
+  ...mockProcessV1,
+  currentState: {
+    ...mockProcessV1.currentState,
+    state: "DocumentsAppointmentRescheduled",
+  },
+};

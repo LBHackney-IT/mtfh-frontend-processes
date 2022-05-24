@@ -55,6 +55,15 @@ const getActiveStep = (state: string, states) => {
   if (state === states.breachChecksPassed.state) {
     return 3;
   }
+  if (
+    [
+      states.documentsRequestedDes.state,
+      states.documentsRequestedAppointment.state,
+      states.documentsAppointmentRescheduled.state,
+    ].includes(state)
+  ) {
+    return 4;
+  }
   return 0;
 };
 
@@ -141,6 +150,9 @@ export const SoleToJointView = () => {
     manualChecksPassed,
     breachChecksPassed,
     breachChecksFailed,
+    documentsRequestedDes,
+    documentsRequestedAppointment,
+    documentsAppointmentRescheduled,
     processCancelled,
   } = states;
 
@@ -152,6 +164,9 @@ export const SoleToJointView = () => {
     [manualChecksPassed.state]: CheckEliigibilityView,
     [breachChecksFailed.state]: CheckEliigibilityView,
     [breachChecksPassed.state]: CheckEliigibilityView,
+    [documentsRequestedDes.state]: CheckEliigibilityView,
+    [documentsRequestedAppointment.state]: CheckEliigibilityView,
+    [documentsAppointmentRescheduled.state]: CheckEliigibilityView,
     [processCancelled.state]: CheckEliigibilityView,
   };
 

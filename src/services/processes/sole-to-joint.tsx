@@ -93,7 +93,25 @@ export const soletojoint: IProcess = {
     documentsRequestedDes: {
       state: "DocumentsRequestedDes",
       triggers: {
+        reviewDocuments: "ReviewDocuments",
         requestDocumentsAppointment: "RequestDocumentsAppointment",
+        cancelProcess: "CancelProcess",
+      },
+    },
+    documentsRequestedAppointment: {
+      state: "DocumentsRequestedAppointment",
+      triggers: {
+        reviewDocuments: "ReviewDocuments",
+        rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
+        cancelProcess: "CancelProcess",
+      },
+    },
+    documentsAppointmentRescheduled: {
+      state: "DocumentsAppointmentRescheduled",
+      triggers: {
+        reviewDocuments: "ReviewDocuments",
+        rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
+        cancelProcess: "CancelProcess",
       },
     },
     processCancelled: {
