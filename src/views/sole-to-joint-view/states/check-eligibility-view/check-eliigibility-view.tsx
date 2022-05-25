@@ -49,6 +49,7 @@ export const CheckEliigibilityView = ({
     documentsRequestedAppointment,
     documentsAppointmentRescheduled,
     processCancelled,
+    processClosed,
   } = processConfig.states;
   const { data: tenure, error } = useTenure(process.targetId);
   const { furtherEligibilitySubmitted, setFurtherEligibilitySubmitted } = optional;
@@ -80,9 +81,13 @@ export const CheckEliigibilityView = ({
     <div data-testid="soletojoint-CheckEligibility">
       <Heading variant="h1">{processConfig.title}</Heading>
       <EntitySummary id={process.targetId} type={processConfig.targetType} />
-      {state !== breachChecksPassed.state && (
-        <Text>{checkEligibility.autoCheckIntro}</Text>
-      )}
+      {![
+        breachChecksPassed.state,
+        documentsRequestedDes.state,
+        documentsRequestedAppointment.state,
+        documentsAppointmentRescheduled.state,
+        processClosed.state,
+      ].includes(state) && <Text>{checkEligibility.autoCheckIntro}</Text>}
       {state === breachChecksPassed.state && <EligibilityChecksPassedBox />}
       {state === manualChecksPassed.state && furtherEligibilitySubmitted && (
         <>
@@ -237,6 +242,7 @@ export const CheckEliigibilityView = ({
         documentsRequestedAppointment.state,
         documentsRequestedDes.state,
         documentsAppointmentRescheduled.state,
+        processClosed.state,
       ].includes(state) &&
         tenant && (
           <ReviewDocumentsView

@@ -18,6 +18,7 @@ import {
   Heading,
   Link,
   LinkButton,
+  List,
   StatusErrorSummary,
   StatusHeading,
   Text,
@@ -67,6 +68,8 @@ export const ReviewDocumentsView = ({
   const [incomingTenantLivingInProperty, setIncomingTenantLivingInProperty] =
     useState<boolean>(false);
   const [isCloseCase, setIsCloseCase] = useState<boolean>(false);
+  const [reason, setReason] = useState<string>("");
+  const [hasNotifiedResident, setHasNotifiedResident] = useState<boolean>(false);
 
   const { states } = processConfig;
   const stateConfigs = {
@@ -75,6 +78,7 @@ export const ReviewDocumentsView = ({
       processConfig.states.documentsRequestedAppointment,
     [states.documentsAppointmentRescheduled.state]:
       processConfig.states.documentsAppointmentRescheduled,
+    [states.processClosed.state]: processConfig.states.processClosed,
   };
   const stateConfig = stateConfigs[process.currentState.state];
   const [globalError, setGlobalError] = useState<number>();
@@ -84,145 +88,223 @@ export const ReviewDocumentsView = ({
       {globalError && (
         <StatusErrorSummary id="review-documents-global-error" code={globalError} />
       )}
-      <EligibilityChecksPassedBox />
-
-      {states.documentsRequestedDes.state === process.currentState.state ||
-        (process.previousStates.map(
-          (previous) => previous.state === states.documentsRequestedDes.state,
-        ) && (
-          <Box variant="success">
-            <StatusHeading variant="success" title={reviewDocuments.documentsRequested} />
-            <div
-              style={{ marginLeft: 60, marginTop: 17.5 }}
-              className="govuk-link lbh-link lbh-link--no-visited-state"
-            >
-              <Link as={RouterLink} to="#" variant="link">
-                View request in Document Evidence Store
-              </Link>
-            </div>
+      {reason || process.currentState.state === states.processClosed.state ? (
+        <>
+          <Box variant="warning">
+            <StatusHeading variant="warning" title={reviewDocuments.soleToJointClosed} />
+            <Text style={{ marginLeft: 60 }}>
+              {reason || process.currentState.processData.formData.reason}
+            </Text>
           </Box>
-        ))}
-
-      <ReviewDocumentsAppointmentForm
-        stateConfig={stateConfig}
-        processConfig={processConfig}
-        process={process}
-        mutate={mutate}
-        setGlobalError={setGlobalError}
-      />
-
-      <div style={{ paddingBottom: 35 }} />
-
-      <Formik
-        initialValues={{}}
-        onSubmit={async () => {
-          try {
-            await editProcess({
-              id: process.id,
-              processTrigger: stateConfig.triggers.reviewDocuments,
-              processName: process?.processName,
-              etag: process.etag || "",
-              formData: {
-                seenPhotographicId,
-                seenSecondId,
-                isNotInImmigrationControl,
-                seenProofOfRelationship,
-                incomingTenantLivingInProperty,
-              },
-              documents: [],
-            });
-            mutate();
-          } catch (e: any) {
-            setGlobalError(e.response?.status || 500);
-          }
-        }}
-      >
-        {() => {
-          return (
-            <Form noValidate id="review-documents-form" className="review-documents-form">
-              <Heading variant="h4">
-                Use the form below to record the documents you have checked:
-              </Heading>
-              <Checkbox
-                id="seen-photographic-id"
-                checked={seenPhotographicId}
-                onChange={() => setSeenPhotographicId(!seenPhotographicId)}
-                hint="(for example: valid passport, driving licence)"
-              >
-                {reviewDocuments.seenPhotographicId}
-              </Checkbox>
-              <Checkbox
-                id="seen-second-id"
-                checked={seenSecondId}
-                onChange={() => setSeenSecondId(!seenSecondId)}
-                hint="(for example: utility bill, bank statement, council letter)"
-              >
-                {reviewDocuments.seenSecondId}
-              </Checkbox>
-              <Checkbox
-                id="is-not-immigration-control"
-                checked={isNotInImmigrationControl}
-                onChange={() => setIsNotInImmigrationControl(!isNotInImmigrationControl)}
-                hint="(for example: passport, home office letter, embassy letter, immigration status document)"
-              >
-                {reviewDocuments.isNotInImmigrationControl}
-              </Checkbox>
-              <Checkbox
-                id="seen-proof-of-relationship"
-                checked={seenProofOfRelationship}
-                onChange={() => setSeenProofOfRelationship(!seenProofOfRelationship)}
-                hint="(for example: marriage or civil partner certificate)"
-              >
-                {reviewDocuments.seenProofOfRelationship}
-              </Checkbox>
-              <Checkbox
-                id="incoming-tenant-living-in-property"
-                checked={incomingTenantLivingInProperty}
-                onChange={() =>
-                  setIncomingTenantLivingInProperty(!incomingTenantLivingInProperty)
+          {process.currentState.state !== states.processClosed.state ? (
+            <Formik
+              initialValues={{}}
+              onSubmit={async () => {
+                try {
+                  await editProcess({
+                    id: process.id,
+                    processTrigger: stateConfig.triggers.closeProcess,
+                    processName: process?.processName,
+                    etag: process.etag || "",
+                    formData: {
+                      hasNotifiedResident,
+                    },
+                    documents: [],
+                  });
+                  mutate();
+                } catch (e: any) {
+                  setGlobalError(e.response?.status || 500);
                 }
-                hint="(for example: letter, utility bill, council tax bill)"
-              >
-                {reviewDocuments.incomingTenantLivingInProperty}
-              </Checkbox>
-              <Button
-                type="submit"
-                disabled={
-                  !seenPhotographicId ||
-                  !seenSecondId ||
-                  !isNotInImmigrationControl ||
-                  !seenProofOfRelationship ||
-                  !incomingTenantLivingInProperty
-                }
-                style={{ width: 222 }}
-              >
-                Next
-              </Button>
-            </Form>
-          );
-        }}
-      </Formik>
+              }}
+            >
+              {() => {
+                return (
+                  <Form
+                    noValidate
+                    id="review-documents-form"
+                    className="review-documents-form"
+                  >
+                    <Heading variant="h4">Next Steps:</Heading>
+                    <Checkbox
+                      id="outcome-letter-sent"
+                      checked={hasNotifiedResident}
+                      onChange={() => setHasNotifiedResident(!hasNotifiedResident)}
+                    >
+                      {reviewDocuments.outcomeLetterSent}
+                    </Checkbox>
+                    <Button
+                      type="submit"
+                      disabled={!hasNotifiedResident}
+                      style={{ width: 222 }}
+                    >
+                      Confirm
+                    </Button>
+                  </Form>
+                );
+              }}
+            </Formik>
+          ) : (
+            <>
+              <Heading variant="h3">{reviewDocuments.thankYouForConfirmation}</Heading>
+              <List variant="bullets">
+                <Text size="sm">{reviewDocuments.confirmation}</Text>
+              </List>
+              <div style={{ marginTop: 35 }}>
+                <Link as={RouterLink} to="" variant="back-link">
+                  {locale.returnHomePage}
+                </Link>
+              </div>
+            </>
+          )}
+        </>
+      ) : (
+        <>
+          <EligibilityChecksPassedBox />
+          {states.documentsRequestedDes.state === process.currentState.state ||
+            (process.previousStates.map(
+              (previous) => previous.state === states.documentsRequestedDes.state,
+            ) && (
+              <Box variant="success">
+                <StatusHeading
+                  variant="success"
+                  title={reviewDocuments.documentsRequested}
+                />
+                <div
+                  style={{ marginLeft: 60, marginTop: 17.5 }}
+                  className="govuk-link lbh-link lbh-link--no-visited-state"
+                >
+                  <Link as={RouterLink} to="#" variant="link">
+                    View request in Document Evidence Store
+                  </Link>
+                </div>
+              </Box>
+            ))}
 
-      <CloseCaseDialog
-        stateConfig={stateConfig}
-        process={process}
-        mutate={mutate}
-        isOpen={isCloseCase}
-        setIsOpen={setIsCloseCase}
-        setGlobalError={setGlobalError}
-      />
+          <ReviewDocumentsAppointmentForm
+            stateConfig={stateConfig}
+            processConfig={processConfig}
+            process={process}
+            mutate={mutate}
+            setGlobalError={setGlobalError}
+          />
 
-      <Text size="md">
-        If the documents are not suitable and all avenues to obtain the right documents
-        have been exhausted, then close the case.
-      </Text>
-      <Button
-        variant="secondary"
-        onClick={() => setIsCloseCase(true)}
-        style={{ width: 222 }}
-      >
-        {locale.closeCase}
-      </Button>
+          <div style={{ paddingBottom: 35 }} />
+
+          <Formik
+            initialValues={{}}
+            onSubmit={async () => {
+              try {
+                await editProcess({
+                  id: process.id,
+                  processTrigger: stateConfig.triggers.reviewDocuments,
+                  processName: process?.processName,
+                  etag: process.etag || "",
+                  formData: {
+                    seenPhotographicId,
+                    seenSecondId,
+                    isNotInImmigrationControl,
+                    seenProofOfRelationship,
+                    incomingTenantLivingInProperty,
+                  },
+                  documents: [],
+                });
+                mutate();
+              } catch (e: any) {
+                setGlobalError(e.response?.status || 500);
+              }
+            }}
+          >
+            {() => {
+              return (
+                <Form
+                  noValidate
+                  id="review-documents-form"
+                  className="review-documents-form"
+                >
+                  <Heading variant="h4">
+                    Use the form below to record the documents you have checked:
+                  </Heading>
+                  <Checkbox
+                    id="seen-photographic-id"
+                    checked={seenPhotographicId}
+                    onChange={() => setSeenPhotographicId(!seenPhotographicId)}
+                    hint="(for example: valid passport, driving licence)"
+                  >
+                    {reviewDocuments.seenPhotographicId}
+                  </Checkbox>
+                  <Checkbox
+                    id="seen-second-id"
+                    checked={seenSecondId}
+                    onChange={() => setSeenSecondId(!seenSecondId)}
+                    hint="(for example: utility bill, bank statement, council letter)"
+                  >
+                    {reviewDocuments.seenSecondId}
+                  </Checkbox>
+                  <Checkbox
+                    id="is-not-immigration-control"
+                    checked={isNotInImmigrationControl}
+                    onChange={() =>
+                      setIsNotInImmigrationControl(!isNotInImmigrationControl)
+                    }
+                    hint="(for example: passport, home office letter, embassy letter, immigration status document)"
+                  >
+                    {reviewDocuments.isNotInImmigrationControl}
+                  </Checkbox>
+                  <Checkbox
+                    id="seen-proof-of-relationship"
+                    checked={seenProofOfRelationship}
+                    onChange={() => setSeenProofOfRelationship(!seenProofOfRelationship)}
+                    hint="(for example: marriage or civil partner certificate)"
+                  >
+                    {reviewDocuments.seenProofOfRelationship}
+                  </Checkbox>
+                  <Checkbox
+                    id="incoming-tenant-living-in-property"
+                    checked={incomingTenantLivingInProperty}
+                    onChange={() =>
+                      setIncomingTenantLivingInProperty(!incomingTenantLivingInProperty)
+                    }
+                    hint="(for example: letter, utility bill, council tax bill)"
+                  >
+                    {reviewDocuments.incomingTenantLivingInProperty}
+                  </Checkbox>
+                  <Button
+                    type="submit"
+                    disabled={
+                      !seenPhotographicId ||
+                      !seenSecondId ||
+                      !isNotInImmigrationControl ||
+                      !seenProofOfRelationship ||
+                      !incomingTenantLivingInProperty
+                    }
+                    style={{ width: 222 }}
+                  >
+                    Next
+                  </Button>
+                </Form>
+              );
+            }}
+          </Formik>
+
+          <CloseCaseDialog
+            isOpen={isCloseCase}
+            setIsOpen={setIsCloseCase}
+            setReason={setReason}
+          />
+
+          <Text size="md">
+            If the documents are not suitable and all avenues to obtain the right
+            documents have been exhausted, then close the case.
+          </Text>
+          <Button
+            variant="secondary"
+            onClick={() => setIsCloseCase(true)}
+            style={{ width: 222 }}
+          >
+            {locale.closeCase}
+          </Button>
+        </>
+      )}
     </div>
   );
 };
@@ -281,6 +363,18 @@ export const ReviewDocumentsAppointmentForm = ({
   );
 };
 
+interface BookAppointmentFormProps {
+  processConfig: IProcess;
+  stateConfig: {
+    [key: string]: any;
+  };
+  process: Process;
+  mutate: () => void;
+  needAppointment: boolean;
+  setGlobalError: any;
+  setNeedAppointment: any;
+}
+
 export const BookAppointmentForm = ({
   processConfig,
   stateConfig,
@@ -289,7 +383,7 @@ export const BookAppointmentForm = ({
   setGlobalError,
   needAppointment,
   setNeedAppointment,
-}): JSX.Element => {
+}: BookAppointmentFormProps): JSX.Element => {
   const [bookAppointmentDisabled, setBookAppointmentDisabled] = useState<boolean>(true);
 
   const { states } = processConfig;

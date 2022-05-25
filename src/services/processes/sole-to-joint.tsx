@@ -114,6 +114,10 @@ export const soletojoint: IProcess = {
         closeProcess: "CloseProcess",
       },
     },
+    processClosed: {
+      state: "ProcessClosed",
+      triggers: {},
+    },
     processCancelled: {
       state: "ProcessCancelled",
       triggers: {},

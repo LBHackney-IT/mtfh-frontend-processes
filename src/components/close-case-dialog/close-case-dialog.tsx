@@ -2,7 +2,6 @@ import { Form, Formik } from "formik";
 
 import { locale } from "../../services";
 
-import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Button,
   Dialog,
@@ -12,14 +11,7 @@ import {
   TextArea,
 } from "@mtfh/common/lib/components";
 
-export const CloseCaseDialog = ({
-  stateConfig,
-  process,
-  mutate,
-  setGlobalError,
-  isOpen,
-  setIsOpen,
-}): JSX.Element => {
+export const CloseCaseDialog = ({ isOpen, setIsOpen, setReason }): JSX.Element => {
   return (
     <Dialog
       isOpen={isOpen}
@@ -30,23 +22,8 @@ export const CloseCaseDialog = ({
         initialValues={{ reasonForRejection: "" }}
         onSubmit={async (values) => {
           console.log(values.reasonForRejection);
-          try {
-            await editProcess({
-              id: process.id,
-              processTrigger: stateConfig.triggers.closeProcess,
-              processName: process?.processName,
-              etag: process.etag || "",
-              formData: {
-                hasNotifiedResident: false,
-                reasonForRejection: values.reasonForRejection,
-              },
-              documents: [],
-            });
-            mutate();
-          } catch (e: any) {
-            setIsOpen(false);
-            setGlobalError(e.response?.status || 500);
-          }
+          setReason(values.reasonForRejection);
+          setIsOpen(false);
         }}
       >
         <Form>

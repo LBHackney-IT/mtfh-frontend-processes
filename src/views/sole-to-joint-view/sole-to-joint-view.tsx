@@ -60,6 +60,7 @@ const getActiveStep = (state: string, states) => {
       states.documentsRequestedDes.state,
       states.documentsRequestedAppointment.state,
       states.documentsAppointmentRescheduled.state,
+      states.processClosed.state,
     ].includes(state)
   ) {
     return 4;
@@ -154,6 +155,7 @@ export const SoleToJointView = () => {
     documentsRequestedAppointment,
     documentsAppointmentRescheduled,
     processCancelled,
+    processClosed,
   } = states;
 
   const components = {
@@ -168,6 +170,7 @@ export const SoleToJointView = () => {
     [documentsRequestedAppointment.state]: CheckEliigibilityView,
     [documentsAppointmentRescheduled.state]: CheckEliigibilityView,
     [processCancelled.state]: CheckEliigibilityView,
+    [processClosed.state]: CheckEliigibilityView,
   };
 
   const Component = components[state];

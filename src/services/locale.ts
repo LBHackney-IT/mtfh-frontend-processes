@@ -13,6 +13,7 @@ const locale = {
   confirm: "Confirm",
   reason: "Reason",
   reschedule: "Reschedule",
+  returnHomePage: "Return to home page",
   views: {
     soleToJoint: {
       title: "Sole tenant requests a joint tenure",
@@ -75,6 +76,12 @@ const locale = {
         "I confirm I have seen proof of relationship to the existing tenant",
       incomingTenantLivingInProperty:
         "I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months",
+      outcomeLetterSent:
+        "I confirm that an outcome letter has been sent to the resident.",
+      soleToJointClosed: "Sole to joint application closed",
+      thankYouForConfirmation: "Thank you for confirmation",
+      confirmation:
+        "The outcome has been recorded and can be viewed in the activity history",
     },
     closeCase: (processName: string) => `Close ${processName} application?`,
   },
