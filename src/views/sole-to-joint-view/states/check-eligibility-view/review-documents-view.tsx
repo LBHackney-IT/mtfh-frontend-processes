@@ -86,17 +86,22 @@ export const ReviewDocumentsView = ({
       )}
       <EligibilityChecksPassedBox />
 
-      <Box variant="success">
-        <StatusHeading variant="success" title={reviewDocuments.documentsRequested} />
-        <div
-          style={{ marginLeft: 60, marginTop: 17.5 }}
-          className="govuk-link lbh-link lbh-link--no-visited-state"
-        >
-          <Link as={RouterLink} to="#" variant="link">
-            View request in Document Evidence Store
-          </Link>
-        </div>
-      </Box>
+      {states.documentsRequestedDes.state === process.currentState.state ||
+        (process.previousStates.map(
+          (previous) => previous.state === states.documentsRequestedDes.state,
+        ) && (
+          <Box variant="success">
+            <StatusHeading variant="success" title={reviewDocuments.documentsRequested} />
+            <div
+              style={{ marginLeft: 60, marginTop: 17.5 }}
+              className="govuk-link lbh-link lbh-link--no-visited-state"
+            >
+              <Link as={RouterLink} to="#" variant="link">
+                View request in Document Evidence Store
+              </Link>
+            </div>
+          </Box>
+        ))}
 
       <ReviewDocumentsAppointmentForm
         stateConfig={stateConfig}
