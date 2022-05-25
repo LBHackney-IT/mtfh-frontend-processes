@@ -4,6 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { format, parse } from "date-fns";
 import { Form, Formik } from "formik";
 
+import { CloseCaseDialog } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
 import { EligibilityChecksPassedBox } from "./shared";
@@ -65,6 +66,7 @@ export const ReviewDocumentsView = ({
   const [seenProofOfRelationship, setSeenProofOfRelationship] = useState<boolean>(false);
   const [incomingTenantLivingInProperty, setIncomingTenantLivingInProperty] =
     useState<boolean>(false);
+  const [isCloseCase, setIsCloseCase] = useState<boolean>(false);
 
   const { states } = processConfig;
   const stateConfigs = {
@@ -195,12 +197,26 @@ export const ReviewDocumentsView = ({
           );
         }}
       </Formik>
+
+      <CloseCaseDialog
+        stateConfig={stateConfig}
+        process={process}
+        mutate={mutate}
+        isOpen={isCloseCase}
+        setIsOpen={setIsCloseCase}
+        setGlobalError={setGlobalError}
+      />
+
       <Text size="md">
         If the documents are not suitable and all avenues to obtain the right documents
         have been exhausted, then close the case.
       </Text>
-      <Button variant="secondary" style={{ width: 222 }}>
-        Close case
+      <Button
+        variant="secondary"
+        onClick={() => setIsCloseCase(true)}
+        style={{ width: 222 }}
+      >
+        {locale.closeCase}
       </Button>
     </div>
   );

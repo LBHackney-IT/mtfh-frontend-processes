@@ -9,6 +9,9 @@ const locale = {
   cancel: "Cancel",
   cancelProcess: "Cancel process",
   change: "Change",
+  closeCase: "Close Case",
+  confirm: "Confirm",
+  reason: "Reason",
   views: {
     soleToJoint: {
       title: "Sole tenant requests a joint tenure",
@@ -72,6 +75,7 @@ const locale = {
       incomingTenantLivingInProperty:
         "I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months",
     },
+    closeCase: (processName: string) => `Close ${processName} application?`,
   },
   errors: {
     unableToFetchRecord: "There was a problem retrieving the record",
