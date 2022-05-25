@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { format, parse } from "date-fns";
+import { format, isPast, parse } from "date-fns";
 import { Form, Formik } from "formik";
 
 import { CloseCaseDialog } from "../../../../components";
@@ -263,7 +263,9 @@ export const ReviewDocumentsAppointmentForm = ({
         Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}
       </Text>
       <LinkButton style={{ marginLeft: 60 }} onClick={() => setNeedAppointment(true)}>
-        {locale.change}
+        {isPast(new Date(formData.appointmentDateTime))
+          ? locale.reschedule
+          : locale.change}
       </LinkButton>
     </Box>
   ) : (

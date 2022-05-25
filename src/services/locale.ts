@@ -12,6 +12,7 @@ const locale = {
   closeCase: "Close Case",
   confirm: "Confirm",
   reason: "Reason",
+  reschedule: "Reschedule",
   views: {
     soleToJoint: {
       title: "Sole tenant requests a joint tenure",
