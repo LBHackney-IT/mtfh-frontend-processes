@@ -63,25 +63,36 @@ const locale = {
     reviewDocuments: {
       passedChecks: "Eligibility checks passed",
       documentsRequested: "Documents requested",
+      viewInDes: "View request in Document Evidence Store",
+      useFormBelow: "Use the form below to record the documents you have checked:",
       checkSupportingDocumentsAppointment:
         "I need to make an appointment to check supporting documents",
       appointmentScheduled: "Office appointment scheduled",
       seenPhotographicId:
         "I confirm that an outcome letter has been sent to the resident",
+      seenPhotographicIdHint: "(for example: valid passport, driving licence)",
       seenSecondId:
         "I confirm I have seen a second form of ID (does not have to be photographic)",
+      seenSecondIdHint: "(for example: utility bill, bank statement, council letter)",
       isNotInImmigrationControl:
         "I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996",
+      isNotInImmigrationControlHint:
+        "(for example: passport, home office letter, embassy letter, immigration status document)",
       seenProofOfRelationship:
         "I confirm I have seen proof of relationship to the existing tenant",
+      seenProofOfRelationshipHint: "(for example: marriage or civil partner certificate)",
       incomingTenantLivingInProperty:
         "I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months",
+      incomingTenantLivingInPropertyHint:
+        "(for example: letter, utility bill, council tax bill)",
       outcomeLetterSent:
         "I confirm that an outcome letter has been sent to the resident.",
       soleToJointClosed: "Sole to joint application closed",
       thankYouForConfirmation: "Thank you for confirmation",
       confirmation:
         "The outcome has been recorded and can be viewed in the activity history",
+      documentsNotSuitableCloseCase:
+        "If the documents are not suitable and all avenues to obtain the right documents have been exhausted, then close the case.",
     },
     closeCase: {
       reasonForRejection: "Reason for Rejection",

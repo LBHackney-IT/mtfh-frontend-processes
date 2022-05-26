@@ -176,7 +176,7 @@ export const ReviewDocumentsView = ({
                   className="govuk-link lbh-link lbh-link--no-visited-state"
                 >
                   <Link as={RouterLink} to="#" variant="link">
-                    View request in Document Evidence Store
+                    {reviewDocuments.viewInDes}
                   </Link>
                 </div>
               </Box>
@@ -223,14 +223,12 @@ export const ReviewDocumentsView = ({
                   id="review-documents-form"
                   className="review-documents-form"
                 >
-                  <Heading variant="h4">
-                    Use the form below to record the documents you have checked:
-                  </Heading>
+                  <Heading variant="h4">{reviewDocuments.useFormBelow}</Heading>
                   <Checkbox
                     id="seen-photographic-id"
                     checked={seenPhotographicId}
                     onChange={() => setSeenPhotographicId(!seenPhotographicId)}
-                    hint="(for example: valid passport, driving licence)"
+                    hint={reviewDocuments.seenPhotographicIdHint}
                   >
                     {reviewDocuments.seenPhotographicId}
                   </Checkbox>
@@ -238,7 +236,7 @@ export const ReviewDocumentsView = ({
                     id="seen-second-id"
                     checked={seenSecondId}
                     onChange={() => setSeenSecondId(!seenSecondId)}
-                    hint="(for example: utility bill, bank statement, council letter)"
+                    hint={reviewDocuments.seenSecondIdHint}
                   >
                     {reviewDocuments.seenSecondId}
                   </Checkbox>
@@ -248,7 +246,7 @@ export const ReviewDocumentsView = ({
                     onChange={() =>
                       setIsNotInImmigrationControl(!isNotInImmigrationControl)
                     }
-                    hint="(for example: passport, home office letter, embassy letter, immigration status document)"
+                    hint={reviewDocuments.isNotInImmigrationControlHint}
                   >
                     {reviewDocuments.isNotInImmigrationControl}
                   </Checkbox>
@@ -256,7 +254,7 @@ export const ReviewDocumentsView = ({
                     id="seen-proof-of-relationship"
                     checked={seenProofOfRelationship}
                     onChange={() => setSeenProofOfRelationship(!seenProofOfRelationship)}
-                    hint="(for example: marriage or civil partner certificate)"
+                    hint={reviewDocuments.seenProofOfRelationshipHint}
                   >
                     {reviewDocuments.seenProofOfRelationship}
                   </Checkbox>
@@ -266,7 +264,7 @@ export const ReviewDocumentsView = ({
                     onChange={() =>
                       setIncomingTenantLivingInProperty(!incomingTenantLivingInProperty)
                     }
-                    hint="(for example: letter, utility bill, council tax bill)"
+                    hint={reviewDocuments.incomingTenantLivingInPropertyHint}
                   >
                     {reviewDocuments.incomingTenantLivingInProperty}
                   </Checkbox>
@@ -281,7 +279,7 @@ export const ReviewDocumentsView = ({
                     }
                     style={{ width: 222 }}
                   >
-                    Next
+                    {locale.next}
                   </Button>
                 </Form>
               );
@@ -311,10 +309,7 @@ export const ReviewDocumentsView = ({
             </Dialog>
           </Formik>
 
-          <Text size="md">
-            If the documents are not suitable and all avenues to obtain the right
-            documents have been exhausted, then close the case.
-          </Text>
+          <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
           <Button
             variant="secondary"
             onClick={() => setIsCloseCase(true)}
@@ -472,7 +467,7 @@ export const BookAppointmentForm = ({
               checked={needAppointment}
               onChange={() => setNeedAppointment(!needAppointment)}
             >
-              I need to make an appointment to check supporting documents
+              {reviewDocuments.checkSupportingDocumentsAppointment}
             </Checkbox>
             {needAppointment && (
               <>
