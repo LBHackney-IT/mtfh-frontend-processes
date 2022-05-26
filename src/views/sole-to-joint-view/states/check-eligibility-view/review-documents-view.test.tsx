@@ -55,14 +55,34 @@ describe("review-documents-view", () => {
     render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
-        process={mockDocumentsRequestedAppointment}
+        process={mockDocumentsRequestedAppointment({
+          appointmentDateTime: "2099-10-12T08:59:00.000Z",
+        })}
         mutate={() => {}}
       />,
     );
 
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
-    const changeButton = screen.getByText(locale.change);
-    fireEvent.click(changeButton);
+    const button = screen.getByText(locale.change);
+    fireEvent.click(button);
+    const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
+    expect(bookAppointmentButton).toBeDisabled();
+  });
+
+  test("it displays reschedule button if date is past", async () => {
+    render(
+      <ReviewDocumentsView
+        processConfig={processes.soletojoint}
+        process={mockDocumentsRequestedAppointment({
+          appointmentDateTime: "2010-10-12T08:59:00.000Z",
+        })}
+        mutate={() => {}}
+      />,
+    );
+
+    await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
+    const button = screen.getByText(locale.reschedule);
+    fireEvent.click(button);
     const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
     expect(bookAppointmentButton).toBeDisabled();
   });
@@ -96,14 +116,16 @@ describe("review-documents-view", () => {
         mutate={() => {}}
       />,
     );
-    const checkbox = screen.getByLabelText(
-      locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
+
+    await userEvent.click(
+      screen.getByLabelText(
+        locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
+      ),
     );
-    fireEvent.click(checkbox);
     await typeDateTime(user, "2099");
     const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
     expect(bookAppointmentButton).toBeEnabled();
-    user.click(bookAppointmentButton);
+    await user.click(bookAppointmentButton);
     await expect(
       screen.findByText("There was a problem with completing the action"),
     ).resolves.toBeInTheDocument();
@@ -139,6 +161,104 @@ test("it displays an error if there's an issue with book appointment", async () 
   selectAllCheckBoxes();
   expect(nextButton).toBeEnabled();
   nextButton.click();
+  await expect(
+    screen.findByText("There was a problem with completing the action"),
+  ).resolves.toBeInTheDocument();
+});
+
+test("it displays close case dialog on close case button click and closes on cancel", async () => {
+  render(
+    <ReviewDocumentsView
+      processConfig={processes.soletojoint}
+      process={mockDocumentsRequestedDes}
+      mutate={() => {}}
+    />,
+  );
+
+  const closeCaseButton = await screen.findByText(locale.closeCase);
+  await expect(closeCaseButton).toBeEnabled();
+  await userEvent.click(closeCaseButton);
+  await expect(
+    screen.findByText(locale.views.closeCase.reasonForRejection),
+  ).resolves.toBeInTheDocument();
+  await userEvent.click(await screen.findByText(locale.cancel));
+  await expect(screen.queryByText(locale.views.closeCase.reasonForRejection)).toBeNull();
+});
+
+test("it displays close case view with reason and checkbox to confirm", async () => {
+  render(
+    <ReviewDocumentsView
+      processConfig={processes.soletojoint}
+      process={mockDocumentsRequestedDes}
+      mutate={() => {}}
+    />,
+  );
+  const reason = "Documents not provided";
+  await userEvent.click(await screen.findByText(locale.closeCase));
+  await expect(
+    screen.findByText(locale.views.closeCase.reasonForRejection),
+  ).resolves.toBeInTheDocument();
+  await userEvent.type(
+    screen.getByLabelText(`${locale.views.closeCase.reasonForRejection}*`),
+    reason,
+  );
+  await userEvent.click(await screen.findByText(locale.confirm));
+  await expect(
+    screen.findByText(locale.views.reviewDocuments.soleToJointClosed),
+  ).resolves.toBeInTheDocument();
+  await expect(screen.findByText(reason)).resolves.toBeInTheDocument();
+});
+
+test("it closes case when checkbox is ticked and reason provided", async () => {
+  server.use(patchProcessV1({}, 200));
+  render(
+    <ReviewDocumentsView
+      processConfig={processes.soletojoint}
+      process={mockDocumentsRequestedDes}
+      mutate={() => {}}
+    />,
+  );
+
+  const reason = "Documents not provided";
+  await userEvent.click(await screen.findByText(locale.closeCase));
+  await userEvent.type(
+    screen.getByLabelText(`${locale.views.closeCase.reasonForRejection}*`),
+    reason,
+  );
+  await userEvent.click(await screen.findByText(locale.confirm));
+  await expect(screen.findByText(reason)).resolves.toBeInTheDocument();
+  await expect(screen.findByText(locale.confirm)).resolves.toBeDisabled();
+  await userEvent.click(
+    screen.getByLabelText(locale.views.reviewDocuments.outcomeLetterSent),
+  );
+  await expect(screen.findByText(locale.confirm)).resolves.toBeEnabled();
+  await userEvent.click(screen.getByText(locale.confirm));
+  expect(
+    screen.findByText(locale.views.reviewDocuments.confirmation),
+  ).resolves.toBeInTheDocument();
+});
+
+test("it displays error if close case API call fails", async () => {
+  server.use(patchProcessV1("", 500));
+  render(
+    <ReviewDocumentsView
+      processConfig={processes.soletojoint}
+      process={mockDocumentsRequestedDes}
+      mutate={() => {}}
+    />,
+  );
+
+  const reason = "Documents not provided";
+  await userEvent.click(await screen.findByText(locale.closeCase));
+  await userEvent.type(
+    screen.getByLabelText(`${locale.views.closeCase.reasonForRejection}*`),
+    reason,
+  );
+  await userEvent.click(await screen.findByText(locale.confirm));
+  await userEvent.click(
+    screen.getByLabelText(locale.views.reviewDocuments.outcomeLetterSent),
+  );
+  await userEvent.click(screen.getByText(locale.confirm));
   await expect(
     screen.findByText("There was a problem with completing the action"),
   ).resolves.toBeInTheDocument();

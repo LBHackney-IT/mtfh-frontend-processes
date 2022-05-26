@@ -139,7 +139,7 @@ export const ReviewDocumentsView = ({
                       disabled={!hasNotifiedResident}
                       style={{ width: 222 }}
                     >
-                      Confirm
+                      {locale.confirm}
                     </Button>
                   </Form>
                 );
