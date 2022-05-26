@@ -83,7 +83,10 @@ const locale = {
       confirmation:
         "The outcome has been recorded and can be viewed in the activity history",
     },
-    closeCase: (processName: string) => `Close ${processName} application?`,
+    closeCase: {
+      reasonForRejection: "Reason for Rejection",
+      closeApplication: (processName: string) => `Close ${processName} application?`,
+    },
   },
   errors: {
     unableToFetchRecord: "There was a problem retrieving the record",

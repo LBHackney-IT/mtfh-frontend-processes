@@ -4,9 +4,9 @@ import { Link as RouterLink } from "react-router-dom";
 import { format, isPast, parse } from "date-fns";
 import { Form, Formik } from "formik";
 
-import { CloseCaseDialog } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
+import { CloseCaseForm, CloseCaseFormData } from "./close-case-form";
 import { EligibilityChecksPassedBox } from "./shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
@@ -15,6 +15,8 @@ import {
   Button,
   Checkbox,
   DateField,
+  Dialog,
+  DialogActions,
   Heading,
   Link,
   LinkButton,
@@ -285,12 +287,29 @@ export const ReviewDocumentsView = ({
               );
             }}
           </Formik>
-
-          <CloseCaseDialog
-            isOpen={isCloseCase}
-            setIsOpen={setIsCloseCase}
-            setReason={setReason}
-          />
+          <Formik<CloseCaseFormData>
+            initialValues={{ reasonForRejection: "" }}
+            onSubmit={async (values) => {
+              setReason(values.reasonForRejection);
+              setIsCloseCase(false);
+            }}
+          >
+            <Dialog
+              isOpen={isCloseCase}
+              onDismiss={() => setIsCloseCase(false)}
+              title={locale.views.closeCase.closeApplication("sole to joint")}
+            >
+              <Form>
+                <CloseCaseForm />
+                <DialogActions>
+                  <Button type="submit">{locale.confirm}</Button>
+                  <Link as="button" onClick={() => setIsCloseCase(false)}>
+                    {locale.cancel}
+                  </Link>
+                </DialogActions>
+              </Form>
+            </Dialog>
+          </Formik>
 
           <Text size="md">
             If the documents are not suitable and all avenues to obtain the right
