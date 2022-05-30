@@ -32,6 +32,39 @@ test("it renders tenure summary details", async () => {
   ).resolves.toBeInTheDocument();
 });
 
+test("it renders tenure summary details with an incoming tenant", async () => {
+  const incomingTenant = {
+    fullName: "IncomingTenant Test",
+  };
+  render(
+    <EntitySummary
+      id={mockActiveTenureV1.id}
+      type="tenure"
+      config={{ incomingTenant }}
+    />,
+    {
+      url: `/processes/soletojoint/start/tenure/${mockActiveTenureV1.id}`,
+      path: "/processes/:processName/start/:targetType/:targetId",
+    },
+  );
+
+  await expect(
+    screen.findByText(locale.components.entitySummary.tenurePaymentRef, { exact: false }),
+  ).resolves.toBeInTheDocument();
+
+  await expect(
+    screen.findByText(mockActiveTenureV1.paymentReference, { exact: false }),
+  ).resolves.toBeInTheDocument();
+
+  await expect(
+    screen.findByText(mockActiveTenureV1?.tenuredAsset?.fullAddress, { exact: false }),
+  ).resolves.toBeInTheDocument();
+
+  await expect(
+    screen.findByText(`adding ${incomingTenant.fullName}`),
+  ).resolves.toBeInTheDocument();
+});
+
 test("it renders an error if tenure details can't be fetched", async () => {
   server.use(getTenureV1("error", 500));
   render(<EntitySummary id={mockActiveTenureV1.id} type="tenure" />, {

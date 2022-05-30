@@ -17,7 +17,13 @@ import "./styles.scss";
 
 const { components } = locale;
 
-const TenureSummary = ({ id }: { id: string }) => {
+interface ComponentProps {
+  id: string;
+  // eslint-disable-next-line react/no-unused-prop-types
+  config?: Record<string, any>;
+}
+
+const TenureSummary = ({ id, config = {} }: ComponentProps) => {
   const { error, data: tenure } = useTenure(id);
 
   if (error) {
@@ -38,7 +44,8 @@ const TenureSummary = ({ id }: { id: string }) => {
     );
   }
 
-  const tennant = tenure.householdMembers.find((m) => m.isResponsible);
+  const tenant = tenure.householdMembers.find((m) => m.isResponsible);
+  const { incomingTenant } = config;
 
   return (
     <Heading className="entity-summary__tenure-heading" variant="h2">
@@ -46,18 +53,19 @@ const TenureSummary = ({ id }: { id: string }) => {
         {components.entitySummary.tenurePaymentRef} {tenure?.paymentReference}
       </div>
       <div>{tenure?.tenuredAsset?.fullAddress}</div>
-      {tennant && (
+      {tenant && (
         <div>
-          <Link as={RouterLink} to={`/person/${tennant.id}`} variant="link">
-            {tennant?.fullName}
+          <Link as={RouterLink} to={`/person/${tenant.id}`} variant="link">
+            {tenant?.fullName}
           </Link>
+          {incomingTenant && ` adding ${incomingTenant.fullName}`}
         </div>
       )}
     </Heading>
   );
 };
 
-const AssetsSummary = ({ id }: { id: string }) => {
+const AssetsSummary = ({ id }: ComponentProps) => {
   const { error, data: asset } = useAsset(id);
 
   if (error) {
@@ -85,7 +93,7 @@ const AssetsSummary = ({ id }: { id: string }) => {
   );
 };
 
-const PersonSummary = ({ id }: { id: string }) => {
+const PersonSummary = ({ id }: ComponentProps) => {
   const { error, data: person } = usePerson(id);
 
   if (error) {
@@ -116,9 +124,10 @@ const PersonSummary = ({ id }: { id: string }) => {
 interface EntitySummaryProps {
   id: string;
   type: "tenure" | "property" | "person";
+  config?: Record<string, any>;
 }
 
-export const EntitySummary = ({ id, type }: EntitySummaryProps) => {
+export const EntitySummary = ({ id, type, config }: EntitySummaryProps) => {
   const Components = {
     tenure: TenureSummary,
     property: AssetsSummary,
@@ -128,5 +137,5 @@ export const EntitySummary = ({ id, type }: EntitySummaryProps) => {
 
   if (!Component) return null;
 
-  return <Component id={id} />;
+  return <Component id={id} config={config} />;
 };
