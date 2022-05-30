@@ -3,7 +3,6 @@ import React from "react";
 import { patchProcessV1, render, server } from "@hackney/mtfh-test-utils";
 import { fireEvent, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { format } from "date-fns";
 
 import { locale, processes } from "../../../../services";
 import {
@@ -199,12 +198,11 @@ describe("review-documents-view", () => {
   });
 
   test("it renders ReviewDocuments correctly on state DocumentsRequestedAppointment", async () => {
-    const dateTimeString = "2099-10-12T08:59:00.000Z";
     const { container } = render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
         process={mockDocumentsRequestedAppointment({
-          appointmentDateTime: dateTimeString,
+          appointmentDateTime: "2099-10-12T08:59:00.000Z",
         })}
         mutate={() => {}}
       />,
@@ -220,9 +218,7 @@ describe("review-documents-view", () => {
     await expect(
       screen.findByText(locale.views.reviewDocuments.appointmentScheduled),
     ).resolves.toBeInTheDocument();
-    await expect(
-      screen.findByText(format(new Date(dateTimeString), "hh:mm aaa"), { exact: false }),
-    ).resolves.toBeInTheDocument();
+    await expect(screen.findByText(/08:59 am/)).resolves.toBeInTheDocument();
     await expect(
       screen.findByText(/Monday 12th October 2099/),
     ).resolves.toBeInTheDocument();
