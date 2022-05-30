@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link as RouterLink, useParams } from "react-router-dom";
 
 import { locale, processes } from "../../services";
 import { CheckEliigibilityView, SelectTenantsView } from "./states";
@@ -72,10 +72,18 @@ interface SideBarProps {
   state: any;
   states: any;
   furtherEligibilitySubmitted: boolean;
+  processId: string;
+  processName: string;
 }
 
 const SideBar = (props: SideBarProps) => {
-  const { state, states, furtherEligibilitySubmitted = false } = props;
+  const {
+    state,
+    states,
+    furtherEligibilitySubmitted = false,
+    processId,
+    processName,
+  } = props;
 
   let activeStep = getActiveStep(state, states);
   let steps: typeof allSteps;
@@ -99,7 +107,13 @@ const SideBar = (props: SideBarProps) => {
       </Stepper>
       <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
       <Button variant="secondary">{soleToJoint.actions.cancelProcess}</Button>
-      <Button variant="secondary">{soleToJoint.actions.caseActivityHistory}</Button>
+      <Button
+        variant="secondary"
+        as={RouterLink}
+        to={`/activities/process/${processName}/${processId}`}
+      >
+        {soleToJoint.actions.caseActivityHistory}
+      </Button>
     </>
   );
 };
@@ -194,6 +208,8 @@ export const SoleToJointView = () => {
           state={state}
           states={states}
           furtherEligibilitySubmitted={furtherEligibilitySubmitted}
+          processId={processId}
+          processName={processConfig.processName}
         />
       }
     >

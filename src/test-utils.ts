@@ -58,6 +58,21 @@ export const mockDocumentsRequestedDes = {
   currentState: { ...mockProcessV1.currentState, state: "DocumentsRequestedDes" },
 };
 
+export const mockDocumentsRequestedDesAppointment = {
+  ...mockProcessV1,
+  currentState: {
+    ...mockProcessV1.currentState,
+    state: "DocumentsRequestedAppointment",
+    processData: {
+      formData: {
+        appointmentDateTime: "2022-10-12T08:59:00.000Z",
+      },
+      documents: [],
+    },
+  },
+  previousStates: [{ ...mockProcessV1.currentState, state: "DocumentsRequestedDes" }],
+};
+
 export const mockDocumentsRequestedAppointment = ({
   appointmentDateTime,
 }: {

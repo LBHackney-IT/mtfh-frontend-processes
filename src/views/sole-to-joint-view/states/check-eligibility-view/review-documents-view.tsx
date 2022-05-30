@@ -162,25 +162,25 @@ export const ReviewDocumentsView = ({
       ) : (
         <>
           <EligibilityChecksPassedBox />
-          {states.documentsRequestedDes.state === process.currentState.state ||
-            (process.previousStates.map(
+          {(states.documentsRequestedDes.state === process.currentState.state ||
+            process.previousStates.find(
               (previous) => previous.state === states.documentsRequestedDes.state,
-            ) && (
-              <Box variant="success">
-                <StatusHeading
-                  variant="success"
-                  title={reviewDocuments.documentsRequested}
-                />
-                <div
-                  style={{ marginLeft: 60, marginTop: 17.5 }}
-                  className="govuk-link lbh-link lbh-link--no-visited-state"
-                >
-                  <Link as={RouterLink} to="#" variant="link">
-                    {reviewDocuments.viewInDes}
-                  </Link>
-                </div>
-              </Box>
-            ))}
+            )) && (
+            <Box variant="success">
+              <StatusHeading
+                variant="success"
+                title={reviewDocuments.documentsRequested}
+              />
+              <div
+                style={{ marginLeft: 60, marginTop: 17.5 }}
+                className="govuk-link lbh-link lbh-link--no-visited-state"
+              >
+                <Link as={RouterLink} to="#" variant="link">
+                  {reviewDocuments.viewInDes}
+                </Link>
+              </div>
+            </Box>
+          )}
 
           <ReviewDocumentsAppointmentForm
             stateConfig={stateConfig}
@@ -327,9 +327,7 @@ interface ReviewDocumentsAppointmentFormProps {
   processConfig: IProcess;
   process: Process;
   mutate: () => void;
-  stateConfig: {
-    [key: string]: any;
-  };
+  stateConfig: Record<string, any>;
   setGlobalError: any;
 }
 
@@ -379,9 +377,7 @@ export const ReviewDocumentsAppointmentForm = ({
 
 interface BookAppointmentFormProps {
   processConfig: IProcess;
-  stateConfig: {
-    [key: string]: any;
-  };
+  stateConfig: Record<string, any>;
   process: Process;
   mutate: () => void;
   needAppointment: boolean;
@@ -407,12 +403,23 @@ export const BookAppointmentForm = ({
       initialValues={{ day: "", month: "", year: "", hour: "", minute: "", amPm: "" }}
       onSubmit={async (values) => {
         const appointmentDateTime = getAppointmentDateTime(values);
-        const processTrigger = [
-          states.documentsRequestedAppointment.state,
-          states.documentsAppointmentRescheduled.state,
-        ].includes(process.currentState.state)
-          ? stateConfig.triggers.rescheduleDocumentsAppointment
-          : stateConfig.triggers.requestDocumentsAppointment;
+        let processTrigger = stateConfig.triggers.requestDocumentsAppointment;
+        if (
+          [
+            states.documentsRequestedAppointment.state,
+            states.documentsAppointmentRescheduled.state,
+          ].includes(process.currentState.state)
+        ) {
+          if (
+            isPast(
+              new Date(process.currentState.processData.formData.appointmentDateTime),
+            )
+          ) {
+            processTrigger = stateConfig.triggers.rescheduleDocumentsAppointment;
+          } else {
+            processTrigger = "";
+          }
+        }
         try {
           await editProcess({
             id: process.id,
@@ -423,6 +430,12 @@ export const BookAppointmentForm = ({
               appointmentDateTime,
             },
             documents: [],
+            processData: {
+              formData: {
+                appointmentDateTime,
+              },
+              documents: [],
+            },
           });
           setNeedAppointment(!needAppointment);
           mutate();
