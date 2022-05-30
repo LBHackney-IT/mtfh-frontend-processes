@@ -1,6 +1,6 @@
 import React from "react";
 
-import { getTenureV1, render, server } from "@hackney/mtfh-test-utils";
+import { getTenureV1, mockProcessV1, render, server } from "@hackney/mtfh-test-utils";
 import { screen } from "@testing-library/react";
 
 import { locale, processes } from "../../../../services";
@@ -49,6 +49,47 @@ test("it renders CheckEligibility passed checks view correctly", async () => {
   await expect(
     screen.findByText(locale.views.checkEligibility.passedChecks),
   ).resolves.toBeInTheDocument();
+});
+
+test("it renders CheckEligibility correctly if there is an incoming tenant", async () => {
+  const incomingTenantId = "incomingTenantId";
+  const fullName = "IncomingTenant Test";
+  const tenure = {
+    householdMembers: [
+      {
+        fullName,
+        id: incomingTenantId,
+        isResponsible: true,
+      },
+    ],
+  };
+  server.use(getTenureV1(tenure));
+  const process = {
+    ...mockProcessV1,
+    currentState: { ...mockProcessV1.currentState, state: "AutomatedChecksPassed" },
+  };
+  process.currentState.processData.formData.incomingTenantId = incomingTenantId;
+  render(
+    <CheckEliigibilityView
+      processConfig={processes.soletojoint}
+      process={process}
+      mutate={() => {}}
+      optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
+    />,
+    options,
+  );
+  await expect(
+    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
+      exact: false,
+    }),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.checkEligibility.passedChecks),
+  ).resolves.toBeInTheDocument();
+  await expect(screen.findByText(`adding ${fullName}`)).resolves.toBeInTheDocument();
 });
 
 test("it renders CheckEligibility failed checks view correctly", async () => {
