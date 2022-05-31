@@ -68,6 +68,7 @@ const locale = {
       checkSupportingDocumentsAppointment:
         "I need to make an appointment to check supporting documents",
       appointmentScheduled: "Office appointment scheduled",
+      appointmentMissed: "Office appointment missed",
       seenPhotographicId:
         "I confirm that an outcome letter has been sent to the resident",
       seenPhotographicIdHint: "(for example: valid passport, driving licence)",

@@ -182,6 +182,34 @@ export const ReviewDocumentsView = ({
             </Box>
           )}
 
+          {states.documentsAppointmentRescheduled.state === process.currentState.state &&
+            process.previousStates.map((process) => {
+              if (process.state === states.documentsRequestedAppointment.state) {
+                return (
+                  <Box>
+                    <StatusHeading
+                      variant="base"
+                      title={reviewDocuments.appointmentMissed}
+                    />
+                    <Text style={{ marginLeft: 60 }}>
+                      Date:{" "}
+                      {format(
+                        new Date(process.processData.formData.appointmentDateTime),
+                        "eeee do MMMM yyyy",
+                      )}
+                      <br />
+                      Time:{" "}
+                      {format(
+                        new Date(process.processData.formData.appointmentDateTime),
+                        "hh:mm aaa",
+                      )}
+                    </Text>
+                  </Box>
+                );
+              }
+              return <></>;
+            })}
+
           <ReviewDocumentsAppointmentForm
             stateConfig={stateConfig}
             processConfig={processConfig}
@@ -452,7 +480,7 @@ export const BookAppointmentForm = ({
           !values.hour ||
           !values.minute ||
           !values.amPm ||
-          !["am", "pm"].includes(values.amPm)
+          !["am", "pm"].includes(values.amPm.toLowerCase())
         ) {
           setBookAppointmentDisabled(true);
           return;
