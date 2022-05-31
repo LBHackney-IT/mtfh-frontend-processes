@@ -1,13 +1,13 @@
 import { EntitySummary } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
-import { SubmitCaseView } from "../submit-case-view";
 import { BreachCheckForm } from "./breach-check-form";
 import { BreachChecksFailedView } from "./breach-checks-view";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
 import { RequestDcoumentsView } from "./request-dcouments-view";
 import { ReviewDocumentsView } from "./review-documents-view";
 import { EligibilityChecksPassedBox, TickBulletPoint } from "./shared";
+import { SubmitCaseView } from "./submit-case-view";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
@@ -272,7 +272,9 @@ export const CheckEliigibilityView = ({
             mutate={mutate}
           />
         )}
-      {state === documentChecksPassed.state && <SubmitCaseView />}
+      {state === documentChecksPassed.state && (
+        <SubmitCaseView process={process} processConfig={processConfig} mutate={mutate} />
+      )}
     </div>
   );
 };
