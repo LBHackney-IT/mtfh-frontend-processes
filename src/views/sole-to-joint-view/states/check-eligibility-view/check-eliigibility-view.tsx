@@ -7,6 +7,7 @@ import { FurtherEligibilityForm } from "./further-eligibility-form";
 import { RequestDcoumentsView } from "./request-dcouments-view";
 import { ReviewDocumentsView } from "./review-documents-view";
 import { EligibilityChecksPassedBox, TickBulletPoint } from "./shared";
+import { SubmitCaseView } from "./submit-case-view";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
@@ -48,6 +49,7 @@ export const CheckEliigibilityView = ({
     documentsRequestedDes,
     documentsRequestedAppointment,
     documentsAppointmentRescheduled,
+    documentChecksPassed,
     processCancelled,
     processClosed,
   } = processConfig.states;
@@ -104,6 +106,7 @@ export const CheckEliigibilityView = ({
         documentsRequestedDes.state,
         documentsRequestedAppointment.state,
         documentsAppointmentRescheduled.state,
+        documentChecksPassed.state,
         processClosed.state,
       ].includes(state) && <Text>{checkEligibility.autoCheckIntro}</Text>}
       {state === breachChecksPassed.state && <EligibilityChecksPassedBox />}
@@ -269,6 +272,9 @@ export const CheckEliigibilityView = ({
             mutate={mutate}
           />
         )}
+      {state === documentChecksPassed.state && (
+        <SubmitCaseView process={process} processConfig={processConfig} mutate={mutate} />
+      )}
     </div>
   );
 };
