@@ -68,6 +68,9 @@ const getActiveStep = (state: string, states) => {
   if (state === states.documentChecksPassed.state) {
     return 5;
   }
+  if (state === states.applicationSubmitted.state) {
+    return 6;
+  }
   return 0;
 };
 
@@ -172,6 +175,7 @@ export const SoleToJointView = () => {
     documentsRequestedAppointment,
     documentsAppointmentRescheduled,
     documentChecksPassed,
+    applicationSubmitted,
     processCancelled,
     processClosed,
   } = states;
@@ -188,6 +192,7 @@ export const SoleToJointView = () => {
     [documentsRequestedAppointment.state]: CheckEliigibilityView,
     [documentsAppointmentRescheduled.state]: CheckEliigibilityView,
     [documentChecksPassed.state]: CheckEliigibilityView,
+    [applicationSubmitted.state]: CheckEliigibilityView,
     [processCancelled.state]: CheckEliigibilityView,
     [processClosed.state]: CheckEliigibilityView,
   };

@@ -120,6 +120,12 @@ export const soletojoint: IProcess = {
         submitApplication: "SubmitApplication",
       },
     },
+    applicationSubmitted: {
+      state: "ApplicationSubmitted",
+      triggers: {
+        tenureInvestigation: "TenureInvestigation",
+      },
+    },
     processClosed: {
       state: "ProcessClosed",
       triggers: {},
