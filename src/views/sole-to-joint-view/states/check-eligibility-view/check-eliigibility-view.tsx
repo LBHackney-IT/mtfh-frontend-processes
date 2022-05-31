@@ -1,4 +1,4 @@
-import { EntitySummary } from "../../../../components";
+import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
 import { BreachCheckForm } from "./breach-check-form";
@@ -78,29 +78,15 @@ export const CheckEliigibilityView = ({
   const tenant = tenure?.householdMembers.find((m) => m.isResponsible);
 
   const {
-    currentState,
     currentState: { state },
   } = process;
 
-  const automatedChecksPassedState = process.previousStates.find(
-    (item) => item.state === processConfig.states.automatedChecksPassed.state,
-  );
-
-  const incomingTenantId =
-    currentState?.processData?.formData?.incomingTenantId ||
-    automatedChecksPassedState?.processData?.formData?.incomingTenantId;
-
-  const incomingTenant = incomingTenantId
-    ? tenure?.householdMembers.find((m) => m.id === incomingTenantId)
-    : undefined;
-
   return (
     <div data-testid="soletojoint-CheckEligibility">
-      <Heading variant="h1">{processConfig.title}</Heading>
-      <EntitySummary
-        id={process.targetId}
-        type={processConfig.targetType}
-        config={{ incomingTenant }}
+      <SoleToJointHeader
+        processConfig={processConfig}
+        process={process}
+        tenure={tenure}
       />
       {![
         breachChecksPassed.state,
