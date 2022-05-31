@@ -1,6 +1,7 @@
 import { EntitySummary } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
+import { SubmitCaseView } from "../submit-case-view";
 import { BreachCheckForm } from "./breach-check-form";
 import { BreachChecksFailedView } from "./breach-checks-view";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
@@ -48,6 +49,7 @@ export const CheckEliigibilityView = ({
     documentsRequestedDes,
     documentsRequestedAppointment,
     documentsAppointmentRescheduled,
+    documentChecksPassed,
     processCancelled,
     processClosed,
   } = processConfig.states;
@@ -104,6 +106,7 @@ export const CheckEliigibilityView = ({
         documentsRequestedDes.state,
         documentsRequestedAppointment.state,
         documentsAppointmentRescheduled.state,
+        documentChecksPassed.state,
         processClosed.state,
       ].includes(state) && <Text>{checkEligibility.autoCheckIntro}</Text>}
       {state === breachChecksPassed.state && <EligibilityChecksPassedBox />}
@@ -269,6 +272,7 @@ export const CheckEliigibilityView = ({
             mutate={mutate}
           />
         )}
+      {state === documentChecksPassed.state && <SubmitCaseView />}
     </div>
   );
 };

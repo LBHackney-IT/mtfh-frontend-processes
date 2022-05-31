@@ -14,6 +14,7 @@ const locale = {
   reason: "Reason",
   reschedule: "Reschedule",
   returnHomePage: "Return to home page",
+  submitCase: "Submit case",
   views: {
     soleToJoint: {
       title: "Sole tenant requests a joint tenure",
@@ -93,6 +94,11 @@ const locale = {
         "The outcome has been recorded and can be viewed in the activity history",
       documentsNotSuitableCloseCase:
         "If the documents are not suitable and all avenues to obtain the right documents have been exhausted, then close the case.",
+    },
+    submitCase: {
+      tenureInvestigation: "Tenure Investigation",
+      disclaimer:
+        "The Tenure investigation team will now carry out background checks on the tenant and proposed tenant, including a credit check.",
     },
     closeCase: {
       reasonForRejection: "Reason for Rejection",
