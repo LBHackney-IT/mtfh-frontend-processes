@@ -1,27 +1,31 @@
 import { Form, Formik } from "formik";
 
+import { IProcess } from "../../../../types";
+import { dateToString, stringToDate } from "../../../../utils/date";
 import { BulletWithExplanation } from "./shared";
 
 import {
   splitContactDetailsByType,
   useContactDetails,
 } from "@mtfh/common/lib/api/contact-details/v2";
-import { editProcess } from "@mtfh/common/lib/api/process/v1";
+import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import { HouseholdMember } from "@mtfh/common/lib/api/tenure/v1/types";
 import {
   Button,
+  DateField,
   Heading,
   InlineField,
   List,
   Radio,
   RadioGroup,
   Text,
+  TimeField,
 } from "@mtfh/common/lib/components";
 
 export interface RequestDcoumentsViewProps {
   tenant: HouseholdMember;
-  process: any;
-  processConfig: any;
+  process: Process;
+  processConfig: IProcess;
   mutate: any;
 }
 
@@ -74,18 +78,35 @@ export const RequestDcoumentsView = (props: RequestDcoumentsViewProps) => {
         <span style={{ marginLeft: "1em" }}>{emails?.[0]?.contactInformation.value}</span>
       </Text>
       <Formik
-        initialValues={{ requestType: undefined }}
+        initialValues={{
+          requestType: undefined,
+          day: undefined,
+          month: undefined,
+          year: undefined,
+          hour: undefined,
+          minute: undefined,
+          amPm: "AM",
+        }}
         onSubmit={async (values) => {
+          const { requestType, day, month, year, hour, minute, amPm } = values;
+          let processTrigger = stateConfig.triggers.requestDocumentsDes;
           let formData = {};
-          if (values.requestType === "manual") {
-            formData = {};
+          if (requestType === "manual") {
+            processTrigger = stateConfig.triggers.requestDocumentsAppointment;
+            const date = stringToDate(
+              `${day}/${month}/${year} ${hour}:${minute} ${amPm.toUpperCase()}`,
+              "dd/MM/yyyy hh:mm a",
+            );
+            formData = {
+              appointmentDateTime: dateToString(date, "yyyy-MM-dd'T'HH:mm:ss"),
+            };
           }
           try {
             await editProcess({
               id: process.id,
-              processTrigger: stateConfig.triggers.requestDocumentsDes,
               processName: process?.processName,
               etag: process.etag || "",
+              processTrigger,
               formData,
               documents: [],
             });
@@ -118,6 +139,47 @@ export const RequestDcoumentsView = (props: RequestDcoumentsViewProps) => {
                   </Radio>
                 </InlineField>
               </RadioGroup>
+              {requestType === "manual" && (
+                <div style={{ display: "flex" }}>
+                  <DateField
+                    id="appointment-form-date"
+                    className="mtfh-appointment-form__date"
+                    label="Date"
+                    dayProps={{
+                      name: "day",
+                      placeholder: "dd",
+                    }}
+                    monthProps={{
+                      name: "month",
+                      placeholder: "mm",
+                    }}
+                    yearProps={{
+                      name: "year",
+                      placeholder: "yyyy",
+                    }}
+                    required
+                  />
+                  <TimeField
+                    style={{ marginTop: 0, marginLeft: "5em" }}
+                    id="appointment-form-time"
+                    className="mtfh-appointment-form__time"
+                    label="Time"
+                    hourProps={{
+                      name: "hour",
+                      placeholder: "00",
+                    }}
+                    minuteProps={{
+                      name: "minute",
+                      placeholder: "00",
+                    }}
+                    amPmProps={{
+                      name: "amPm",
+                      placeholder: "am",
+                    }}
+                    required
+                  />
+                </div>
+              )}
               <Button type="submit" disabled={buttonDisabled}>
                 Next
               </Button>

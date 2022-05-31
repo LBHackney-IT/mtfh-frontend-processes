@@ -203,6 +203,11 @@ test("it renders CheckEligibility for state=BreachChecksPassed", async () => {
   ).not.toBeInTheDocument();
   await expect(screen.queryByText("Eligibility checks passed")).toBeInTheDocument();
   await expect(screen.findByText("Suporting documents")).resolves.toBeInTheDocument();
+  await expect(screen.getByText("Request documents electronically")).toBeInTheDocument();
+  await expect(
+    screen.getByText("I have made an appointment to check supporting documents"),
+  ).toBeInTheDocument();
+  await expect(screen.getByText(locale.next)).toBeDisabled();
 });
 
 test("it renders CheckEligibility for state=DocumentsRequestedDes", async () => {
