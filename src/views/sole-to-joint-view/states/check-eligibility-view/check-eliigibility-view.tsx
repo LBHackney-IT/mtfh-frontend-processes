@@ -50,6 +50,7 @@ export const CheckEliigibilityView = ({
     documentsRequestedAppointment,
     documentsAppointmentRescheduled,
     documentChecksPassed,
+    applicationSubmitted,
     processCancelled,
     processClosed,
   } = processConfig.states;
@@ -107,6 +108,7 @@ export const CheckEliigibilityView = ({
         documentsRequestedAppointment.state,
         documentsAppointmentRescheduled.state,
         documentChecksPassed.state,
+        applicationSubmitted.state,
         processClosed.state,
       ].includes(state) && <Text>{checkEligibility.autoCheckIntro}</Text>}
       {state === breachChecksPassed.state && <EligibilityChecksPassedBox />}
@@ -272,7 +274,7 @@ export const CheckEliigibilityView = ({
             mutate={mutate}
           />
         )}
-      {state === documentChecksPassed.state && (
+      {[documentChecksPassed.state, applicationSubmitted.state].includes(state) && (
         <SubmitCaseView process={process} processConfig={processConfig} mutate={mutate} />
       )}
     </div>

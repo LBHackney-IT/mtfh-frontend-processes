@@ -100,6 +100,10 @@ const locale = {
       tenureInvestigation: "Tenure Investigation",
       disclaimer:
         "The Tenure investigation team will now carry out background checks on the tenant and proposed tenant, including a credit check.",
+      nextSteps: "Next Steps",
+      nextStepsText:
+        "Based upon the documents submitted by the tenant and the proposed joint tenant, and the investigation undertaken by the Housing Officer, the application now needs to be assessed by the Tenancy Investigation Team.",
+      supportingDocumentsApproved: "Supporting documents approved",
     },
     closeCase: {
       reasonForRejection: "Reason for Rejection",

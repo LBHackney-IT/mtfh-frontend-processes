@@ -28,7 +28,7 @@ describe("submit-case-view", () => {
       },
     );
     await expect(
-      screen.findByText(locale.views.reviewDocuments.documentsRequested),
+      screen.findByText(locale.views.submitCase.supportingDocumentsApproved),
     ).resolves.toBeInTheDocument();
     await expect(
       screen.findByText(locale.views.reviewDocuments.passedChecks),
@@ -53,5 +53,29 @@ describe("submit-case-view", () => {
     await expect(
       screen.findByText("There was a problem with completing the action"),
     ).resolves.toBeInTheDocument();
+  });
+
+  test("it renders Finish view correctly", async () => {
+    render(
+      <SubmitCaseView
+        processConfig={processes.soletojoint}
+        process={{
+          ...mockProcessV1,
+          currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
+        }}
+        mutate={() => {}}
+      />,
+      {
+        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+        path: "/processes/soletojoint/:processId",
+      },
+    );
+    await expect(
+      screen.findByText(locale.views.submitCase.nextSteps, { exact: false }),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(locale.views.submitCase.nextStepsText),
+    ).resolves.toBeInTheDocument();
+    await expect(screen.findByText(locale.returnHomePage)).resolves.toBeInTheDocument();
   });
 });
