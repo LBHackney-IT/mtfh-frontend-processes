@@ -5,6 +5,31 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
   <div
     data-testid="soletojoint-ReviewDocuments"
   >
+    <h1
+      class="lbh-heading-h1"
+    >
+      Sole tenant requests a joint tenure
+    </h1>
+    <h2
+      class="lbh-heading-h2 entity-summary__tenure-heading"
+    >
+      <div>
+        Tenure payment ref
+         
+        mt0xzvjp6g
+      </div>
+      <div>
+        72251 Champlin Trafficway, 99647
+      </div>
+      <div>
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+        >
+          Global Web Consultant Alverta Denesik
+        </a>
+      </div>
+    </h2>
     <div
       class="mtfh-box mtfh-box--success"
     >
@@ -255,6 +280,31 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
   <div
     data-testid="soletojoint-ReviewDocuments"
   >
+    <h1
+      class="lbh-heading-h1"
+    >
+      Sole tenant requests a joint tenure
+    </h1>
+    <h2
+      class="lbh-heading-h2 entity-summary__tenure-heading"
+    >
+      <div>
+        Tenure payment ref
+         
+        mt0xzvjp6g
+      </div>
+      <div>
+        72251 Champlin Trafficway, 99647
+      </div>
+      <div>
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+        >
+          Global Web Consultant Alverta Denesik
+        </a>
+      </div>
+    </h2>
     <div
       class="mtfh-box mtfh-box--success"
     >

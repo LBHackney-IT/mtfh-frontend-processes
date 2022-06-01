@@ -3,6 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { Form, Formik } from "formik";
 
+import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 
 import { editProcess } from "@mtfh/common/lib/api/process/v1";
@@ -30,7 +31,9 @@ export const BreachChecksFailedView = ({
   const { state } = process.currentState;
 
   return (
-    <>
+    <div data-testid="soletojoint-BreachChecksFailed">
+      <SoleToJointHeader processConfig={processConfig} process={process} />
+      <Text>{checkEligibility.autoCheckIntro}</Text>
       <Box variant="warning">
         <StatusHeading variant="warning" title={checkEligibility.failedChecks} />{" "}
         <div style={{ marginLeft: "60px" }}>
@@ -108,6 +111,6 @@ export const BreachChecksFailedView = ({
           </Formik>
         </>
       )}
-    </>
+    </div>
   );
 };

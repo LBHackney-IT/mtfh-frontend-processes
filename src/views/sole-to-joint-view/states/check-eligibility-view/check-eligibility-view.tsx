@@ -1,24 +1,16 @@
-import { EntitySummary } from "../../../../components";
+import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
-import { BreachCheckForm } from "./breach-check-form";
-import { BreachChecksFailedView } from "./breach-checks-view";
+import { BreachCheckForm } from "../breach-checks-view/breach-check-form";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
-import { RequestDcoumentsView } from "./request-dcouments-view";
-import { ReviewDocumentsView } from "./review-documents-view";
-import { EligibilityChecksPassedBox, TickBulletPoint } from "./shared";
-import { SubmitCaseView } from "./submit-case-view";
+import { TickBulletPoint } from "./shared";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
-import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
   Box,
   Button,
-  Center,
-  ErrorSummary,
   Heading,
   List,
-  Spinner,
   StatusHeading,
   Text,
 } from "@mtfh/common/lib/components";
@@ -33,7 +25,7 @@ interface CheckEligibilityViewProps {
 const { views } = locale;
 const { checkEligibility } = views;
 
-export const CheckEliigibilityView = ({
+export const CheckEligibilityView = ({
   processConfig,
   process,
   mutate,
@@ -44,74 +36,21 @@ export const CheckEliigibilityView = ({
     automatedChecksPassed,
     manualChecksFailed,
     manualChecksPassed,
-    breachChecksFailed,
     breachChecksPassed,
-    documentsRequestedDes,
-    documentsRequestedAppointment,
-    documentsAppointmentRescheduled,
-    documentChecksPassed,
-    applicationSubmitted,
-    processCancelled,
     processClosed,
   } = processConfig.states;
-  const { data: tenure, error } = useTenure(process.targetId);
   const { furtherEligibilitySubmitted, setFurtherEligibilitySubmitted } = optional;
 
-  if (error) {
-    return (
-      <ErrorSummary
-        id="select-tenants-view"
-        title={locale.errors.unableToFetchRecord}
-        description={locale.errors.unableToFetchRecordDescription}
-      />
-    );
-  }
-
-  if (!tenure) {
-    return (
-      <Center>
-        <Spinner />
-      </Center>
-    );
-  }
-
-  const tenant = tenure?.householdMembers.find((m) => m.isResponsible);
-
   const {
-    currentState,
     currentState: { state },
   } = process;
 
-  const automatedChecksPassedState = process.previousStates.find(
-    (item) => item.state === processConfig.states.automatedChecksPassed.state,
-  );
-
-  const incomingTenantId =
-    currentState?.processData?.formData?.incomingTenantId ||
-    automatedChecksPassedState?.processData?.formData?.incomingTenantId;
-
-  const incomingTenant = incomingTenantId
-    ? tenure?.householdMembers.find((m) => m.id === incomingTenantId)
-    : undefined;
-
   return (
     <div data-testid="soletojoint-CheckEligibility">
-      <Heading variant="h1">{processConfig.title}</Heading>
-      <EntitySummary
-        id={process.targetId}
-        type={processConfig.targetType}
-        config={{ incomingTenant }}
-      />
-      {![
-        breachChecksPassed.state,
-        documentsRequestedDes.state,
-        documentsRequestedAppointment.state,
-        documentsAppointmentRescheduled.state,
-        documentChecksPassed.state,
-        applicationSubmitted.state,
-        processClosed.state,
-      ].includes(state) && <Text>{checkEligibility.autoCheckIntro}</Text>}
-      {state === breachChecksPassed.state && <EligibilityChecksPassedBox />}
+      <SoleToJointHeader processConfig={processConfig} process={process} />
+      {![breachChecksPassed.state, processClosed.state].includes(state) && (
+        <Text>{checkEligibility.autoCheckIntro}</Text>
+      )}
       {state === manualChecksPassed.state && furtherEligibilitySubmitted && (
         <>
           <Heading variant="h3">Next Steps:</Heading>
@@ -245,37 +184,6 @@ export const CheckEliigibilityView = ({
           </Box>
           <Button>Close case</Button>
         </>
-      )}
-      {[breachChecksFailed.state, processCancelled.state].includes(state) && (
-        <BreachChecksFailedView
-          process={process}
-          processConfig={processConfig}
-          mutate={mutate}
-        />
-      )}
-      {state === breachChecksPassed.state && tenant && (
-        <RequestDcoumentsView
-          process={process}
-          processConfig={processConfig}
-          mutate={mutate}
-          tenant={tenant}
-        />
-      )}
-      {[
-        documentsRequestedAppointment.state,
-        documentsRequestedDes.state,
-        documentsAppointmentRescheduled.state,
-        processClosed.state,
-      ].includes(state) &&
-        tenant && (
-          <ReviewDocumentsView
-            process={process}
-            processConfig={processConfig}
-            mutate={mutate}
-          />
-        )}
-      {[documentChecksPassed.state, applicationSubmitted.state].includes(state) && (
-        <SubmitCaseView process={process} processConfig={processConfig} mutate={mutate} />
       )}
     </div>
   );

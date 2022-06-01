@@ -1,1 +1,1 @@
-export * from "./check-eliigibility-view";
+export * from "./check-eligibility-view";

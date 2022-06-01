@@ -2,7 +2,14 @@ import { useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 import { locale, processes } from "../../services";
-import { CheckEliigibilityView, SelectTenantsView } from "./states";
+import {
+  BreachChecksFailedView,
+  CheckEligibilityView,
+  RequestDcoumentsView,
+  ReviewDocumentsView,
+  SelectTenantsView,
+  SubmitCaseView,
+} from "./states";
 
 import { useProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -182,19 +189,19 @@ export const SoleToJointView = () => {
 
   const components = {
     [selectTenants.state]: SelectTenantsView,
-    [automatedChecksFailed.state]: CheckEliigibilityView,
-    [automatedChecksPassed.state]: CheckEliigibilityView,
-    [manualChecksFailed.state]: CheckEliigibilityView,
-    [manualChecksPassed.state]: CheckEliigibilityView,
-    [breachChecksFailed.state]: CheckEliigibilityView,
-    [breachChecksPassed.state]: CheckEliigibilityView,
-    [documentsRequestedDes.state]: CheckEliigibilityView,
-    [documentsRequestedAppointment.state]: CheckEliigibilityView,
-    [documentsAppointmentRescheduled.state]: CheckEliigibilityView,
-    [documentChecksPassed.state]: CheckEliigibilityView,
-    [applicationSubmitted.state]: CheckEliigibilityView,
-    [processCancelled.state]: CheckEliigibilityView,
-    [processClosed.state]: CheckEliigibilityView,
+    [automatedChecksFailed.state]: CheckEligibilityView,
+    [automatedChecksPassed.state]: CheckEligibilityView,
+    [manualChecksFailed.state]: CheckEligibilityView,
+    [manualChecksPassed.state]: CheckEligibilityView,
+    [breachChecksFailed.state]: BreachChecksFailedView,
+    [breachChecksPassed.state]: RequestDcoumentsView,
+    [documentsRequestedDes.state]: ReviewDocumentsView,
+    [documentsRequestedAppointment.state]: ReviewDocumentsView,
+    [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
+    [documentChecksPassed.state]: ReviewDocumentsView,
+    [applicationSubmitted.state]: SubmitCaseView,
+    [processCancelled.state]: SubmitCaseView,
+    [processClosed.state]: CheckEligibilityView,
   };
 
   const Component = components[state];

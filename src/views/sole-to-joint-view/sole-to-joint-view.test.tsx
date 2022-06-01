@@ -1,11 +1,19 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-import { getProcessV1, render, server } from "@hackney/mtfh-test-utils";
+import {
+  getContactDetailsV2,
+  getProcessV1,
+  mockContactDetailsV2,
+  render,
+  server,
+} from "@hackney/mtfh-test-utils";
 import { screen, within } from "@testing-library/react";
 
 import { locale } from "../../services";
 import {
+  mockBreachChecksFailedState,
   mockBreachChecksPassedState,
+  mockDocumentsRequestedDes,
   mockManualChecksPassedState,
   mockProcessAutomatedChecksFailed,
   mockProcessAutomatedChecksPassed,
@@ -130,32 +138,47 @@ test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibili
 
 test("it renders soletojoint view for state=BreachChecksPassed", async () => {
   server.use(getProcessV1(mockBreachChecksPassedState));
+  server.use(getContactDetailsV2(mockContactDetailsV2));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
   render(<SoleToJointView />, options);
   await expect(
-    screen.findByTestId("soletojoint-CheckEligibility"),
+    screen.findByTestId("soletojoint-RequestDocuments"),
   ).resolves.toBeInTheDocument();
 
   const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
   const steps = within(stepper).getAllByRole("listitem");
   expect(steps[1].className).toContain("active");
   expect(steps[1].textContent).toContain("Request Documents");
+  await expect(
+    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
+      exact: false,
+    }),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.queryByText(locale.views.checkEligibility.autoCheckIntro),
+  ).not.toBeInTheDocument();
+  await expect(screen.queryByText("Eligibility checks passed")).toBeInTheDocument();
+  await expect(screen.findByText("Supporting documents")).resolves.toBeInTheDocument();
 });
 
-test("it renders soletojoint view for state=BreachChecksPassed", async () => {
-  server.use(getProcessV1(mockBreachChecksPassedState));
+test("it renders soletojoint for state=BreachChecksFailed", async () => {
+  server.use(getProcessV1(mockBreachChecksFailedState));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
   render(<SoleToJointView />, options);
-  await expect(
-    screen.findByTestId("soletojoint-CheckEligibility"),
-  ).resolves.toBeInTheDocument();
 
-  const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
-  const steps = within(stepper).getAllByRole("listitem");
-  expect(steps[1].className).toContain("active");
-  expect(steps[1].textContent).toContain("Request Documents");
+  await expect(
+    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
+      exact: false,
+    }),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText("Failed breach of tenure check:"),
+  ).resolves.toBeInTheDocument();
 });
 
 test("it renders an error if an invalid state is returned", async () => {
@@ -179,5 +202,22 @@ test("it renders an error if tenure details can't be fetched", async () => {
   ).resolves.toBeInTheDocument();
   await expect(
     screen.findByText(locale.errors.unableToFetchRecordDescription),
+  ).resolves.toBeInTheDocument();
+});
+
+test("it renders soletojoint for state=DocumentsRequestedDes", async () => {
+  server.use(getProcessV1(mockDocumentsRequestedDes));
+  // @ts-ignore
+  useStateMock.mockImplementation(() => [false, jest.fn()]);
+  render(<SoleToJointView />, options);
+  await expect(
+    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
+      exact: false,
+    }),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.reviewDocuments.passedChecks, {
+      exact: true,
+    }),
   ).resolves.toBeInTheDocument();
 });
