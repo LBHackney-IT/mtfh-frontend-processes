@@ -14,7 +14,6 @@ import {
   ContactDetail,
   ContactInformationContactTypes,
 } from "@mtfh/common/lib/api/contact-details/v2/types";
-import { HouseholdMember } from "@mtfh/common/lib/api/tenure/v1/types";
 import { AxiosSWRResponse } from "@mtfh/common/lib/http";
 
 describe("request-documents-view", () => {
@@ -22,7 +21,6 @@ describe("request-documents-view", () => {
     jest.resetModules();
   });
 
-  const tenant = { id: "tenant-id" } as HouseholdMember;
   const contactDetailsResponse = {
     results: [
       {
@@ -50,7 +48,6 @@ describe("request-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockBreachChecksPassedState}
         mutate={() => {}}
-        tenant={tenant}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
