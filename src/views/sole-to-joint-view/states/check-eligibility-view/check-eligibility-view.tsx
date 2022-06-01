@@ -25,7 +25,7 @@ interface CheckEligibilityViewProps {
 const { views } = locale;
 const { checkEligibility } = views;
 
-export const CheckEliigibilityView = ({
+export const CheckEligibilityView = ({
   processConfig,
   process,
   mutate,

@@ -9,7 +9,7 @@ import {
   mockProcessAutomatedChecksFailed,
   mockProcessAutomatedChecksPassed,
 } from "../../../../test-utils";
-import { CheckEliigibilityView } from "./check-eliigibility-view";
+import { CheckEligibilityView } from "./check-eligibility-view";
 
 let furtherEligibilitySubmitted = false;
 const setFurtherEligibilitySubmitted = () => {};
@@ -27,7 +27,7 @@ const options = {
 
 test("it renders CheckEligibility passed checks view correctly", async () => {
   render(
-    <CheckEliigibilityView
+    <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={mockProcessAutomatedChecksPassed}
       mutate={() => {}}
@@ -67,7 +67,7 @@ test("it renders CheckEligibility correctly if there is an incoming tenant", asy
   };
   process.currentState.processData.formData.incomingTenantId = incomingTenantId;
   render(
-    <CheckEliigibilityView
+    <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={process}
       mutate={() => {}}
@@ -91,7 +91,7 @@ test("it renders CheckEligibility correctly if there is an incoming tenant", asy
 
 test("it renders CheckEligibility failed checks view correctly", async () => {
   render(
-    <CheckEliigibilityView
+    <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={mockProcessAutomatedChecksFailed}
       mutate={() => {}}
@@ -114,7 +114,7 @@ test("it renders CheckEligibility failed checks view correctly", async () => {
 
 test("it renders CheckEligibility for state=ManualChecksPassed, furtherEligibilitySubmitted=false", async () => {
   render(
-    <CheckEliigibilityView
+    <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={mockManualChecksPassedState}
       mutate={() => {}}
@@ -136,7 +136,7 @@ test("it renders CheckEligibility for state=ManualChecksPassed, furtherEligibili
 test("it renders CheckEligibility for state=ManualChecksPassed, furtherEligibilitySubmitted=true", async () => {
   furtherEligibilitySubmitted = true;
   render(
-    <CheckEliigibilityView
+    <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={mockManualChecksPassedState}
       mutate={() => {}}
@@ -158,7 +158,7 @@ test("it renders CheckEligibility for state=ManualChecksPassed, furtherEligibili
 test("it renders an error if tenure details can't be fetched", async () => {
   server.use(getTenureV1("error", 500));
   render(
-    <CheckEliigibilityView
+    <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={mockProcessAutomatedChecksPassed}
       mutate={() => {}}

@@ -4,7 +4,7 @@ import { Link as RouterLink, useParams } from "react-router-dom";
 import { locale, processes } from "../../services";
 import {
   BreachChecksFailedView,
-  CheckEliigibilityView,
+  CheckEligibilityView,
   RequestDcoumentsView,
   ReviewDocumentsView,
   SelectTenantsView,
@@ -189,10 +189,10 @@ export const SoleToJointView = () => {
 
   const components = {
     [selectTenants.state]: SelectTenantsView,
-    [automatedChecksFailed.state]: CheckEliigibilityView,
-    [automatedChecksPassed.state]: CheckEliigibilityView,
-    [manualChecksFailed.state]: CheckEliigibilityView,
-    [manualChecksPassed.state]: CheckEliigibilityView,
+    [automatedChecksFailed.state]: CheckEligibilityView,
+    [automatedChecksPassed.state]: CheckEligibilityView,
+    [manualChecksFailed.state]: CheckEligibilityView,
+    [manualChecksPassed.state]: CheckEligibilityView,
     [breachChecksFailed.state]: BreachChecksFailedView,
     [breachChecksPassed.state]: RequestDcoumentsView,
     [documentsRequestedDes.state]: ReviewDocumentsView,
@@ -201,7 +201,7 @@ export const SoleToJointView = () => {
     [documentChecksPassed.state]: ReviewDocumentsView,
     [applicationSubmitted.state]: SubmitCaseView,
     [processCancelled.state]: SubmitCaseView,
-    [processClosed.state]: CheckEliigibilityView,
+    [processClosed.state]: CheckEligibilityView,
   };
 
   const Component = components[state];
