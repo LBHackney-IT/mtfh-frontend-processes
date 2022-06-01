@@ -1,43 +1,75 @@
 import { Form, Formik } from "formik";
 
+import { SoleToJointHeader } from "../../../../components";
+import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
 import { dateToString, stringToDate } from "../../../../utils/date";
-import { BulletWithExplanation } from "./shared";
+import {
+  BulletWithExplanation,
+  EligibilityChecksPassedBox,
+} from "../check-eligibility-view/shared";
 
 import {
   splitContactDetailsByType,
   useContactDetails,
 } from "@mtfh/common/lib/api/contact-details/v2";
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
+import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import { HouseholdMember } from "@mtfh/common/lib/api/tenure/v1/types";
 import {
   Button,
+  Center,
   DateField,
+  ErrorSummary,
   Heading,
   InlineField,
   List,
   Radio,
   RadioGroup,
+  Spinner,
   Text,
   TimeField,
 } from "@mtfh/common/lib/components";
 
 export interface RequestDcoumentsViewProps {
-  tenant: HouseholdMember;
   process: Process;
   processConfig: IProcess;
   mutate: any;
 }
 
-export const RequestDcoumentsView = (props: RequestDcoumentsViewProps) => {
-  const { tenant, process, processConfig, mutate } = props;
+export const RequestDcoumentsView = ({
+  process,
+  processConfig,
+  mutate,
+}: RequestDcoumentsViewProps) => {
+  const { data: tenure, error } = useTenure(process.targetId);
+
+  if (error) {
+    return (
+      <ErrorSummary
+        id="request-documents-view"
+        title={locale.errors.unableToFetchRecord}
+        description={locale.errors.unableToFetchRecordDescription}
+      />
+    );
+  }
+
+  if (!tenure) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
   const stateConfig = processConfig.states.breachChecksPassed;
-  const { data: contacts } = useContactDetails(tenant.id);
-  const { emails, phones } = splitContactDetailsByType(contacts?.results || []);
+  const tenant = tenure?.householdMembers.find((m) => m.isResponsible);
 
   return (
-    <>
-      <Heading variant="h3">Suporting documents</Heading>
+    <div data-testid="soletojoint-RequestDocuments">
+      <SoleToJointHeader processConfig={processConfig} process={process} />
+      <EligibilityChecksPassedBox />
+      <Heading variant="h3">Supporting documents</Heading>
       <Text size="sm">
         The following documentation is required from the secure tenant and/or proposed
         tenant, as proof to support their application:
@@ -68,15 +100,7 @@ export const RequestDcoumentsView = (props: RequestDcoumentsViewProps) => {
         You must make an appointment with the tenant to check supporting documents
         in-person.
       </Text>
-      <Text size="sm">{tenant.fullName} contact details:</Text>
-      <Text size="sm">
-        Phone:
-        <span style={{ marginLeft: "1em" }}>{phones?.[0]?.contactInformation.value}</span>
-      </Text>
-      <Text size="sm">
-        Email:
-        <span style={{ marginLeft: "1em" }}>{emails?.[0]?.contactInformation.value}</span>
-      </Text>
+      {tenant ? <TenantContactDetails tenant={tenant} /> : <Text>Tenant not found.</Text>}
       <Formik
         initialValues={{
           requestType: undefined,
@@ -187,6 +211,44 @@ export const RequestDcoumentsView = (props: RequestDcoumentsViewProps) => {
           );
         }}
       </Formik>
+    </div>
+  );
+};
+
+const TenantContactDetails = ({ tenant }: { tenant: HouseholdMember }) => {
+  const { data: contacts, error } = useContactDetails(tenant.id);
+
+  if (error) {
+    return (
+      <ErrorSummary
+        id="request-documents-view-contact-details"
+        title={locale.errors.unableToFetchRecord}
+        description={locale.errors.unableToFetchRecordDescription}
+      />
+    );
+  }
+
+  if (!contacts) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
+  const { emails, phones } = splitContactDetailsByType(contacts?.results || []);
+
+  return (
+    <>
+      <Text size="sm">{tenant.fullName} contact details:</Text>
+      <Text size="sm">
+        Phone:
+        <span style={{ marginLeft: "1em" }}>{phones?.[0]?.contactInformation.value}</span>
+      </Text>
+      <Text size="sm">
+        Email:
+        <span style={{ marginLeft: "1em" }}>{emails?.[0]?.contactInformation.value}</span>
+      </Text>
     </>
   );
 };

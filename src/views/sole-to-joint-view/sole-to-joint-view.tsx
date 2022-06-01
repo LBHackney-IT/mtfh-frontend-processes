@@ -2,7 +2,14 @@ import { useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 import { locale, processes } from "../../services";
-import { CheckEliigibilityView, SelectTenantsView } from "./states";
+import {
+  BreachChecksFailedView,
+  CheckEliigibilityView,
+  RequestDcoumentsView,
+  ReviewDocumentsView,
+  SelectTenantsView,
+  SubmitCaseView,
+} from "./states";
 
 import { useProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -186,14 +193,14 @@ export const SoleToJointView = () => {
     [automatedChecksPassed.state]: CheckEliigibilityView,
     [manualChecksFailed.state]: CheckEliigibilityView,
     [manualChecksPassed.state]: CheckEliigibilityView,
-    [breachChecksFailed.state]: CheckEliigibilityView,
-    [breachChecksPassed.state]: CheckEliigibilityView,
-    [documentsRequestedDes.state]: CheckEliigibilityView,
-    [documentsRequestedAppointment.state]: CheckEliigibilityView,
-    [documentsAppointmentRescheduled.state]: CheckEliigibilityView,
-    [documentChecksPassed.state]: CheckEliigibilityView,
-    [applicationSubmitted.state]: CheckEliigibilityView,
-    [processCancelled.state]: CheckEliigibilityView,
+    [breachChecksFailed.state]: BreachChecksFailedView,
+    [breachChecksPassed.state]: RequestDcoumentsView,
+    [documentsRequestedDes.state]: ReviewDocumentsView,
+    [documentsRequestedAppointment.state]: ReviewDocumentsView,
+    [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
+    [documentChecksPassed.state]: ReviewDocumentsView,
+    [applicationSubmitted.state]: SubmitCaseView,
+    [processCancelled.state]: SubmitCaseView,
     [processClosed.state]: CheckEliigibilityView,
   };
 

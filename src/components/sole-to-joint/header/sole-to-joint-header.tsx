@@ -1,21 +1,40 @@
-import { IProcess } from "../../types";
-import { EntitySummary } from "../entity-summary";
+import { locale } from "../../../services";
+import { IProcess } from "../../../types";
+import { EntitySummary } from "../../entity-summary";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
-import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
-import { Heading } from "@mtfh/common/lib/components";
+import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
+import { Center, ErrorSummary, Heading, Spinner } from "@mtfh/common/lib/components";
 
 interface SoleToJointHeaderProps {
   processConfig: IProcess;
   process: Process;
-  tenure: Tenure;
 }
 
 export const SoleToJointHeader = ({
   processConfig,
   process,
-  tenure,
 }: SoleToJointHeaderProps): JSX.Element => {
+  const { data: tenure, error } = useTenure(process.targetId);
+
+  if (error) {
+    return (
+      <ErrorSummary
+        id="select-tenants-view"
+        title={locale.errors.unableToFetchRecord}
+        description={locale.errors.unableToFetchRecordDescription}
+      />
+    );
+  }
+
+  if (!tenure) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
   const automatedChecksPassedState = process.previousStates.find(
     (item) => item.state === processConfig.states.automatedChecksPassed.state,
   );

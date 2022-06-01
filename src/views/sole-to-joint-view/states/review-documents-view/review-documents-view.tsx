@@ -4,10 +4,11 @@ import { Link as RouterLink } from "react-router-dom";
 import { format, isPast, parse } from "date-fns";
 import { Form, Formik } from "formik";
 
+import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
-import { CloseCaseForm, CloseCaseFormData } from "./close-case-form";
-import { EligibilityChecksPassedBox } from "./shared";
+import { EligibilityChecksPassedBox } from "../check-eligibility-view/shared";
+import { CloseCaseForm, CloseCaseFormData } from "../submit-case-view/close-case-form";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -87,6 +88,8 @@ export const ReviewDocumentsView = ({
 
   return (
     <div data-testid="soletojoint-ReviewDocuments">
+      <SoleToJointHeader processConfig={processConfig} process={process} />
+
       {globalError && (
         <StatusErrorSummary id="review-documents-global-error" code={globalError} />
       )}

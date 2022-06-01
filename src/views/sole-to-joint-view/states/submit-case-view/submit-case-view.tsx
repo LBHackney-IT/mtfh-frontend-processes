@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
-import { EligibilityChecksPassedBox } from "./shared";
+import { EligibilityChecksPassedBox } from "../check-eligibility-view/shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -36,6 +37,7 @@ export const SubmitCaseView = ({
 
   return (
     <>
+      <SoleToJointHeader processConfig={processConfig} process={process} />
       {globalError && (
         <StatusErrorSummary id="review-documents-global-error" code={globalError} />
       )}

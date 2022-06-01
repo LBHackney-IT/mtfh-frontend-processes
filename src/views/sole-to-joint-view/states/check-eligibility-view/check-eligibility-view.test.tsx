@@ -5,9 +5,6 @@ import { screen } from "@testing-library/react";
 
 import { locale, processes } from "../../../../services";
 import {
-  mockBreachChecksFailedState,
-  mockBreachChecksPassedState,
-  mockDocumentsRequestedDes,
   mockManualChecksPassedState,
   mockProcessAutomatedChecksFailed,
   mockProcessAutomatedChecksPassed,
@@ -156,81 +153,6 @@ test("it renders CheckEligibility for state=ManualChecksPassed, furtherEligibili
     screen.findByText(locale.views.checkEligibility.autoCheckIntro),
   ).resolves.toBeInTheDocument();
   await expect(screen.findByText("Next Steps:")).resolves.toBeInTheDocument();
-});
-
-test("it renders CheckEligibility for state=BreachChecksFailed", async () => {
-  furtherEligibilitySubmitted = true;
-  render(
-    <CheckEliigibilityView
-      processConfig={processes.soletojoint}
-      process={mockBreachChecksFailedState}
-      mutate={() => {}}
-      optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
-    />,
-    options,
-  );
-  await expect(
-    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-      exact: false,
-    }),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText("Failed breach of tenure check:"),
-  ).resolves.toBeInTheDocument();
-});
-
-test("it renders CheckEligibility for state=BreachChecksPassed", async () => {
-  furtherEligibilitySubmitted = true;
-  render(
-    <CheckEliigibilityView
-      processConfig={processes.soletojoint}
-      process={mockBreachChecksPassedState}
-      mutate={() => {}}
-      optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
-    />,
-    options,
-  );
-  await expect(
-    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-      exact: false,
-    }),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.queryByText(locale.views.checkEligibility.autoCheckIntro),
-  ).not.toBeInTheDocument();
-  await expect(screen.queryByText("Eligibility checks passed")).toBeInTheDocument();
-  await expect(screen.findByText("Suporting documents")).resolves.toBeInTheDocument();
-  await expect(screen.getByText("Request documents electronically")).toBeInTheDocument();
-  await expect(
-    screen.getByText("I have made an appointment to check supporting documents"),
-  ).toBeInTheDocument();
-  await expect(screen.getByText(locale.next)).toBeDisabled();
-});
-
-test("it renders CheckEligibility for state=DocumentsRequestedDes", async () => {
-  furtherEligibilitySubmitted = true;
-  render(
-    <CheckEliigibilityView
-      processConfig={processes.soletojoint}
-      process={mockDocumentsRequestedDes}
-      mutate={() => {}}
-      optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
-    />,
-    options,
-  );
-  await expect(
-    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-      exact: false,
-    }),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.reviewDocuments.passedChecks, {
-      exact: true,
-    }),
-  ).resolves.toBeInTheDocument();
 });
 
 test("it renders an error if tenure details can't be fetched", async () => {
