@@ -43,6 +43,11 @@ export const mockManualChecksPassedState = {
   currentState: { ...mockProcessV1.currentState, state: "ManualChecksPassed" },
 };
 
+export const mockManualChecksFailedState = {
+  ...mockProcessV1,
+  currentState: { ...mockProcessV1.currentState, state: "ManualChecksFailed" },
+};
+
 export const mockBreachChecksFailedState = {
   ...mockProcessV1,
   currentState: { ...mockProcessV1.currentState, state: "BreachChecksFailed" },
@@ -56,6 +61,11 @@ export const mockBreachChecksPassedState = {
 export const mockDocumentsRequestedDes = {
   ...mockProcessV1,
   currentState: { ...mockProcessV1.currentState, state: "DocumentsRequestedDes" },
+};
+
+export const mockProcessClosedState = {
+  ...mockProcessV1,
+  currentState: { ...mockProcessV1.currentState, state: "ProcessClosed" },
 };
 
 export const mockDocumentsRequestedDesAppointment = {

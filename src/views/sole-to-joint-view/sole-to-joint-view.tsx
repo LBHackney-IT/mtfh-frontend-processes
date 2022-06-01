@@ -10,6 +10,7 @@ import {
   SelectTenantsView,
   SubmitCaseView,
 } from "./states";
+import { ManualChecksFailedView } from "./states/manual-checks-view";
 
 import { useProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -21,6 +22,43 @@ import {
   Step,
   Stepper,
 } from "@mtfh/common/lib/components";
+
+const processConfig = processes.soletojoint;
+
+const { states } = processConfig;
+const {
+  selectTenants,
+  automatedChecksFailed,
+  automatedChecksPassed,
+  manualChecksFailed,
+  manualChecksPassed,
+  breachChecksPassed,
+  breachChecksFailed,
+  documentsRequestedDes,
+  documentsRequestedAppointment,
+  documentsAppointmentRescheduled,
+  documentChecksPassed,
+  applicationSubmitted,
+  processCancelled,
+  processClosed,
+} = states;
+
+const components = {
+  [selectTenants.state]: SelectTenantsView,
+  [automatedChecksFailed.state]: CheckEligibilityView,
+  [automatedChecksPassed.state]: CheckEligibilityView,
+  [manualChecksFailed.state]: ManualChecksFailedView,
+  [manualChecksPassed.state]: CheckEligibilityView,
+  [breachChecksFailed.state]: BreachChecksFailedView,
+  [breachChecksPassed.state]: RequestDcoumentsView,
+  [documentsRequestedDes.state]: ReviewDocumentsView,
+  [documentsRequestedAppointment.state]: ReviewDocumentsView,
+  [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
+  [documentChecksPassed.state]: ReviewDocumentsView,
+  [applicationSubmitted.state]: SubmitCaseView,
+  [processCancelled.state]: SubmitCaseView,
+  [processClosed.state]: CheckEligibilityView,
+};
 
 const { views } = locale;
 const { soleToJoint } = views;
@@ -37,10 +75,26 @@ const allSteps = [
   finishStep,
 ];
 
-const getActiveStep = (state: string, states) => {
+const getActiveStep = (process: any, states) => {
+  const {
+    currentState: { state },
+    currentState,
+  } = process;
+
   if (state === states.selectTenants.state) {
     return 0;
   }
+
+  if (isSameState(currentState, states.processClosed)) {
+    const previousState = getPreviousState(process);
+    if (isSameState(previousState, states.manualChecksFailed)) {
+      return 1;
+    }
+    if (isSameState(previousState, states.breachChecksFailed)) {
+      return 2;
+    }
+  }
+
   if (
     [
       states.automatedChecksPassed.state,
@@ -82,7 +136,7 @@ const getActiveStep = (state: string, states) => {
 };
 
 interface SideBarProps {
-  state: any;
+  process: any;
   states: any;
   furtherEligibilitySubmitted: boolean;
   processId: string;
@@ -91,14 +145,14 @@ interface SideBarProps {
 
 const SideBar = (props: SideBarProps) => {
   const {
-    state,
+    process,
     states,
     furtherEligibilitySubmitted = false,
     processId,
     processName,
   } = props;
 
-  let activeStep = getActiveStep(state, states);
+  let activeStep = getActiveStep(process, states);
   let steps: typeof allSteps;
   let startIndex = 0;
   if (activeStep > 2 || (!furtherEligibilitySubmitted && activeStep === 2)) {
@@ -131,10 +185,40 @@ const SideBar = (props: SideBarProps) => {
   );
 };
 
+const isSameState = (firstState, secondState) => {
+  return firstState.state === secondState.state;
+};
+
+const getPreviousState = (process) => {
+  const { previousStates } = process;
+  return previousStates[previousStates.length - 1];
+};
+
+const getComponent = (process) => {
+  const {
+    currentState: { state },
+  } = process;
+
+  let Component;
+
+  if (state === processConfig.states.processClosed.state) {
+    const previousState = getPreviousState(process);
+    if (isSameState(previousState, processConfig.states.manualChecksFailed)) {
+      Component = ManualChecksFailedView;
+    } else if (isSameState(previousState, processConfig.states.breachChecksFailed)) {
+      Component = BreachChecksFailedView;
+    }
+  }
+
+  if (!Component) {
+    Component = components[state];
+  }
+
+  return Component;
+};
+
 export const SoleToJointView = () => {
   const { processId } = useParams<{ processId: string }>();
-
-  const processConfig = processes.soletojoint;
 
   const {
     data: process,
@@ -166,45 +250,7 @@ export const SoleToJointView = () => {
     );
   }
 
-  const { currentState } = process;
-  const { state } = currentState;
-
-  const { states } = processConfig;
-  const {
-    selectTenants,
-    automatedChecksFailed,
-    automatedChecksPassed,
-    manualChecksFailed,
-    manualChecksPassed,
-    breachChecksPassed,
-    breachChecksFailed,
-    documentsRequestedDes,
-    documentsRequestedAppointment,
-    documentsAppointmentRescheduled,
-    documentChecksPassed,
-    applicationSubmitted,
-    processCancelled,
-    processClosed,
-  } = states;
-
-  const components = {
-    [selectTenants.state]: SelectTenantsView,
-    [automatedChecksFailed.state]: CheckEligibilityView,
-    [automatedChecksPassed.state]: CheckEligibilityView,
-    [manualChecksFailed.state]: CheckEligibilityView,
-    [manualChecksPassed.state]: CheckEligibilityView,
-    [breachChecksFailed.state]: BreachChecksFailedView,
-    [breachChecksPassed.state]: RequestDcoumentsView,
-    [documentsRequestedDes.state]: ReviewDocumentsView,
-    [documentsRequestedAppointment.state]: ReviewDocumentsView,
-    [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
-    [documentChecksPassed.state]: ReviewDocumentsView,
-    [applicationSubmitted.state]: SubmitCaseView,
-    [processCancelled.state]: SubmitCaseView,
-    [processClosed.state]: CheckEligibilityView,
-  };
-
-  const Component = components[state];
+  const Component = getComponent(process);
 
   if (!Component) {
     return (
@@ -222,7 +268,7 @@ export const SoleToJointView = () => {
       sidePosition="right"
       side={
         <SideBar
-          state={state}
+          process={process}
           states={states}
           furtherEligibilitySubmitted={furtherEligibilitySubmitted}
           processId={processId}
