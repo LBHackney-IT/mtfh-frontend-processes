@@ -34,7 +34,6 @@ export const CheckEligibilityView = ({
   const {
     automatedChecksFailed,
     automatedChecksPassed,
-    manualChecksFailed,
     manualChecksPassed,
     breachChecksPassed,
     processClosed,
@@ -76,7 +75,7 @@ export const CheckEligibilityView = ({
           mutate={mutate}
         />
       )}
-      {(state === automatedChecksPassed.state || state === manualChecksFailed.state) && (
+      {state === automatedChecksPassed.state && (
         <>
           <Heading variant="h5">
             This is an automated check based on the data the system has. At this stage,
@@ -96,51 +95,14 @@ export const CheckEligibilityView = ({
             <TickBulletPoint text="The proposed tenant is over 18 years of age" />
             <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
           </Box>
-          {state === automatedChecksPassed.state && (
-            <FurtherEligibilityForm
-              process={process}
-              processConfig={processConfig}
-              onSuccessfulSubmit={() => {
-                mutate();
-                setFurtherEligibilitySubmitted(true);
-              }}
-            />
-          )}
-          {state === manualChecksFailed.state && (
-            <>
-              <Box variant="warning">
-                <StatusHeading variant="warning" title={checkEligibility.failedChecks} />{" "}
-                <div style={{ marginLeft: "60px" }}>
-                  <Text size="sm">
-                    All criteria must be passed in order for the applicant to be eligible.{" "}
-                    <br />
-                    Applicant has failed one or more of the further eligibility questions:
-                  </Text>
-                  <Heading variant="h5">Failed further eligibility question:</Heading>
-                  <List variant="bullets">
-                    <Text size="sm">
-                      The tenant and proposed tenant have not been living together for 12
-                      months or more, or are not married or in a civil partnership
-                    </Text>
-                    <Text size="sm">
-                      The tenant or proposed tenant intends to occupy another property as
-                      their only or main home
-                    </Text>
-                    <Text size="sm">Then tenant is a survivor of a joint tenancy</Text>
-                    <Text size="sm">
-                      The proposed tenant has been evicted by London Borough of Hackney or
-                      another local authority or housing association
-                    </Text>
-                    <Text size="sm">
-                      The proposed tenant is subject to immigration control under the
-                      Asylum And Immigration Act 1996
-                    </Text>
-                  </List>
-                </div>
-              </Box>
-              <Button>Close case</Button>
-            </>
-          )}
+          <FurtherEligibilityForm
+            process={process}
+            processConfig={processConfig}
+            onSuccessfulSubmit={() => {
+              mutate();
+              setFurtherEligibilitySubmitted(true);
+            }}
+          />
         </>
       )}
       {state === automatedChecksFailed.state && (

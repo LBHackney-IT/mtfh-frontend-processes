@@ -1,22 +1,8 @@
-import { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
-
-import { Form, Formik } from "formik";
-
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
+import { CloseProcessView } from "../../shared/close-process-view";
 
-import { editProcess } from "@mtfh/common/lib/api/process/v1";
-import {
-  Box,
-  Button,
-  Checkbox,
-  Heading,
-  Link,
-  List,
-  StatusHeading,
-  Text,
-} from "@mtfh/common/lib/components";
+import { Box, Heading, List, StatusHeading, Text } from "@mtfh/common/lib/components";
 
 const { views } = locale;
 const { checkEligibility } = views;
@@ -26,10 +12,6 @@ export const BreachChecksFailedView = ({
   processConfig,
   mutate,
 }): JSX.Element => {
-  const [confirmed, setConfirmed] = useState<boolean>(false);
-  const { breachChecksFailed, processCancelled } = processConfig.states;
-  const { state } = process.currentState;
-
   return (
     <div data-testid="soletojoint-BreachChecksFailed">
       <SoleToJointHeader processConfig={processConfig} process={process} />
@@ -59,58 +41,7 @@ export const BreachChecksFailedView = ({
           </List>
         </div>
       </Box>
-      {state === processCancelled.state ? (
-        <>
-          <Heading variant="h3">Outcome letter has been sent</Heading>
-          <List variant="bullets" style={{ marginLeft: "1em" }}>
-            <Text size="sm">
-              This has been recorded and can be viewed in the case activity history
-            </Text>
-          </List>
-          <div style={{ marginTop: "1em" }}>
-            <Link as={RouterLink} to="" variant="link">
-              Return to home page
-            </Link>
-          </div>
-        </>
-      ) : (
-        <>
-          <Heading variant="h3">Next steps:</Heading>
-          <Formik
-            initialValues={{}}
-            onSubmit={async (values) => {
-              try {
-                await editProcess({
-                  id: process.id,
-                  processTrigger: breachChecksFailed.triggers.cancelProcess,
-                  processName: process?.processName,
-                  etag: process.etag || "",
-                  formData: values,
-                  documents: [],
-                });
-                mutate();
-              } catch (e: any) {
-                console.log(e.response?.status || 500);
-              }
-            }}
-          >
-            {() => (
-              <Form noValidate id="breach-form" className="mtfh-breach-form">
-                <Checkbox
-                  id="condition"
-                  checked={confirmed}
-                  onChange={() => setConfirmed(!confirmed)}
-                >
-                  I confirm that an outcome letter has been sent to the resident
-                </Checkbox>
-                <Button type="submit" disabled={!confirmed}>
-                  Confirm
-                </Button>
-              </Form>
-            )}
-          </Formik>
-        </>
-      )}
+      <CloseProcessView process={process} processConfig={processConfig} mutate={mutate} />
     </div>
   );
 };

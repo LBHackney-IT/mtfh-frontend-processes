@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`close-process-view it renders CloseProcessView correctly for state!=ProcessClosed 1`] = `
+<div>
+  <h3
+    class="lbh-heading-h3"
+  >
+    Next steps:
+  </h3>
+  <form
+    action="#"
+    class="mtfh-breach-form"
+    id="breach-form"
+    novalidate=""
+  >
+    <div
+      class="govuk-checkboxes__item"
+    >
+      <input
+        class="govuk-checkboxes__input"
+        id="condition"
+        type="checkbox"
+      />
+      <label
+        class="govuk-label govuk-checkboxes__label"
+        for="condition"
+      >
+        I confirm that an outcome letter has been sent to the resident
+      </label>
+    </div>
+    <button
+      class="govuk-button lbh-button"
+      disabled=""
+      type="submit"
+    >
+      Confirm
+    </button>
+  </form>
+</div>
+`;
+
+exports[`close-process-view it renders CloseProcessView correctly for state=ProcessClosed 1`] = `
+<div>
+  <h3
+    class="lbh-heading-h3"
+  >
+    Outcome letter has been sent
+  </h3>
+  <ul
+    class="lbh-list lbh-list--bullet"
+    style="margin-left: 1em;"
+  >
+    <li>
+      <p
+        class="lbh-body-s"
+      >
+        This has been recorded and can be viewed in the case activity history
+      </p>
+    </li>
+  </ul>
+  <div
+    style="margin-top: 1em;"
+  >
+    <a
+      class="govuk-back-link lbh-back-link lbh-link--no-visited-state"
+      href="/"
+    >
+      Return to home page
+    </a>
+  </div>
+</div>
+`;

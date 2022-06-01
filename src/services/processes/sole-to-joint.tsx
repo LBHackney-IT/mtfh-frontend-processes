@@ -1,5 +1,6 @@
 import { IProcess, IStartProcess } from "../../types";
 import locale from "../locale";
+import { Trigger } from "./types";
 
 import { Heading, Link, List, Text } from "@mtfh/common/lib/components";
 
@@ -81,7 +82,7 @@ export const soletojoint: IProcess = {
     },
     breachChecksFailed: {
       state: "BreachChecksFailed",
-      triggers: { cancelProcess: "CancelProcess" },
+      triggers: { cancelProcess: Trigger.CancelProcess },
     },
     breachChecksPassed: {
       state: "BreachChecksPassed",
@@ -95,7 +96,7 @@ export const soletojoint: IProcess = {
       triggers: {
         reviewDocuments: "ReviewDocuments",
         requestDocumentsAppointment: "RequestDocumentsAppointment",
-        closeProcess: "CloseProcess",
+        closeProcess: Trigger.CloseProcess,
       },
     },
     documentsRequestedAppointment: {
@@ -103,7 +104,7 @@ export const soletojoint: IProcess = {
       triggers: {
         reviewDocuments: "ReviewDocuments",
         rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
-        closeProcess: "CloseProcess",
+        closeProcess: Trigger.CloseProcess,
       },
     },
     documentsAppointmentRescheduled: {
@@ -111,7 +112,7 @@ export const soletojoint: IProcess = {
       triggers: {
         reviewDocuments: "ReviewDocuments",
         rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
-        closeProcess: "CloseProcess",
+        closeProcess: Trigger.CloseProcess,
       },
     },
     documentChecksPassed: {
