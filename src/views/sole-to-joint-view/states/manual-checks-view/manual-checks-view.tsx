@@ -1,3 +1,4 @@
+import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { CloseProcessView } from "../../shared/close-process-view";
 import { TickBulletPoint } from "../check-eligibility-view/shared";
@@ -13,7 +14,9 @@ export const ManualChecksFailedView = ({
   mutate,
 }): JSX.Element => {
   return (
-    <>
+    <div data-testid={`soletojoint-${process.currentState.state}`}>
+      <SoleToJointHeader processConfig={processConfig} process={process} />
+      <Text>{checkEligibility.autoCheckIntro}</Text>
       <Heading variant="h5">
         This is an automated check based on the data the system has. At this stage, the
         system does not have all the data required to make a decision, so these results
@@ -27,8 +30,6 @@ export const ManualChecksFailedView = ({
         <TickBulletPoint text="Applicant is currently a sole tenant" />
         <TickBulletPoint text="Secure tenures can be changed from a sole to joint tenancy" />
         <TickBulletPoint text="Tenant's tenure is active" />
-        <TickBulletPoint text="Applicant does not have rent arrears over £500" />
-        <TickBulletPoint text="The tenant does not have a live notice seeking possession" />
         <TickBulletPoint text="The proposed tenant is over 18 years of age" />
         <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
       </Box>
@@ -64,6 +65,6 @@ export const ManualChecksFailedView = ({
         </div>
       </Box>
       <CloseProcessView process={process} processConfig={processConfig} mutate={mutate} />
-    </>
+    </div>
   );
 };

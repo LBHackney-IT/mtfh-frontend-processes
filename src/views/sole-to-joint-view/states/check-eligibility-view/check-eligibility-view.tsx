@@ -1,3 +1,5 @@
+import { Link as RouterLink } from "react-router-dom";
+
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
@@ -10,6 +12,7 @@ import {
   Box,
   Button,
   Heading,
+  Link,
   List,
   StatusHeading,
   Text,
@@ -65,7 +68,11 @@ export const CheckEligibilityView = ({
               agreement
             </Text>
           </List>
-          <Button>Close</Button>
+          <div style={{ marginTop: "1em" }}>
+            <Link as={RouterLink} to="" variant="back-link">
+              Return to home page
+            </Link>
+          </div>
         </>
       )}
       {state === manualChecksPassed.state && !furtherEligibilitySubmitted && (
@@ -90,8 +97,6 @@ export const CheckEligibilityView = ({
             <TickBulletPoint text="Applicant is currently a sole tenant" />
             <TickBulletPoint text="Secure tenures can be changed from a sole to joint tenancy" />
             <TickBulletPoint text="Tenant's tenure is active" />
-            <TickBulletPoint text="Applicant does not have rent arrears over £500" />
-            <TickBulletPoint text="The tenant does not have a live notice seeking possession" />
             <TickBulletPoint text="The proposed tenant is over 18 years of age" />
             <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
           </Box>
