@@ -20,7 +20,7 @@ export const SoleToJointHeader = ({
   if (error) {
     return (
       <ErrorSummary
-        id="select-tenants-view"
+        id="sole-to-joint-header-view"
         title={locale.errors.unableToFetchRecord}
         description={locale.errors.unableToFetchRecordDescription}
       />

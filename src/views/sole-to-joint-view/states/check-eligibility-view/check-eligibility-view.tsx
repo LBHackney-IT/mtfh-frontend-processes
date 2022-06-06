@@ -4,8 +4,8 @@ import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
 import { BreachCheckForm } from "../breach-checks-view/breach-check-form";
+import { TickBulletPoint } from "../shared";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
-import { TickBulletPoint } from "./shared";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -41,7 +41,7 @@ export const CheckEligibilityView = ({
     breachChecksPassed,
     processClosed,
   } = processConfig.states;
-  const { furtherEligibilitySubmitted, setFurtherEligibilitySubmitted } = optional;
+  const { submitted, setSubmitted } = optional;
 
   const {
     currentState: { state },
@@ -53,7 +53,7 @@ export const CheckEligibilityView = ({
       {![breachChecksPassed.state, processClosed.state].includes(state) && (
         <Text>{checkEligibility.autoCheckIntro}</Text>
       )}
-      {state === manualChecksPassed.state && furtherEligibilitySubmitted && (
+      {state === manualChecksPassed.state && submitted && (
         <>
           <Heading variant="h3">Next Steps:</Heading>
           <Text size="sm">
@@ -75,7 +75,7 @@ export const CheckEligibilityView = ({
           </div>
         </>
       )}
-      {state === manualChecksPassed.state && !furtherEligibilitySubmitted && (
+      {state === manualChecksPassed.state && !submitted && (
         <BreachCheckForm
           process={process}
           processConfig={processConfig}
@@ -105,7 +105,7 @@ export const CheckEligibilityView = ({
             processConfig={processConfig}
             onSuccessfulSubmit={() => {
               mutate();
-              setFurtherEligibilitySubmitted(true);
+              setSubmitted(true);
             }}
           />
         </>
