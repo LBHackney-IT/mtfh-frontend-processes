@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import { parse } from "date-fns";
+
 import { locale } from "../../../services";
 
 import {
@@ -161,5 +163,27 @@ export const TenantContactDetails = ({ tenant }: { tenant: HouseholdMember }) =>
         <span style={{ marginLeft: "1em" }}>{emails?.[0]?.contactInformation.value}</span>
       </Text>
     </>
+  );
+};
+
+export const getAppointmentDateTime = ({
+  day,
+  month,
+  year,
+  hour,
+  minute,
+  amPm,
+}: {
+  day: string;
+  month: string;
+  year: string;
+  hour: string;
+  minute: string;
+  amPm: string;
+}) => {
+  return parse(
+    `${year}-${month}-${day} ${hour}:${minute} ${amPm.toUpperCase()}`,
+    "yyyy-MM-dd hh:mm a",
+    new Date(),
   );
 };

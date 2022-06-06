@@ -70,8 +70,6 @@ const locale = {
       useFormBelow: "Use the form below to record the documents you have checked:",
       checkSupportingDocumentsAppointment:
         "I need to make an appointment to check supporting documents",
-      appointmentScheduled: "Office appointment scheduled",
-      appointmentMissed: "Office appointment missed",
       seenPhotographicId:
         "I confirm that an outcome letter has been sent to the resident",
       seenPhotographicIdHint: "(for example: valid passport, driving licence)",
@@ -114,6 +112,13 @@ const locale = {
       recommendation: "Recommendation:",
       tenureInvestigationCompleted:
         "I confirm that the tenure investigation has been completed",
+      showReport: "Show investigator report",
+      tenureInvestigatorRecommendation: (recommendation) =>
+        `Tenure investigator recommendation: ${recommendation} application`,
+      hoApproved: "Sole to joint tenure application approved",
+      hoApprovedNextSteps: "Sole to Joint application approved, next steps:",
+      mustMakeAppointment:
+        "You must make an office appointment with the applicant to sign a new tenancy agreement",
     },
     closeCase: {
       reasonForRejection: "Reason for Rejection",
@@ -160,6 +165,10 @@ const locale = {
           .filter((addressLine) => !!addressLine)
           .join(" ");
       },
+    },
+    appointment: {
+      scheduled: "Office appointment scheduled",
+      missed: "Office appointment missed",
     },
   },
 };

@@ -9,6 +9,7 @@ import {
   ReviewDocumentsView,
   SelectTenantsView,
   SubmitCaseView,
+  TenureInvestigationView,
 } from "./states";
 import { ManualChecksFailedView } from "./states/manual-checks-view";
 
@@ -39,6 +40,9 @@ const {
   documentsAppointmentRescheduled,
   documentChecksPassed,
   applicationSubmitted,
+  hoApprovalPassed,
+  tenureAppointmentScheduled,
+  tenureAppointmentRescheduled,
   processCancelled,
   processClosed,
 } = states;
@@ -56,6 +60,9 @@ const components = {
   [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
   [documentChecksPassed.state]: ReviewDocumentsView,
   [applicationSubmitted.state]: SubmitCaseView,
+  [hoApprovalPassed.state]: TenureInvestigationView,
+  [tenureAppointmentScheduled.state]: TenureInvestigationView,
+  [tenureAppointmentRescheduled.state]: TenureInvestigationView,
   [processCancelled.state]: SubmitCaseView,
   [processClosed.state]: CheckEligibilityView,
 };
@@ -121,7 +128,14 @@ const getActiveStep = (process: any, states, submitted: boolean) => {
   ) {
     return 5;
   }
-  if (state === states.applicationSubmitted.state) {
+  if (
+    [
+      states.applicationSubmitted.state,
+      states.hoApprovalPassed.state,
+      states.tenureAppointmentScheduled.state,
+      states.tenureAppointmentRescheduled.state,
+    ].includes(state)
+  ) {
     return 6;
   }
   return 0;

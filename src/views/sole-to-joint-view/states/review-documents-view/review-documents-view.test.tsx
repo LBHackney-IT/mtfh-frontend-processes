@@ -124,7 +124,7 @@ describe("review-documents-view", () => {
       screen.findByText(locale.views.reviewDocuments.viewInDes),
     ).resolves.toBeInTheDocument();
     await expect(
-      screen.findByText(locale.views.reviewDocuments.appointmentScheduled),
+      screen.findByText(locale.components.appointment.scheduled),
     ).resolves.toBeInTheDocument();
   });
 
@@ -140,7 +140,7 @@ describe("review-documents-view", () => {
     );
 
     await expect(
-      screen.findByText(locale.views.reviewDocuments.appointmentScheduled),
+      screen.findByText(locale.components.appointment.scheduled),
     ).resolves.toBeInTheDocument();
     await expect(screen.findByText(locale.change)).resolves.toBeInTheDocument();
   });
@@ -216,7 +216,7 @@ describe("review-documents-view", () => {
     ).resolves.toBeInTheDocument();
     await expect(screen.queryByText(locale.views.reviewDocuments.viewInDes)).toBeNull();
     await expect(
-      screen.findByText(locale.views.reviewDocuments.appointmentScheduled),
+      screen.findByText(locale.components.appointment.scheduled),
     ).resolves.toBeInTheDocument();
     await expect(screen.findByText(/08:59 am/)).resolves.toBeInTheDocument();
     await expect(

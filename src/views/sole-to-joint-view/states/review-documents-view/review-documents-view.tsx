@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { format, isPast, parse } from "date-fns";
 import { Form, Formik } from "formik";
 
 import { SoleToJointHeader } from "../../../../components";
+import { AppointmentDetails } from "../../../../components/appointment-details/appointment-details";
+import { BookAppointmentForm } from "../../../../components/appointment-form/appointment-form";
 import { locale } from "../../../../services";
+import { Trigger } from "../../../../services/processes/types";
 import { IProcess } from "../../../../types";
 import { EligibilityChecksPassedBox } from "../shared";
 import { CloseCaseForm, CloseCaseFormData } from "../submit-case-view/close-case-form";
@@ -15,19 +17,15 @@ import {
   Box,
   Button,
   Checkbox,
-  DateField,
   Dialog,
   DialogActions,
   Heading,
   Link,
-  LinkButton,
   List,
   StatusErrorSummary,
   StatusHeading,
   Text,
-  TimeField,
 } from "@mtfh/common/lib/components";
-import { dateToString, isFutureDate } from "@mtfh/common/lib/utils";
 
 const { views } = locale;
 const { reviewDocuments } = views;
@@ -35,27 +33,6 @@ interface ReviewDocumentsViewProps {
   processConfig: IProcess;
   process: Process;
   mutate: () => void;
-}
-function getAppointmentDateTime({
-  day,
-  month,
-  year,
-  hour,
-  minute,
-  amPm,
-}: {
-  day: string;
-  month: string;
-  year: string;
-  hour: string;
-  minute: string;
-  amPm: string;
-}) {
-  return parse(
-    `${year}-${month}-${day} ${hour}:${minute} ${amPm.toUpperCase()}`,
-    "yyyy-MM-dd hh:mm a",
-    new Date(),
-  );
 }
 
 export const ReviewDocumentsView = ({
@@ -185,36 +162,7 @@ export const ReviewDocumentsView = ({
             </Box>
           )}
 
-          {states.documentsAppointmentRescheduled.state === process.currentState.state &&
-            process.previousStates.map((process) => {
-              if (process.state === states.documentsRequestedAppointment.state) {
-                return (
-                  <Box>
-                    <StatusHeading
-                      variant="base"
-                      title={reviewDocuments.appointmentMissed}
-                    />
-                    <Text style={{ marginLeft: 60 }}>
-                      Date:{" "}
-                      {format(
-                        new Date(process.processData.formData.appointmentDateTime),
-                        "eeee do MMMM yyyy",
-                      )}
-                      <br />
-                      Time:{" "}
-                      {format(
-                        new Date(process.processData.formData.appointmentDateTime),
-                        "hh:mm aaa",
-                      )}
-                    </Text>
-                  </Box>
-                );
-              }
-              return <></>;
-            })}
-
           <ReviewDocumentsAppointmentForm
-            stateConfig={stateConfig}
             processConfig={processConfig}
             process={process}
             mutate={mutate}
@@ -358,7 +306,6 @@ interface ReviewDocumentsAppointmentFormProps {
   processConfig: IProcess;
   process: Process;
   mutate: () => void;
-  stateConfig: Record<string, any>;
   setGlobalError: any;
 }
 
@@ -366,195 +313,50 @@ export const ReviewDocumentsAppointmentForm = ({
   processConfig,
   process,
   mutate,
-  stateConfig,
   setGlobalError,
 }: ReviewDocumentsAppointmentFormProps): JSX.Element => {
   const [needAppointment, setNeedAppointment] = useState<boolean>(false);
 
   const { states } = processConfig;
-  const formData = process.currentState.processData.formData as {
-    appointmentDateTime: string;
-  };
-
-  return [
-    states.documentsRequestedAppointment.state,
-    states.documentsAppointmentRescheduled.state,
-  ].includes(process.currentState.state) && !needAppointment ? (
-    <Box>
-      <StatusHeading variant="base" title={reviewDocuments.appointmentScheduled} />
-      <Text style={{ marginLeft: 60 }}>
-        Date: {format(new Date(formData.appointmentDateTime), "eeee do MMMM yyyy")}
-        <br />
-        Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}
-      </Text>
-      <LinkButton style={{ marginLeft: 60 }} onClick={() => setNeedAppointment(true)}>
-        {isPast(new Date(formData.appointmentDateTime))
-          ? locale.reschedule
-          : locale.change}
-      </LinkButton>
-    </Box>
-  ) : (
-    <BookAppointmentForm
-      processConfig={processConfig}
-      stateConfig={stateConfig}
-      process={process}
-      mutate={mutate}
-      setGlobalError={setGlobalError}
-      needAppointment={needAppointment}
-      setNeedAppointment={setNeedAppointment}
-    />
-  );
-};
-
-interface BookAppointmentFormProps {
-  processConfig: IProcess;
-  stateConfig: Record<string, any>;
-  process: Process;
-  mutate: () => void;
-  needAppointment: boolean;
-  setGlobalError: any;
-  setNeedAppointment: any;
-}
-
-export const BookAppointmentForm = ({
-  processConfig,
-  stateConfig,
-  process,
-  mutate,
-  setGlobalError,
-  needAppointment,
-  setNeedAppointment,
-}: BookAppointmentFormProps): JSX.Element => {
-  const [bookAppointmentDisabled, setBookAppointmentDisabled] = useState<boolean>(true);
-
-  const { states } = processConfig;
-
   return (
-    <Formik
-      initialValues={{ day: "", month: "", year: "", hour: "", minute: "", amPm: "" }}
-      onSubmit={async (values) => {
-        const appointmentDateTime = getAppointmentDateTime(values);
-        let processTrigger = stateConfig.triggers.requestDocumentsAppointment;
-        if (
-          [
-            states.documentsRequestedAppointment.state,
-            states.documentsAppointmentRescheduled.state,
-          ].includes(process.currentState.state)
-        ) {
-          if (
-            isPast(
-              new Date(process.currentState.processData.formData.appointmentDateTime),
-            )
-          ) {
-            processTrigger = stateConfig.triggers.rescheduleDocumentsAppointment;
-          } else {
-            processTrigger = "";
-          }
-        }
-        try {
-          await editProcess({
-            id: process.id,
-            processTrigger,
-            processName: process?.processName,
-            etag: process.etag || "",
-            formData: {
-              appointmentDateTime,
-            },
-            documents: [],
-            processData: {
-              formData: {
-                appointmentDateTime,
-              },
-              documents: [],
-            },
-          });
-          setNeedAppointment(!needAppointment);
-          mutate();
-        } catch (e: any) {
-          setGlobalError(e.response?.status || 500);
-        }
-      }}
-      validateOnBlur
-      validate={(values) => {
-        if (
-          !values.day ||
-          !values.month ||
-          !values.year ||
-          !values.hour ||
-          !values.minute ||
-          !values.amPm ||
-          !["am", "pm"].includes(values.amPm.toLowerCase())
-        ) {
-          setBookAppointmentDisabled(true);
-          return;
-        }
-        if (
-          !isFutureDate(
-            dateToString(getAppointmentDateTime(values), "yyyy-MM-dd'T'HH:mm:ss"),
-          )
-        ) {
-          setBookAppointmentDisabled(true);
-          return;
-        }
-        setBookAppointmentDisabled(false);
-      }}
-    >
-      {() => {
-        return (
-          <Form
-            noValidate
-            id="request-appointment-form"
-            className="request-appointment-form"
-          >
-            <Checkbox
-              id="condition"
-              checked={needAppointment}
-              onChange={() => setNeedAppointment(!needAppointment)}
-            >
-              {reviewDocuments.checkSupportingDocumentsAppointment}
-            </Checkbox>
-            {needAppointment && (
-              <>
-                <div style={{ display: "flex" }}>
-                  <DateField
-                    id="appointment-form-date"
-                    className="mtfh-appointment-form__date"
-                    label="Date"
-                    dayLabel=""
-                    monthLabel=""
-                    yearLabel=""
-                    dayProps={{ name: "day", placeholder: "dd" }}
-                    monthProps={{ name: "month", placeholder: "mm" }}
-                    yearProps={{ name: "year", placeholder: "yy" }}
-                    style={{ marginTop: "1.5em", width: "100%" }}
-                    required
-                  />
-                  <TimeField
-                    id="appointment-form-time"
-                    className="mtfh-appointment-form__time"
-                    label="Time"
-                    hourLabel=""
-                    minuteLabel=""
-                    amPmLabel=""
-                    hourProps={{ name: "hour", placeholder: "00" }}
-                    minuteProps={{ name: "minute", placeholder: "00" }}
-                    amPmProps={{ name: "amPm", placeholder: "am" }}
-                    style={{ marginTop: "1.5em", width: "100%" }}
-                    required
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  disabled={bookAppointmentDisabled}
-                  style={{ width: 222 }}
-                >
-                  {locale.bookAppointment}
-                </Button>
-              </>
-            )}
-          </Form>
-        );
-      }}
-    </Formik>
+    <>
+      <AppointmentDetails
+        process={process}
+        needAppointment={needAppointment}
+        setNeedAppointment={setNeedAppointment}
+        options={{
+          requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
+          rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
+          appointmentRequestedState: states.documentsRequestedAppointment.state,
+          appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
+        }}
+      />
+
+      {(states.documentsRequestedDes.state === process.currentState.state ||
+        needAppointment) && (
+        <Checkbox
+          id="condition"
+          checked={needAppointment}
+          onChange={() => setNeedAppointment(!needAppointment)}
+        >
+          {locale.views.reviewDocuments.checkSupportingDocumentsAppointment}
+        </Checkbox>
+      )}
+
+      <BookAppointmentForm
+        process={process}
+        mutate={mutate}
+        setGlobalError={setGlobalError}
+        needAppointment={needAppointment}
+        setNeedAppointment={setNeedAppointment}
+        options={{
+          buttonText: locale.bookAppointment,
+          requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
+          rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
+          appointmentRequestedState: states.documentsRequestedAppointment.state,
+          appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
+        }}
+      />
+    </>
   );
 };

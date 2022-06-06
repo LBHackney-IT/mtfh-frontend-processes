@@ -161,6 +161,14 @@ export const soletojoint: IProcess = {
         cancelProcess: "CancelProcess",
       },
     },
+    tenureAppointmentScheduled: {
+      state: "TenureAppointmentScheduled",
+      triggers: {},
+    },
+    tenureAppointmentRescheduled: {
+      state: "TenureAppointmentRescheduled",
+      triggers: {},
+    },
     processClosed: {
       state: "ProcessClosed",
       triggers: {},
