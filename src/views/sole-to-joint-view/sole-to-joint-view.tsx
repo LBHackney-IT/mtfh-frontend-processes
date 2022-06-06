@@ -63,18 +63,6 @@ const components = {
 const { views } = locale;
 const { soleToJoint } = views;
 
-const finishStep = <Step key="step-finish">{soleToJoint.steps.finish}</Step>;
-
-const allSteps = [
-  <Step key="step-select-tenant">{soleToJoint.steps.selectTenant}</Step>,
-  <Step key="step-personal-details">{soleToJoint.steps.checkEligibility}</Step>,
-  <Step key="step-breach-of-tenancy">{soleToJoint.steps.breachOfTenancy}</Step>,
-  <Step key="step-request-documents">{soleToJoint.steps.requestDocuments}</Step>,
-  <Step key="step-review-documents">{soleToJoint.steps.reviewDocuments}</Step>,
-  <Step key="step-submit-case">{soleToJoint.steps.submitCase}</Step>,
-  finishStep,
-];
-
 const getActiveStep = (process: any, states, submitted: boolean) => {
   const {
     currentState: { state },
@@ -151,7 +139,7 @@ const SideBar = (props: SideBarProps) => {
   const { process, states, submitted = false, processId, processName } = props;
 
   let activeStep = getActiveStep(process, states, submitted);
-  let steps: typeof allSteps;
+  let steps: JSX.Element[];
   let startIndex = 0;
   if (activeStep > 5) {
     steps = [
