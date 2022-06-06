@@ -1,9 +1,12 @@
 import { mockProcessV1, patchProcessV1, render, server } from "@hackney/mtfh-test-utils";
-import { screen } from "@testing-library/react";
+import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { locale, processes } from "../../../../services";
 import { SubmitCaseView } from "./submit-case-view";
+
+let submitted = false;
+const setSubmitted = jest.fn(() => {});
 
 const mockDocumentChecksPassedProcess = {
   ...mockProcessV1,
@@ -13,6 +16,7 @@ const mockDocumentChecksPassedProcess = {
 describe("submit-case-view", () => {
   beforeEach(() => {
     jest.resetModules();
+    submitted = false;
   });
 
   test("it renders SubmitCaseView correctly", async () => {
@@ -21,6 +25,7 @@ describe("submit-case-view", () => {
         processConfig={processes.soletojoint}
         process={mockDocumentChecksPassedProcess}
         mutate={() => {}}
+        optional={{ submitted, setSubmitted }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -36,6 +41,25 @@ describe("submit-case-view", () => {
     await expect(screen.findByText(locale.submitCase)).resolves.toBeInTheDocument();
   });
 
+  test("it submits case correctly", async () => {
+    server.use(patchProcessV1({}, 200));
+    render(
+      <SubmitCaseView
+        processConfig={processes.soletojoint}
+        process={mockDocumentChecksPassedProcess}
+        mutate={() => {}}
+        optional={{ submitted, setSubmitted }}
+      />,
+      {
+        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+        path: "/processes/soletojoint/:processId",
+      },
+    );
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    await userEvent.click(screen.getByText(locale.submitCase));
+    expect(setSubmitted.mock.calls.length).toBe(1);
+  });
+
   test("it renders SubmitCaseView error when submit not successful", async () => {
     server.use(patchProcessV1("error", 500));
     render(
@@ -43,6 +67,7 @@ describe("submit-case-view", () => {
         processConfig={processes.soletojoint}
         process={mockDocumentChecksPassedProcess}
         mutate={() => {}}
+        optional={{ submitted, setSubmitted }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -56,6 +81,7 @@ describe("submit-case-view", () => {
   });
 
   test("it renders Finish view correctly", async () => {
+    submitted = true;
     render(
       <SubmitCaseView
         processConfig={processes.soletojoint}
@@ -64,6 +90,7 @@ describe("submit-case-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
+        optional={{ submitted, setSubmitted }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",

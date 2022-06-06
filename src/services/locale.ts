@@ -27,6 +27,8 @@ const locale = {
         requestDocuments: "Request Documents",
         reviewDocuments: "Review Documents",
         submitCase: "Submit case",
+        reviewApplication: "Review application",
+        endCase: "End Case",
       },
       actions: {
         reassignCase: "Reassign case",
@@ -104,6 +106,14 @@ const locale = {
       nextStepsText:
         "Based upon the documents submitted by the tenant and the proposed joint tenant, and the investigation undertaken by the Housing Officer, the application now needs to be assessed by the Tenancy Investigation Team.",
       supportingDocumentsApproved: "Supporting documents approved",
+    },
+    tenureInvestigation: {
+      approve: "Approve",
+      decline: "Decline",
+      appointment: "Appointment",
+      recommendation: "Recommendation:",
+      tenureInvestigationCompleted:
+        "I confirm that the tenure investigation has been completed",
     },
     closeCase: {
       reasonForRejection: "Reason for Rejection",

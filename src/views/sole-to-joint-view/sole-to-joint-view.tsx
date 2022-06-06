@@ -75,7 +75,7 @@ const allSteps = [
   finishStep,
 ];
 
-const getActiveStep = (process: any, states) => {
+const getActiveStep = (process: any, states, submitted: boolean) => {
   const {
     currentState: { state },
     currentState,
@@ -109,7 +109,8 @@ const getActiveStep = (process: any, states) => {
       states.manualChecksPassed.state,
       states.breachChecksFailed.state,
       states.processCancelled.state,
-    ].includes(state)
+    ].includes(state) ||
+    (states.manualChecksPassed.state === state && submitted)
   ) {
     return 2;
   }
@@ -126,7 +127,10 @@ const getActiveStep = (process: any, states) => {
   ) {
     return 4;
   }
-  if (state === states.documentChecksPassed.state) {
+  if (
+    state === states.documentChecksPassed.state ||
+    (states.applicationSubmitted.state === state && submitted)
+  ) {
     return 5;
   }
   if (state === states.applicationSubmitted.state) {
@@ -138,30 +142,39 @@ const getActiveStep = (process: any, states) => {
 interface SideBarProps {
   process: any;
   states: any;
-  furtherEligibilitySubmitted: boolean;
+  submitted: boolean;
   processId: string;
   processName: string;
 }
 
 const SideBar = (props: SideBarProps) => {
-  const {
-    process,
-    states,
-    furtherEligibilitySubmitted = false,
-    processId,
-    processName,
-  } = props;
+  const { process, states, submitted = false, processId, processName } = props;
 
-  let activeStep = getActiveStep(process, states);
+  let activeStep = getActiveStep(process, states, submitted);
   let steps: typeof allSteps;
   let startIndex = 0;
-  if (activeStep > 2 || (!furtherEligibilitySubmitted && activeStep === 2)) {
-    steps = allSteps.slice(2);
+  if (activeStep > 5) {
+    steps = [
+      <Step key="step-review-application">{soleToJoint.steps.reviewApplication}</Step>,
+      <Step key="step-end-case">{soleToJoint.steps.endCase}</Step>,
+    ];
+    activeStep = activeStep - 6;
+    startIndex = 10;
+  } else if (activeStep > 2 || (!submitted && activeStep === 2)) {
+    steps = [
+      <Step key="step-breach-of-tenancy">{soleToJoint.steps.breachOfTenancy}</Step>,
+      <Step key="step-request-documents">{soleToJoint.steps.requestDocuments}</Step>,
+      <Step key="step-review-documents">{soleToJoint.steps.reviewDocuments}</Step>,
+      <Step key="step-submit-case">{soleToJoint.steps.submitCase}</Step>,
+    ];
     activeStep = activeStep - 2;
     startIndex = 3;
   } else {
-    steps = allSteps.slice(0, 2);
-    steps.push(finishStep);
+    steps = [
+      <Step key="step-select-tenant">{soleToJoint.steps.selectTenant}</Step>,
+      <Step key="step-personal-details">{soleToJoint.steps.checkEligibility}</Step>,
+      <Step key="step-finish">{soleToJoint.steps.finish}</Step>,
+    ];
   }
   return (
     <>
@@ -229,8 +242,7 @@ export const SoleToJointView = () => {
     processName: processConfig.processName,
   });
 
-  const [furtherEligibilitySubmitted, setFurtherEligibilitySubmitted] =
-    useState<boolean>(false);
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   if (error) {
     return (
@@ -270,7 +282,7 @@ export const SoleToJointView = () => {
         <SideBar
           process={process}
           states={states}
-          furtherEligibilitySubmitted={furtherEligibilitySubmitted}
+          submitted={submitted}
           processId={processId}
           processName={processConfig.processName}
         />
@@ -280,7 +292,7 @@ export const SoleToJointView = () => {
         processConfig={processConfig}
         process={process}
         mutate={mutate}
-        optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
+        optional={{ submitted, setSubmitted }}
       />
     </Layout>
   );

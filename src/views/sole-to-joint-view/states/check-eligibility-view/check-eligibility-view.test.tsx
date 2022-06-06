@@ -11,11 +11,11 @@ import {
 } from "../../../../test-utils";
 import { CheckEligibilityView } from "./check-eligibility-view";
 
-let furtherEligibilitySubmitted = false;
-const setFurtherEligibilitySubmitted = () => {};
+let submitted = false;
+const setSubmitted = () => {};
 
 beforeEach(() => {
-  furtherEligibilitySubmitted = false;
+  submitted = false;
 });
 
 const url = "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735";
@@ -31,7 +31,7 @@ test("it renders CheckEligibility passed checks view correctly", async () => {
       processConfig={processes.soletojoint}
       process={mockProcessAutomatedChecksPassed}
       mutate={() => {}}
-      optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
+      optional={{ submitted, setSubmitted }}
     />,
     options,
   );
@@ -71,7 +71,7 @@ test("it renders CheckEligibility correctly if there is an incoming tenant", asy
       processConfig={processes.soletojoint}
       process={process}
       mutate={() => {}}
-      optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
+      optional={{ submitted, setSubmitted }}
     />,
     options,
   );
@@ -95,7 +95,7 @@ test("it renders CheckEligibility failed checks view correctly", async () => {
       processConfig={processes.soletojoint}
       process={mockProcessAutomatedChecksFailed}
       mutate={() => {}}
-      optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
+      optional={{ submitted, setSubmitted }}
     />,
     options,
   );
@@ -112,13 +112,13 @@ test("it renders CheckEligibility failed checks view correctly", async () => {
   ).resolves.toBeInTheDocument();
 });
 
-test("it renders CheckEligibility for state=ManualChecksPassed, furtherEligibilitySubmitted=false", async () => {
+test("it renders CheckEligibility for state=ManualChecksPassed, submitted=false", async () => {
   render(
     <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={mockManualChecksPassedState}
       mutate={() => {}}
-      optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
+      optional={{ submitted, setSubmitted }}
     />,
     options,
   );
@@ -133,14 +133,14 @@ test("it renders CheckEligibility for state=ManualChecksPassed, furtherEligibili
   await expect(screen.findByText("Breach of tenure")).resolves.toBeInTheDocument();
 });
 
-test("it renders CheckEligibility for state=ManualChecksPassed, furtherEligibilitySubmitted=true", async () => {
-  furtherEligibilitySubmitted = true;
+test("it renders CheckEligibility for state=ManualChecksPassed, submitted=true", async () => {
+  submitted = true;
   render(
     <CheckEligibilityView
       processConfig={processes.soletojoint}
       process={mockManualChecksPassedState}
       mutate={() => {}}
-      optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
+      optional={{ submitted, setSubmitted }}
     />,
     options,
   );
@@ -162,7 +162,7 @@ test("it renders an error if tenure details can't be fetched", async () => {
       processConfig={processes.soletojoint}
       process={mockProcessAutomatedChecksPassed}
       mutate={() => {}}
-      optional={{ furtherEligibilitySubmitted, setFurtherEligibilitySubmitted }}
+      optional={{ submitted, setSubmitted }}
     />,
     options,
   );

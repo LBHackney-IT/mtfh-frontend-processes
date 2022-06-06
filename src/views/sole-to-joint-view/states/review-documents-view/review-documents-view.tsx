@@ -7,7 +7,7 @@ import { Form, Formik } from "formik";
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
-import { EligibilityChecksPassedBox } from "../check-eligibility-view/shared";
+import { EligibilityChecksPassedBox } from "../shared";
 import { CloseCaseForm, CloseCaseFormData } from "../submit-case-view/close-case-form";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";

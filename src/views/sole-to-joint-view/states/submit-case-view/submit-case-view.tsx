@@ -4,7 +4,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
-import { EligibilityChecksPassedBox } from "../check-eligibility-view/shared";
+import { EligibilityChecksPassedBox } from "../shared";
+import { TenureInvestigationView } from "../tenure-investigation-view";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -24,16 +25,29 @@ interface SubmitCaseViewProps {
   processConfig: IProcess;
   process: Process;
   mutate: () => void;
+  optional?: any;
 }
 
 export const SubmitCaseView = ({
   processConfig,
   process,
   mutate,
+  optional,
 }: SubmitCaseViewProps): JSX.Element => {
+  const { submitted, setSubmitted } = optional;
   const [globalError, setGlobalError] = useState<number>();
   const { states } = processConfig;
   const { documentChecksPassed, applicationSubmitted } = states;
+
+  if (applicationSubmitted.state === process.currentState.state && !submitted) {
+    return (
+      <TenureInvestigationView
+        processConfig={processConfig}
+        process={process}
+        mutate={mutate}
+      />
+    );
+  }
 
   return (
     <>
@@ -42,7 +56,7 @@ export const SubmitCaseView = ({
         <StatusErrorSummary id="review-documents-global-error" code={globalError} />
       )}
 
-      {applicationSubmitted.state === process.currentState.state && (
+      {applicationSubmitted.state === process.currentState.state && submitted && (
         <>
           <Heading variant="h2">{submitCase.nextSteps}:</Heading>
           <Text>{submitCase.nextStepsText}</Text>
@@ -87,6 +101,7 @@ export const SubmitCaseView = ({
                   formData: {},
                   documents: [],
                 });
+                setSubmitted(true);
                 mutate();
               } catch (e: any) {
                 setGlobalError(e.response?.status || 500);

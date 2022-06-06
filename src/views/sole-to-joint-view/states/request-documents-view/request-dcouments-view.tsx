@@ -7,15 +7,11 @@ import { dateToString, stringToDate } from "../../../../utils/date";
 import {
   BulletWithExplanation,
   EligibilityChecksPassedBox,
-} from "../check-eligibility-view/shared";
+  TenantContactDetails,
+} from "../shared";
 
-import {
-  splitContactDetailsByType,
-  useContactDetails,
-} from "@mtfh/common/lib/api/contact-details/v2";
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
-import { HouseholdMember } from "@mtfh/common/lib/api/tenure/v1/types";
 import {
   Button,
   Center,
@@ -212,43 +208,5 @@ export const RequestDcoumentsView = ({
         }}
       </Formik>
     </div>
-  );
-};
-
-const TenantContactDetails = ({ tenant }: { tenant: HouseholdMember }) => {
-  const { data: contacts, error } = useContactDetails(tenant.id);
-
-  if (error) {
-    return (
-      <ErrorSummary
-        id="request-documents-view-contact-details"
-        title={locale.errors.unableToFetchRecord}
-        description={locale.errors.unableToFetchRecordDescription}
-      />
-    );
-  }
-
-  if (!contacts) {
-    return (
-      <Center>
-        <Spinner />
-      </Center>
-    );
-  }
-
-  const { emails, phones } = splitContactDetailsByType(contacts?.results || []);
-
-  return (
-    <>
-      <Text size="sm">{tenant.fullName} contact details:</Text>
-      <Text size="sm">
-        Phone:
-        <span style={{ marginLeft: "1em" }}>{phones?.[0]?.contactInformation.value}</span>
-      </Text>
-      <Text size="sm">
-        Email:
-        <span style={{ marginLeft: "1em" }}>{emails?.[0]?.contactInformation.value}</span>
-      </Text>
-    </>
   );
 };
