@@ -106,4 +106,55 @@ describe("appointment-details-component", () => {
     expect(screen.findByLabelText(locale.change)).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
+
+  test("it renders rescheduled appointment details with cancel process correctly", () => {
+    const { states } = processes.soletojoint;
+    render(
+      <AppointmentDetails
+        process={{
+          ...mockDocumentsAppointmentRescheduled({
+            appointmentDateTime: "2010-10-17T08:59:00.000Z",
+          }),
+          previousStates: [
+            {
+              state: "DocumentsRequestedAppointment",
+              permittedTriggers: [],
+              assignment: "",
+              processData: {
+                formData: {
+                  appointmentDateTime: "2010-10-12T08:59:00.000Z",
+                },
+                documents: [],
+              },
+              createdAt: "",
+              updatedAt: "",
+            },
+            {
+              state: "BreachChecksPassed",
+              permittedTriggers: [],
+              assignment: "",
+              processData: {
+                formData: {},
+                documents: [],
+              },
+              createdAt: "",
+              updatedAt: "",
+            },
+          ],
+        }}
+        needAppointment
+        setNeedAppointment={setNeedAppointment}
+        options={{
+          requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
+          rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
+          appointmentRequestedState: states.documentsRequestedAppointment.state,
+          appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
+          cancelProcess: true,
+        }}
+      />,
+    );
+    expect(
+      screen.findByLabelText(locale.components.appointment.cancelProcess),
+    ).resolves.toBeInTheDocument();
+  });
 });

@@ -14,6 +14,7 @@ interface AppointmentDetailsProps {
     rescheduleAppointmentTrigger: string;
     appointmentRequestedState: string;
     appointmentRescheduledState: string;
+    cancelProcess?: boolean;
   };
 }
 
@@ -72,6 +73,7 @@ export const AppointmentDetails = ({
               <br />
               Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}
             </Text>
+
             <LinkButton
               style={{ marginLeft: 60 }}
               onClick={() => setNeedAppointment(!needAppointment)}
@@ -80,6 +82,16 @@ export const AppointmentDetails = ({
                 ? locale.reschedule
                 : locale.change}
             </LinkButton>
+            {options.cancelProcess &&
+              options.appointmentRescheduledState === process.currentState.state &&
+              isPast(new Date(formData.appointmentDateTime)) && (
+                <LinkButton
+                  style={{ marginLeft: 60 }}
+                  onClick={() => setNeedAppointment(!needAppointment)}
+                >
+                  {locale.components.appointment.cancelProcess}
+                </LinkButton>
+              )}
           </Box>
         </>
       )}

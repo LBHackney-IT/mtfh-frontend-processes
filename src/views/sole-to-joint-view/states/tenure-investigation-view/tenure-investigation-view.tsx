@@ -166,6 +166,7 @@ export const TenureInvestigationView = ({
                 rescheduleAppointmentTrigger: Trigger.RescheduleTenureAppointment,
                 appointmentRequestedState: tenureAppointmentScheduled.state,
                 appointmentRescheduledState: tenureAppointmentRescheduled.state,
+                cancelProcess: true,
               }}
             />
           )}
