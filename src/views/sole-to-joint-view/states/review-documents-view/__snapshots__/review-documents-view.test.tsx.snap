@@ -126,12 +126,6 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
         Change
       </button>
     </div>
-    <form
-      action="#"
-      class="request-appointment-form"
-      id="request-appointment-form"
-      novalidate=""
-    />
     <div
       style="padding-bottom: 35px;"
     />
@@ -418,12 +412,6 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
         I need to make an appointment to check supporting documents
       </label>
     </div>
-    <form
-      action="#"
-      class="request-appointment-form"
-      id="request-appointment-form"
-      novalidate=""
-    />
     <div
       style="padding-bottom: 35px;"
     />

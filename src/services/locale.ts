@@ -106,19 +106,20 @@ const locale = {
       supportingDocumentsApproved: "Supporting documents approved",
     },
     tenureInvestigation: {
+      appointment: "Appointment",
       approve: "Approve",
       decline: "Decline",
-      appointment: "Appointment",
-      recommendation: "Recommendation:",
-      tenureInvestigationCompleted:
-        "I confirm that the tenure investigation has been completed",
-      showReport: "Show investigator report",
-      tenureInvestigatorRecommendation: (recommendation) =>
-        `Tenure investigator recommendation: ${recommendation} application`,
+      documentsSigned: "Documents signed",
       hoApproved: "Sole to joint tenure application approved",
       hoApprovedNextSteps: "Sole to Joint application approved, next steps:",
       mustMakeAppointment:
         "You must make an office appointment with the applicant to sign a new tenancy agreement",
+      recommendation: "Recommendation:",
+      showReport: "Show investigator report",
+      tenureInvestigationCompleted:
+        "I confirm that the tenure investigation has been completed",
+      tenureInvestigatorRecommendation: (recommendation) =>
+        `Tenure investigator recommendation: ${recommendation} application`,
     },
     closeCase: {
       reasonForRejection: "Reason for Rejection",

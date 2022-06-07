@@ -24,7 +24,7 @@ interface BookAppointmentFormProps {
   };
 }
 
-export const BookAppointmentForm = ({
+export const AppointmentForm = ({
   process,
   mutate,
   setGlobalError,
@@ -106,47 +106,45 @@ export const BookAppointmentForm = ({
       >
         {() => {
           return (
-            <Form
-              noValidate
-              id="request-appointment-form"
-              className="request-appointment-form"
-            >
-              {needAppointment && (
-                <>
-                  <div style={{ display: "flex" }}>
-                    <DateField
-                      id="appointment-form-date"
-                      className="mtfh-appointment-form__date"
-                      label="Date"
-                      dayLabel=""
-                      monthLabel=""
-                      yearLabel=""
-                      dayProps={{ name: "day", placeholder: "dd" }}
-                      monthProps={{ name: "month", placeholder: "mm" }}
-                      yearProps={{ name: "year", placeholder: "yy" }}
-                      style={{ marginTop: "1.5em", width: "100%" }}
-                      required
-                    />
-                    <TimeField
-                      id="appointment-form-time"
-                      className="mtfh-appointment-form__time"
-                      label="Time"
-                      hourLabel=""
-                      minuteLabel=""
-                      amPmLabel=""
-                      hourProps={{ name: "hour", placeholder: "00" }}
-                      minuteProps={{ name: "minute", placeholder: "00" }}
-                      amPmProps={{ name: "amPm", placeholder: "am" }}
-                      style={{ marginTop: "1.5em", width: "100%" }}
-                      required
-                    />
-                  </div>
-                  <Button type="submit" disabled={disabled} style={{ width: 222 }}>
-                    {options.buttonText}
-                  </Button>
-                </>
-              )}
-            </Form>
+            needAppointment && (
+              <Form
+                noValidate
+                id="request-appointment-form"
+                className="request-appointment-form"
+              >
+                <div style={{ display: "flex" }}>
+                  <DateField
+                    id="appointment-form-date"
+                    className="mtfh-appointment-form__date"
+                    label="Date"
+                    dayLabel=""
+                    monthLabel=""
+                    yearLabel=""
+                    dayProps={{ name: "day", placeholder: "dd" }}
+                    monthProps={{ name: "month", placeholder: "mm" }}
+                    yearProps={{ name: "year", placeholder: "yy" }}
+                    style={{ marginTop: "1.5em", width: "100%" }}
+                    required
+                  />
+                  <TimeField
+                    id="appointment-form-time"
+                    className="mtfh-appointment-form__time"
+                    label="Time"
+                    hourLabel=""
+                    minuteLabel=""
+                    amPmLabel=""
+                    hourProps={{ name: "hour", placeholder: "00" }}
+                    minuteProps={{ name: "minute", placeholder: "00" }}
+                    amPmProps={{ name: "amPm", placeholder: "am" }}
+                    style={{ marginTop: "1.5em", width: "100%" }}
+                    required
+                  />
+                </div>
+                <Button type="submit" disabled={disabled} style={{ width: 222 }}>
+                  {options.buttonText}
+                </Button>
+              </Form>
+            )
           );
         }}
       </Formik>

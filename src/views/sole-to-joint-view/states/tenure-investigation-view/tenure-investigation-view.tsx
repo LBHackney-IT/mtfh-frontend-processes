@@ -5,7 +5,7 @@ import { isPast } from "date-fns";
 
 import { SoleToJointHeader } from "../../../../components";
 import { AppointmentDetails } from "../../../../components/appointment-details/appointment-details";
-import { BookAppointmentForm } from "../../../../components/appointment-form/appointment-form";
+import { AppointmentForm } from "../../../../components/appointment-form/appointment-form";
 import { locale } from "../../../../services";
 import { Trigger } from "../../../../services/processes/types";
 import { IProcess } from "../../../../types";
@@ -153,7 +153,10 @@ export const TenureInvestigationView = ({
             <Text>{views.tenureInvestigation.mustMakeAppointment}</Text>
           )}
 
-          {isCurrentState(tenureAppointmentScheduled.state) && (
+          {[
+            tenureAppointmentScheduled.state,
+            tenureAppointmentRescheduled.state,
+          ].includes(process.currentState.state) && (
             <AppointmentDetails
               process={process}
               needAppointment={needAppointment}
@@ -176,22 +179,20 @@ export const TenureInvestigationView = ({
         tenureAppointmentScheduled.state,
         tenureAppointmentRescheduled.state,
       ].includes(process.currentState.state) && (
-        <>
-          <BookAppointmentForm
-            process={process}
-            mutate={mutate}
-            needAppointment={needAppointment}
-            setGlobalError={setGlobalError}
-            setNeedAppointment={setNeedAppointment}
-            options={{
-              buttonText: "Continue",
-              requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
-              rescheduleAppointmentTrigger: Trigger.RescheduleTenureAppointment,
-              appointmentRequestedState: tenureAppointmentScheduled.state,
-              appointmentRescheduledState: tenureAppointmentRescheduled.state,
-            }}
-          />
-        </>
+        <AppointmentForm
+          process={process}
+          mutate={mutate}
+          needAppointment={needAppointment}
+          setGlobalError={setGlobalError}
+          setNeedAppointment={setNeedAppointment}
+          options={{
+            buttonText: "Continue",
+            requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
+            rescheduleAppointmentTrigger: Trigger.RescheduleTenureAppointment,
+            appointmentRequestedState: tenureAppointmentScheduled.state,
+            appointmentRescheduledState: tenureAppointmentRescheduled.state,
+          }}
+        />
       )}
 
       {[tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
@@ -199,7 +200,7 @@ export const TenureInvestigationView = ({
       ) &&
         !needAppointment && (
           <Button disabled={!isPast(new Date(formData.appointmentDateTime))}>
-            Documents signed
+            {views.tenureInvestigation.documentsSigned}
           </Button>
         )}
 

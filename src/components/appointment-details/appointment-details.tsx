@@ -38,7 +38,7 @@ export const AppointmentDetails = ({
             process.previousStates.map((process) => {
               if (process.state === options.appointmentRequestedState) {
                 return (
-                  <Box>
+                  <Box key={process.state}>
                     <StatusHeading
                       variant="base"
                       title={locale.components.appointment.missed}
@@ -59,7 +59,7 @@ export const AppointmentDetails = ({
                   </Box>
                 );
               }
-              return <></>;
+              return null;
             })}
 
           <Box>

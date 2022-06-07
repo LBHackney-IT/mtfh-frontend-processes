@@ -5,7 +5,7 @@ import { Form, Formik } from "formik";
 
 import { SoleToJointHeader } from "../../../../components";
 import { AppointmentDetails } from "../../../../components/appointment-details/appointment-details";
-import { BookAppointmentForm } from "../../../../components/appointment-form/appointment-form";
+import { AppointmentForm } from "../../../../components/appointment-form/appointment-form";
 import { locale } from "../../../../services";
 import { Trigger } from "../../../../services/processes/types";
 import { IProcess } from "../../../../types";
@@ -343,7 +343,7 @@ export const ReviewDocumentsAppointmentForm = ({
         </Checkbox>
       )}
 
-      <BookAppointmentForm
+      <AppointmentForm
         process={process}
         mutate={mutate}
         setGlobalError={setGlobalError}
