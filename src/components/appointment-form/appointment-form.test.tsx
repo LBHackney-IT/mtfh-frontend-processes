@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 
 import { processes } from "../../services";
 import { Trigger } from "../../services/processes/types";
-import { mockDocumentsRequestedDes } from "../../test-utils";
+import { mockDocumentsRequestedDes, typeDateTime } from "../../test-utils";
 import { AppointmentForm } from "./appointment-form";
 
 const setNeedAppointment = jest.fn();
@@ -76,18 +76,9 @@ describe("appointment-form-component", () => {
         }}
       />,
     );
-    await typeDateTime("2099");
+    await typeDateTime(screen, userEvent, "2099");
     expect(screen.getByText("Continue")).toBeEnabled();
-    await typeDateTime("2000");
+    await typeDateTime(screen, userEvent, "2000");
     expect(screen.getByText("Continue")).toBeDisabled();
   });
 });
-
-async function typeDateTime(year) {
-  await userEvent.type(screen.getByPlaceholderText(/dd/i), "01");
-  await userEvent.type(screen.getByPlaceholderText(/mm/i), "01");
-  await userEvent.type(screen.getByPlaceholderText(/yy/i), year);
-  await userEvent.type(screen.getAllByPlaceholderText(/00/i)[0], "01");
-  await userEvent.type(screen.getAllByPlaceholderText(/00/i)[1], "01");
-  await userEvent.type(screen.getByPlaceholderText(/am/i), "am");
-}
