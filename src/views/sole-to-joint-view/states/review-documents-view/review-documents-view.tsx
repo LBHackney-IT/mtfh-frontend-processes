@@ -112,7 +112,7 @@ export const ReviewDocumentsView = ({
                       checked={hasNotifiedResident}
                       onChange={() => setHasNotifiedResident(!hasNotifiedResident)}
                     >
-                      {reviewDocuments.outcomeLetterSent}
+                      {views.closeCase.outcomeLetterSent}
                     </Checkbox>
                     <Button
                       type="submit"

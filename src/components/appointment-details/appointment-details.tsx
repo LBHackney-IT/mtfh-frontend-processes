@@ -9,12 +9,14 @@ interface AppointmentDetailsProps {
   process: Process;
   needAppointment: boolean;
   setNeedAppointment: any;
+  closeCase?: boolean;
+  setCloseCase?: any;
   options: {
     requestAppointmentTrigger: string;
     rescheduleAppointmentTrigger: string;
     appointmentRequestedState: string;
     appointmentRescheduledState: string;
-    cancelProcess?: boolean;
+    closeCaseButton?: boolean;
   };
 }
 
@@ -22,6 +24,8 @@ export const AppointmentDetails = ({
   process,
   needAppointment,
   setNeedAppointment,
+  closeCase = false,
+  setCloseCase,
   options,
 }: AppointmentDetailsProps): JSX.Element => {
   const { currentState } = process;
@@ -74,24 +78,28 @@ export const AppointmentDetails = ({
               Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}
             </Text>
 
-            <LinkButton
-              style={{ marginLeft: 60 }}
-              onClick={() => setNeedAppointment(!needAppointment)}
-            >
-              {isPast(new Date(formData.appointmentDateTime))
-                ? locale.reschedule
-                : locale.change}
-            </LinkButton>
-            {options.cancelProcess &&
-              options.appointmentRescheduledState === process.currentState.state &&
-              isPast(new Date(formData.appointmentDateTime)) && (
+            {!closeCase && (
+              <>
                 <LinkButton
                   style={{ marginLeft: 60 }}
                   onClick={() => setNeedAppointment(!needAppointment)}
                 >
-                  {locale.components.appointment.cancelProcess}
+                  {isPast(new Date(formData.appointmentDateTime))
+                    ? locale.reschedule
+                    : locale.change}
                 </LinkButton>
-              )}
+                {options.closeCaseButton &&
+                  options.appointmentRescheduledState === process.currentState.state &&
+                  isPast(new Date(formData.appointmentDateTime)) && (
+                    <LinkButton
+                      style={{ marginLeft: 60 }}
+                      onClick={() => setCloseCase(true)}
+                    >
+                      {locale.components.appointment.closeCase}
+                    </LinkButton>
+                  )}
+              </>
+            )}
           </Box>
         </>
       )}

@@ -70,7 +70,7 @@ const components = {
 const { views } = locale;
 const { soleToJoint } = views;
 
-const getActiveStep = (process: any, states, submitted: boolean) => {
+const getActiveStep = (process: any, states, submitted: boolean, closeCase: boolean) => {
   const {
     currentState: { state },
     currentState,
@@ -138,6 +138,9 @@ const getActiveStep = (process: any, states, submitted: boolean) => {
   ) {
     return 6;
   }
+  if ([states.tenureAppointmentRescheduled.state].includes(state) && closeCase) {
+    return 7;
+  }
   return 0;
 };
 
@@ -145,14 +148,20 @@ interface SideBarProps {
   process: any;
   states: any;
   submitted: boolean;
+  closeCase: boolean;
   processId: string;
   processName: string;
 }
 
-const SideBar = (props: SideBarProps) => {
-  const { process, states, submitted = false, processId, processName } = props;
-
-  let activeStep = getActiveStep(process, states, submitted);
+const SideBar = ({
+  process,
+  states,
+  submitted = false,
+  closeCase = false,
+  processId,
+  processName,
+}: SideBarProps): JSX.Element => {
+  let activeStep = getActiveStep(process, states, submitted, closeCase);
   let steps: JSX.Element[];
   let startIndex = 0;
   if (activeStep > 5) {
@@ -245,6 +254,7 @@ export const SoleToJointView = () => {
   });
 
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [closeCase, setCloseCase] = useState<boolean>(false);
 
   if (error) {
     return (
@@ -285,6 +295,7 @@ export const SoleToJointView = () => {
           process={process}
           states={states}
           submitted={submitted}
+          closeCase={closeCase}
           processId={processId}
           processName={processConfig.processName}
         />
@@ -294,7 +305,7 @@ export const SoleToJointView = () => {
         processConfig={processConfig}
         process={process}
         mutate={mutate}
-        optional={{ submitted, setSubmitted }}
+        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />
     </Layout>
   );

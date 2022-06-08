@@ -2,6 +2,7 @@ import React from "react";
 
 import { render } from "@hackney/mtfh-test-utils";
 import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { locale, processes } from "../../services";
 import { Trigger } from "../../services/processes/types";
@@ -107,7 +108,8 @@ describe("appointment-details-component", () => {
     expect(container).toMatchSnapshot();
   });
 
-  test("it renders rescheduled appointment details with cancel process correctly", () => {
+  test("it renders rescheduled appointment details with cancel process correctly", async () => {
+    const setCloseCase = jest.fn();
     const { states } = processes.soletojoint;
     render(
       <AppointmentDetails
@@ -144,17 +146,18 @@ describe("appointment-details-component", () => {
         }}
         needAppointment
         setNeedAppointment={setNeedAppointment}
+        closeCase={false}
+        setCloseCase={setCloseCase}
         options={{
           requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
           rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
           appointmentRequestedState: states.documentsRequestedAppointment.state,
           appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
-          cancelProcess: true,
+          closeCaseButton: true,
         }}
       />,
     );
-    expect(
-      screen.findByLabelText(locale.components.appointment.cancelProcess),
-    ).resolves.toBeInTheDocument();
+    await userEvent.click(screen.getByText(locale.components.appointment.closeCase));
+    expect(setCloseCase.mock.calls.length).toBe(1);
   });
 });

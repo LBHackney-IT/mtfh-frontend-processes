@@ -15,12 +15,15 @@ import { SubmitCaseView } from "../submit-case-view";
 import { TenureInvestigationView } from "./tenure-investigation-view";
 
 let submitted = false;
+let closeCase = false;
 const setSubmitted = () => {};
+const setCloseCase = () => {};
 
 describe("tenure-investigation-view", () => {
   beforeEach(() => {
     jest.resetModules();
     submitted = false;
+    closeCase = false;
   });
 
   test("it renders TenureInvestigation view correctly for ApplicationSubmitted state", async () => {
@@ -33,7 +36,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted }}
+        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -58,7 +61,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted }}
+        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -82,7 +85,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted }}
+        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -105,7 +108,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted }}
+        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -141,7 +144,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted }}
+        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -172,6 +175,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "HOApprovalPassed" },
         }}
         mutate={() => {}}
+        optional={{ closeCase, setCloseCase }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -205,6 +209,7 @@ describe("tenure-investigation-view", () => {
           },
         }}
         mutate={() => {}}
+        optional={{ closeCase, setCloseCase }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -238,6 +243,7 @@ describe("tenure-investigation-view", () => {
           },
         }}
         mutate={() => {}}
+        optional={{ closeCase, setCloseCase }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -296,6 +302,7 @@ describe("tenure-investigation-view", () => {
           ],
         }}
         mutate={() => {}}
+        optional={{ closeCase, setCloseCase }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -309,5 +316,52 @@ describe("tenure-investigation-view", () => {
       }),
     ).resolves.toBeDisabled();
     expect(container).toMatchSnapshot();
+  });
+
+  test("it renders TenureInvestigation view correctly for close case", async () => {
+    closeCase = true;
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    render(
+      <TenureInvestigationView
+        processConfig={processes.soletojoint}
+        process={{
+          ...mockProcessV1,
+          currentState: {
+            ...mockProcessV1.currentState,
+            processData: {
+              formData: {
+                appointmentDateTime: "2010-10-17T08:59:00.000Z",
+              },
+              documents: [],
+            },
+            state: "TenureAppointmentRescheduled",
+          },
+          previousStates: [
+            {
+              state: "TenureAppointmentScheduled",
+              permittedTriggers: [],
+              assignment: "",
+              processData: {
+                formData: {
+                  appointmentDateTime: "2010-10-12T08:59:00.000Z",
+                },
+                documents: [],
+              },
+              createdAt: "",
+              updatedAt: "",
+            },
+          ],
+        }}
+        mutate={() => {}}
+        optional={{ closeCase, setCloseCase }}
+      />,
+      {
+        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+        path: "/processes/soletojoint/:processId",
+      },
+    );
+    await expect(
+      screen.findByText(locale.views.closeCase.soleToJointClosed),
+    ).resolves.toBeInTheDocument();
   });
 });

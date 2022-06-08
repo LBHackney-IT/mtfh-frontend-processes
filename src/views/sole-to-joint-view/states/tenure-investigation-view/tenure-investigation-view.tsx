@@ -9,6 +9,7 @@ import { AppointmentForm } from "../../../../components/appointment-form/appoint
 import { locale } from "../../../../services";
 import { Trigger } from "../../../../services/processes/types";
 import { IProcess } from "../../../../types";
+import { CloseProcessView } from "../../shared/close-process-view";
 import { EligibilityChecksPassedBox, TenantContactDetails } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
@@ -33,12 +34,14 @@ interface TenureInvestigationViewProps {
   processConfig: IProcess;
   process: Process;
   mutate: () => void;
+  optional?: any;
 }
 
 export const TenureInvestigationView = ({
   processConfig,
   process,
   mutate,
+  optional,
 }: TenureInvestigationViewProps): JSX.Element => {
   const isCurrentState = (state) => state === process.currentState.state;
   const [globalError, setGlobalError] = useState<number>();
@@ -53,6 +56,7 @@ export const TenureInvestigationView = ({
   const [needAppointment, setNeedAppointment] = useState<boolean>(
     isCurrentState(hoApprovalPassed.state),
   );
+  const { closeCase, setCloseCase } = optional;
   const formData = process.currentState.processData.formData as {
     appointmentDateTime: string;
   };
@@ -161,19 +165,25 @@ export const TenureInvestigationView = ({
               process={process}
               needAppointment={needAppointment}
               setNeedAppointment={setNeedAppointment}
+              closeCase={closeCase}
+              setCloseCase={setCloseCase}
               options={{
                 requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
                 rescheduleAppointmentTrigger: Trigger.RescheduleTenureAppointment,
                 appointmentRequestedState: tenureAppointmentScheduled.state,
                 appointmentRescheduledState: tenureAppointmentRescheduled.state,
-                cancelProcess: true,
+                closeCaseButton: true,
               }}
             />
           )}
         </>
       )}
 
-      {tenant ? <TenantContactDetails tenant={tenant} /> : <Text>Tenant not found.</Text>}
+      {!closeCase && tenant ? (
+        <TenantContactDetails tenant={tenant} />
+      ) : (
+        <Text>Tenant not found.</Text>
+      )}
 
       {[
         hoApprovalPassed.state,
@@ -196,14 +206,28 @@ export const TenureInvestigationView = ({
         />
       )}
 
-      {[tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
-        process.currentState.state,
-      ) &&
+      {!closeCase &&
+        [tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
+          process.currentState.state,
+        ) &&
         !needAppointment && (
           <Button disabled={!isPast(new Date(formData.appointmentDateTime))}>
             {views.tenureInvestigation.documentsSigned}
           </Button>
         )}
+
+      {closeCase && (
+        <>
+          <Box variant="warning">
+            <StatusHeading variant="warning" title={views.closeCase.soleToJointClosed} />
+          </Box>
+          <CloseProcessView
+            process={process}
+            processConfig={processConfig}
+            mutate={mutate}
+          />
+        </>
+      )}
 
       {isCurrentState(applicationSubmitted.state) && (
         <>

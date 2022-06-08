@@ -87,8 +87,6 @@ const locale = {
         "I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months",
       incomingTenantLivingInPropertyHint:
         "(for example: letter, utility bill, council tax bill)",
-      outcomeLetterSent:
-        "I confirm that an outcome letter has been sent to the resident.",
       soleToJointClosed: "Sole to joint application closed",
       thankYouForConfirmation: "Thank you for confirmation",
       confirmation:
@@ -124,6 +122,8 @@ const locale = {
     closeCase: {
       reasonForRejection: "Reason for Rejection",
       closeApplication: (processName: string) => `Close ${processName} application?`,
+      outcomeLetterSent: "I confirm that an outcome letter has been sent to the resident",
+      soleToJointClosed: "Sole to joint tenure application closed",
     },
   },
   errors: {
@@ -170,7 +170,7 @@ const locale = {
     appointment: {
       scheduled: "Office appointment scheduled",
       missed: "Office appointment missed",
-      cancelProcess: "Office appointment missed - close case",
+      closeCase: "Office appointment missed - close case",
     },
   },
 };

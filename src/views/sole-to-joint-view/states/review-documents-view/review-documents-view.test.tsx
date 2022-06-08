@@ -290,7 +290,7 @@ describe("review-documents-view", () => {
     await expect(screen.findByText(reason)).resolves.toBeInTheDocument();
     await expect(screen.findByText(locale.confirm)).resolves.toBeDisabled();
     await userEvent.click(
-      screen.getByLabelText(locale.views.reviewDocuments.outcomeLetterSent),
+      screen.getByLabelText(locale.views.closeCase.outcomeLetterSent),
     );
     await expect(screen.findByText(locale.confirm)).resolves.toBeEnabled();
     await userEvent.click(screen.getByText(locale.confirm));
@@ -317,7 +317,7 @@ describe("review-documents-view", () => {
     );
     await userEvent.click(await screen.findByText(locale.confirm));
     await userEvent.click(
-      screen.getByLabelText(locale.views.reviewDocuments.outcomeLetterSent),
+      screen.getByLabelText(locale.views.closeCase.outcomeLetterSent),
     );
     await userEvent.click(screen.getByText(locale.confirm));
     await expect(
