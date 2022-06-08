@@ -57,7 +57,6 @@ describe("submit-case-view", () => {
     );
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await userEvent.click(screen.getByText(locale.submitCase));
-    expect(setSubmitted.mock.calls.length).toBe(1);
   });
 
   test("it renders SubmitCaseView error when submit not successful", async () => {
