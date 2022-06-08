@@ -114,10 +114,12 @@ const locale = {
         "You must make an office appointment with the applicant to sign a new tenancy agreement",
       recommendation: "Recommendation:",
       showReport: "Show investigator report",
+      tenancySigned: "Tenancy signed: tenure created",
       tenureInvestigationCompleted:
         "I confirm that the tenure investigation has been completed",
       tenureInvestigatorRecommendation: (recommendation) =>
         `Tenure investigator recommendation: ${recommendation} application`,
+      viewNewTenure: "View new tenure",
     },
     closeCase: {
       reasonForRejection: "Reason for Rejection",
