@@ -3,12 +3,24 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { Form, Formik } from "formik";
 
+import { locale } from "../../../services";
 import { Trigger } from "../../../services/processes/types";
+import { IProcess } from "../../../types";
 
-import { editProcess } from "@mtfh/common/lib/api/process/v1";
+import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import { Button, Checkbox, Heading, Link, List, Text } from "@mtfh/common/lib/components";
 
-export const CloseProcessView = ({ process, processConfig, mutate }) => {
+interface CloseProcessViewProps {
+  processConfig: IProcess;
+  process: Process;
+  mutate: () => void;
+}
+
+export const CloseProcessView = ({
+  process,
+  processConfig,
+  mutate,
+}: CloseProcessViewProps): JSX.Element => {
   const [confirmed, setConfirmed] = useState<boolean>(false);
 
   const { state } = process.currentState;
@@ -58,10 +70,10 @@ export const CloseProcessView = ({ process, processConfig, mutate }) => {
               checked={confirmed}
               onChange={() => setConfirmed(!confirmed)}
             >
-              I confirm that an outcome letter has been sent to the resident
+              {locale.views.closeCase.outcomeLetterSent}
             </Checkbox>
             <Button type="submit" disabled={!confirmed}>
-              Confirm
+              {locale.confirm}
             </Button>
           </Form>
         )}

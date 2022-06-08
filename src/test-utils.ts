@@ -103,10 +103,31 @@ export const mockDocumentsRequestedAppointment = ({
   };
 };
 
-export const mockDocumentsAppointmentRescheduled = {
-  ...mockProcessV1,
-  currentState: {
-    ...mockProcessV1.currentState,
-    state: "DocumentsAppointmentRescheduled",
-  },
+export const mockDocumentsAppointmentRescheduled = ({
+  appointmentDateTime,
+}: {
+  appointmentDateTime: string;
+}) => {
+  return {
+    ...mockProcessV1,
+    currentState: {
+      ...mockProcessV1.currentState,
+      state: "DocumentsAppointmentRescheduled",
+      processData: {
+        formData: {
+          appointmentDateTime,
+        },
+        documents: [],
+      },
+    },
+  };
+};
+
+export const typeDateTime = async (screen, userEvent, year) => {
+  await userEvent.type(screen.getByPlaceholderText(/dd/i), "01");
+  await userEvent.type(screen.getByPlaceholderText(/mm/i), "01");
+  await userEvent.type(screen.getByPlaceholderText(/yy/i), year);
+  await userEvent.type(screen.getAllByPlaceholderText(/00/i)[0], "01");
+  await userEvent.type(screen.getAllByPlaceholderText(/00/i)[1], "01");
+  await userEvent.type(screen.getByPlaceholderText(/am/i), "am");
 };

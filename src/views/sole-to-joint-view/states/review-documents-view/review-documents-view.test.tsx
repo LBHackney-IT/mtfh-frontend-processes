@@ -9,6 +9,7 @@ import {
   mockDocumentsRequestedAppointment,
   mockDocumentsRequestedDes,
   mockDocumentsRequestedDesAppointment,
+  typeDateTime,
 } from "../../../../test-utils";
 import { ReviewDocumentsView } from "./review-documents-view";
 
@@ -62,7 +63,6 @@ describe("review-documents-view", () => {
   });
 
   test("it disables book appointment if date is not in future", async () => {
-    const user = userEvent.setup();
     server.use(patchProcessV1("error", 500));
     render(
       <ReviewDocumentsView
@@ -75,7 +75,7 @@ describe("review-documents-view", () => {
       locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
     );
     fireEvent.click(checkbox);
-    await typeDateTime(user, "2000");
+    await typeDateTime(screen, userEvent, "2000");
     const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
     expect(bookAppointmentButton).toBeDisabled();
   });
@@ -96,7 +96,7 @@ describe("review-documents-view", () => {
         locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
       ),
     );
-    await typeDateTime(user, "2099");
+    await typeDateTime(screen, userEvent, "2099");
     const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
     expect(bookAppointmentButton).toBeEnabled();
     await user.click(bookAppointmentButton);
@@ -124,7 +124,7 @@ describe("review-documents-view", () => {
       screen.findByText(locale.views.reviewDocuments.viewInDes),
     ).resolves.toBeInTheDocument();
     await expect(
-      screen.findByText(locale.views.reviewDocuments.appointmentScheduled),
+      screen.findByText(locale.components.appointment.scheduled),
     ).resolves.toBeInTheDocument();
   });
 
@@ -140,7 +140,7 @@ describe("review-documents-view", () => {
     );
 
     await expect(
-      screen.findByText(locale.views.reviewDocuments.appointmentScheduled),
+      screen.findByText(locale.components.appointment.scheduled),
     ).resolves.toBeInTheDocument();
     await expect(screen.findByText(locale.change)).resolves.toBeInTheDocument();
   });
@@ -216,7 +216,7 @@ describe("review-documents-view", () => {
     ).resolves.toBeInTheDocument();
     await expect(screen.queryByText(locale.views.reviewDocuments.viewInDes)).toBeNull();
     await expect(
-      screen.findByText(locale.views.reviewDocuments.appointmentScheduled),
+      screen.findByText(locale.components.appointment.scheduled),
     ).resolves.toBeInTheDocument();
     await expect(screen.findByText(/08:59 am/)).resolves.toBeInTheDocument();
     await expect(
@@ -290,7 +290,7 @@ describe("review-documents-view", () => {
     await expect(screen.findByText(reason)).resolves.toBeInTheDocument();
     await expect(screen.findByText(locale.confirm)).resolves.toBeDisabled();
     await userEvent.click(
-      screen.getByLabelText(locale.views.reviewDocuments.outcomeLetterSent),
+      screen.getByLabelText(locale.views.closeCase.outcomeLetterSent),
     );
     await expect(screen.findByText(locale.confirm)).resolves.toBeEnabled();
     await userEvent.click(screen.getByText(locale.confirm));
@@ -317,7 +317,7 @@ describe("review-documents-view", () => {
     );
     await userEvent.click(await screen.findByText(locale.confirm));
     await userEvent.click(
-      screen.getByLabelText(locale.views.reviewDocuments.outcomeLetterSent),
+      screen.getByLabelText(locale.views.closeCase.outcomeLetterSent),
     );
     await userEvent.click(screen.getByText(locale.confirm));
     await expect(
@@ -338,13 +338,4 @@ function selectAllCheckBoxes() {
   fireEvent.click(
     screen.getByLabelText(locale.views.reviewDocuments.incomingTenantLivingInProperty),
   );
-}
-
-async function typeDateTime(user, year) {
-  await user.type(screen.getByPlaceholderText(/dd/i), "01");
-  await user.type(screen.getByPlaceholderText(/mm/i), "01");
-  await user.type(screen.getByPlaceholderText(/yy/i), year);
-  await user.type(screen.getAllByPlaceholderText(/00/i)[0], "01");
-  await user.type(screen.getAllByPlaceholderText(/00/i)[1], "01");
-  await user.type(screen.getByPlaceholderText(/am/i), "am");
 }

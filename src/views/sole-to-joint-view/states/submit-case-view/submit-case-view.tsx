@@ -45,6 +45,7 @@ export const SubmitCaseView = ({
         processConfig={processConfig}
         process={process}
         mutate={mutate}
+        optional={optional}
       />
     );
   }

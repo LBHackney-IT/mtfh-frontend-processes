@@ -9,6 +9,7 @@ import {
   ReviewDocumentsView,
   SelectTenantsView,
   SubmitCaseView,
+  TenureInvestigationView,
 } from "./states";
 import { ManualChecksFailedView } from "./states/manual-checks-view";
 
@@ -39,6 +40,9 @@ const {
   documentsAppointmentRescheduled,
   documentChecksPassed,
   applicationSubmitted,
+  hoApprovalPassed,
+  tenureAppointmentScheduled,
+  tenureAppointmentRescheduled,
   processCancelled,
   processClosed,
 } = states;
@@ -56,6 +60,9 @@ const components = {
   [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
   [documentChecksPassed.state]: ReviewDocumentsView,
   [applicationSubmitted.state]: SubmitCaseView,
+  [hoApprovalPassed.state]: TenureInvestigationView,
+  [tenureAppointmentScheduled.state]: TenureInvestigationView,
+  [tenureAppointmentRescheduled.state]: TenureInvestigationView,
   [processCancelled.state]: SubmitCaseView,
   [processClosed.state]: CheckEligibilityView,
 };
@@ -63,19 +70,7 @@ const components = {
 const { views } = locale;
 const { soleToJoint } = views;
 
-const finishStep = <Step key="step-finish">{soleToJoint.steps.finish}</Step>;
-
-const allSteps = [
-  <Step key="step-select-tenant">{soleToJoint.steps.selectTenant}</Step>,
-  <Step key="step-personal-details">{soleToJoint.steps.checkEligibility}</Step>,
-  <Step key="step-breach-of-tenancy">{soleToJoint.steps.breachOfTenancy}</Step>,
-  <Step key="step-request-documents">{soleToJoint.steps.requestDocuments}</Step>,
-  <Step key="step-review-documents">{soleToJoint.steps.reviewDocuments}</Step>,
-  <Step key="step-submit-case">{soleToJoint.steps.submitCase}</Step>,
-  finishStep,
-];
-
-const getActiveStep = (process: any, states, submitted: boolean) => {
+const getActiveStep = (process: any, states, submitted: boolean, closeCase: boolean) => {
   const {
     currentState: { state },
     currentState,
@@ -133,8 +128,18 @@ const getActiveStep = (process: any, states, submitted: boolean) => {
   ) {
     return 5;
   }
-  if (state === states.applicationSubmitted.state) {
+  if (
+    [
+      states.applicationSubmitted.state,
+      states.hoApprovalPassed.state,
+      states.tenureAppointmentScheduled.state,
+      states.tenureAppointmentRescheduled.state,
+    ].includes(state)
+  ) {
     return 6;
+  }
+  if ([states.tenureAppointmentRescheduled.state].includes(state) && closeCase) {
+    return 7;
   }
   return 0;
 };
@@ -143,15 +148,21 @@ interface SideBarProps {
   process: any;
   states: any;
   submitted: boolean;
+  closeCase: boolean;
   processId: string;
   processName: string;
 }
 
-const SideBar = (props: SideBarProps) => {
-  const { process, states, submitted = false, processId, processName } = props;
-
-  let activeStep = getActiveStep(process, states, submitted);
-  let steps: typeof allSteps;
+const SideBar = ({
+  process,
+  states,
+  submitted = false,
+  closeCase = false,
+  processId,
+  processName,
+}: SideBarProps): JSX.Element => {
+  let activeStep = getActiveStep(process, states, submitted, closeCase);
+  let steps: JSX.Element[];
   let startIndex = 0;
   if (activeStep > 5) {
     steps = [
@@ -243,6 +254,7 @@ export const SoleToJointView = () => {
   });
 
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [closeCase, setCloseCase] = useState<boolean>(false);
 
   if (error) {
     return (
@@ -283,6 +295,7 @@ export const SoleToJointView = () => {
           process={process}
           states={states}
           submitted={submitted}
+          closeCase={closeCase}
           processId={processId}
           processName={processConfig.processName}
         />
@@ -292,7 +305,7 @@ export const SoleToJointView = () => {
         processConfig={processConfig}
         process={process}
         mutate={mutate}
-        optional={{ submitted, setSubmitted }}
+        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />
     </Layout>
   );
