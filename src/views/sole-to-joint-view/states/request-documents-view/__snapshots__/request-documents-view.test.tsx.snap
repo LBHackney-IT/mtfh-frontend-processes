@@ -124,7 +124,7 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
           class="lbh-body-s"
           style="font-weight: bold;"
         >
-          Proposed tenant: Proof of relationship to the exisiting tenant
+          Proposed tenant: Proof of relationship to the existing tenant
         </p>
         <span
           class="lbh-body-s"
@@ -153,7 +153,7 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
     <h3
       class="lbh-heading-h3"
     >
-      Checking suporting documents
+      Checking supporting documents
     </h3>
     <p
       class="lbh-body-s"

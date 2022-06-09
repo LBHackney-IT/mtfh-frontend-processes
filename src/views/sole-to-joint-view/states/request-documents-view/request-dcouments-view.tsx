@@ -27,17 +27,17 @@ import {
   TimeField,
 } from "@mtfh/common/lib/components";
 
-export interface RequestDcoumentsViewProps {
+export interface RequestDocumentsViewProps {
   process: Process;
   processConfig: IProcess;
   mutate: any;
 }
 
-export const RequestDcoumentsView = ({
+export const RequestDocumentsView = ({
   process,
   processConfig,
   mutate,
-}: RequestDcoumentsViewProps) => {
+}: RequestDocumentsViewProps) => {
   const { data: tenure, error } = useTenure(process.targetId);
 
   if (error) {
@@ -81,7 +81,7 @@ export const RequestDcoumentsView = ({
           explanation="for example: passport, home office letter, embassy letter, immigration status document"
         />
         <BulletWithExplanation
-          text="Proposed tenant: Proof of relationship to the exisiting tenant"
+          text="Proposed tenant: Proof of relationship to the existing tenant"
           explanation="for example: marriage or civil partner certificate"
         />
         <BulletWithExplanation
@@ -91,7 +91,7 @@ export const RequestDcoumentsView = ({
           explanation="for example: letter, utility bill, council tax bill"
         />
       </List>
-      <Heading variant="h3">Checking suporting documents</Heading>
+      <Heading variant="h3">Checking supporting documents</Heading>
       <Text size="sm">
         You must make an appointment with the tenant to check supporting documents
         in-person.
