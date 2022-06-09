@@ -122,7 +122,8 @@ const locale = {
       viewNewTenure: "View new tenure",
     },
     closeCase: {
-      reasonForRejection: "Reason for Rejection",
+      reasonForCancellation: "Reason for Cancellation",
+      reasonForCloseCase: "Reason for close case",
       closeApplication: (processName: string) => `Close ${processName} application?`,
       outcomeLetterSent: "I confirm that an outcome letter has been sent to the resident",
       soleToJointClosed: "Sole to joint tenure application closed",

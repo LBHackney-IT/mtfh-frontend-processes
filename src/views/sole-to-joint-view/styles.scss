@@ -1,0 +1,11 @@
+.lbh-dialog {
+  max-width: 510px;
+  &__close {
+    display: none;
+  }
+  &__actions {
+    .lbh-button {
+      width: 15em;
+    }
+  }
+}
