@@ -52,6 +52,7 @@ export const TenureInvestigationView = ({
     hoApprovalPassed,
     tenureAppointmentScheduled,
     tenureAppointmentRescheduled,
+    tenureUpdated,
   } = processConfig.states;
   const [needAppointment, setNeedAppointment] = useState<boolean>(
     isCurrentState(hoApprovalPassed.state),
@@ -179,6 +180,30 @@ export const TenureInvestigationView = ({
         </>
       )}
 
+      {isCurrentState(tenureUpdated.state) && (
+        <>
+          <Box variant="success">
+            <StatusHeading
+              variant="success"
+              title={views.tenureInvestigation.tenancySigned}
+            />
+            <div
+              style={{ marginLeft: 60, marginTop: 17.5 }}
+              className="govuk-link lbh-link lbh-link--no-visited-state"
+            >
+              <Link as={RouterLink} to="#" variant="link">
+                {views.tenureInvestigation.viewNewTenure}
+              </Link>
+            </div>
+          </Box>
+          <CloseProcessView
+            processConfig={processConfig}
+            process={process}
+            mutate={mutate}
+          />
+        </>
+      )}
+
       {!closeCase && tenant ? (
         <TenantContactDetails tenant={tenant} />
       ) : (
@@ -211,7 +236,24 @@ export const TenureInvestigationView = ({
           process.currentState.state,
         ) &&
         !needAppointment && (
-          <Button disabled={!isPast(new Date(formData.appointmentDateTime))}>
+          <Button
+            disabled={!isPast(new Date(formData.appointmentDateTime))}
+            onClick={async () => {
+              try {
+                await editProcess({
+                  id: process.id,
+                  processName: process?.processName,
+                  etag: process.etag || "",
+                  processTrigger: stateConfig.triggers.updateTenure,
+                  formData: {},
+                  documents: [],
+                });
+                mutate();
+              } catch (e: any) {
+                setGlobalError(e.response?.status || 500);
+              }
+            }}
+          >
             {views.tenureInvestigation.documentsSigned}
           </Button>
         )}

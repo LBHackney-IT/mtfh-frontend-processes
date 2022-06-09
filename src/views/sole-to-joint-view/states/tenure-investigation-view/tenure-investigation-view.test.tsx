@@ -228,6 +228,7 @@ describe("tenure-investigation-view", () => {
 
   test("it renders TenureInvestigation view correctly for TenureAppointmentScheduled state, date has passed", async () => {
     server.use(getContactDetailsV2(mockContactDetailsV2));
+    server.use(patchProcessV1(null, 500));
     render(
       <TenureInvestigationView
         processConfig={processes.soletojoint}
@@ -252,11 +253,17 @@ describe("tenure-investigation-view", () => {
         path: "/processes/soletojoint/:processId",
       },
     );
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    const documentsSigned = screen.getByText(
+      locale.views.tenureInvestigation.documentsSigned,
+    );
+    expect(documentsSigned).toBeEnabled();
+    await userEvent.click(documentsSigned);
     await expect(
-      screen.findByText(locale.views.tenureInvestigation.documentsSigned, {
+      screen.findByText("There was a problem with completing the action", {
         exact: false,
       }),
-    ).resolves.toBeEnabled();
+    ).resolves.toBeInTheDocument();
   });
 
   test("it renders TenureInvestigation view correctly for TenureAppointmentRescheduled state", async () => {
@@ -364,6 +371,34 @@ describe("tenure-investigation-view", () => {
     );
     await expect(
       screen.findByText(locale.views.closeCase.soleToJointClosed),
+    ).resolves.toBeInTheDocument();
+  });
+
+  test("it renders TenureInvestigation view correctly for TenureUpdated state", async () => {
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    render(
+      <TenureInvestigationView
+        processConfig={processes.soletojoint}
+        process={{
+          ...mockProcessV1,
+          currentState: { ...mockProcessV1.currentState, state: "TenureUpdated" },
+        }}
+        mutate={() => {}}
+        optional={{ closeCase, setCloseCase }}
+      />,
+      {
+        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+        path: "/processes/soletojoint/:processId",
+      },
+    );
+    await expect(
+      screen.findByText(locale.views.tenureInvestigation.tenancySigned),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(locale.views.tenureInvestigation.viewNewTenure),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(locale.views.closeCase.outcomeLetterSent),
     ).resolves.toBeInTheDocument();
   });
 });

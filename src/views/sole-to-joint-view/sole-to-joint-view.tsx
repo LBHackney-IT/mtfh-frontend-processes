@@ -43,6 +43,7 @@ const {
   hoApprovalPassed,
   tenureAppointmentScheduled,
   tenureAppointmentRescheduled,
+  tenureUpdated,
   processCancelled,
   processClosed,
 } = states;
@@ -63,6 +64,7 @@ const components = {
   [hoApprovalPassed.state]: TenureInvestigationView,
   [tenureAppointmentScheduled.state]: TenureInvestigationView,
   [tenureAppointmentRescheduled.state]: TenureInvestigationView,
+  [tenureUpdated.state]: TenureInvestigationView,
   [processCancelled.state]: SubmitCaseView,
   [processClosed.state]: CheckEligibilityView,
 };
@@ -138,7 +140,10 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
   ) {
     return 6;
   }
-  if ([states.tenureAppointmentRescheduled.state].includes(state) && closeCase) {
+  if (
+    [states.tenureUpdated.state].includes(state) ||
+    (states.tenureAppointmentRescheduled.state === state && closeCase)
+  ) {
     return 7;
   }
   return 0;
