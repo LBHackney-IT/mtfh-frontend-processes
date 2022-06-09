@@ -25,6 +25,7 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
           href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
         >
           Global Web Consultant Alverta Denesik
         </a>
@@ -288,6 +289,7 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
           href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
         >
           Global Web Consultant Alverta Denesik
         </a>

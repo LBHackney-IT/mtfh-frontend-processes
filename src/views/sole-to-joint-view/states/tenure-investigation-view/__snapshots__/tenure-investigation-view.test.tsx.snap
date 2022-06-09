@@ -25,6 +25,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
           href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
         >
           Global Web Consultant Alverta Denesik
         </a>
@@ -221,6 +222,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
           href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
         >
           Global Web Consultant Alverta Denesik
         </a>
@@ -633,6 +635,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
           href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
         >
           Global Web Consultant Alverta Denesik
         </a>
@@ -973,6 +976,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
           href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
         >
           Global Web Consultant Alverta Denesik
         </a>

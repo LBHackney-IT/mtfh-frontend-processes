@@ -55,7 +55,12 @@ const TenureSummary = ({ id, config = {} }: ComponentProps) => {
       <div>{tenure?.tenuredAsset?.fullAddress}</div>
       {tenant && (
         <div>
-          <Link as={RouterLink} to={`/person/${tenant.id}`} variant="link">
+          <Link
+            as={RouterLink}
+            to={`/person/${tenant.id}`}
+            variant="link"
+            target="_blank"
+          >
             {tenant?.fullName}
           </Link>
           {incomingTenant && ` adding ${incomingTenant.fullName}`}
