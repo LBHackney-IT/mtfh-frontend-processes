@@ -158,7 +158,7 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
     <p
       class="lbh-body-s"
     >
-      You must make an appointment with the tenant to check supporting documents in-person.
+      You can request supporting documents through the Document Evidence Store or you can make an appointment with the tenant to check supporting documents in-person.
     </p>
     <p
       class="lbh-body-s"

@@ -93,8 +93,8 @@ export const RequestDocumentsView = ({
       </List>
       <Heading variant="h3">Checking supporting documents</Heading>
       <Text size="sm">
-        You must make an appointment with the tenant to check supporting documents
-        in-person.
+        You can request supporting documents through the Document Evidence Store or you
+        can make an appointment with the tenant to check supporting documents in-person.
       </Text>
       {tenant ? <TenantContactDetails tenant={tenant} /> : <Text>Tenant not found.</Text>}
       <Formik
