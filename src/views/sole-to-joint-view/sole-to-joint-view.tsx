@@ -5,7 +5,7 @@ import { locale, processes } from "../../services";
 import {
   BreachChecksFailedView,
   CheckEligibilityView,
-  RequestDcoumentsView,
+  RequestDocumentsView,
   ReviewDocumentsView,
   SelectTenantsView,
   SubmitCaseView,
@@ -55,7 +55,7 @@ const components = {
   [manualChecksFailed.state]: ManualChecksFailedView,
   [manualChecksPassed.state]: CheckEligibilityView,
   [breachChecksFailed.state]: BreachChecksFailedView,
-  [breachChecksPassed.state]: RequestDcoumentsView,
+  [breachChecksPassed.state]: RequestDocumentsView,
   [documentsRequestedDes.state]: ReviewDocumentsView,
   [documentsRequestedAppointment.state]: ReviewDocumentsView,
   [documentsAppointmentRescheduled.state]: ReviewDocumentsView,

@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 
 import { processes } from "../../../../services";
 import { mockBreachChecksPassedState } from "../../../../test-utils";
-import { RequestDcoumentsView } from "./request-dcouments-view";
+import { RequestDocumentsView } from "./request-dcouments-view";
 
 import * as contactDetailsService from "@mtfh/common/lib/api/contact-details/v2/service";
 import { ContactDetailsResponse } from "@mtfh/common/lib/api/contact-details/v2/service";
@@ -44,7 +44,7 @@ describe("request-documents-view", () => {
     } as AxiosSWRResponse<ContactDetailsResponse>);
 
     const { container } = render(
-      <RequestDcoumentsView
+      <RequestDocumentsView
         processConfig={processes.soletojoint}
         process={mockBreachChecksPassedState}
         mutate={() => {}}
@@ -65,7 +65,7 @@ describe("request-documents-view", () => {
     } as AxiosSWRResponse<ContactDetailsResponse>);
 
     const { container } = render(
-      <RequestDcoumentsView
+      <RequestDocumentsView
         processConfig={processes.soletojoint}
         process={mockBreachChecksPassedState}
         mutate={() => {}}
