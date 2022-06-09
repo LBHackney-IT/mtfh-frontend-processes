@@ -127,9 +127,6 @@ test("it renders CheckEligibility for state=ManualChecksPassed, submitted=false"
       exact: false,
     }),
   ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
-  ).resolves.toBeInTheDocument();
   await expect(screen.findByText("Breach of tenure")).resolves.toBeInTheDocument();
 });
 
@@ -148,9 +145,6 @@ test("it renders CheckEligibility for state=ManualChecksPassed, submitted=true",
     screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
       exact: false,
     }),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
   ).resolves.toBeInTheDocument();
   await expect(screen.findByText("Next Steps:")).resolves.toBeInTheDocument();
 });
