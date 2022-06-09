@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
+import { Form, Formik } from "formik";
+
 import { locale, processes } from "../../services";
+import { Trigger } from "../../services/processes/types";
+import { CloseCaseForm } from "./close-case-form";
 import {
   BreachChecksFailedView,
   CheckEligibilityView,
@@ -13,16 +17,20 @@ import {
 } from "./states";
 import { ManualChecksFailedView } from "./states/manual-checks-view";
 
-import { useProcess } from "@mtfh/common/lib/api/process/v1";
+import { editProcess, useProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Button,
   Center,
+  Dialog,
+  DialogActions,
   ErrorSummary,
   Layout,
   Spinner,
   Step,
   Stepper,
+  Text,
 } from "@mtfh/common/lib/components";
+import "./styles.scss";
 
 const processConfig = processes.soletojoint;
 
@@ -48,6 +56,15 @@ const {
   processClosed,
 } = states;
 
+const reviewDocumentsViewByStates = {
+  [documentsRequestedDes.state]: ReviewDocumentsView,
+  [documentsRequestedAppointment.state]: ReviewDocumentsView,
+  [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
+  [documentChecksPassed.state]: ReviewDocumentsView,
+};
+
+const reviewDocumentsPageStates = Object.keys(reviewDocumentsViewByStates);
+
 const components = {
   [selectTenants.state]: SelectTenantsView,
   [automatedChecksFailed.state]: CheckEligibilityView,
@@ -55,11 +72,8 @@ const components = {
   [manualChecksFailed.state]: ManualChecksFailedView,
   [manualChecksPassed.state]: CheckEligibilityView,
   [breachChecksFailed.state]: BreachChecksFailedView,
+  ...reviewDocumentsViewByStates,
   [breachChecksPassed.state]: RequestDocumentsView,
-  [documentsRequestedDes.state]: ReviewDocumentsView,
-  [documentsRequestedAppointment.state]: ReviewDocumentsView,
-  [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
-  [documentChecksPassed.state]: ReviewDocumentsView,
   [applicationSubmitted.state]: SubmitCaseView,
   [hoApprovalPassed.state]: TenureInvestigationView,
   [tenureAppointmentScheduled.state]: TenureInvestigationView,
@@ -70,7 +84,7 @@ const components = {
 };
 
 const { views } = locale;
-const { soleToJoint } = views;
+const { soleToJoint, reviewDocuments } = views;
 
 const getActiveStep = (process: any, states, submitted: boolean, closeCase: boolean) => {
   const {
@@ -149,6 +163,65 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
   return 0;
 };
 
+const CloseProcessDialog = ({
+  process,
+  isCloseProcessDialogOpen,
+  setCloseProcessDialogOpen,
+  mutate,
+  isCancel,
+}) => {
+  return (
+    <Dialog
+      isOpen={isCloseProcessDialogOpen}
+      onDismiss={() => setCloseProcessDialogOpen(false)}
+      title={`Are you sure you want to ${
+        isCancel ? "cancel" : "close"
+      } this process? You will have to begin the process from the start.`}
+    >
+      <Formik
+        initialValues={{ reasonForCancellation: undefined }}
+        onSubmit={async (values) => {
+          const { reasonForCancellation } = values;
+          try {
+            await editProcess({
+              id: process.id,
+              processName: process?.processName,
+              etag: process.etag || "",
+              processTrigger: isCancel ? Trigger.CancelProcess : Trigger.CloseProcess,
+              formData: isCancel
+                ? {
+                    comment: reasonForCancellation,
+                  }
+                : {
+                    hasNotifiedResident: true,
+                    Reason: reasonForCancellation,
+                  },
+              documents: [],
+            });
+            mutate();
+          } catch (e: any) {
+            console.log(e.response?.status || 500);
+          } finally {
+            setCloseProcessDialogOpen(false);
+          }
+        }}
+      >
+        <Form noValidate id="cancel-process-form" className="cancel-process-form">
+          <CloseCaseForm isCancel={isCancel} />
+          <DialogActions>
+            <Button type="submit" data-testid="close-process-modal-submit">
+              {isCancel ? "Cancel Process" : "Close case"}
+            </Button>
+            <Button variant="secondary" onClick={() => setCloseProcessDialogOpen(false)}>
+              Back
+            </Button>
+          </DialogActions>
+        </Form>
+      </Formik>
+    </Dialog>
+  );
+};
+
 interface SideBarProps {
   process: any;
   states: any;
@@ -156,16 +229,22 @@ interface SideBarProps {
   closeCase: boolean;
   processId: string;
   processName: string;
+  setCloseProcessDialogOpen: any;
+  setCancel: any;
 }
 
-const SideBar = ({
-  process,
-  states,
-  submitted = false,
-  closeCase = false,
-  processId,
-  processName,
-}: SideBarProps): JSX.Element => {
+const SideBar = (props: SideBarProps) => {
+  const {
+    process,
+    states,
+    submitted = false,
+    closeCase = false,
+    processId,
+    processName,
+    setCloseProcessDialogOpen,
+    setCancel,
+  } = props;
+
   let activeStep = getActiveStep(process, states, submitted, closeCase);
   let steps: JSX.Element[];
   let startIndex = 0;
@@ -202,7 +281,15 @@ const SideBar = ({
         {steps}
       </Stepper>
       <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
-      <Button variant="secondary">{soleToJoint.actions.cancelProcess}</Button>
+      <Button
+        variant="secondary"
+        onClick={() => {
+          setCancel(true);
+          setCloseProcessDialogOpen(true);
+        }}
+      >
+        {soleToJoint.actions.cancelProcess}
+      </Button>
       <Button
         variant="secondary"
         as={RouterLink}
@@ -247,6 +334,8 @@ const getComponent = (process) => {
 };
 
 export const SoleToJointView = () => {
+  const [isCloseProcessDialogOpen, setCloseProcessDialogOpen] = useState<boolean>(false);
+  const [isCancel, setCancel] = useState<boolean>(false);
   const { processId } = useParams<{ processId: string }>();
 
   const {
@@ -291,6 +380,10 @@ export const SoleToJointView = () => {
     );
   }
 
+  const {
+    currentState: { state },
+  } = process;
+
   return (
     <Layout
       data-testid="soletojoint"
@@ -303,6 +396,8 @@ export const SoleToJointView = () => {
           closeCase={closeCase}
           processId={processId}
           processName={processConfig.processName}
+          setCloseProcessDialogOpen={setCloseProcessDialogOpen}
+          setCancel={setCancel}
         />
       }
     >
@@ -312,6 +407,35 @@ export const SoleToJointView = () => {
         mutate={mutate}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />
+
+      <CloseProcessDialog
+        process={process}
+        isCloseProcessDialogOpen={isCloseProcessDialogOpen}
+        setCloseProcessDialogOpen={setCloseProcessDialogOpen}
+        mutate={mutate}
+        isCancel={isCancel}
+      />
+
+      {[
+        automatedChecksFailed.state,
+        manualChecksFailed.state,
+        breachChecksFailed.state,
+        ...reviewDocumentsPageStates,
+      ].includes(state) && (
+        <>
+          <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
+          <Button
+            variant={reviewDocumentsPageStates.includes(state) ? "secondary" : "primary"}
+            onClick={() => {
+              setCancel(false);
+              setCloseProcessDialogOpen(true);
+            }}
+            style={{ width: 222 }}
+          >
+            {locale.closeCase}
+          </Button>
+        </>
+      )}
     </Layout>
   );
 };

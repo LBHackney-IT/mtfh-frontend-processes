@@ -259,18 +259,6 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
         Next
       </button>
     </form>
-    <p
-      class="lbh-body-m"
-    >
-      If the documents are not suitable and all avenues to obtain the right documents have been exhausted, then close the case.
-    </p>
-    <button
-      class="govuk-button lbh-button govuk-button--secondary lbh-button--secondary"
-      style="width: 222px;"
-      type="button"
-    >
-      Close Case
-    </button>
   </div>
 </div>
 `;
@@ -545,18 +533,6 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
         Next
       </button>
     </form>
-    <p
-      class="lbh-body-m"
-    >
-      If the documents are not suitable and all avenues to obtain the right documents have been exhausted, then close the case.
-    </p>
-    <button
-      class="govuk-button lbh-button govuk-button--secondary lbh-button--secondary"
-      style="width: 222px;"
-      type="button"
-    >
-      Close Case
-    </button>
   </div>
 </div>
 `;

@@ -84,6 +84,7 @@ test("it renders soletojoint view for AutomatedChecksFailed", async () => {
   await expect(
     screen.findByTestId("soletojoint-CheckEligibility"),
   ).resolves.toBeInTheDocument();
+  await expect(screen.findByText(locale.closeCase)).resolves.toBeInTheDocument();
 
   const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
   const steps = within(stepper).getAllByRole("listitem");
@@ -123,8 +124,19 @@ test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibili
 
 test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibilitySubmitted=true", async () => {
   server.use(getProcessV1(mockManualChecksPassedState));
-  // @ts-ignore
-  useStateMock.mockImplementation(() => [true, jest.fn()]);
+  useStateMock
+    // @ts-ignore
+    .mockReturnValue([true, jest.fn()])
+    // @ts-ignore
+    .mockReturnValueOnce([false, jest.fn()])
+    // @ts-ignore
+    .mockReturnValueOnce([false, jest.fn()])
+    // @ts-ignore
+    .mockReturnValueOnce([false, jest.fn()])
+    // @ts-ignore
+    .mockReturnValueOnce([false, jest.fn()])
+    // @ts-ignore
+    .mockReturnValueOnce([false, jest.fn()]);
   render(<SoleToJointView />, options);
   await expect(
     screen.findByTestId("soletojoint-CheckEligibility"),

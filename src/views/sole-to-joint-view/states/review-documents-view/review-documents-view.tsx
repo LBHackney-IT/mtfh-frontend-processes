@@ -10,15 +10,12 @@ import { locale } from "../../../../services";
 import { Trigger } from "../../../../services/processes/types";
 import { IProcess } from "../../../../types";
 import { EligibilityChecksPassedBox } from "../shared";
-import { CloseCaseForm, CloseCaseFormData } from "../submit-case-view/close-case-form";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Box,
   Button,
   Checkbox,
-  Dialog,
-  DialogActions,
   Heading,
   Link,
   List,
@@ -47,8 +44,6 @@ export const ReviewDocumentsView = ({
   const [seenProofOfRelationship, setSeenProofOfRelationship] = useState<boolean>(false);
   const [incomingTenantLivingInProperty, setIncomingTenantLivingInProperty] =
     useState<boolean>(false);
-  const [isCloseCase, setIsCloseCase] = useState<boolean>(false);
-  const [reason, setReason] = useState<string>("");
   const [hasNotifiedResident, setHasNotifiedResident] = useState<boolean>(false);
 
   const { states } = processConfig;
@@ -70,12 +65,12 @@ export const ReviewDocumentsView = ({
       {globalError && (
         <StatusErrorSummary id="review-documents-global-error" code={globalError} />
       )}
-      {reason || process.currentState.state === states.processClosed.state ? (
+      {process.currentState.state === states.processClosed.state ? (
         <>
           <Box variant="warning">
             <StatusHeading variant="warning" title={reviewDocuments.soleToJointClosed} />
             <Text style={{ marginLeft: 60 }}>
-              {reason || process.currentState.processData.formData.reason}
+              {process.currentState.processData.formData.reason}
             </Text>
           </Box>
           {process.currentState.state !== states.processClosed.state ? (
@@ -264,38 +259,6 @@ export const ReviewDocumentsView = ({
               );
             }}
           </Formik>
-          <Formik<CloseCaseFormData>
-            initialValues={{ reasonForRejection: "" }}
-            onSubmit={async (values) => {
-              setReason(values.reasonForRejection);
-              setIsCloseCase(false);
-            }}
-          >
-            <Dialog
-              isOpen={isCloseCase}
-              onDismiss={() => setIsCloseCase(false)}
-              title={locale.views.closeCase.closeApplication("sole to joint")}
-            >
-              <Form>
-                <CloseCaseForm />
-                <DialogActions>
-                  <Button type="submit">{locale.confirm}</Button>
-                  <Link as="button" onClick={() => setIsCloseCase(false)}>
-                    {locale.cancel}
-                  </Link>
-                </DialogActions>
-              </Form>
-            </Dialog>
-          </Formik>
-
-          <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
-          <Button
-            variant="secondary"
-            onClick={() => setIsCloseCase(true)}
-            style={{ width: 222 }}
-          >
-            {locale.closeCase}
-          </Button>
         </>
       )}
     </div>

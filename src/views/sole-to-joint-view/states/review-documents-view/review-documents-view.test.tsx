@@ -39,7 +39,6 @@ describe("review-documents-view", () => {
     await expect(
       screen.findByText(locale.views.reviewDocuments.checkSupportingDocumentsAppointment),
     ).resolves.toBeInTheDocument();
-    await expect(screen.findByText(locale.closeCase)).resolves.toBeInTheDocument();
     await expect(screen.getByText(locale.next)).toBeDisabled();
     expect(container).toMatchSnapshot();
   });
@@ -222,107 +221,8 @@ describe("review-documents-view", () => {
     await expect(
       screen.findByText(/Monday 12th October 2099/),
     ).resolves.toBeInTheDocument();
-    await expect(screen.findByText(locale.closeCase)).resolves.toBeInTheDocument();
     await expect(screen.getByText(locale.next)).toBeDisabled();
     expect(container).toMatchSnapshot();
-  });
-
-  test("it displays close case dialog on close case button click and closes on cancel", async () => {
-    render(
-      <ReviewDocumentsView
-        processConfig={processes.soletojoint}
-        process={mockDocumentsRequestedDes}
-        mutate={() => {}}
-      />,
-    );
-
-    await userEvent.click(screen.getByText(locale.closeCase));
-    await expect(
-      screen.findByText(locale.views.closeCase.reasonForRejection, { exact: false }),
-    ).resolves.toBeInTheDocument();
-    await userEvent.click(await screen.findByText(locale.cancel));
-    await expect(
-      screen.queryByText(locale.views.closeCase.reasonForRejection),
-    ).toBeNull();
-  });
-
-  test("it displays close case view with reason and checkbox to confirm", async () => {
-    render(
-      <ReviewDocumentsView
-        processConfig={processes.soletojoint}
-        process={mockDocumentsRequestedDes}
-        mutate={() => {}}
-      />,
-    );
-    const reason = "Documents not provided";
-    await userEvent.click(await screen.findByText(locale.closeCase));
-    await expect(
-      screen.findByText(locale.views.closeCase.reasonForRejection),
-    ).resolves.toBeInTheDocument();
-    await userEvent.type(
-      screen.getByLabelText(`${locale.views.closeCase.reasonForRejection}*`),
-      reason,
-    );
-    await userEvent.click(await screen.findByText(locale.confirm));
-    await expect(
-      screen.findByText(locale.views.reviewDocuments.soleToJointClosed),
-    ).resolves.toBeInTheDocument();
-    await expect(screen.findByText(reason)).resolves.toBeInTheDocument();
-  });
-
-  test("it closes case when checkbox is ticked and reason provided", async () => {
-    server.use(patchProcessV1({}, 200));
-    render(
-      <ReviewDocumentsView
-        processConfig={processes.soletojoint}
-        process={mockDocumentsRequestedDes}
-        mutate={() => {}}
-      />,
-    );
-
-    const reason = "Documents not provided";
-    await userEvent.click(await screen.findByText(locale.closeCase));
-    await userEvent.type(
-      screen.getByLabelText(`${locale.views.closeCase.reasonForRejection}*`),
-      reason,
-    );
-    await userEvent.click(await screen.findByText(locale.confirm));
-    await expect(screen.findByText(reason)).resolves.toBeInTheDocument();
-    await expect(screen.findByText(locale.confirm)).resolves.toBeDisabled();
-    await userEvent.click(
-      screen.getByLabelText(locale.views.closeCase.outcomeLetterSent),
-    );
-    await expect(screen.findByText(locale.confirm)).resolves.toBeEnabled();
-    await userEvent.click(screen.getByText(locale.confirm));
-    expect(
-      screen.findByText(locale.views.reviewDocuments.confirmation),
-    ).resolves.toBeInTheDocument();
-  });
-
-  test("it displays error if close case API call fails", async () => {
-    server.use(patchProcessV1("", 500));
-    render(
-      <ReviewDocumentsView
-        processConfig={processes.soletojoint}
-        process={mockDocumentsRequestedDes}
-        mutate={() => {}}
-      />,
-    );
-
-    const reason = "Documents not provided";
-    await userEvent.click(await screen.findByText(locale.closeCase));
-    await userEvent.type(
-      screen.getByLabelText(`${locale.views.closeCase.reasonForRejection}*`),
-      reason,
-    );
-    await userEvent.click(await screen.findByText(locale.confirm));
-    await userEvent.click(
-      screen.getByLabelText(locale.views.closeCase.outcomeLetterSent),
-    );
-    await userEvent.click(screen.getByText(locale.confirm));
-    await expect(
-      screen.findByText("There was a problem with completing the action"),
-    ).resolves.toBeInTheDocument();
   });
 });
 
