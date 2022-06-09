@@ -34,13 +34,8 @@ export const CheckEligibilityView = ({
   mutate,
   optional,
 }: CheckEligibilityViewProps) => {
-  const {
-    automatedChecksFailed,
-    automatedChecksPassed,
-    manualChecksPassed,
-    breachChecksPassed,
-    processClosed,
-  } = processConfig.states;
+  const { automatedChecksFailed, automatedChecksPassed, manualChecksPassed } =
+    processConfig.states;
   const { submitted, setSubmitted } = optional;
 
   const {
@@ -50,7 +45,7 @@ export const CheckEligibilityView = ({
   return (
     <div data-testid="soletojoint-CheckEligibility">
       <SoleToJointHeader processConfig={processConfig} process={process} />
-      {![breachChecksPassed.state, processClosed.state].includes(state) && (
+      {[automatedChecksPassed.state, automatedChecksFailed.state].includes(state) && (
         <Text>{checkEligibility.autoCheckIntro}</Text>
       )}
       {state === manualChecksPassed.state && submitted && (
@@ -64,8 +59,8 @@ export const CheckEligibilityView = ({
             <Text size="sm">Background checks carried out by the Housing Officer</Text>
             <Text size="sm">A check carried out by the Tenancy Investigation Team</Text>
             <Text size="sm">
-              If successful the tenant and proposed tenant will need to sign a new tenancy
-              agreement
+              If successful the tenant and proposed joint tenant will need to sign a new
+              tenancy agreement
             </Text>
           </List>
           <div style={{ marginTop: "1em" }}>

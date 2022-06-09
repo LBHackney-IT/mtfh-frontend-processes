@@ -43,6 +43,7 @@ describe("tenure-investigation-view", () => {
         path: "/processes/soletojoint/:processId",
       },
     );
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(
       screen.findByText(locale.views.tenureInvestigation.tenureInvestigationCompleted, {
         exact: false,
