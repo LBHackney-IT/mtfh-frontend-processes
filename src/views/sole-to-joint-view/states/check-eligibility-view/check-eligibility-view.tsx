@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
-import { BreachCheckForm } from "../breach-checks-view/breach-check-form";
+import { BreachCheckForm } from "../breach-checks-view";
 import { TickBulletPoint } from "../shared";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
 
