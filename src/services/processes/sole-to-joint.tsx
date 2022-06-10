@@ -148,6 +148,21 @@ export const soletojoint: IProcess = {
         scheduleInterview: "ScheduleInterview",
       },
     },
+    interviewScheduled: {
+      state: "InterviewScheduled",
+      triggers: {
+        hoApproval: "HOApproval",
+        rescheduleInterview: "RescheduleInterview",
+        cancelProcess: Trigger.CancelProcess,
+      },
+    },
+    interviewRescheduled: {
+      state: "InterviewRescheduled",
+      triggers: {
+        hoApproval: "HOApproval",
+        cancelProcess: Trigger.CancelProcess,
+      },
+    },
     hoApprovalFailed: {
       state: "HOApprovalFailed",
       triggers: {
