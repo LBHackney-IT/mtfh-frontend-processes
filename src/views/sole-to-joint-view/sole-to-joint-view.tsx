@@ -65,7 +65,6 @@ const reviewDocumentsViewByStates = {
   [documentsRequestedDes.state]: ReviewDocumentsView,
   [documentsRequestedAppointment.state]: ReviewDocumentsView,
   [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
-  [documentChecksPassed.state]: ReviewDocumentsView,
 };
 
 const reviewDocumentsPageStates = Object.keys(reviewDocumentsViewByStates);
@@ -79,6 +78,7 @@ const components = {
   [breachChecksFailed.state]: BreachChecksFailedView,
   [breachChecksPassed.state]: RequestDocumentsView,
   ...reviewDocumentsViewByStates,
+  [documentChecksPassed.state]: SubmitCaseView,
   [applicationSubmitted.state]: SubmitCaseView,
   [tenureInvestigationFailed.state]: TenureInvestigationView,
   [tenureInvestigationPassed.state]: TenureInvestigationView,
@@ -148,10 +148,7 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
   ) {
     return 4;
   }
-  if (
-    state === states.documentChecksPassed.state ||
-    (states.applicationSubmitted.state === state && submitted)
-  ) {
+  if (state === states.documentChecksPassed.state) {
     return 5;
   }
   if (
@@ -165,7 +162,8 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
       states.hoApprovalPassed.state,
       states.tenureAppointmentScheduled.state,
       states.tenureAppointmentRescheduled.state,
-    ].includes(state)
+    ].includes(state) ||
+    (states.applicationSubmitted.state === state && submitted)
   ) {
     return 6;
   }
@@ -263,7 +261,7 @@ const SideBar = (props: SideBarProps) => {
   let activeStep = getActiveStep(process, states, submitted, closeCase);
   let steps: JSX.Element[];
   let startIndex = 0;
-  if (activeStep > 5) {
+  if (activeStep > 6 || (!submitted && activeStep === 6)) {
     steps = [
       <Step key="step-review-application">{soleToJoint.steps.reviewApplication}</Step>,
       <Step key="step-end-case">{soleToJoint.steps.endCase}</Step>,
@@ -276,6 +274,7 @@ const SideBar = (props: SideBarProps) => {
       <Step key="step-request-documents">{soleToJoint.steps.requestDocuments}</Step>,
       <Step key="step-review-documents">{soleToJoint.steps.reviewDocuments}</Step>,
       <Step key="step-submit-case">{soleToJoint.steps.submitCase}</Step>,
+      <Step key="step-finish">{soleToJoint.steps.finish}</Step>,
     ];
     activeStep = activeStep - 2;
     startIndex = 3;
