@@ -117,8 +117,13 @@ const locale = {
       tenancySigned: "Tenancy signed: tenure created",
       tenureInvestigationCompleted:
         "I confirm that the tenure investigation has been completed",
-      tenureInvestigatorRecommendation: (recommendation) =>
-        `Tenure investigator recommendation: ${recommendation} application`,
+      tenureInvestigatorRecommendation: (recommendation) => {
+        return `Tenure investigator recommendation: ${
+          recommendation === "int"
+            ? "Interview Applicant"
+            : `${recommendation} application`
+        }`;
+      },
       viewNewTenure: "View new tenure",
     },
     closeCase: {

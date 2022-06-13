@@ -13,9 +13,9 @@ import {
   ReviewDocumentsView,
   SelectTenantsView,
   SubmitCaseView,
-  TenureInvestigationView,
 } from "./states";
 import { ManualChecksFailedView } from "./states/manual-checks-view";
+import { ReviewApplicationView } from "./states/review-application-view/review-application-view";
 
 import { editProcess, useProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -80,15 +80,15 @@ const components = {
   ...reviewDocumentsViewByStates,
   [documentChecksPassed.state]: SubmitCaseView,
   [applicationSubmitted.state]: SubmitCaseView,
-  [tenureInvestigationFailed.state]: TenureInvestigationView,
-  [tenureInvestigationPassed.state]: TenureInvestigationView,
-  [tenureInvestigationPassedWithInt.state]: TenureInvestigationView,
-  [interviewScheduled.state]: TenureInvestigationView,
-  [interviewRescheduled.state]: TenureInvestigationView,
-  [hoApprovalPassed.state]: TenureInvestigationView,
-  [tenureAppointmentScheduled.state]: TenureInvestigationView,
-  [tenureAppointmentRescheduled.state]: TenureInvestigationView,
-  [tenureUpdated.state]: TenureInvestigationView,
+  [tenureInvestigationFailed.state]: ReviewApplicationView,
+  [tenureInvestigationPassed.state]: ReviewApplicationView,
+  [tenureInvestigationPassedWithInt.state]: ReviewApplicationView,
+  [interviewScheduled.state]: ReviewApplicationView,
+  [interviewRescheduled.state]: ReviewApplicationView,
+  [hoApprovalPassed.state]: ReviewApplicationView,
+  [tenureAppointmentScheduled.state]: ReviewApplicationView,
+  [tenureAppointmentRescheduled.state]: ReviewApplicationView,
+  [tenureUpdated.state]: ReviewApplicationView,
   [processCancelled.state]: SubmitCaseView,
   [processClosed.state]: CheckEligibilityView,
 };

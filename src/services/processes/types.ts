@@ -5,4 +5,7 @@ export enum Trigger {
   RescheduleDocumentsAppointment = "RescheduleDocumentsAppointment",
   ScheduleTenureAppointment = "ScheduleTenureAppointment",
   RescheduleTenureAppointment = "RescheduleTenureAppointment",
+  ScheduleInterview = "ScheduleInterview",
+  RescheduleInterview = "RescheduleInterview",
+  HOApproval = "HOApproval",
 }

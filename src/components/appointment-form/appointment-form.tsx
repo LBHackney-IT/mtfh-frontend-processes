@@ -14,9 +14,9 @@ interface BookAppointmentFormProps {
   mutate: () => void;
   needAppointment: boolean;
   setGlobalError: any;
-  setNeedAppointment: any;
+  setNeedAppointment?: any;
   options: {
-    buttonText: string;
+    buttonText?: string;
     requestAppointmentTrigger: string;
     rescheduleAppointmentTrigger: string;
     appointmentRequestedState: string;
@@ -80,29 +80,7 @@ export const AppointmentForm = ({
           }
         }}
         validateOnBlur
-        validate={(values) => {
-          if (
-            !values.day ||
-            !values.month ||
-            !values.year ||
-            !values.hour ||
-            !values.minute ||
-            !values.amPm ||
-            !["am", "pm"].includes(values.amPm.toLowerCase())
-          ) {
-            setDisabled(true);
-            return;
-          }
-          if (
-            !isFutureDate(
-              dateToString(getAppointmentDateTime(values), "yyyy-MM-dd'T'HH:mm:ss"),
-            )
-          ) {
-            setDisabled(true);
-            return;
-          }
-          setDisabled(false);
-        }}
+        validate={(values) => validate(values, setDisabled)}
       >
         {() => {
           return (
@@ -112,36 +90,9 @@ export const AppointmentForm = ({
                 id="request-appointment-form"
                 className="request-appointment-form"
               >
-                <div style={{ display: "flex" }}>
-                  <DateField
-                    id="appointment-form-date"
-                    className="mtfh-appointment-form__date"
-                    label="Date"
-                    dayLabel=""
-                    monthLabel=""
-                    yearLabel=""
-                    dayProps={{ name: "day", placeholder: "dd" }}
-                    monthProps={{ name: "month", placeholder: "mm" }}
-                    yearProps={{ name: "year", placeholder: "yy" }}
-                    style={{ marginTop: "1.5em", width: "100%" }}
-                    required
-                  />
-                  <TimeField
-                    id="appointment-form-time"
-                    className="mtfh-appointment-form__time"
-                    label="Time"
-                    hourLabel=""
-                    minuteLabel=""
-                    amPmLabel=""
-                    hourProps={{ name: "hour", placeholder: "00" }}
-                    minuteProps={{ name: "minute", placeholder: "00" }}
-                    amPmProps={{ name: "amPm", placeholder: "am" }}
-                    style={{ marginTop: "1.5em", width: "100%" }}
-                    required
-                  />
-                </div>
+                <DateTimeFields />
                 <Button type="submit" disabled={disabled} style={{ width: 222 }}>
-                  {options.buttonText}
+                  {options.buttonText || "Confirm"}
                 </Button>
               </Form>
             )
@@ -149,5 +100,69 @@ export const AppointmentForm = ({
         }}
       </Formik>
     </>
+  );
+};
+
+export const validate = (values, setDisabled) => {
+  if (
+    !values.day ||
+    !values.month ||
+    !values.year ||
+    !values.hour ||
+    !values.minute ||
+    !values.amPm ||
+    !["am", "pm"].includes(values.amPm.toLowerCase())
+  ) {
+    console.log("TRUE");
+    setDisabled(true);
+    return;
+  }
+  if (
+    !isFutureDate(dateToString(getAppointmentDateTime(values), "yyyy-MM-dd'T'HH:mm:ss"))
+  ) {
+    console.log("TRUE");
+    setDisabled(true);
+    return;
+  }
+  console.log("FALSE");
+  setDisabled(false);
+};
+
+export const DateTimeFields = ({
+  dateLabel = "Date",
+  timeLabel = "Time",
+}: {
+  dateLabel?: string;
+  timeLabel?: string;
+}): JSX.Element => {
+  return (
+    <div style={{ display: "flex" }}>
+      <DateField
+        id="appointment-form-date"
+        className="mtfh-appointment-form__date"
+        label={dateLabel}
+        dayLabel=""
+        monthLabel=""
+        yearLabel=""
+        dayProps={{ name: "day", placeholder: "dd" }}
+        monthProps={{ name: "month", placeholder: "mm" }}
+        yearProps={{ name: "year", placeholder: "yy" }}
+        style={{ marginTop: "1.5em", width: "100%" }}
+        required
+      />
+      <TimeField
+        id="appointment-form-time"
+        className="mtfh-appointment-form__time"
+        label={timeLabel}
+        hourLabel=""
+        minuteLabel=""
+        amPmLabel=""
+        hourProps={{ name: "hour", placeholder: "00" }}
+        minuteProps={{ name: "minute", placeholder: "00" }}
+        amPmProps={{ name: "amPm", placeholder: "am" }}
+        style={{ marginTop: "1.5em", width: "100%" }}
+        required
+      />
+    </div>
   );
 };
