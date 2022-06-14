@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 import { Form, Formik } from "formik";
@@ -6,6 +6,7 @@ import { Form, Formik } from "formik";
 import { locale, processes } from "../../services";
 import { Trigger } from "../../services/processes/types";
 import { CloseCaseForm } from "./close-case-form";
+import { CommentsView } from "./comments-view";
 import {
   BreachChecksFailedView,
   CheckEligibilityView,
@@ -18,6 +19,7 @@ import {
 import { ManualChecksFailedView } from "./states/manual-checks-view";
 
 import { editProcess, useProcess } from "@mtfh/common/lib/api/process/v1";
+import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
   Button,
   Center,
@@ -30,6 +32,7 @@ import {
   Stepper,
   Text,
 } from "@mtfh/common/lib/components";
+
 import "./styles.scss";
 
 const processConfig = processes.soletojoint;
@@ -349,6 +352,8 @@ export const SoleToJointView = () => {
 
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [closeCase, setCloseCase] = useState<boolean>(false);
+  const { data: tenure } = useTenure(process?.targetId || null);
+  const tenureId = tenure?.id;
 
   if (error) {
     return (
@@ -436,6 +441,10 @@ export const SoleToJointView = () => {
           </Button>
         </>
       )}
+
+      <hr className="divider" />
+
+      {tenureId && <CommentsView tenureId={tenureId} mutate={mutate} />}
     </Layout>
   );
 };
