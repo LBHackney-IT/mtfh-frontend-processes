@@ -22,6 +22,10 @@ import {
 } from "../../test-utils";
 import { SoleToJointView } from "./sole-to-joint-view";
 
+import * as tenureV1 from "@mtfh/common/lib/api/tenure/v1/service";
+import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
+import { AxiosSWRResponse } from "@mtfh/common/lib/http";
+
 jest.mock("react", () => ({
   ...jest.requireActual<any>("react"),
   useState: jest.fn(),
@@ -123,7 +127,32 @@ test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibili
 });
 
 test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibilitySubmitted=true", async () => {
+  const tenure = {
+    householdMembers: [
+      {
+        fullName: "Test0 Test",
+        isResponsible: false,
+      },
+      {
+        fullName: "Test1 Test",
+        isResponsible: true,
+      },
+      {
+        fullName: "Test2 Test",
+        isResponsible: true,
+      },
+    ],
+    tenuredAsset: {
+      propertyReference: "004567124",
+    },
+  } as Tenure;
+
   server.use(getProcessV1(mockManualChecksPassedState));
+
+  jest.spyOn(tenureV1, "useTenure").mockReturnValue({
+    data: tenure,
+  } as AxiosSWRResponse<Tenure>);
+
   useStateMock
     // @ts-ignore
     .mockReturnValue([true, jest.fn()])

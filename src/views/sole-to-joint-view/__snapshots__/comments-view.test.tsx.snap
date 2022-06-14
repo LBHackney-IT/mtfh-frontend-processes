@@ -1,0 +1,283 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it opens a modal when user click "Cancel comment" link 1`] = `
+<div
+  aria-hidden="true"
+>
+  <h4
+    class="lbh-heading-h4"
+    style="margin-bottom: 0.5em;"
+  >
+    Comments
+  </h4>
+  <form
+    action="#"
+    class="comment-form"
+    id="comment-form"
+    novalidate=""
+  >
+    <div
+      class="govuk-form-group lbh-form-group"
+      id="comment-title"
+    >
+      <label
+        class="govuk-label lbh-label"
+        for="comment-title-field"
+      >
+        Comment title
+        <sup
+          aria-hidden="true"
+        >
+          *
+        </sup>
+      </label>
+      <input
+        class="govuk-input lbh-input"
+        data-testid="comment-form:title"
+        id="comment-title-field"
+        name="title"
+        required=""
+        value=""
+      />
+    </div>
+    <div
+      class="govuk-character-count"
+    >
+      <div
+        class="govuk-form-group lbh-form-group"
+        id="comment-description"
+      >
+        <label
+          class="govuk-label lbh-label"
+          for="comment-description-field"
+        >
+          Comment
+          <sup
+            aria-hidden="true"
+          >
+            *
+          </sup>
+        </label>
+        <textarea
+          class="govuk-textarea lbh-textarea lbh-character-count"
+          data-testid="comment-form:description"
+          id="comment-description-field"
+          name="description"
+          required=""
+          rows="5"
+        />
+        <span
+          aria-live="polite"
+          class="govuk-hint govuk-character-count__message"
+        >
+          You have 500 characters remaining
+        </span>
+      </div>
+    </div>
+    <button
+      class="govuk-button lbh-button"
+      data-testid="comment-form-submit"
+      disabled=""
+      type="submit"
+    >
+      Save comment
+    </button>
+  </form>
+  <a
+    class="govuk-link lbh-link lbh-link--no-visited-state"
+    href="/"
+  >
+    Cancel comment
+  </a>
+</div>
+`;
+
+exports[`it renders comments by default 1`] = `
+<div>
+  <h4
+    class="lbh-heading-h4"
+    style="margin-bottom: 0.5em;"
+  >
+    Comments
+  </h4>
+  <button
+    class="govuk-button lbh-button"
+    data-testid="add-comment"
+    style="margin-top: 1em;"
+    type="button"
+  >
+    Add comment
+  </button>
+  <div>
+    <div>
+      <div
+        class="comment"
+      >
+        <div
+          class="comment__item"
+        >
+          <div
+            class="comment__date-time"
+          >
+            13/06/2022
+          </div>
+          <div
+            class="comment__date-time"
+          >
+            13:48:27
+          </div>
+        </div>
+        <div
+          class="comment__item --center"
+        >
+          test description 1
+        </div>
+        <div
+          class="comment__item"
+        >
+          Name Surname
+        </div>
+      </div>
+      <div
+        class="comment"
+      >
+        <div
+          class="comment__item"
+        >
+          <div
+            class="comment__date-time"
+          >
+            13/06/2022
+          </div>
+          <div
+            class="comment__date-time"
+          >
+            13:29:33
+          </div>
+        </div>
+        <div
+          class="comment__item --center"
+        >
+          test description 2
+        </div>
+        <div
+          class="comment__item"
+        >
+          Name Surname
+        </div>
+      </div>
+      <nav
+        class="lbh-simple-pagination"
+      >
+        <a
+          class="lbh-simple-pagination__link lbh-simple-pagination__link--next"
+          rel="next"
+        >
+          Next
+          <svg
+            fill="none"
+            height="19"
+            viewBox="0 0 11 19"
+            width="11"
+          >
+            <path
+              d="M1 18L9 9.5L1 1"
+              stroke-width="2"
+            />
+          </svg>
+        </a>
+      </nav>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`it renders inputs to add comments when user clicks Add Comment 1`] = `
+<div>
+  <h4
+    class="lbh-heading-h4"
+    style="margin-bottom: 0.5em;"
+  >
+    Comments
+  </h4>
+  <form
+    action="#"
+    class="comment-form"
+    id="comment-form"
+    novalidate=""
+  >
+    <div
+      class="govuk-form-group lbh-form-group"
+      id="comment-title"
+    >
+      <label
+        class="govuk-label lbh-label"
+        for="comment-title-field"
+      >
+        Comment title
+        <sup
+          aria-hidden="true"
+        >
+          *
+        </sup>
+      </label>
+      <input
+        class="govuk-input lbh-input"
+        data-testid="comment-form:title"
+        id="comment-title-field"
+        name="title"
+        required=""
+        value=""
+      />
+    </div>
+    <div
+      class="govuk-character-count"
+    >
+      <div
+        class="govuk-form-group lbh-form-group"
+        id="comment-description"
+      >
+        <label
+          class="govuk-label lbh-label"
+          for="comment-description-field"
+        >
+          Comment
+          <sup
+            aria-hidden="true"
+          >
+            *
+          </sup>
+        </label>
+        <textarea
+          class="govuk-textarea lbh-textarea lbh-character-count"
+          data-testid="comment-form:description"
+          id="comment-description-field"
+          name="description"
+          required=""
+          rows="5"
+        />
+        <span
+          aria-live="polite"
+          class="govuk-hint govuk-character-count__message"
+        >
+          You have 500 characters remaining
+        </span>
+      </div>
+    </div>
+    <button
+      class="govuk-button lbh-button"
+      data-testid="comment-form-submit"
+      disabled=""
+      type="submit"
+    >
+      Save comment
+    </button>
+  </form>
+  <a
+    class="govuk-link lbh-link lbh-link--no-visited-state"
+    href="/"
+  >
+    Cancel comment
+  </a>
+</div>
+`;
