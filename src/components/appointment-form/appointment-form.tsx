@@ -3,6 +3,7 @@ import { useState } from "react";
 import { isPast } from "date-fns";
 import { Form, Formik } from "formik";
 
+import { locale } from "../../services";
 import { getAppointmentDateTime } from "../../views/sole-to-joint-view/states/shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
@@ -92,7 +93,7 @@ export const AppointmentForm = ({
               >
                 <DateTimeFields />
                 <Button type="submit" disabled={disabled} style={{ width: 222 }}>
-                  {options.buttonText || "Confirm"}
+                  {options.buttonText || locale.confirm}
                 </Button>
               </Form>
             )
@@ -113,18 +114,15 @@ export const validate = (values, setDisabled) => {
     !values.amPm ||
     !["am", "pm"].includes(values.amPm.toLowerCase())
   ) {
-    console.log("TRUE");
     setDisabled(true);
     return;
   }
   if (
     !isFutureDate(dateToString(getAppointmentDateTime(values), "yyyy-MM-dd'T'HH:mm:ss"))
   ) {
-    console.log("TRUE");
     setDisabled(true);
     return;
   }
-  console.log("FALSE");
   setDisabled(false);
 };
 

@@ -11,7 +11,6 @@ import userEvent from "@testing-library/user-event";
 
 import { locale, processes } from "../../../../services";
 import { SubmitCaseView } from "../submit-case-view";
-// import { TenureInvestigationView } from "./tenure-investigation-view";
 
 let submitted = false;
 let closeCase = false;

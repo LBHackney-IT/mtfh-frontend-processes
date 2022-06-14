@@ -158,7 +158,6 @@ export const HoReviewView = ({
         validateOnChange
         validateOnBlur
         validate={(values) => {
-          console.log("validate", values.choice);
           if (values.choice === Choice.Appointment) {
             validate(values, setDisabled);
             return;
