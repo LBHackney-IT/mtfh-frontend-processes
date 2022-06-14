@@ -130,22 +130,37 @@ export const soletojoint: IProcess = {
     tenureInvestigationFailed: {
       state: "TenureInvestigationFailed",
       triggers: {
-        hoApproval: "HOApproval",
-        scheduleInterview: "ScheduleInterview",
+        hoApproval: Trigger.HOApproval,
+        scheduleInterview: Trigger.ScheduleInterview,
       },
     },
     tenureInvestigationPassed: {
       state: "TenureInvestigationPassed",
       triggers: {
-        hoApproval: "HOApproval",
-        scheduleInterview: "ScheduleInterview",
+        hoApproval: Trigger.HOApproval,
+        scheduleInterview: Trigger.ScheduleInterview,
       },
     },
     tenureInvestigationPassedWithInt: {
       state: "TenureInvestigationPassedWithInt",
       triggers: {
-        hoApproval: "HOApproval",
-        scheduleInterview: "ScheduleInterview",
+        hoApproval: Trigger.HOApproval,
+        scheduleInterview: Trigger.ScheduleInterview,
+      },
+    },
+    interviewScheduled: {
+      state: "InterviewScheduled",
+      triggers: {
+        hoApproval: Trigger.HOApproval,
+        rescheduleInterview: Trigger.RescheduleInterview,
+        cancelProcess: Trigger.CancelProcess,
+      },
+    },
+    interviewRescheduled: {
+      state: "InterviewRescheduled",
+      triggers: {
+        hoApproval: Trigger.HOApproval,
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     hoApprovalFailed: {

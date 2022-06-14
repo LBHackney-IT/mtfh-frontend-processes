@@ -14,9 +14,9 @@ import {
   ReviewDocumentsView,
   SelectTenantsView,
   SubmitCaseView,
-  TenureInvestigationView,
 } from "./states";
 import { ManualChecksFailedView } from "./states/manual-checks-view";
+import { ReviewApplicationView } from "./states/review-application-view/review-application-view";
 
 import { editProcess, useProcess } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
@@ -51,6 +51,11 @@ const {
   documentsAppointmentRescheduled,
   documentChecksPassed,
   applicationSubmitted,
+  tenureInvestigationFailed,
+  tenureInvestigationPassed,
+  tenureInvestigationPassedWithInt,
+  interviewScheduled,
+  interviewRescheduled,
   hoApprovalPassed,
   tenureAppointmentScheduled,
   tenureAppointmentRescheduled,
@@ -63,7 +68,6 @@ const reviewDocumentsViewByStates = {
   [documentsRequestedDes.state]: ReviewDocumentsView,
   [documentsRequestedAppointment.state]: ReviewDocumentsView,
   [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
-  [documentChecksPassed.state]: ReviewDocumentsView,
 };
 
 const reviewDocumentsPageStates = Object.keys(reviewDocumentsViewByStates);
@@ -75,13 +79,19 @@ const components = {
   [manualChecksFailed.state]: ManualChecksFailedView,
   [manualChecksPassed.state]: CheckEligibilityView,
   [breachChecksFailed.state]: BreachChecksFailedView,
-  ...reviewDocumentsViewByStates,
   [breachChecksPassed.state]: RequestDocumentsView,
+  ...reviewDocumentsViewByStates,
+  [documentChecksPassed.state]: SubmitCaseView,
   [applicationSubmitted.state]: SubmitCaseView,
-  [hoApprovalPassed.state]: TenureInvestigationView,
-  [tenureAppointmentScheduled.state]: TenureInvestigationView,
-  [tenureAppointmentRescheduled.state]: TenureInvestigationView,
-  [tenureUpdated.state]: TenureInvestigationView,
+  [tenureInvestigationFailed.state]: ReviewApplicationView,
+  [tenureInvestigationPassed.state]: ReviewApplicationView,
+  [tenureInvestigationPassedWithInt.state]: ReviewApplicationView,
+  [interviewScheduled.state]: ReviewApplicationView,
+  [interviewRescheduled.state]: ReviewApplicationView,
+  [hoApprovalPassed.state]: ReviewApplicationView,
+  [tenureAppointmentScheduled.state]: ReviewApplicationView,
+  [tenureAppointmentRescheduled.state]: ReviewApplicationView,
+  [tenureUpdated.state]: ReviewApplicationView,
   [processCancelled.state]: SubmitCaseView,
   [processClosed.state]: CheckEligibilityView,
 };
@@ -141,19 +151,22 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
   ) {
     return 4;
   }
-  if (
-    state === states.documentChecksPassed.state ||
-    (states.applicationSubmitted.state === state && submitted)
-  ) {
+  if (state === states.documentChecksPassed.state) {
     return 5;
   }
   if (
     [
       states.applicationSubmitted.state,
+      states.tenureInvestigationFailed.state,
+      states.tenureInvestigationPassed.state,
+      states.tenureInvestigationPassedWithInt.state,
+      states.interviewScheduled.state,
+      states.interviewRescheduled.state,
       states.hoApprovalPassed.state,
       states.tenureAppointmentScheduled.state,
       states.tenureAppointmentRescheduled.state,
-    ].includes(state)
+    ].includes(state) ||
+    (states.applicationSubmitted.state === state && submitted)
   ) {
     return 6;
   }
@@ -251,7 +264,7 @@ const SideBar = (props: SideBarProps) => {
   let activeStep = getActiveStep(process, states, submitted, closeCase);
   let steps: JSX.Element[];
   let startIndex = 0;
-  if (activeStep > 5) {
+  if (activeStep > 6 || (!submitted && activeStep === 6)) {
     steps = [
       <Step key="step-review-application">{soleToJoint.steps.reviewApplication}</Step>,
       <Step key="step-end-case">{soleToJoint.steps.endCase}</Step>,
@@ -264,6 +277,7 @@ const SideBar = (props: SideBarProps) => {
       <Step key="step-request-documents">{soleToJoint.steps.requestDocuments}</Step>,
       <Step key="step-review-documents">{soleToJoint.steps.reviewDocuments}</Step>,
       <Step key="step-submit-case">{soleToJoint.steps.submitCase}</Step>,
+      <Step key="step-finish">{soleToJoint.steps.finish}</Step>,
     ];
     activeStep = activeStep - 2;
     startIndex = 3;

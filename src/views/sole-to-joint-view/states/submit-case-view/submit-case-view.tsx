@@ -4,8 +4,8 @@ import { Link as RouterLink } from "react-router-dom";
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
+import { ReviewApplicationView } from "../review-application-view/review-application-view";
 import { EligibilityChecksPassedBox } from "../shared";
-import { TenureInvestigationView } from "../tenure-investigation-view";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -41,7 +41,7 @@ export const SubmitCaseView = ({
 
   if (applicationSubmitted.state === process.currentState.state && !submitted) {
     return (
-      <TenureInvestigationView
+      <ReviewApplicationView
         processConfig={processConfig}
         process={process}
         mutate={mutate}
