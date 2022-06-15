@@ -117,7 +117,8 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
       >
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
-          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
+          href="http://des/teams/1/dashboard/requests"
+          target="_blank"
         >
           View request in Document Evidence Store
         </a>
@@ -405,7 +406,8 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
       >
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
-          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
+          href="http://des/teams/1/dashboard/requests"
+          target="_blank"
         >
           View request in Document Evidence Store
         </a>

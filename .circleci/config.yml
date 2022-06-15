@@ -125,6 +125,7 @@ jobs:
           command: |
             export APP_ENV=development
             export APP_CDN=$(aws ssm get-parameter --name /tl-housing/<<parameters.stage>>/processes-app-url --query Parameter.Value --output text)
+            export DES_URL=$(aws ssm get-parameter --name /housing-tl/<<parameters.stage>>/des-app-url --query Parameter.Value --output text)
             yarn build
       - run:
           name: Deploy to S3
@@ -147,6 +148,7 @@ jobs:
           command: |
             export APP_ENV=staging
             export APP_CDN=$(aws ssm get-parameter --name /tl-housing/<<parameters.stage>>/processes-app-url --query Parameter.Value --output text)
+            export DES_URL=$(aws ssm get-parameter --name /housing-tl/<<parameters.stage>>/des-app-url --query Parameter.Value --output text)
             yarn build
       - run:
           name: Deploy to S3
@@ -169,6 +171,7 @@ jobs:
           command: |
             export APP_ENV=production
             export APP_CDN=$(aws ssm get-parameter --name /tl-housing/<<parameters.stage>>/processes-app-url --query Parameter.Value --output text)
+            export DES_URL=$(aws ssm get-parameter --name /housing-tl/<<parameters.stage>>/des-app-url --query Parameter.Value --output text)
             yarn build
       - run:
           name: Deploy to S3

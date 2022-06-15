@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { Form, Formik } from "formik";
@@ -9,7 +9,7 @@ import { AppointmentForm } from "../../../../components/appointment-form/appoint
 import { locale } from "../../../../services";
 import { Trigger } from "../../../../services/processes/types";
 import { IProcess } from "../../../../types";
-import { EligibilityChecksPassedBox } from "../shared";
+import { DesBox, EligibilityChecksPassedBox } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -140,22 +140,7 @@ export const ReviewDocumentsView = ({
           {(states.documentsRequestedDes.state === process.currentState.state ||
             process.previousStates.find(
               (previous) => previous.state === states.documentsRequestedDes.state,
-            )) && (
-            <Box variant="success">
-              <StatusHeading
-                variant="success"
-                title={reviewDocuments.documentsRequested}
-              />
-              <div
-                style={{ marginLeft: 60, marginTop: 17.5 }}
-                className="govuk-link lbh-link lbh-link--no-visited-state"
-              >
-                <Link as={RouterLink} to="#" variant="link">
-                  {reviewDocuments.viewInDes}
-                </Link>
-              </div>
-            </Box>
-          )}
+            )) && <DesBox title={reviewDocuments.documentsRequested} />}
 
           <ReviewDocumentsAppointmentForm
             processConfig={processConfig}

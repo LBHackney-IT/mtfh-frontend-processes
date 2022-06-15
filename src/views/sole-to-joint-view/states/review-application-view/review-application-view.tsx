@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { SoleToJointHeader } from "../../../../components";
@@ -7,7 +7,7 @@ import { IProcess } from "../../../../types";
 import { CloseProcessView } from "../../shared/close-process-view";
 import { HoReviewView } from "../ho-review-view/ho-review-view";
 import { NewTenancyView } from "../new-tenancy-view/new-tenancy-view";
-import { EligibilityChecksPassedBox, TenantContactDetails } from "../shared";
+import { DesBox, EligibilityChecksPassedBox, TenantContactDetails } from "../shared";
 import { TenureInvestigationView } from "../tenure-investigation-view";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -132,20 +132,7 @@ export const ReviewApplicationView = ({
         <StatusErrorSummary id="review-application-global-error" code={globalError} />
       )}
       <EligibilityChecksPassedBox />
-      <Box variant="success">
-        <StatusHeading
-          variant="success"
-          title={views.submitCase.supportingDocumentsApproved}
-        />
-        <div
-          style={{ marginLeft: 60, marginTop: 17.5 }}
-          className="govuk-link lbh-link lbh-link--no-visited-state"
-        >
-          <Link as={RouterLink} to="#" variant="link">
-            {views.reviewDocuments.viewInDes}
-          </Link>
-        </div>
-      </Box>
+      <DesBox title={views.submitCase.supportingDocumentsApproved} />
 
       {!isCurrentState(applicationSubmitted.state, process) && (
         <Box variant={recommendationBoxVariant}>

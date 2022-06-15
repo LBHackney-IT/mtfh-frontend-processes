@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { parse } from "date-fns";
 
-import { locale } from "../../../services";
+import { config, locale } from "../../../services";
 
 import {
   splitContactDetailsByType,
@@ -124,6 +124,29 @@ export const EligibilityChecksPassedBox = () => {
           </div>
         </>
       )}
+    </Box>
+  );
+};
+
+export const DesBox = ({ title }: { title: string }): JSX.Element => {
+  return (
+    <Box variant="success">
+      <StatusHeading variant="success" title={title} />
+      <div
+        style={{ marginLeft: 60, marginTop: 17.5 }}
+        className="govuk-link lbh-link lbh-link--no-visited-state"
+      >
+        <Link
+          as={RouterLink}
+          to={{
+            pathname: `${config.desURL}/teams/1/dashboard/requests`,
+          }}
+          target="_blank"
+          variant="link"
+        >
+          {views.reviewDocuments.viewInDes}
+        </Link>
+      </div>
     </Box>
   );
 };
