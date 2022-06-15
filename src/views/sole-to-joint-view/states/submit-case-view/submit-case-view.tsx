@@ -1,20 +1,18 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
 import { ReviewApplicationView } from "../review-application-view/review-application-view";
-import { EligibilityChecksPassedBox } from "../shared";
+import { DesBox, EligibilityChecksPassedBox } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
-  Box,
   Button,
   Heading,
   Link,
   StatusErrorSummary,
-  StatusHeading,
   Text,
 } from "@mtfh/common/lib/components";
 
@@ -73,20 +71,7 @@ export const SubmitCaseView = ({
       {documentChecksPassed.state === process.currentState.state && (
         <>
           <EligibilityChecksPassedBox />
-          <Box variant="success">
-            <StatusHeading
-              variant="success"
-              title={submitCase.supportingDocumentsApproved}
-            />
-            <div
-              style={{ marginLeft: 60, marginTop: 17.5 }}
-              className="govuk-link lbh-link lbh-link--no-visited-state"
-            >
-              <Link as={RouterLink} to="#" variant="link">
-                {views.reviewDocuments.viewInDes}
-              </Link>
-            </div>
-          </Box>
+          <DesBox title={views.submitCase.supportingDocumentsApproved} />
 
           <Heading variant="h2">{submitCase.tenureInvestigation}</Heading>
           <Text>{submitCase.disclaimer}</Text>
