@@ -126,10 +126,20 @@ const locale = {
       },
       viewNewTenure: "View new tenure",
     },
+    hoReviewView: {
+      makeAppointment: "Make an appointment with the applicant for an interview",
+      appointmentContactDetails:
+        "To make an appointment with the applicant for an interview, please use the following details:",
+      receivedDecision: "The case has received area housing manager’s final decision.",
+      passedForReview:
+        "I have passed the case to the Housing Manager for review and received decision",
+      confirmInstructionReceived:
+        "I confirm that this is an instruction received by the housing area manager",
+      managersName: "Enter manager's name",
+    },
     closeCase: {
       reasonForCancellation: "Reason for Cancellation",
       reasonForCloseCase: "Reason for close case",
-      closeApplication: (processName: string) => `Close ${processName} application?`,
       outcomeLetterSent: "I confirm that an outcome letter has been sent to the resident",
       soleToJointClosed: "Sole to joint tenure application closed",
     },
