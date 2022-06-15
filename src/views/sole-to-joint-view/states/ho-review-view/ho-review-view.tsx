@@ -26,6 +26,7 @@ import {
   Text,
 } from "@mtfh/common/lib/components";
 
+const { views } = locale;
 interface HoReviewViewProps {
   processConfig: IProcess;
   process: Process;
@@ -52,7 +53,7 @@ export const HoReviewView = ({
   optional,
 }: HoReviewViewProps): JSX.Element => {
   const [choice, setChoice] = useState<Choice | undefined>();
-  const [disabled, setDisabled] = useState<boolean>(true);
+  const [disabled, setDisabled] = React.useState<boolean>(true);
   const [needAppointment, setNeedAppointment] = useState<boolean>(false);
 
   const { currentState } = process;
@@ -146,7 +147,7 @@ export const HoReviewView = ({
               processName: process?.processName,
               etag: process.etag || "",
               formData: {
-                hORecommendation: values.decision,
+                hoRecommendation: values.decision,
               },
               documents: [],
             });
@@ -191,7 +192,7 @@ export const HoReviewView = ({
                   }}
                   checked={choice === Choice.Appointment && needAppointment}
                 >
-                  Make an appointment with the applicant for an interview
+                  {views.hoReviewView.makeAppointment}
                 </Radio>
 
                 {choice === Choice.Appointment && needAppointment && (
@@ -223,15 +224,12 @@ export const HoReviewView = ({
                   }}
                   checked={choice === Choice.Review}
                 >
-                  I have passed the case to the Housing Manager for review and received a
-                  decision
+                  {views.hoReviewView.passedForReview}
                 </Radio>
 
                 {choice === Choice.Review && !needAppointment && (
                   <div style={{ marginLeft: 50 }}>
-                    <Text>
-                      The case has received area housing manager’s final decision.
-                    </Text>
+                    <Text>{views.hoReviewView.receivedDecision}</Text>
                     <Field
                       id="decision"
                       name="decision"
@@ -239,25 +237,32 @@ export const HoReviewView = ({
                       type="radio"
                     >
                       <RadioGroup>
-                        <Radio id="ho-review" value={Decision.Approve}>
+                        <Radio
+                          id="ho-review-approve"
+                          name="decision"
+                          value={Decision.Approve}
+                        >
                           {locale.views.tenureInvestigation.approve}
                         </Radio>
-                        <Radio id="ho-review" value={Decision.Decline}>
+                        <Radio
+                          id="ho-review-decline"
+                          name="decision"
+                          value={Decision.Decline}
+                        >
                           {locale.views.tenureInvestigation.decline}
                         </Radio>
                       </RadioGroup>
                     </Field>
                     <InlineField name="confirm">
                       <Checkbox id="confirm" name="confirm">
-                        I confirm that this is an instruction received by the housing area
-                        manager
+                        {views.hoReviewView.confirmInstructionReceived}
                       </Checkbox>
                     </InlineField>
                     <InlineField name="managerName">
                       <Input
                         id="managerName"
                         style={{ marginLeft: 53, marginTop: 22, maxWidth: 300 }}
-                        placeholder="Enter manager's name"
+                        placeholder={views.hoReviewView.managersName}
                       />
                     </InlineField>
                   </div>

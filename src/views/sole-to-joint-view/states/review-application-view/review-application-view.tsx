@@ -52,9 +52,9 @@ const getRecommendation = (
     isPreviousState(tenureInvestigationFailed.state, process)
   ) {
     return {
-      recommendation: "approve",
-      recommendationBoxVariant: "success",
-      recommendationHeadingVariant: "success",
+      recommendation: "decline",
+      recommendationBoxVariant: "warning",
+      recommendationHeadingVariant: "warning",
     };
   }
   if (
