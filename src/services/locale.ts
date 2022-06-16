@@ -70,8 +70,7 @@ const locale = {
       useFormBelow: "Use the form below to record the documents you have checked:",
       checkSupportingDocumentsAppointment:
         "I need to make an appointment to check supporting documents",
-      seenPhotographicId:
-        "I confirm that an outcome letter has been sent to the resident",
+      seenPhotographicId: "I confirm I have seen a government issue photographic ID",
       seenPhotographicIdHint: "(for example: valid passport, driving licence)",
       seenSecondId:
         "I confirm I have seen a second form of ID (does not have to be photographic)",
