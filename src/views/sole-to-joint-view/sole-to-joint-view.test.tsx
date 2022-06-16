@@ -65,19 +65,27 @@ test("it renders stepper component", async () => {
   expect(steps).toMatchSnapshot();
 });
 
-test("it renders sidebar buttons", async () => {
+test("it renders sidebar buttons correctly", async () => {
   server.use(getProcessV1(mockProcessSelectTenants));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
   render(<SoleToJointView />, options);
 
   const { soleToJoint } = locale.views;
+  const { cancelProcess, ...actions } = soleToJoint.actions;
   await Promise.all(
-    Object.keys(soleToJoint.actions).map(async (key) => {
+    Object.keys(actions).map(async (key) => {
       const button = await screen.findByText(soleToJoint.actions[key]);
       expect(button.className).toContain("secondary");
     }),
   );
+  await expect(screen.queryByText(cancelProcess)).toBeNull();
+
+  server.use(getProcessV1(mockDocumentsRequestedDes)); // "Cancel process" must be rendered at DocumentsRequestedDes
+  render(<SoleToJointView />, options);
+
+  const cancelButton = await screen.findByText(cancelProcess);
+  expect(cancelButton.className).toContain("secondary");
 });
 
 test("it renders soletojoint view for AutomatedChecksFailed", async () => {
