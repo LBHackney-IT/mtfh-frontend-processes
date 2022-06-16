@@ -252,6 +252,9 @@ interface SideBarProps {
 const SideBar = (props: SideBarProps) => {
   const {
     process,
+    process: {
+      currentState: { state },
+    },
     states,
     submitted = false,
     closeCase = false,
@@ -298,15 +301,27 @@ const SideBar = (props: SideBarProps) => {
         {steps}
       </Stepper>
       <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
-      <Button
-        variant="secondary"
-        onClick={() => {
-          setCancel(true);
-          setCloseProcessDialogOpen(true);
-        }}
-      >
-        {soleToJoint.actions.cancelProcess}
-      </Button>
+      {[
+        states.documentsRequestedDes.state,
+        states.documentsRequestedAppointment.state,
+        states.documentsAppointmentRescheduled.state,
+        states.interviewScheduled.state,
+        states.interviewRescheduled.state,
+        states.hoApprovalFailed.state,
+        states.hoApprovalPassed.state,
+        states.tenureAppointmentScheduled.state,
+        states.tenureAppointmentRescheduled.state,
+      ].includes(state) && (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setCancel(true);
+            setCloseProcessDialogOpen(true);
+          }}
+        >
+          {soleToJoint.actions.cancelProcess}
+        </Button>
+      )}
       <Button
         variant="secondary"
         as={RouterLink}
