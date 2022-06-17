@@ -152,7 +152,18 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
                 </RadioGroup>
               </FormGroup>
             </Box>
-            <Button type="submit">Next</Button>
+            <Button
+              type="submit"
+              disabled={
+                props.values.br5 === "true"
+                  ? Object.values(props.values).includes(null)
+                  : props.values.br5 === null ||
+                    props.values.br17 === null ||
+                    props.values.br18 === null
+              }
+            >
+              Next
+            </Button>
           </Form>
         );
       }}
