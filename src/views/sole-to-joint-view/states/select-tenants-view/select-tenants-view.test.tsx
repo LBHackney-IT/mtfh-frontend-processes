@@ -93,6 +93,7 @@ describe("select-tenants-view", () => {
   });
 
   test("it displays a message if there are no household members over 18", async () => {
+    server.use(getTenureV1(mockActiveTenureV1));
     render(
       <SelectTenantsView
         processConfig={processes.soletojoint}
@@ -108,6 +109,10 @@ describe("select-tenants-view", () => {
     await expect(
       screen.findByText(locale.views.selectTenants.noHouseholdMembersOver18),
     ).resolves.toBeInTheDocument();
+
+    await expect(
+      screen.queryByText(locale.views.selectTenants.selectTenantHint),
+    ).toBeNull();
   });
 
   test("it displays an error if there's an issue with patching", async () => {
