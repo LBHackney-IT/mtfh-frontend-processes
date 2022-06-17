@@ -10,7 +10,6 @@ import { FurtherEligibilityForm } from "./further-eligibility-form";
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
   Box,
-  Button,
   Heading,
   Link,
   List,
@@ -144,7 +143,6 @@ export const CheckEligibilityView = ({
               </List>
             </div>
           </Box>
-          <Button>Close case</Button>
         </>
       )}
     </div>
