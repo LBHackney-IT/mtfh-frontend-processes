@@ -102,6 +102,6 @@ describe("submit-case-view", () => {
     await expect(
       screen.findByText(locale.views.submitCase.nextStepsText),
     ).resolves.toBeInTheDocument();
-    await expect(screen.findByText(locale.returnHomePage)).resolves.toBeInTheDocument();
+    await expect(screen.findByText("Continue")).resolves.toBeInTheDocument();
   });
 });

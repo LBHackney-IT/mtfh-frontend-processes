@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
@@ -8,13 +7,7 @@ import { ReviewApplicationView } from "../review-application-view/review-applica
 import { DesBox, EligibilityChecksPassedBox } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
-import {
-  Button,
-  Heading,
-  Link,
-  StatusErrorSummary,
-  Text,
-} from "@mtfh/common/lib/components";
+import { Button, Heading, StatusErrorSummary, Text } from "@mtfh/common/lib/components";
 
 const { views } = locale;
 const { submitCase } = views;
@@ -60,11 +53,12 @@ export const SubmitCaseView = ({
           <Heading variant="h2">{submitCase.nextSteps}:</Heading>
           <Text>{submitCase.nextStepsText}</Text>
 
-          <div style={{ marginTop: 24 }}>
-            <Link as={RouterLink} to="" variant="back-link">
-              {locale.returnHomePage}
-            </Link>
-          </div>
+          <Button
+            style={{ width: 180, marginRight: "100%" }}
+            onClick={() => setSubmitted(false)}
+          >
+            Continue
+          </Button>
         </>
       )}
 

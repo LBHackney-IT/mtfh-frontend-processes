@@ -1,5 +1,3 @@
-import { Link as RouterLink } from "react-router-dom";
-
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
@@ -10,8 +8,8 @@ import { FurtherEligibilityForm } from "./further-eligibility-form";
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
   Box,
+  Button,
   Heading,
-  Link,
   List,
   StatusHeading,
   Text,
@@ -36,7 +34,6 @@ export const CheckEligibilityView = ({
   const { automatedChecksFailed, automatedChecksPassed, manualChecksPassed } =
     processConfig.states;
   const { submitted, setSubmitted } = optional;
-
   const {
     currentState: { state },
   } = process;
@@ -62,11 +59,12 @@ export const CheckEligibilityView = ({
               tenancy agreement
             </Text>
           </List>
-          <div style={{ marginTop: "1em" }}>
-            <Link as={RouterLink} to="" variant="back-link">
-              Return to home page
-            </Link>
-          </div>
+          <Button
+            style={{ width: 180, marginRight: "100%" }}
+            onClick={() => setSubmitted(false)}
+          >
+            Continue
+          </Button>
         </>
       )}
       {state === manualChecksPassed.state && !submitted && (
