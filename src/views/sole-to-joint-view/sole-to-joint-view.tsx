@@ -27,6 +27,7 @@ import {
   DialogActions,
   ErrorSummary,
   Layout,
+  Link,
   Spinner,
   Step,
   Stepper,
@@ -422,6 +423,11 @@ export const SoleToJointView = () => {
     <Layout
       data-testid="soletojoint"
       sidePosition="right"
+      backLink={
+        <Link as={RouterLink} to={`/tenure/${process.targetId}`} variant="back-link">
+          {locale.backButton}
+        </Link>
+      }
       side={
         <SideBar
           process={process}
