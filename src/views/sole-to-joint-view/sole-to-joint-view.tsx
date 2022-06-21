@@ -302,9 +302,6 @@ const SideBar = (props: SideBarProps) => {
       </Stepper>
       <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
       {[
-        states.documentsRequestedDes.state,
-        states.documentsRequestedAppointment.state,
-        states.documentsAppointmentRescheduled.state,
         states.interviewScheduled.state,
         states.interviewRescheduled.state,
         states.hoApprovalFailed.state,
