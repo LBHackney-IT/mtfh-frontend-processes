@@ -1,6 +1,7 @@
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
+import { CloseProcessView } from "../../shared/close-process-view";
 import { BreachCheckForm } from "../breach-checks-view";
 import { TickBulletPoint } from "../shared";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
@@ -141,6 +142,11 @@ export const CheckEligibilityView = ({
               </List>
             </div>
           </Box>
+          <CloseProcessView
+            process={process}
+            processConfig={processConfig}
+            mutate={mutate}
+          />
         </>
       )}
     </div>

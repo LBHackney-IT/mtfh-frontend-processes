@@ -43,6 +43,10 @@ export const CloseProcessView = ({
   ) : (
     <>
       <Heading variant="h3">Next steps:</Heading>
+      <Text size="sm">
+        The applicant is not eligibile for sole to joint tenure. <br />
+        This case will be closed once you have sent an outcome letter to the resident.
+      </Text>
       <Formik
         initialValues={{}}
         onSubmit={async () => {
