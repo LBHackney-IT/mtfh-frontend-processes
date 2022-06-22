@@ -7,6 +7,13 @@ exports[`close-process-view it renders CloseProcessView correctly for state!=Pro
   >
     Next steps:
   </h3>
+  <p
+    class="lbh-body-s"
+  >
+    The applicant is not eligibile for sole to joint tenure. 
+    <br />
+    This case will be closed once you have sent an outcome letter to the resident.
+  </p>
   <form
     action="#"
     class="mtfh-breach-form"

@@ -96,7 +96,9 @@ test("it renders soletojoint view for AutomatedChecksFailed", async () => {
   await expect(
     screen.findByTestId("soletojoint-CheckEligibility"),
   ).resolves.toBeInTheDocument();
-  await expect(screen.findByText(locale.closeCase)).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.closeCase.outcomeLetterSent),
+  ).resolves.toBeInTheDocument();
 
   const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
   const steps = within(stepper).getAllByRole("listitem");

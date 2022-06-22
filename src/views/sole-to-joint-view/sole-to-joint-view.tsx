@@ -451,7 +451,6 @@ export const SoleToJointView = () => {
       />
 
       {[
-        automatedChecksFailed.state,
         manualChecksFailed.state,
         breachChecksFailed.state,
         ...reviewDocumentsPageStates,
