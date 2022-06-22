@@ -1,6 +1,10 @@
 import { Form, Formik } from "formik";
 
 import { SoleToJointHeader } from "../../../../components";
+import {
+  DateTimeFields,
+  validate,
+} from "../../../../components/appointment-form/appointment-form";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
 import { dateToString, stringToDate } from "../../../../utils/date";
@@ -15,7 +19,6 @@ import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
   Button,
   Center,
-  DateField,
   ErrorSummary,
   Heading,
   InlineField,
@@ -24,7 +27,6 @@ import {
   RadioGroup,
   Spinner,
   Text,
-  TimeField,
 } from "@mtfh/common/lib/components";
 
 export interface RequestDocumentsViewProps {
@@ -100,12 +102,12 @@ export const RequestDocumentsView = ({
       <Formik
         initialValues={{
           requestType: undefined,
-          day: undefined,
-          month: undefined,
-          year: undefined,
-          hour: undefined,
-          minute: undefined,
-          amPm: "AM",
+          day: "",
+          month: "",
+          year: "",
+          hour: "",
+          minute: "",
+          amPm: "",
         }}
         onSubmit={async (values) => {
           const { requestType, day, month, year, hour, minute, amPm } = values;
@@ -140,7 +142,6 @@ export const RequestDocumentsView = ({
           const {
             values: { requestType },
           } = props;
-          const buttonDisabled = requestType === undefined;
           return (
             <Form
               noValidate
@@ -159,48 +160,13 @@ export const RequestDocumentsView = ({
                   </Radio>
                 </InlineField>
               </RadioGroup>
-              {requestType === "manual" && (
-                <div style={{ display: "flex" }}>
-                  <DateField
-                    id="appointment-form-date"
-                    className="mtfh-appointment-form__date"
-                    label="Date"
-                    dayProps={{
-                      name: "day",
-                      placeholder: "dd",
-                    }}
-                    monthProps={{
-                      name: "month",
-                      placeholder: "mm",
-                    }}
-                    yearProps={{
-                      name: "year",
-                      placeholder: "yyyy",
-                    }}
-                    required
-                  />
-                  <TimeField
-                    style={{ marginTop: 0, marginLeft: "5em" }}
-                    id="appointment-form-time"
-                    className="mtfh-appointment-form__time"
-                    label="Time"
-                    hourProps={{
-                      name: "hour",
-                      placeholder: "00",
-                    }}
-                    minuteProps={{
-                      name: "minute",
-                      placeholder: "00",
-                    }}
-                    amPmProps={{
-                      name: "amPm",
-                      placeholder: "am",
-                    }}
-                    required
-                  />
-                </div>
-              )}
-              <Button type="submit" disabled={buttonDisabled}>
+              {requestType === "manual" && <DateTimeFields />}
+              <Button
+                type="submit"
+                disabled={
+                  !requestType || (requestType === "manual" && validate(props.values))
+                }
+              >
                 Next
               </Button>
             </Form>

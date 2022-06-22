@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { isPast } from "date-fns";
 import { Form, Formik } from "formik";
 
@@ -33,7 +31,6 @@ export const AppointmentForm = ({
   setNeedAppointment,
   options,
 }: BookAppointmentFormProps): JSX.Element => {
-  const [disabled, setDisabled] = useState<boolean>(true);
   const { currentState } = process;
   const formData = process.currentState.processData.formData as {
     appointmentDateTime: string;
@@ -80,10 +77,8 @@ export const AppointmentForm = ({
             setGlobalError(e.response?.status || 500);
           }
         }}
-        validateOnBlur
-        validate={(values) => validate(values, setDisabled)}
       >
-        {() => {
+        {(props) => {
           return (
             needAppointment && (
               <Form
@@ -92,7 +87,11 @@ export const AppointmentForm = ({
                 className="request-appointment-form"
               >
                 <DateTimeFields />
-                <Button type="submit" disabled={disabled} style={{ width: 222 }}>
+                <Button
+                  type="submit"
+                  disabled={validate(props.values)}
+                  style={{ width: 222 }}
+                >
                   {options.buttonText || locale.confirm}
                 </Button>
               </Form>
@@ -104,7 +103,7 @@ export const AppointmentForm = ({
   );
 };
 
-export const validate = (values, setDisabled) => {
+export const validate = (values) => {
   if (
     !values.day ||
     !values.month ||
@@ -114,16 +113,11 @@ export const validate = (values, setDisabled) => {
     !values.amPm ||
     !["am", "pm"].includes(values.amPm.toLowerCase())
   ) {
-    setDisabled(true);
-    return;
+    return true;
   }
-  if (
-    !isFutureDate(dateToString(getAppointmentDateTime(values), "yyyy-MM-dd'T'HH:mm:ss"))
-  ) {
-    setDisabled(true);
-    return;
-  }
-  setDisabled(false);
+  return !isFutureDate(
+    dateToString(getAppointmentDateTime(values), "yyyy-MM-dd'T'HH:mm:ss"),
+  );
 };
 
 export const DateTimeFields = ({
