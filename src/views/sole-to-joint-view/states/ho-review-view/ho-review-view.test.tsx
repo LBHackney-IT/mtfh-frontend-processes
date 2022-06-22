@@ -225,7 +225,7 @@ describe("ho-review-view", () => {
     await userEvent.click(screen.getByText(locale.confirm));
     expect(editProcessSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        formData: { hoRecommendation: "approve" },
+        formData: { hoRecommendation: "approve", housingAreaManagerName: "test" },
         processTrigger: "HOApproval",
       }),
     );

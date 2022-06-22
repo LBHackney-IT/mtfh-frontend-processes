@@ -40,7 +40,7 @@ enum Choice {
   Review = "review",
 }
 
-enum Decision {
+enum HORecommendation {
   Approve = "approve",
   Decline = "decline",
 }
@@ -88,9 +88,9 @@ export const HoReviewView = ({
 
       <Formik
         initialValues={{
-          decision: undefined,
+          hoRecommendation: undefined,
           confirm: false,
-          managerName: "",
+          housingAreaManagerName: "",
           choice,
           day: "",
           month: "",
@@ -147,7 +147,8 @@ export const HoReviewView = ({
               processName: process?.processName,
               etag: process.etag || "",
               formData: {
-                hoRecommendation: values.decision,
+                hoRecommendation: values.hoRecommendation,
+                housingAreaManagerName: values.housingAreaManagerName,
               },
               documents: [],
             });
@@ -165,9 +166,9 @@ export const HoReviewView = ({
           }
           if (values.choice === Choice.Review) {
             if (
-              values.decision !== undefined &&
+              values.hoRecommendation !== undefined &&
               values.confirm &&
-              values.managerName !== ""
+              values.housingAreaManagerName !== ""
             ) {
               setDisabled(false);
             } else {
@@ -231,23 +232,23 @@ export const HoReviewView = ({
                   <div style={{ marginLeft: 50 }}>
                     <Text>{views.hoReviewView.receivedDecision}</Text>
                     <Field
-                      id="decision"
-                      name="decision"
+                      id="hoRecommendation"
+                      name="hoRecommendation"
                       label="The decision is"
                       type="radio"
                     >
                       <RadioGroup>
                         <Radio
                           id="ho-review-approve"
-                          name="decision"
-                          value={Decision.Approve}
+                          name="hoRecommendation"
+                          value={HORecommendation.Approve}
                         >
                           {locale.views.tenureInvestigation.approve}
                         </Radio>
                         <Radio
                           id="ho-review-decline"
-                          name="decision"
-                          value={Decision.Decline}
+                          name="hoRecommendation"
+                          value={HORecommendation.Decline}
                         >
                           {locale.views.tenureInvestigation.decline}
                         </Radio>
@@ -258,7 +259,7 @@ export const HoReviewView = ({
                         {views.hoReviewView.confirmInstructionReceived}
                       </Checkbox>
                     </InlineField>
-                    <InlineField name="managerName">
+                    <InlineField name="housingAreaManagerName">
                       <Input
                         id="managerName"
                         style={{ marginLeft: 53, marginTop: 22, maxWidth: 300 }}
