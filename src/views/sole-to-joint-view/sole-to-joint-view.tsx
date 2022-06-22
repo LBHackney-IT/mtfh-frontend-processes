@@ -424,7 +424,11 @@ export const SoleToJointView = () => {
       data-testid="soletojoint"
       sidePosition="right"
       backLink={
-        <Link as={RouterLink} to={`/tenure/${process.targetId}`} variant="back-link">
+        <Link
+          as={RouterLink}
+          to={`/processes/soletojoint/start/tenure/${process.targetId}`}
+          variant="back-link"
+        >
           {locale.backButton}
         </Link>
       }
