@@ -348,10 +348,18 @@ const getComponent = (process) => {
 
   if (state === processConfig.states.processClosed.state) {
     const previousState = getPreviousState(process);
-    if (isSameState(previousState, processConfig.states.manualChecksFailed)) {
+    if (isSameState(previousState, manualChecksFailed)) {
       Component = ManualChecksFailedView;
-    } else if (isSameState(previousState, processConfig.states.breachChecksFailed)) {
+    }
+    if (isSameState(previousState, breachChecksFailed)) {
       Component = BreachChecksFailedView;
+    }
+    if (
+      isSameState(previousState, documentsRequestedDes) ||
+      isSameState(previousState, documentsRequestedAppointment) ||
+      isSameState(previousState, documentsAppointmentRescheduled)
+    ) {
+      Component = ReviewDocumentsView;
     }
   }
 

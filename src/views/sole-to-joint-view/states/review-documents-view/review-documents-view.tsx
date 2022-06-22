@@ -70,7 +70,7 @@ export const ReviewDocumentsView = ({
           <Box variant="warning">
             <StatusHeading variant="warning" title={reviewDocuments.soleToJointClosed} />
             <Text style={{ marginLeft: 60 }}>
-              {process.currentState.processData.formData.reason}
+              {process.currentState.processData.formData.Reason}
             </Text>
           </Box>
           {process.currentState.state !== states.processClosed.state ? (
