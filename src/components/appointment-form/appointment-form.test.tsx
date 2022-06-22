@@ -78,7 +78,8 @@ describe("appointment-form-component", () => {
     );
     await typeDateTime(screen, userEvent, "2099");
     expect(screen.getByText("Continue")).toBeEnabled();
-    await typeDateTime(screen, userEvent, "2000");
+    await userEvent.clear(screen.getByPlaceholderText(/yy/i));
+    await userEvent.type(screen.getByPlaceholderText(/yy/i), "2000");
     expect(screen.getByText("Continue")).toBeDisabled();
   });
 });

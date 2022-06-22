@@ -151,7 +151,7 @@ export const DateTimeFields = ({
         amPmLabel=""
         hourProps={{ name: "hour", placeholder: "00" }}
         minuteProps={{ name: "minute", placeholder: "00" }}
-        amPmProps={{ name: "amPm", placeholder: "am" }}
+        amPmProps={{ name: "amPm" }}
         style={{ marginTop: "1.5em", width: "100%" }}
         required
       />

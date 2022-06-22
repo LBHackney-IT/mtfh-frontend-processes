@@ -177,7 +177,7 @@ describe("review-documents-view", () => {
     await expect(nextButton).toBeEnabled();
   });
 
-  test("it displays an error if there's an issue with book appointment", async () => {
+  test("it displays an error if there's an issue with confirm", async () => {
     server.use(patchProcessV1("error", 500));
     render(
       <ReviewDocumentsView

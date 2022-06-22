@@ -153,13 +153,28 @@ exports[`appointment-form-component it renders appointment form correctly 1`] = 
               class="govuk-label lbh-label"
               for="appointment-form-time-field-amPm"
             />
-            <input
+            <select
               aria-label="AM/PM"
-              class="govuk-input lbh-input govuk-input--width-2"
+              class="govuk-select lbh-select"
+              id="amPm"
               name="amPm"
-              placeholder="am"
-              value=""
-            />
+            >
+              <option
+                value=""
+              >
+                AM/PM
+              </option>
+              <option
+                value="am"
+              >
+                AM
+              </option>
+              <option
+                value="pm"
+              >
+                PM
+              </option>
+            </select>
           </div>
         </div>
       </fieldset>
