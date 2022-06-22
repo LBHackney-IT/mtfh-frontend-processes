@@ -89,13 +89,7 @@ describe("request-documents-view", () => {
       "I have made an appointment to check supporting documents",
     );
     await user.click(radioButton);
-    await user.type(screen.getByPlaceholderText(/dd/i), "01");
-    await user.type(screen.getByPlaceholderText(/mm/i), "01");
-    await user.type(screen.getByPlaceholderText(/yy/i), "2022");
-    await user.type(screen.getAllByPlaceholderText(/00/i)[0], "01");
-    await user.type(screen.getAllByPlaceholderText(/00/i)[1], "01");
-    await user.type(screen.getByPlaceholderText(/am/i), "am");
-
+    await typeDateTime(screen, userEvent, "2022");
     expect(container).toMatchSnapshot();
   });
 

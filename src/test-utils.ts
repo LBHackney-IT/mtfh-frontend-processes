@@ -129,5 +129,8 @@ export const typeDateTime = async (screen, userEvent, year) => {
   await userEvent.type(screen.getByPlaceholderText(/yy/i), year);
   await userEvent.type(screen.getAllByPlaceholderText(/00/i)[0], "01");
   await userEvent.type(screen.getAllByPlaceholderText(/00/i)[1], "01");
-  await userEvent.type(screen.getByPlaceholderText(/am/i), "am");
+  await userEvent.selectOptions(
+    screen.getByLabelText("AM/PM"),
+    screen.getByText("AM") as HTMLOptionElement,
+  );
 };
