@@ -80,12 +80,6 @@ test("it renders sidebar buttons correctly", async () => {
     }),
   );
   await expect(screen.queryByText(cancelProcess)).toBeNull();
-
-  server.use(getProcessV1(mockDocumentsRequestedDes)); // "Cancel process" must be rendered at DocumentsRequestedDes
-  render(<SoleToJointView />, options);
-
-  const cancelButton = await screen.findByText(cancelProcess);
-  expect(cancelButton.className).toContain("secondary");
 });
 
 test("it renders soletojoint view for AutomatedChecksFailed", async () => {
