@@ -303,9 +303,6 @@ const SideBar = (props: SideBarProps) => {
       </Stepper>
       <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
       {[
-        states.documentsRequestedDes.state,
-        states.documentsRequestedAppointment.state,
-        states.documentsAppointmentRescheduled.state,
         states.interviewScheduled.state,
         states.interviewRescheduled.state,
         states.hoApprovalFailed.state,
@@ -352,10 +349,18 @@ const getComponent = (process) => {
 
   if (state === processConfig.states.processClosed.state) {
     const previousState = getPreviousState(process);
-    if (isSameState(previousState, processConfig.states.manualChecksFailed)) {
+    if (isSameState(previousState, manualChecksFailed)) {
       Component = ManualChecksFailedView;
-    } else if (isSameState(previousState, processConfig.states.breachChecksFailed)) {
+    }
+    if (isSameState(previousState, breachChecksFailed)) {
       Component = BreachChecksFailedView;
+    }
+    if (
+      isSameState(previousState, documentsRequestedDes) ||
+      isSameState(previousState, documentsRequestedAppointment) ||
+      isSameState(previousState, documentsAppointmentRescheduled)
+    ) {
+      Component = ReviewDocumentsView;
     }
   }
 
