@@ -45,7 +45,7 @@ export const FurtherEligibilityForm = ({
       }}
     >
       {(props) => (
-        <Form noValidate id="person-form" className="mtfh-person-form">
+        <Form noValidate id="person-form">
           <Box>
             <Heading variant="h4" style={{ marginBottom: "0.5em" }}>
               Further eligibility questions
