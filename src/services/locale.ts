@@ -101,6 +101,7 @@ const locale = {
       nextStepsText:
         "Based upon the documents submitted by the tenant and the proposed joint tenant, and the investigation undertaken by the Housing Officer, the application now needs to be assessed by the Tenancy Investigation Team.",
       supportingDocumentsApproved: "Supporting documents approved",
+      viewDocumentsOnDes: "View documents on the Document Evidence Store",
     },
     tenureInvestigation: {
       appointment: "Appointment",
