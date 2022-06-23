@@ -128,7 +128,13 @@ export const EligibilityChecksPassedBox = () => {
   );
 };
 
-export const DesBox = ({ title }: { title: string }): JSX.Element => {
+export const DesBox = ({
+  title,
+  description,
+}: {
+  title: string;
+  description?: string;
+}): JSX.Element => {
   return (
     <Box variant="success">
       <StatusHeading variant="success" title={title} />
@@ -144,7 +150,7 @@ export const DesBox = ({ title }: { title: string }): JSX.Element => {
           target="_blank"
           variant="link"
         >
-          {views.reviewDocuments.viewInDes}
+          {description || views.reviewDocuments.viewInDes}
         </Link>
       </div>
     </Box>

@@ -65,7 +65,10 @@ export const SubmitCaseView = ({
       {documentChecksPassed.state === process.currentState.state && (
         <>
           <EligibilityChecksPassedBox />
-          <DesBox title={views.submitCase.supportingDocumentsApproved} />
+          <DesBox
+            title={views.submitCase.supportingDocumentsApproved}
+            description={views.submitCase.viewDocumentsOnDes}
+          />
 
           <Heading variant="h2">{submitCase.tenureInvestigation}</Heading>
           <Text>{submitCase.disclaimer}</Text>
