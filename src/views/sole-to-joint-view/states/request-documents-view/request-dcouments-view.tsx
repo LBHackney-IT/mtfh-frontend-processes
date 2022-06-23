@@ -164,7 +164,7 @@ export const RequestDocumentsView = ({
               <Button
                 type="submit"
                 disabled={
-                  !requestType || (requestType === "manual" && validate(props.values))
+                  !requestType || (requestType === "manual" && !validate(props.values))
                 }
               >
                 Next

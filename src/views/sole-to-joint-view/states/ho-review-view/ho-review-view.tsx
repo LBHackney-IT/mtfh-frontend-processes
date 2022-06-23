@@ -161,7 +161,7 @@ export const HoReviewView = ({
         validateOnBlur
         validate={(values) => {
           if (values.choice === Choice.Appointment) {
-            setDisabled(validate(values));
+            setDisabled(!validate(values));
             return;
           }
           if (values.choice === Choice.Review) {

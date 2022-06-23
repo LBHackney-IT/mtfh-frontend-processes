@@ -89,7 +89,7 @@ export const AppointmentForm = ({
                 <DateTimeFields />
                 <Button
                   type="submit"
-                  disabled={validate(props.values)}
+                  disabled={!validate(props.values)}
                   style={{ width: 222 }}
                 >
                   {options.buttonText || locale.confirm}
@@ -110,14 +110,17 @@ export const validate = (values) => {
     !values.year ||
     !values.hour ||
     !values.minute ||
-    !values.amPm ||
     !["am", "pm"].includes(values.amPm.toLowerCase())
   ) {
-    return true;
+    return false;
   }
-  return !isFutureDate(
-    dateToString(getAppointmentDateTime(values), "yyyy-MM-dd'T'HH:mm:ss"),
-  );
+  try {
+    return isFutureDate(
+      dateToString(getAppointmentDateTime(values), "yyyy-MM-dd'T'HH:mm:ss"),
+    );
+  } catch (error) {
+    return false;
+  }
 };
 
 export const DateTimeFields = ({
