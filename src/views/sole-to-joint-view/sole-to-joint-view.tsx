@@ -4,9 +4,9 @@ import { Link as RouterLink, useParams } from "react-router-dom";
 import { Form, Formik } from "formik";
 
 import { locale, processes } from "../../services";
-import { Trigger } from "../../services/processes/types";
 import { CloseCaseForm } from "./close-case-form";
 import { CommentsView } from "./comments-view";
+import { CloseProcessView } from "./shared/close-process-view";
 import {
   BreachChecksFailedView,
   CheckEligibilityView,
@@ -18,9 +18,10 @@ import {
 import { ManualChecksFailedView } from "./states/manual-checks-view";
 import { ReviewApplicationView } from "./states/review-application-view/review-application-view";
 
-import { editProcess, useProcess } from "@mtfh/common/lib/api/process/v1";
+import { useProcess } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
+  Box,
   Button,
   Center,
   Dialog,
@@ -29,6 +30,7 @@ import {
   Layout,
   Link,
   Spinner,
+  StatusHeading,
   Step,
   Stepper,
   Text,
@@ -181,9 +183,9 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
 };
 
 const CloseProcessDialog = ({
-  process,
   isCloseProcessDialogOpen,
   setCloseProcessDialogOpen,
+  setCloseProcessReason,
   mutate,
   isCancel,
 }) => {
@@ -199,28 +201,9 @@ const CloseProcessDialog = ({
         initialValues={{ reasonForCancellation: undefined }}
         onSubmit={async (values) => {
           const { reasonForCancellation } = values;
-          try {
-            await editProcess({
-              id: process.id,
-              processName: process?.processName,
-              etag: process.etag || "",
-              processTrigger: isCancel ? Trigger.CancelProcess : Trigger.CloseProcess,
-              formData: isCancel
-                ? {
-                    comment: reasonForCancellation,
-                  }
-                : {
-                    hasNotifiedResident: true,
-                    Reason: reasonForCancellation,
-                  },
-              documents: [],
-            });
-            mutate();
-          } catch (e: any) {
-            console.log(e.response?.status || 500);
-          } finally {
-            setCloseProcessDialogOpen(false);
-          }
+          setCloseProcessReason(reasonForCancellation);
+          mutate();
+          setCloseProcessDialogOpen(false);
         }}
       >
         <Form noValidate id="cancel-process-form" className="cancel-process-form">
@@ -373,6 +356,7 @@ const getComponent = (process) => {
 
 export const SoleToJointView = () => {
   const [isCloseProcessDialogOpen, setCloseProcessDialogOpen] = useState<boolean>(false);
+  const [closeProcessReason, setCloseProcessReason] = useState<string>();
   const [isCancel, setCancel] = useState<boolean>(false);
   const { processId } = useParams<{ processId: string }>();
 
@@ -421,8 +405,14 @@ export const SoleToJointView = () => {
   }
 
   const {
+    currentState,
     currentState: { state },
   } = process;
+
+  let closeProcessReasonFinal = closeProcessReason;
+  if (!closeProcessReasonFinal && isSameState(currentState, processClosed)) {
+    closeProcessReasonFinal = process.currentState.processData.formData.Reason;
+  }
 
   return (
     <Layout
@@ -454,22 +444,42 @@ export const SoleToJointView = () => {
         processConfig={processConfig}
         process={process}
         mutate={mutate}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{
+          submitted,
+          setSubmitted,
+          closeCase,
+          setCloseCase,
+          closeProcessReasonFinal,
+        }}
       />
 
       <CloseProcessDialog
-        process={process}
         isCloseProcessDialogOpen={isCloseProcessDialogOpen}
         setCloseProcessDialogOpen={setCloseProcessDialogOpen}
+        setCloseProcessReason={setCloseProcessReason}
         mutate={mutate}
         isCancel={isCancel}
       />
 
-      {[breachChecksFailed.state, ...reviewDocumentsPageStates].includes(state) && (
+      {closeProcessReasonFinal && (
+        <>
+          <Box variant="warning">
+            <StatusHeading variant="warning" title={reviewDocuments.soleToJointClosed} />
+            <Text style={{ marginLeft: 60 }}>{closeProcessReasonFinal}</Text>
+          </Box>
+          <CloseProcessView
+            closeProcessReason={closeProcessReasonFinal}
+            process={process}
+            processConfig={processConfig}
+            mutate={mutate}
+          />
+        </>
+      )}
+      {!closeProcessReasonFinal && reviewDocumentsPageStates.includes(state) && (
         <>
           <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
           <Button
-            variant={reviewDocumentsPageStates.includes(state) ? "secondary" : "primary"}
+            variant="secondary"
             onClick={() => {
               setCancel(false);
               setCloseProcessDialogOpen(true);
