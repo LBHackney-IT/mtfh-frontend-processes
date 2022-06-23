@@ -1,11 +1,11 @@
 import React from "react";
 
 import { getProcessV1, render, server } from "@hackney/mtfh-test-utils";
-import { screen, waitForElementToBeRemoved } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { locale } from "../../services";
-import { mockBreachChecksFailedState } from "../../test-utils";
+import { mockDocumentsRequestedDes } from "../../test-utils";
 import { SoleToJointView } from "./sole-to-joint-view";
 
 const options = {
@@ -14,7 +14,7 @@ const options = {
 };
 
 test("it displays close case dialog on close case button click and closes on cancel", async () => {
-  server.use(getProcessV1(mockBreachChecksFailedState));
+  server.use(getProcessV1(mockDocumentsRequestedDes));
   render(<SoleToJointView />, options);
   await expect(screen.findByText(locale.closeCase)).resolves.toBeInTheDocument();
 
@@ -23,7 +23,7 @@ test("it displays close case dialog on close case button click and closes on can
     screen.findByText(locale.views.closeCase.reasonForCloseCase, { exact: false }),
   ).resolves.toBeInTheDocument();
   await userEvent.click(await screen.findByTestId("close-process-modal-submit"));
-  await waitForElementToBeRemoved(() =>
-    screen.queryByText(locale.views.closeCase.reasonForCloseCase),
-  );
+  expect(
+    screen.queryByText(locale.views.closeCase.reasonForCloseCase, { exact: false }),
+  ).not.toBeInTheDocument();
 });

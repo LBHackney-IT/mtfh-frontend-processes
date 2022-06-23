@@ -51,7 +51,7 @@ exports[`close-process-view it renders CloseProcessView correctly for state=Proc
   <h3
     class="lbh-heading-h3"
   >
-    Outcome letter has been sent
+    Thank you for confirmation
   </h3>
   <ul
     class="lbh-list lbh-list--bullet"
@@ -61,7 +61,7 @@ exports[`close-process-view it renders CloseProcessView correctly for state=Proc
       <p
         class="lbh-body-s"
       >
-        This has been recorded and can be viewed in the case activity history
+        This case is now closed and we have record this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history
       </p>
     </li>
   </ul>

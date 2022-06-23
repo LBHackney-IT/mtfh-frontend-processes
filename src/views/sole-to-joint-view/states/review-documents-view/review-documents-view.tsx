@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 
 import { Form, Formik } from "formik";
 
@@ -13,15 +12,10 @@ import { DesBox, EligibilityChecksPassedBox } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
-  Box,
   Button,
   Checkbox,
   Heading,
-  Link,
-  List,
   StatusErrorSummary,
-  StatusHeading,
-  Text,
 } from "@mtfh/common/lib/components";
 
 const { views } = locale;
@@ -30,12 +24,14 @@ interface ReviewDocumentsViewProps {
   processConfig: IProcess;
   process: Process;
   mutate: () => void;
+  optional?: any;
 }
 
 export const ReviewDocumentsView = ({
   processConfig,
   process,
   mutate,
+  optional,
 }: ReviewDocumentsViewProps) => {
   const [seenPhotographicId, setSeenPhotographicId] = useState<boolean>(false);
   const [seenSecondId, setSeenSecondId] = useState<boolean>(false);
@@ -44,7 +40,6 @@ export const ReviewDocumentsView = ({
   const [seenProofOfRelationship, setSeenProofOfRelationship] = useState<boolean>(false);
   const [incomingTenantLivingInProperty, setIncomingTenantLivingInProperty] =
     useState<boolean>(false);
-  const [hasNotifiedResident, setHasNotifiedResident] = useState<boolean>(false);
 
   const { states } = processConfig;
   const stateConfigs = {
@@ -65,76 +60,7 @@ export const ReviewDocumentsView = ({
       {globalError && (
         <StatusErrorSummary id="review-documents-global-error" code={globalError} />
       )}
-      {process.currentState.state === states.processClosed.state ? (
-        <>
-          <Box variant="warning">
-            <StatusHeading variant="warning" title={reviewDocuments.soleToJointClosed} />
-            <Text style={{ marginLeft: 60 }}>
-              {process.currentState.processData.formData.Reason}
-            </Text>
-          </Box>
-          {process.currentState.state !== states.processClosed.state ? (
-            <Formik
-              initialValues={{}}
-              onSubmit={async () => {
-                try {
-                  await editProcess({
-                    id: process.id,
-                    processTrigger: stateConfig.triggers.closeProcess,
-                    processName: process?.processName,
-                    etag: process.etag || "",
-                    formData: {
-                      hasNotifiedResident,
-                    },
-                    documents: [],
-                  });
-                  mutate();
-                } catch (e: any) {
-                  setGlobalError(e.response?.status || 500);
-                }
-              }}
-            >
-              {() => {
-                return (
-                  <Form
-                    noValidate
-                    id="review-documents-form"
-                    className="review-documents-form"
-                  >
-                    <Heading variant="h4">Next Steps:</Heading>
-                    <Checkbox
-                      id="outcome-letter-sent"
-                      checked={hasNotifiedResident}
-                      onChange={() => setHasNotifiedResident(!hasNotifiedResident)}
-                    >
-                      {views.closeCase.outcomeLetterSent}
-                    </Checkbox>
-                    <Button
-                      type="submit"
-                      disabled={!hasNotifiedResident}
-                      style={{ width: 222 }}
-                    >
-                      {locale.confirm}
-                    </Button>
-                  </Form>
-                );
-              }}
-            </Formik>
-          ) : (
-            <>
-              <Heading variant="h3">{reviewDocuments.thankYouForConfirmation}</Heading>
-              <List variant="bullets">
-                <Text size="sm">{reviewDocuments.confirmation}</Text>
-              </List>
-              <div style={{ marginTop: 35 }}>
-                <Link as={RouterLink} to="" variant="back-link">
-                  {locale.returnHomePage}
-                </Link>
-              </div>
-            </>
-          )}
-        </>
-      ) : (
+      {!optional?.closeProcessReasonFinal && (
         <>
           <EligibilityChecksPassedBox />
           {(states.documentsRequestedDes.state === process.currentState.state ||

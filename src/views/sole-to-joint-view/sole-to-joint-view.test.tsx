@@ -176,7 +176,7 @@ test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibili
   ).resolves.toBeInTheDocument();
 
   const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
-  const steps = within(stepper).getAllByRole("listitem");
+  const steps = within(stepper).getAllByRole("listitem", { hidden: true });
   expect(steps[2].className).toContain("active");
   expect(steps[2].textContent).toContain("Finish");
 });

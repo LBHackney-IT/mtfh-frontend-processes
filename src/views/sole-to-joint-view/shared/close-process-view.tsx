@@ -14,12 +14,14 @@ interface CloseProcessViewProps {
   processConfig: IProcess;
   process: Process;
   mutate: () => void;
+  closeProcessReason?: string;
 }
 
 export const CloseProcessView = ({
   process,
   processConfig,
   mutate,
+  closeProcessReason,
 }: CloseProcessViewProps): JSX.Element => {
   const [confirmed, setConfirmed] = useState<boolean>(false);
 
@@ -28,10 +30,14 @@ export const CloseProcessView = ({
 
   return state === processClosed.state ? (
     <>
-      <Heading variant="h3">Outcome letter has been sent</Heading>
+      <Heading variant="h3">
+        {locale.views.reviewDocuments.thankYouForConfirmation}
+      </Heading>
       <List variant="bullets" style={{ marginLeft: "1em" }}>
         <Text size="sm">
-          This has been recorded and can be viewed in the case activity history
+          This case is now closed and we have record this on the system - that you have
+          sent an outcome letter to the resident. The outcome can be viewed in the
+          activity history
         </Text>
       </List>
       <div style={{ marginTop: "1em" }}>
@@ -58,6 +64,7 @@ export const CloseProcessView = ({
               etag: process.etag || "",
               formData: {
                 hasNotifiedResident: true,
+                Reason: closeProcessReason,
               },
               documents: [],
             });
