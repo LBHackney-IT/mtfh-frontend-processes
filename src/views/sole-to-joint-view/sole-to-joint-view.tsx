@@ -465,11 +465,7 @@ export const SoleToJointView = () => {
         isCancel={isCancel}
       />
 
-      {[
-        manualChecksFailed.state,
-        breachChecksFailed.state,
-        ...reviewDocumentsPageStates,
-      ].includes(state) && (
+      {[breachChecksFailed.state, ...reviewDocumentsPageStates].includes(state) && (
         <>
           <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
           <Button

@@ -5,7 +5,7 @@ import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { locale } from "../../services";
-import { mockManualChecksFailedState } from "../../test-utils";
+import { mockBreachChecksFailedState } from "../../test-utils";
 import { SoleToJointView } from "./sole-to-joint-view";
 
 const options = {
@@ -14,7 +14,7 @@ const options = {
 };
 
 test("it displays close case dialog on close case button click and closes on cancel", async () => {
-  server.use(getProcessV1(mockManualChecksFailedState));
+  server.use(getProcessV1(mockBreachChecksFailedState));
   render(<SoleToJointView />, options);
   await expect(screen.findByText(locale.closeCase)).resolves.toBeInTheDocument();
 
