@@ -5,8 +5,12 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Form, Formik } from "formik";
 
-import { locale } from "../../services";
-import { CloseCaseForm, CloseCaseFormData, closeCaseSchema } from "./close-case-form";
+import { locale } from "../../../../services";
+import {
+  CloseProcessFormData,
+  CloseProcessReasonForm,
+  closeProcessSchema,
+} from "./close-process-reason-form";
 
 import { Button } from "@mtfh/common/lib/components";
 import commonLocale from "@mtfh/common/lib/locale";
@@ -17,7 +21,7 @@ const Component = ({
   initialValues,
   isCancel = false,
 }: {
-  initialValues?: Partial<CloseCaseFormData>;
+  initialValues?: Partial<CloseProcessFormData>;
   isCancel: boolean;
 }): JSX.Element => {
   const [submitted, setSubmitted] = useState(false);
@@ -32,7 +36,7 @@ const Component = ({
         reasonForRejection: "",
         ...initialValues,
       }}
-      validationSchema={closeCaseSchema(mockErrorMessages)}
+      validationSchema={closeProcessSchema(mockErrorMessages)}
       validateOnBlur={false}
       validateOnChange={false}
       onSubmit={() => {
@@ -41,7 +45,7 @@ const Component = ({
     >
       {() => (
         <Form noValidate data-testid="form">
-          <CloseCaseForm isCancel={isCancel} />
+          <CloseProcessReasonForm isCancel={isCancel} />
           <Button type="submit">{locale.confirm}</Button>
         </Form>
       )}
@@ -68,7 +72,7 @@ test("it fails validation if submitted without interaction", async () => {
 test("it submits with correct required fields", async () => {
   render(<Component isCancel />);
   const reasonForRejection = screen.getByLabelText(
-    `${locale.views.closeCase.reasonForCancellation}*`,
+    `${locale.views.closeProcess.reasonForCancellation}*`,
   );
   await userEvent.type(reasonForRejection, "Documents not provided");
   await userEvent.click(screen.getByText(locale.confirm));

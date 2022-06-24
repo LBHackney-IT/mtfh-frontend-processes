@@ -140,7 +140,7 @@ const locale = {
       managersName: "Enter manager's name",
       hoOutcome: (decision) => `Sole to joint tenure application ${decision}`,
     },
-    closeCase: {
+    closeProcess: {
       reasonForCancellation: "Reason for Cancellation",
       reasonForCloseCase: "Reason for close case",
       outcomeLetterSent: "I confirm that an outcome letter has been sent to the resident",

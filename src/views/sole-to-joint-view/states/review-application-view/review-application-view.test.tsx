@@ -141,7 +141,7 @@ describe("tenure-investigation-view", () => {
       },
     );
     await expect(
-      screen.findByText(locale.views.closeCase.soleToJointClosed),
+      screen.findByText(locale.views.closeProcess.soleToJointClosed),
     ).resolves.toBeInTheDocument();
   });
 
@@ -169,7 +169,7 @@ describe("tenure-investigation-view", () => {
       screen.findByText(locale.views.tenureInvestigation.viewNewTenure),
     ).resolves.toBeInTheDocument();
     await expect(
-      screen.findByText(locale.views.closeCase.outcomeLetterSent),
+      screen.findByText(locale.views.closeProcess.outcomeLetterSent),
     ).resolves.toBeInTheDocument();
   });
 });

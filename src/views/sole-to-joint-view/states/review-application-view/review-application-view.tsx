@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
-import { CloseProcessView } from "../../shared/close-process-view";
+import { CloseProcessView } from "../close-process-view";
 import { HoReviewFailedView } from "../ho-review-view/ho-review-failed-view";
 import { HoReviewView } from "../ho-review-view/ho-review-view";
 import { NewTenancyView } from "../new-tenancy-view/new-tenancy-view";
@@ -17,7 +16,6 @@ import {
   Box,
   Center,
   ErrorSummary,
-  Link,
   Spinner,
   StatusErrorSummary,
   StatusHeading,
@@ -82,6 +80,7 @@ export const ReviewApplicationView = ({
   optional,
 }: ReviewApplicationViewProps): JSX.Element => {
   const [globalError, setGlobalError] = useState<number>();
+  const [documentsSigned, setDocumentsSigned] = useState<boolean>(false);
   const { closeCase, setCloseCase } = optional;
   const { data: tenure, error } = useTenure(process.targetId);
   const {
@@ -152,6 +151,7 @@ export const ReviewApplicationView = ({
       )}
 
       {!closeCase &&
+        !documentsSigned &&
         ![
           tenureInvestigationFailed.state,
           tenureInvestigationPassed.state,
@@ -204,37 +204,24 @@ export const ReviewApplicationView = ({
         hoApprovalPassed.state,
         tenureAppointmentScheduled.state,
         tenureAppointmentRescheduled.state,
+        tenureUpdated.state,
       ].includes(process.currentState.state) && (
         <NewTenancyView
           processConfig={processConfig}
           process={process}
           mutate={mutate}
           setGlobalError={setGlobalError}
-          optional={{ closeCase, setCloseCase }}
+          optional={{ closeCase, setCloseCase, documentsSigned, setDocumentsSigned }}
         />
       )}
 
-      {isCurrentState(tenureUpdated.state, process) && (
-        <Box variant="success">
-          <StatusHeading
-            variant="success"
-            title={views.tenureInvestigation.tenancySigned}
-          />
-          <div
-            style={{ marginLeft: 60, marginTop: 17.5 }}
-            className="govuk-link lbh-link lbh-link--no-visited-state"
-          >
-            <Link as={RouterLink} to="#" variant="link">
-              {views.tenureInvestigation.viewNewTenure}
-            </Link>
-          </div>
-        </Box>
-      )}
-
-      {(closeCase || isCurrentState(tenureUpdated.state, process)) && (
+      {closeCase && (
         <>
           <Box variant="warning">
-            <StatusHeading variant="warning" title={views.closeCase.soleToJointClosed} />
+            <StatusHeading
+              variant="warning"
+              title={views.closeProcess.soleToJointClosed}
+            />
           </Box>
           <CloseProcessView
             process={process}

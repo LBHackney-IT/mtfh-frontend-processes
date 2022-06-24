@@ -2,7 +2,7 @@ import { Form, Formik } from "formik";
 
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
-import { CloseProcessView } from "../../shared/close-process-view";
+import { CloseProcessView } from "../close-process-view";
 
 import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import {

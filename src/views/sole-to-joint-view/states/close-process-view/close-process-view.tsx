@@ -3,9 +3,9 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { Form, Formik } from "formik";
 
-import { locale } from "../../../services";
-import { Trigger } from "../../../services/processes/types";
-import { IProcess } from "../../../types";
+import { locale } from "../../../../services";
+import { Trigger } from "../../../../services/processes/types";
+import { IProcess } from "../../../../types";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import { Button, Checkbox, Heading, Link, List, Text } from "@mtfh/common/lib/components";
@@ -16,6 +16,7 @@ interface CloseProcessViewProps {
   mutate: () => void;
   closeProcessReason?: string;
   optional?: {
+    trigger?: Trigger;
     nextStepsDescription?: boolean;
   };
 }
@@ -63,7 +64,7 @@ export const CloseProcessView = ({
           try {
             await editProcess({
               id: process.id,
-              processTrigger: Trigger.CloseProcess,
+              processTrigger: optional.trigger || Trigger.CloseProcess,
               processName: process?.processName,
               etag: process.etag || "",
               formData: {
@@ -79,13 +80,13 @@ export const CloseProcessView = ({
         }}
       >
         {() => (
-          <Form noValidate id="breach-form" className="mtfh-breach-form">
+          <Form noValidate id="close-process-form" className="mtfh-close-process-form">
             <Checkbox
               id="condition"
               checked={confirmed}
               onChange={() => setConfirmed(!confirmed)}
             >
-              {locale.views.closeCase.outcomeLetterSent}
+              {locale.views.closeProcess.outcomeLetterSent}
             </Checkbox>
             <Button type="submit" disabled={!confirmed}>
               {locale.confirm}

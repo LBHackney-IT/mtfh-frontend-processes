@@ -1,8 +1,8 @@
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
-import { CloseProcessView } from "../../shared/close-process-view";
 import { BreachCheckForm } from "../breach-checks-view";
+import { CloseProcessView } from "../close-process-view";
 import { AutomatedChecksPassedBox } from "../shared";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
 

@@ -1,6 +1,6 @@
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
-import { CloseProcessView } from "../../shared/close-process-view";
+import { CloseProcessView } from "../close-process-view";
 import { AutomatedChecksPassedBox } from "../shared";
 
 import { Box, Heading, List, StatusHeading, Text } from "@mtfh/common/lib/components";

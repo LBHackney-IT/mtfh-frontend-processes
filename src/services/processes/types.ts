@@ -8,4 +8,5 @@ export enum Trigger {
   ScheduleInterview = "ScheduleInterview",
   RescheduleInterview = "RescheduleInterview",
   HOApproval = "HOApproval",
+  UpdateTenure = "UpdateTenure",
 }

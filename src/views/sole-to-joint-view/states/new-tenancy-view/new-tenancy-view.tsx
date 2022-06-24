@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link as RouterLink } from "react-router-dom";
 
 import { isPast } from "date-fns";
 
@@ -7,9 +8,17 @@ import { AppointmentForm } from "../../../../components/appointment-form/appoint
 import { locale } from "../../../../services";
 import { Trigger } from "../../../../services/processes/types";
 import { IProcess } from "../../../../types";
+import { CloseProcessView } from "../close-process-view";
 
-import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
-import { Box, Button, Heading, StatusHeading, Text } from "@mtfh/common/lib/components";
+import { Process } from "@mtfh/common/lib/api/process/v1";
+import {
+  Box,
+  Button,
+  Heading,
+  Link,
+  StatusHeading,
+  Text,
+} from "@mtfh/common/lib/components";
 
 interface NewTenancyViewProps {
   processConfig: IProcess;
@@ -33,6 +42,7 @@ export const NewTenancyView = ({
     hoApprovalPassed.state === process.currentState.state,
   );
   const { closeCase, setCloseCase } = optional;
+  const { documentsSigned, setDocumentsSigned } = optional;
   const formData = process.currentState.processData.formData as {
     appointmentDateTime: string;
   };
@@ -45,29 +55,49 @@ export const NewTenancyView = ({
         />
       </Box>
 
-      <Heading variant="h2">{views.tenureInvestigation.hoApprovedNextSteps}</Heading>
-      {currentState.state === process.currentState.state && (
-        <Text>{views.tenureInvestigation.mustMakeAppointment}</Text>
+      {documentsSigned ? (
+        <Box variant="success">
+          <StatusHeading
+            variant="success"
+            title={views.tenureInvestigation.tenancySigned}
+          />
+          <div
+            style={{ marginLeft: 60, marginTop: 17.5 }}
+            className="govuk-link lbh-link lbh-link--no-visited-state"
+          >
+            <Link as={RouterLink} to={`/tenure/${process.targetId}`} variant="link">
+              {views.tenureInvestigation.viewNewTenure}
+            </Link>
+          </div>
+        </Box>
+      ) : (
+        <>
+          <Heading variant="h2">{views.tenureInvestigation.hoApprovedNextSteps}</Heading>
+          {currentState.state === process.currentState.state && (
+            <Text>{views.tenureInvestigation.mustMakeAppointment}</Text>
+          )}
+        </>
       )}
 
-      {[tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
-        process.currentState.state,
-      ) && (
-        <AppointmentDetails
-          process={process}
-          needAppointment={needAppointment}
-          setNeedAppointment={setNeedAppointment}
-          closeCase={closeCase}
-          setCloseCase={setCloseCase}
-          options={{
-            requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
-            rescheduleAppointmentTrigger: Trigger.RescheduleTenureAppointment,
-            appointmentRequestedState: tenureAppointmentScheduled.state,
-            appointmentRescheduledState: tenureAppointmentRescheduled.state,
-            closeCaseButton: true,
-          }}
-        />
-      )}
+      {!documentsSigned &&
+        [tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
+          process.currentState.state,
+        ) && (
+          <AppointmentDetails
+            process={process}
+            needAppointment={needAppointment}
+            setNeedAppointment={setNeedAppointment}
+            closeCase={closeCase}
+            setCloseCase={setCloseCase}
+            options={{
+              requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
+              rescheduleAppointmentTrigger: Trigger.RescheduleTenureAppointment,
+              appointmentRequestedState: tenureAppointmentScheduled.state,
+              appointmentRescheduledState: tenureAppointmentRescheduled.state,
+              closeCaseButton: true,
+            }}
+          />
+        )}
 
       <AppointmentForm
         process={process}
@@ -84,33 +114,31 @@ export const NewTenancyView = ({
         }}
       />
 
-      {!closeCase &&
+      {!documentsSigned &&
+        !closeCase &&
         [tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
           process.currentState.state,
         ) &&
         !needAppointment && (
           <Button
             disabled={!isPast(new Date(formData.appointmentDateTime))}
-            onClick={async () => {
-              try {
-                await editProcess({
-                  id: process.id,
-                  processName: process?.processName,
-                  etag: process.etag || "",
-                  processTrigger:
-                    processConfig.states[currentState.state].triggers.updateTenure,
-                  formData: {},
-                  documents: [],
-                });
-                mutate();
-              } catch (e: any) {
-                setGlobalError(e.response?.status || 500);
-              }
-            }}
+            onClick={() => setDocumentsSigned(true)}
           >
             {views.tenureInvestigation.documentsSigned}
           </Button>
         )}
+
+      {documentsSigned && (
+        <CloseProcessView
+          processConfig={processConfig}
+          process={process}
+          mutate={mutate}
+          optional={{
+            trigger: Trigger.UpdateTenure,
+            nextStepsDescription: false,
+          }}
+        />
+      )}
     </>
   );
 };

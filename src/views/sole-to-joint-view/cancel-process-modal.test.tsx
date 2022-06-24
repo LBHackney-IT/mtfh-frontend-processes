@@ -20,10 +20,10 @@ test("it displays close case dialog on close case button click and closes on can
 
   await userEvent.click(screen.getByText(locale.closeCase));
   await expect(
-    screen.findByText(locale.views.closeCase.reasonForCloseCase, { exact: false }),
+    screen.findByText(locale.views.closeProcess.reasonForCloseCase, { exact: false }),
   ).resolves.toBeInTheDocument();
   await userEvent.click(await screen.findByTestId("close-process-modal-submit"));
   expect(
-    screen.queryByText(locale.views.closeCase.reasonForCloseCase, { exact: false }),
+    screen.queryByText(locale.views.closeProcess.reasonForCloseCase, { exact: false }),
   ).not.toBeInTheDocument();
 });
