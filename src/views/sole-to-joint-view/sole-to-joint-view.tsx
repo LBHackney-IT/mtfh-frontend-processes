@@ -60,6 +60,7 @@ const {
   interviewScheduled,
   interviewRescheduled,
   hoApprovalPassed,
+  hoApprovalFailed,
   tenureAppointmentScheduled,
   tenureAppointmentRescheduled,
   tenureUpdated,
@@ -92,6 +93,7 @@ const components = {
   [interviewScheduled.state]: ReviewApplicationView,
   [interviewRescheduled.state]: ReviewApplicationView,
   [hoApprovalPassed.state]: ReviewApplicationView,
+  [hoApprovalFailed.state]: ReviewApplicationView,
   [tenureAppointmentScheduled.state]: ReviewApplicationView,
   [tenureAppointmentRescheduled.state]: ReviewApplicationView,
   [tenureUpdated.state]: ReviewApplicationView,
@@ -166,6 +168,7 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
       states.interviewScheduled.state,
       states.interviewRescheduled.state,
       states.hoApprovalPassed.state,
+      states.hoApprovalFailed.state,
       states.tenureAppointmentScheduled.state,
       states.tenureAppointmentRescheduled.state,
     ].includes(state) ||

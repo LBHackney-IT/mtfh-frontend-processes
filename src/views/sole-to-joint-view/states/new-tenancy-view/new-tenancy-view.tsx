@@ -39,7 +39,10 @@ export const NewTenancyView = ({
   return (
     <>
       <Box variant="success">
-        <StatusHeading variant="success" title={views.tenureInvestigation.hoApproved} />
+        <StatusHeading
+          variant="success"
+          title={views.hoReviewView.hoOutcome("approved")}
+        />
       </Box>
 
       <Heading variant="h2">{views.tenureInvestigation.hoApprovedNextSteps}</Heading>
