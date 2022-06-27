@@ -122,6 +122,9 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
     if (isSameState(previousState, states.breachChecksFailed)) {
       return 2;
     }
+    if (isSameState(previousState, states.hoApprovalFailed)) {
+      return 6;
+    }
   }
 
   if (
@@ -347,6 +350,9 @@ const getComponent = (process) => {
       isSameState(previousState, documentsAppointmentRescheduled)
     ) {
       Component = ReviewDocumentsView;
+    }
+    if (isSameState(previousState, hoApprovalFailed)) {
+      Component = ReviewApplicationView;
     }
   }
 

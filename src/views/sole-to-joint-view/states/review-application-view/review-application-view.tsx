@@ -96,6 +96,7 @@ export const ReviewApplicationView = ({
     interviewScheduled,
     interviewRescheduled,
     tenureUpdated,
+    processClosed,
   } = processConfig.states;
   const {
     recommendation,
@@ -154,6 +155,7 @@ export const ReviewApplicationView = ({
           tenureInvestigationPassedWithInt.state,
           interviewScheduled.state,
           interviewRescheduled.state,
+          processClosed.state,
         ].includes(process.currentState.state) &&
         (tenant ? (
           <TenantContactDetails tenant={tenant} />
@@ -186,7 +188,8 @@ export const ReviewApplicationView = ({
         />
       )}
 
-      {isCurrentState(hoApprovalFailed.state, process) && (
+      {(isCurrentState(hoApprovalFailed.state, process) ||
+        isCurrentState(processClosed.state, process)) && (
         <HoReviewFailedView
           processConfig={processConfig}
           process={process}
