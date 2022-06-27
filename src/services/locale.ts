@@ -86,6 +86,7 @@ const locale = {
         "I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months",
       incomingTenantLivingInPropertyHint:
         "(for example: letter, utility bill, council tax bill)",
+      soleToJointWillBeClosed: "Sole to joint application will be closed",
       soleToJointClosed: "Sole to joint application closed",
       thankYouForConfirmation: "Thank you for confirmation",
       confirmation:

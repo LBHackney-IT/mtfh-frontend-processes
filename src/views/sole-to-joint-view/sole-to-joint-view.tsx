@@ -473,8 +473,18 @@ export const SoleToJointView = () => {
       {closeProcessReasonFinal && (
         <>
           <Box variant="warning">
-            <StatusHeading variant="warning" title={reviewDocuments.soleToJointClosed} />
-            <Text style={{ marginLeft: 60 }}>{closeProcessReasonFinal}</Text>
+            <StatusHeading
+              variant="warning"
+              title={
+                isSameState(currentState, processClosed)
+                  ? reviewDocuments.soleToJointClosed
+                  : reviewDocuments.soleToJointWillBeClosed
+              }
+            />
+            <Text style={{ marginLeft: 60 }}>
+              <strong>Reason of close case:</strong> <br />
+              {closeProcessReasonFinal}
+            </Text>
           </Box>
           <CloseProcessView
             closeProcessReason={closeProcessReasonFinal}
