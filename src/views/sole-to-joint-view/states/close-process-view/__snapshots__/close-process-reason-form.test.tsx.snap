@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders correctly Close Process 1`] = `
+<div>
+  <form
+    action="#"
+    data-testid="form"
+    novalidate=""
+  >
+    <div
+      class="govuk-character-count"
+    >
+      <div
+        class="govuk-form-group lbh-form-group"
+        id="mtfh-close-case-form-reason"
+      >
+        <label
+          class="govuk-label lbh-label"
+          for="mtfh-close-case-form-reason-field"
+        >
+          Reason for close case
+          <sup
+            aria-hidden="true"
+          >
+            *
+          </sup>
+        </label>
+        <textarea
+          class="govuk-textarea lbh-textarea lbh-character-count"
+          id="mtfh-close-case-form-reason-field"
+          name="reasonForCancellation"
+          required=""
+          rows="5"
+        />
+      </div>
+    </div>
+    <button
+      class="govuk-button lbh-button"
+      type="submit"
+    >
+      Confirm
+    </button>
+  </form>
+</div>
+`;
+
+exports[`it renders correctly for Cancel Process 1`] = `
+<div>
+  <form
+    action="#"
+    data-testid="form"
+    novalidate=""
+  >
+    <div
+      class="govuk-character-count"
+    >
+      <div
+        class="govuk-form-group lbh-form-group"
+        id="mtfh-close-case-form-reason"
+      >
+        <label
+          class="govuk-label lbh-label"
+          for="mtfh-close-case-form-reason-field"
+        >
+          Reason for Cancellation
+          <sup
+            aria-hidden="true"
+          >
+            *
+          </sup>
+        </label>
+        <textarea
+          class="govuk-textarea lbh-textarea lbh-character-count"
+          id="mtfh-close-case-form-reason-field"
+          name="reasonForCancellation"
+          required=""
+          rows="5"
+        />
+      </div>
+    </div>
+    <button
+      class="govuk-button lbh-button"
+      type="submit"
+    >
+      Confirm
+    </button>
+  </form>
+</div>
+`;
