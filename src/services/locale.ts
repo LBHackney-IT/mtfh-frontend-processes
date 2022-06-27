@@ -88,7 +88,7 @@ const locale = {
         "(for example: letter, utility bill, council tax bill)",
       soleToJointWillBeClosed: "Sole to joint application will be closed",
       soleToJointClosed: "Sole to joint application closed",
-      thankYouForConfirmation: "Thank you for confirmation",
+      thankYouForConfirmation: "Thank you for your confirmation",
       confirmation:
         "The outcome has been recorded and can be viewed in the activity history",
       documentsNotSuitableCloseCase:
