@@ -157,32 +157,6 @@ exports[`ho-review-failed-view it renders ReviewApplication view correctly for H
         </h4>
       </div>
     </div>
-    <p
-      class="lbh-body-s"
-    >
-      Global Web Consultant Alverta Denesik
-       contact details:
-    </p>
-    <p
-      class="lbh-body-s"
-    >
-      Phone:
-      <span
-        style="margin-left: 1em;"
-      >
-        075949281
-      </span>
-    </p>
-    <p
-      class="lbh-body-s"
-    >
-      Email:
-      <span
-        style="margin-left: 1em;"
-      >
-        Gay.Jacobi@hotmail.com
-      </span>
-    </p>
     <div
       class="mtfh-box mtfh-box--warning"
     >
@@ -223,8 +197,8 @@ exports[`ho-review-failed-view it renders ReviewApplication view correctly for H
     </h3>
     <form
       action="#"
-      class="mtfh-breach-form"
-      id="breach-form"
+      class="mtfh-close-process-form"
+      id="close-process-form"
       novalidate=""
     >
       <div
