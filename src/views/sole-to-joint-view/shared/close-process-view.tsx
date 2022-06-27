@@ -15,6 +15,9 @@ interface CloseProcessViewProps {
   process: Process;
   mutate: () => void;
   closeProcessReason?: string;
+  optional?: {
+    nextStepsDescription?: boolean;
+  };
 }
 
 export const CloseProcessView = ({
@@ -22,6 +25,9 @@ export const CloseProcessView = ({
   processConfig,
   mutate,
   closeProcessReason,
+  optional = {
+    nextStepsDescription: true,
+  },
 }: CloseProcessViewProps): JSX.Element => {
   const [confirmed, setConfirmed] = useState<boolean>(false);
 
@@ -49,10 +55,12 @@ export const CloseProcessView = ({
   ) : (
     <>
       <Heading variant="h3">Next steps:</Heading>
-      <Text size="sm">
-        The applicant is not eligibile for sole to joint tenure. <br />
-        This case will be closed once you have sent an outcome letter to the resident.
-      </Text>
+      {optional.nextStepsDescription && (
+        <Text size="sm">
+          The applicant is not eligible for sole to joint tenure. <br />
+          This case will be closed once you have sent an outcome letter to the resident.
+        </Text>
+      )}
       <Formik
         initialValues={{}}
         onSubmit={async () => {

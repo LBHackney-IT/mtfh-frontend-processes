@@ -5,6 +5,7 @@ import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
 import { CloseProcessView } from "../../shared/close-process-view";
+import { HoReviewFailedView } from "../ho-review-view/ho-review-failed-view";
 import { HoReviewView } from "../ho-review-view/ho-review-view";
 import { NewTenancyView } from "../new-tenancy-view/new-tenancy-view";
 import { DesBox, EligibilityChecksPassedBox, TenantContactDetails } from "../shared";
@@ -89,11 +90,13 @@ export const ReviewApplicationView = ({
     tenureInvestigationPassed,
     tenureInvestigationPassedWithInt,
     hoApprovalPassed,
+    hoApprovalFailed,
     tenureAppointmentScheduled,
     tenureAppointmentRescheduled,
     interviewScheduled,
     interviewRescheduled,
     tenureUpdated,
+    processClosed,
   } = processConfig.states;
   const {
     recommendation,
@@ -152,6 +155,7 @@ export const ReviewApplicationView = ({
           tenureInvestigationPassedWithInt.state,
           interviewScheduled.state,
           interviewRescheduled.state,
+          processClosed.state,
         ].includes(process.currentState.state) &&
         (tenant ? (
           <TenantContactDetails tenant={tenant} />
@@ -181,6 +185,15 @@ export const ReviewApplicationView = ({
           mutate={mutate}
           setGlobalError={setGlobalError}
           optional={{ tenant }}
+        />
+      )}
+
+      {(isCurrentState(hoApprovalFailed.state, process) ||
+        isCurrentState(processClosed.state, process)) && (
+        <HoReviewFailedView
+          processConfig={processConfig}
+          process={process}
+          mutate={mutate}
         />
       )}
 

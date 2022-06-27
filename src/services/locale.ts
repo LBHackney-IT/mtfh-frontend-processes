@@ -108,7 +108,6 @@ const locale = {
       approve: "Approve",
       decline: "Decline",
       documentsSigned: "Documents signed",
-      hoApproved: "Sole to joint tenure application approved",
       hoApprovedNextSteps: "Sole to Joint application approved, next steps:",
       mustMakeAppointment:
         "You must make an office appointment with the applicant to sign a new tenancy agreement",
@@ -136,6 +135,7 @@ const locale = {
       confirmInstructionReceived:
         "I confirm that this is an instruction received by the housing area manager",
       managersName: "Enter manager's name",
+      hoOutcome: (decision) => `Sole to joint tenure application ${decision}`,
     },
     closeCase: {
       reasonForCancellation: "Reason for Cancellation",
