@@ -7,7 +7,7 @@ import { CloseProcessView } from "../close-process-view";
 import { HoReviewFailedView } from "../ho-review-view/ho-review-failed-view";
 import { HoReviewView } from "../ho-review-view/ho-review-view";
 import { NewTenancyView } from "../new-tenancy-view/new-tenancy-view";
-import { DesBox, EligibilityChecksPassedBox, TenantContactDetails } from "../shared";
+import { DesBox, EligibilityChecksPassedBox } from "../shared";
 import { TenureInvestigationView } from "../tenure-investigation-view";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -19,7 +19,6 @@ import {
   Spinner,
   StatusErrorSummary,
   StatusHeading,
-  Text,
 } from "@mtfh/common/lib/components";
 import { BoxVariant } from "@mtfh/common/lib/components/box";
 import { StatusHeadingVariant } from "@mtfh/common/lib/components/status-heading";
@@ -150,28 +149,13 @@ export const ReviewApplicationView = ({
         </Box>
       )}
 
-      {!closeCase &&
-        !documentsSigned &&
-        ![
-          tenureInvestigationFailed.state,
-          tenureInvestigationPassed.state,
-          tenureInvestigationPassedWithInt.state,
-          interviewScheduled.state,
-          interviewRescheduled.state,
-          processClosed.state,
-        ].includes(process.currentState.state) &&
-        (tenant ? (
-          <TenantContactDetails tenant={tenant} />
-        ) : (
-          <Text>Tenant not found.</Text>
-        ))}
-
       {applicationSubmitted.state === process.currentState.state && (
         <TenureInvestigationView
           processConfig={processConfig}
           process={process}
           mutate={mutate}
           setGlobalError={setGlobalError}
+          optional={{ tenant }}
         />
       )}
 
@@ -211,7 +195,13 @@ export const ReviewApplicationView = ({
           process={process}
           mutate={mutate}
           setGlobalError={setGlobalError}
-          optional={{ closeCase, setCloseCase, documentsSigned, setDocumentsSigned }}
+          optional={{
+            closeCase,
+            setCloseCase,
+            documentsSigned,
+            setDocumentsSigned,
+            tenant,
+          }}
         />
       )}
 
@@ -227,6 +217,7 @@ export const ReviewApplicationView = ({
             process={process}
             processConfig={processConfig}
             mutate={mutate}
+            setGlobalError={setGlobalError}
           />
         </>
       )}

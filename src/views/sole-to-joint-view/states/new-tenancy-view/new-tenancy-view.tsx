@@ -9,6 +9,7 @@ import { locale } from "../../../../services";
 import { Trigger } from "../../../../services/processes/types";
 import { IProcess } from "../../../../types";
 import { CloseProcessView } from "../close-process-view";
+import { TenantContactDetails } from "../shared";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -35,13 +36,17 @@ export const NewTenancyView = ({
   setGlobalError,
   optional,
 }: NewTenancyViewProps): JSX.Element => {
-  const { hoApprovalPassed, tenureAppointmentScheduled, tenureAppointmentRescheduled } =
-    processConfig.states;
+  const {
+    hoApprovalPassed,
+    tenureAppointmentScheduled,
+    tenureAppointmentRescheduled,
+    tenureUpdated,
+  } = processConfig.states;
   const { currentState } = process;
   const [needAppointment, setNeedAppointment] = useState<boolean>(
     hoApprovalPassed.state === process.currentState.state,
   );
-  const { closeCase, setCloseCase } = optional;
+  const { closeCase, setCloseCase, tenant } = optional;
   const { documentsSigned, setDocumentsSigned } = optional;
   const formData = process.currentState.processData.formData as {
     appointmentDateTime: string;
@@ -55,7 +60,7 @@ export const NewTenancyView = ({
         />
       </Box>
 
-      {documentsSigned ? (
+      {currentState.state === tenureUpdated.state ? (
         <Box variant="success">
           <StatusHeading
             variant="success"
@@ -72,8 +77,15 @@ export const NewTenancyView = ({
         </Box>
       ) : (
         <>
-          <Heading variant="h2">{views.tenureInvestigation.hoApprovedNextSteps}</Heading>
-          {currentState.state === process.currentState.state && (
+          {!documentsSigned && (
+            <Heading variant="h2">
+              {views.tenureInvestigation.hoApprovedNextSteps}
+            </Heading>
+          )}
+          {![
+            tenureAppointmentScheduled.state,
+            tenureAppointmentRescheduled.state,
+          ].includes(process.currentState.state) && (
             <Text>{views.tenureInvestigation.mustMakeAppointment}</Text>
           )}
         </>
@@ -98,6 +110,10 @@ export const NewTenancyView = ({
             }}
           />
         )}
+
+      {!documentsSigned && currentState.state !== tenureUpdated.state && tenant && (
+        <TenantContactDetails tenant={tenant} />
+      )}
 
       <AppointmentForm
         process={process}
@@ -128,14 +144,16 @@ export const NewTenancyView = ({
           </Button>
         )}
 
-      {documentsSigned && (
+      {(documentsSigned || currentState.state === tenureUpdated.state) && (
         <CloseProcessView
           processConfig={processConfig}
           process={process}
           mutate={mutate}
+          setGlobalError={setGlobalError}
           optional={{
             trigger: Trigger.UpdateTenure,
             nextStepsDescription: false,
+            closed: currentState.state === tenureUpdated.state,
           }}
         />
       )}

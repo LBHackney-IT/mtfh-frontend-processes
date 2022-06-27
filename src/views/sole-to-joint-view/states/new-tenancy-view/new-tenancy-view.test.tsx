@@ -92,6 +92,8 @@ describe("tenure-investigation-view", () => {
     );
     expect(documentsSigned).toBeEnabled();
     await userEvent.click(documentsSigned);
+    await userEvent.click(screen.getByText(locale.views.closeProcess.outcomeLetterSent));
+    await userEvent.click(screen.getByText(locale.confirm));
     await expect(
       screen.findByText("There was a problem with completing the action", {
         exact: false,

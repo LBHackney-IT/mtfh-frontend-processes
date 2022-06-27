@@ -176,12 +176,12 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
     ].includes(state) ||
     (states.applicationSubmitted.state === state && submitted)
   ) {
+    if (closeCase) {
+      return 7;
+    }
     return 6;
   }
-  if (
-    [states.tenureUpdated.state].includes(state) ||
-    (states.tenureAppointmentRescheduled.state === state && closeCase)
-  ) {
+  if ([states.tenureUpdated.state].includes(state)) {
     return 7;
   }
   return 0;
@@ -250,14 +250,14 @@ const SideBar = (props: SideBarProps) => {
         {steps}
       </Stepper>
       <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
-      {[
+      {([
         states.interviewScheduled.state,
         states.interviewRescheduled.state,
         states.hoApprovalFailed.state,
         states.hoApprovalPassed.state,
         states.tenureAppointmentScheduled.state,
-        states.tenureAppointmentRescheduled.state,
-      ].includes(state) && (
+      ].includes(state) ||
+        (states.tenureAppointmentRescheduled.state === state && !closeCase)) && (
         <Button
           variant="secondary"
           onClick={() => {

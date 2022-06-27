@@ -14,10 +14,12 @@ interface CloseProcessViewProps {
   processConfig: IProcess;
   process: Process;
   mutate: () => void;
+  setGlobalError?: any;
   closeProcessReason?: string;
   optional?: {
     trigger?: Trigger;
     nextStepsDescription?: boolean;
+    closed?: boolean;
   };
 }
 
@@ -25,21 +27,20 @@ export const CloseProcessView = ({
   process,
   processConfig,
   mutate,
+  setGlobalError,
   closeProcessReason,
   optional = {
     nextStepsDescription: true,
   },
 }: CloseProcessViewProps): JSX.Element => {
   const [confirmed, setConfirmed] = useState<boolean>(false);
-
+  const { closed, trigger, nextStepsDescription } = optional;
   const { state } = process.currentState;
   const { processClosed } = processConfig.states;
 
-  return state === processClosed.state ? (
+  return closed || state === processClosed.state ? (
     <>
-      <Heading variant="h3">
-        {locale.views.reviewDocuments.thankYouForConfirmation}
-      </Heading>
+      <Heading variant="h3">{locale.views.closeProcess.thankYouForConfirmation}</Heading>
       <List variant="bullets" style={{ marginLeft: "1em" }}>
         <Text size="sm">{locale.views.closeCase.confirmationText}</Text>
       </List>
@@ -52,7 +53,7 @@ export const CloseProcessView = ({
   ) : (
     <>
       <Heading variant="h3">Next steps:</Heading>
-      {optional.nextStepsDescription && (
+      {nextStepsDescription && (
         <Text size="sm">
           The applicant is not eligible for sole to joint tenure. <br />
           This case will be closed once you have sent an outcome letter to the resident.
@@ -64,7 +65,7 @@ export const CloseProcessView = ({
           try {
             await editProcess({
               id: process.id,
-              processTrigger: optional.trigger || Trigger.CloseProcess,
+              processTrigger: trigger || Trigger.CloseProcess,
               processName: process?.processName,
               etag: process.etag || "",
               formData: {
@@ -75,7 +76,11 @@ export const CloseProcessView = ({
             });
             mutate();
           } catch (e: any) {
-            console.log(e.response?.status || 500);
+            if (setGlobalError) {
+              setGlobalError(e.response?.status || 500);
+            } else {
+              console.log(e.response?.status || 500);
+            }
           }
         }}
       >
