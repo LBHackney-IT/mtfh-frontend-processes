@@ -130,6 +130,7 @@ export const CommentsView = ({ tenureId, mutate }) => {
           <Button
             style={{ marginTop: "1em" }}
             data-testid="add-comment"
+            variant="secondary"
             onClick={() => {
               setAddCommentOpen(true);
             }}

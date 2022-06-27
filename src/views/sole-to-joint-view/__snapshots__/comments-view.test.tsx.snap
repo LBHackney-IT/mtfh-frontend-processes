@@ -101,7 +101,7 @@ exports[`it renders comments by default 1`] = `
     Comments
   </h4>
   <button
-    class="govuk-button lbh-button"
+    class="govuk-button lbh-button govuk-button--secondary lbh-button--secondary"
     data-testid="add-comment"
     style="margin-top: 1em;"
     type="button"
