@@ -1,7 +1,7 @@
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { CloseProcessView } from "../../shared/close-process-view";
-import { TickBulletPoint } from "../shared";
+import { AutomatedChecksPassedBox } from "../shared";
 
 import { Box, Heading, List, StatusHeading, Text } from "@mtfh/common/lib/components";
 
@@ -17,22 +17,8 @@ export const ManualChecksFailedView = ({
     <div data-testid={`soletojoint-${process.currentState.state}`}>
       <SoleToJointHeader processConfig={processConfig} process={process} />
       <Text>{checkEligibility.autoCheckIntro}</Text>
-      <Heading variant="h5">
-        This is an automated check based on the data the system has. At this stage, the
-        system does not have all the data required to make a decision, so these results
-        are for guidance only and do not reflect accurate information.
-      </Heading>
-      <Box variant="success">
-        <Heading variant="h4" style={{ marginBottom: "0.5em" }}>
-          {checkEligibility.passedChecks}
-        </Heading>
-        <TickBulletPoint text="Applicant is a named tenure holder on the tenure" />
-        <TickBulletPoint text="Applicant is currently a sole tenant" />
-        <TickBulletPoint text="Secure tenures can be changed from a sole to joint tenancy" />
-        <TickBulletPoint text="Tenant's tenure is active" />
-        <TickBulletPoint text="The proposed tenant is over 18 years of age" />
-        <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
-      </Box>
+      <Heading variant="h5">{checkEligibility.autoCheckInfo}</Heading>
+      <AutomatedChecksPassedBox />
       <Box variant="warning">
         <StatusHeading variant="warning" title={checkEligibility.failedChecks} />{" "}
         <div style={{ marginLeft: "60px" }}>

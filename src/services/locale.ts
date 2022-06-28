@@ -52,9 +52,11 @@ const locale = {
         ),
     },
     checkEligibility: {
+      autoCheckInfo:
+        "This is an automated check based on the data the system has. At this stage, the system does not have all the data required to make a decision, so these results are for guidance only and do not reflect accurate information.",
       autoCheckIntro:
         "Manage My Home has used tenure, person and property information to automatically check eligibility for this application.",
-      passedChecks: "Passed automatic eligibilty checks",
+      passedChecks: "Passed automatic eligibility checks",
       failedChecks: "Not eligible for a sole to joint tenure",
     },
     breachOfTenancy: {
@@ -143,6 +145,8 @@ const locale = {
       reasonForCloseCase: "Reason for close case",
       outcomeLetterSent: "I confirm that an outcome letter has been sent to the resident",
       soleToJointClosed: "Sole to joint tenure application closed",
+      confirmationText:
+        "This case is now closed and we have record this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history",
     },
   },
   errors: {

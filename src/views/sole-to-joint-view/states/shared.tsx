@@ -22,7 +22,7 @@ import {
 } from "@mtfh/common/lib/components";
 
 const { views } = locale;
-const { breachOfTenancy } = views;
+const { breachOfTenancy, checkEligibility } = views;
 
 export const TickIcon = () => {
   return (
@@ -153,6 +153,22 @@ export const DesBox = ({
           {description || views.reviewDocuments.viewInDes}
         </Link>
       </div>
+    </Box>
+  );
+};
+
+export const AutomatedChecksPassedBox = (): JSX.Element => {
+  return (
+    <Box variant="success">
+      <Heading variant="h4" style={{ marginBottom: "0.5em" }}>
+        {checkEligibility.passedChecks}
+      </Heading>
+      <TickBulletPoint text="Applicant is a named tenure holder on the tenure" />
+      <TickBulletPoint text="Applicant is currently a sole tenant" />
+      <TickBulletPoint text="Secure tenures can be changed from a sole to joint tenancy" />
+      <TickBulletPoint text="Tenant's tenure is active" />
+      <TickBulletPoint text="The proposed tenant is over 18 years of age" />
+      <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
     </Box>
   );
 };

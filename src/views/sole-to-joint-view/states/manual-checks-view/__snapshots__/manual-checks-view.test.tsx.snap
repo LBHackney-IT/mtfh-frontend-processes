@@ -67,7 +67,7 @@ exports[`manual-checks-view it renders ManualChecksView correctly 1`] = `
         class="lbh-heading-h4"
         style="margin-bottom: 0.5em;"
       >
-        Passed automatic eligibilty checks
+        Passed automatic eligibility checks
       </h4>
       <div
         style="display: flex; align-items: center; margin: 0px 0px 0px -7px;"

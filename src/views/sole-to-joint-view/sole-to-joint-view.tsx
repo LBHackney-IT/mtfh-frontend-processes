@@ -116,7 +116,10 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
 
   if (isSameState(currentState, states.processClosed)) {
     const previousState = getPreviousState(process);
-    if (isSameState(previousState, states.manualChecksFailed)) {
+    if (
+      isSameState(previousState, states.manualChecksFailed) ||
+      isSameState(previousState, states.automatedChecksFailed)
+    ) {
       return 1;
     }
     if (isSameState(previousState, states.breachChecksFailed)) {
@@ -334,33 +337,29 @@ const getComponent = (process) => {
     currentState: { state },
   } = process;
 
-  let Component;
-
   if (state === processConfig.states.processClosed.state) {
     const previousState = getPreviousState(process);
     if (isSameState(previousState, manualChecksFailed)) {
-      Component = ManualChecksFailedView;
+      return ManualChecksFailedView;
+    }
+    if (isSameState(previousState, automatedChecksFailed)) {
+      return CheckEligibilityView;
     }
     if (isSameState(previousState, breachChecksFailed)) {
-      Component = BreachChecksFailedView;
+      return BreachChecksFailedView;
     }
     if (
       isSameState(previousState, documentsRequestedDes) ||
       isSameState(previousState, documentsRequestedAppointment) ||
       isSameState(previousState, documentsAppointmentRescheduled)
     ) {
-      Component = ReviewDocumentsView;
+      return ReviewDocumentsView;
     }
     if (isSameState(previousState, hoApprovalFailed)) {
-      Component = ReviewApplicationView;
+      return ReviewApplicationView;
     }
   }
-
-  if (!Component) {
-    Component = components[state];
-  }
-
-  return Component;
+  return components[state];
 };
 
 export const SoleToJointView = () => {
