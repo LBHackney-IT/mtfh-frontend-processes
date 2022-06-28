@@ -3,7 +3,7 @@ import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
 import { CloseProcessView } from "../../shared/close-process-view";
 import { BreachCheckForm } from "../breach-checks-view";
-import { TickBulletPoint } from "../shared";
+import { AutomatedChecksPassedBox } from "../shared";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -32,17 +32,27 @@ export const CheckEligibilityView = ({
   mutate,
   optional,
 }: CheckEligibilityViewProps) => {
-  const { automatedChecksFailed, automatedChecksPassed, manualChecksPassed } =
-    processConfig.states;
+  const {
+    automatedChecksFailed,
+    automatedChecksPassed,
+    manualChecksPassed,
+    processClosed,
+  } = processConfig.states;
   const { submitted, setSubmitted } = optional;
   const {
     currentState: { state },
+    previousStates,
   } = process;
+
+  const isPreviousState = (state) =>
+    previousStates.find((previousState) => previousState.state === state);
 
   return (
     <div data-testid="soletojoint-CheckEligibility">
       <SoleToJointHeader processConfig={processConfig} process={process} />
-      {[automatedChecksPassed.state, automatedChecksFailed.state].includes(state) && (
+      {([automatedChecksPassed.state, automatedChecksFailed.state].includes(state) ||
+        (processClosed.state === state &&
+          isPreviousState(automatedChecksFailed.state))) && (
         <Text>{checkEligibility.autoCheckIntro}</Text>
       )}
       {state === manualChecksPassed.state && submitted && (
@@ -77,22 +87,8 @@ export const CheckEligibilityView = ({
       )}
       {state === automatedChecksPassed.state && (
         <>
-          <Heading variant="h5">
-            This is an automated check based on the data the system has. At this stage,
-            the system does not have all the data required to make a decision, so these
-            results are for guidance only and do not reflect accurate information.
-          </Heading>
-          <Box variant="success">
-            <Heading variant="h4" style={{ marginBottom: "0.5em" }}>
-              {checkEligibility.passedChecks}
-            </Heading>
-            <TickBulletPoint text="Applicant is a named tenure holder on the tenure" />
-            <TickBulletPoint text="Applicant is currently a sole tenant" />
-            <TickBulletPoint text="Secure tenures can be changed from a sole to joint tenancy" />
-            <TickBulletPoint text="Tenant's tenure is active" />
-            <TickBulletPoint text="The proposed tenant is over 18 years of age" />
-            <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
-          </Box>
+          <Heading variant="h5">{checkEligibility.autoCheckInfo}</Heading>
+          <AutomatedChecksPassedBox />
           <FurtherEligibilityForm
             process={process}
             processConfig={processConfig}
@@ -103,13 +99,11 @@ export const CheckEligibilityView = ({
           />
         </>
       )}
-      {state === automatedChecksFailed.state && (
+      {(state === automatedChecksFailed.state ||
+        (processClosed.state === state &&
+          isPreviousState(automatedChecksFailed.state))) && (
         <>
-          <Heading variant="h5">
-            This is an automated check based on the data the system has. At this stage,
-            the system does not have all the data required to make a decision, so these
-            results are for guidance only and do not reflect accurate information.
-          </Heading>
+          <Heading variant="h5">{checkEligibility.autoCheckInfo}</Heading>
           <Box variant="warning">
             <StatusHeading variant="warning" title={checkEligibility.failedChecks} />
             <div style={{ marginLeft: "60px" }}>

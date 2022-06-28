@@ -40,15 +40,11 @@ export const CloseProcessView = ({
         {locale.views.reviewDocuments.thankYouForConfirmation}
       </Heading>
       <List variant="bullets" style={{ marginLeft: "1em" }}>
-        <Text size="sm">
-          This case is now closed and we have record this on the system - that you have
-          sent an outcome letter to the resident. The outcome can be viewed in the
-          activity history
-        </Text>
+        <Text size="sm">{locale.views.closeCase.confirmationText}</Text>
       </List>
       <div style={{ marginTop: "1em" }}>
         <Link as={RouterLink} to="" variant="back-link">
-          Return to home page
+          {locale.returnHomePage}
         </Link>
       </div>
     </>
