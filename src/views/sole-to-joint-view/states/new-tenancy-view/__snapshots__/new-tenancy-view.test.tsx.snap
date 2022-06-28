@@ -120,7 +120,7 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
           href="http://des/teams/1/dashboard/requests"
           target="_blank"
         >
-          View request in Document Evidence Store
+          View documents on the Document Evidence Store
         </a>
       </div>
     </div>
@@ -409,7 +409,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
           href="http://des/teams/1/dashboard/requests"
           target="_blank"
         >
-          View request in Document Evidence Store
+          View documents on the Document Evidence Store
         </a>
       </div>
     </div>

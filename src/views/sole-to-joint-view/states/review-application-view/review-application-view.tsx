@@ -135,7 +135,10 @@ export const ReviewApplicationView = ({
         <StatusErrorSummary id="review-application-global-error" code={globalError} />
       )}
       <EligibilityChecksPassedBox />
-      <DesBox title={views.submitCase.supportingDocumentsApproved} />
+      <DesBox
+        title={views.submitCase.supportingDocumentsApproved}
+        description={views.submitCase.viewDocumentsOnDes}
+      />
 
       {!isCurrentState(applicationSubmitted.state, process) && (
         <Box variant={recommendationBoxVariant}>
