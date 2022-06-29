@@ -16,8 +16,8 @@ exports[`close-process-view it renders CloseProcessView correctly for state!=Pro
   </p>
   <form
     action="#"
-    class="mtfh-breach-form"
-    id="breach-form"
+    class="mtfh-close-process-form"
+    id="close-process-form"
     novalidate=""
   >
     <div

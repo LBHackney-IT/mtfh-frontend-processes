@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
+import { TenantContactDetails } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import { Button, Checkbox, Text } from "@mtfh/common/lib/components";
@@ -13,6 +14,7 @@ interface TenureInvestigationViewProps {
   process: Process;
   mutate: () => void;
   setGlobalError: any;
+  optional?: any;
 }
 
 export const TenureInvestigationView = ({
@@ -20,9 +22,11 @@ export const TenureInvestigationView = ({
   process,
   mutate,
   setGlobalError,
+  optional,
 }: TenureInvestigationViewProps): JSX.Element => {
   const [completed, setCompleted] = useState<boolean>(false);
   const stateConfig = processConfig.states.applicationSubmitted;
+  const { tenant } = optional;
 
   const submit = async (recommendation: string) => {
     try {
@@ -44,6 +48,8 @@ export const TenureInvestigationView = ({
 
   return (
     <>
+      {tenant ? <TenantContactDetails tenant={tenant} /> : <Text>Tenant not found.</Text>}
+
       <Checkbox
         id="tenure-investigation-completed"
         checked={completed}

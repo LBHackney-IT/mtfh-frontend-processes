@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
-import { Form, Formik } from "formik";
-
 import { locale, processes } from "../../services";
-import { CloseCaseForm } from "./close-case-form";
 import { CommentsView } from "./comments-view";
-import { CloseProcessView } from "./shared/close-process-view";
 import {
   BreachChecksFailedView,
   CheckEligibilityView,
+  CloseProcessDialog,
+  CloseProcessView,
   RequestDocumentsView,
   ReviewDocumentsView,
   SelectTenantsView,
@@ -24,8 +22,6 @@ import {
   Box,
   Button,
   Center,
-  Dialog,
-  DialogActions,
   ErrorSummary,
   Layout,
   Link,
@@ -180,55 +176,15 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
     ].includes(state) ||
     (states.applicationSubmitted.state === state && submitted)
   ) {
+    if (closeCase) {
+      return 7;
+    }
     return 6;
   }
-  if (
-    [states.tenureUpdated.state].includes(state) ||
-    (states.tenureAppointmentRescheduled.state === state && closeCase)
-  ) {
+  if ([states.tenureUpdated.state].includes(state)) {
     return 7;
   }
   return 0;
-};
-
-const CloseProcessDialog = ({
-  isCloseProcessDialogOpen,
-  setCloseProcessDialogOpen,
-  setCloseProcessReason,
-  mutate,
-  isCancel,
-}) => {
-  return (
-    <Dialog
-      isOpen={isCloseProcessDialogOpen}
-      onDismiss={() => setCloseProcessDialogOpen(false)}
-      title={`Are you sure you want to ${
-        isCancel ? "cancel" : "close"
-      } this process? You will have to begin the process from the start.`}
-    >
-      <Formik
-        initialValues={{ reasonForCancellation: undefined }}
-        onSubmit={async (values) => {
-          const { reasonForCancellation } = values;
-          setCloseProcessReason(reasonForCancellation);
-          mutate();
-          setCloseProcessDialogOpen(false);
-        }}
-      >
-        <Form noValidate id="cancel-process-form" className="cancel-process-form">
-          <CloseCaseForm isCancel={isCancel} />
-          <DialogActions>
-            <Button type="submit" data-testid="close-process-modal-submit">
-              {isCancel ? "Cancel Process" : "Close case"}
-            </Button>
-            <Button variant="secondary" onClick={() => setCloseProcessDialogOpen(false)}>
-              Back
-            </Button>
-          </DialogActions>
-        </Form>
-      </Formik>
-    </Dialog>
-  );
 };
 
 interface SideBarProps {
@@ -294,14 +250,14 @@ const SideBar = (props: SideBarProps) => {
         {steps}
       </Stepper>
       <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
-      {[
+      {([
         states.interviewScheduled.state,
         states.interviewRescheduled.state,
         states.hoApprovalFailed.state,
         states.hoApprovalPassed.state,
         states.tenureAppointmentScheduled.state,
-        states.tenureAppointmentRescheduled.state,
-      ].includes(state) && (
+      ].includes(state) ||
+        (states.tenureAppointmentRescheduled.state === state && !closeCase)) && (
         <Button
           variant="secondary"
           onClick={() => {

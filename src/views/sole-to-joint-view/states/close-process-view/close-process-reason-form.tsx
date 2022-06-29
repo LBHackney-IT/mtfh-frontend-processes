@@ -2,20 +2,20 @@ import React from "react";
 
 import * as Yup from "yup";
 
-import { locale } from "../../services";
+import { locale } from "../../../../services";
 
 import { Field, TextArea } from "@mtfh/common/lib/components";
 
-const { reasonForCancellation, reasonForCloseCase } = locale.views.closeCase;
+const { reasonForCancellation, reasonForCloseCase } = locale.views.closeProcess;
 
-export const closeCaseSchema = (errorMessages: Record<string, string>) =>
+export const closeProcessSchema = (errorMessages: Record<string, string>) =>
   Yup.object({
     reasonForCancellation: Yup.string().required(errorMessages.W50),
   });
 
-export type CloseCaseFormData = Yup.Asserts<ReturnType<typeof closeCaseSchema>>;
+export type CloseProcessFormData = Yup.Asserts<ReturnType<typeof closeProcessSchema>>;
 
-export const CloseCaseForm = ({ isCancel }): JSX.Element => {
+export const CloseProcessReasonForm = ({ isCancel }): JSX.Element => {
   return (
     <>
       <Field

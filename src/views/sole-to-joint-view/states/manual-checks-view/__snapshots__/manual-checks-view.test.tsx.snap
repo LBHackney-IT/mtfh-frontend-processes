@@ -331,8 +331,8 @@ exports[`manual-checks-view it renders ManualChecksView correctly 1`] = `
     </p>
     <form
       action="#"
-      class="mtfh-breach-form"
-      id="breach-form"
+      class="mtfh-close-process-form"
+      id="close-process-form"
       novalidate=""
     >
       <div

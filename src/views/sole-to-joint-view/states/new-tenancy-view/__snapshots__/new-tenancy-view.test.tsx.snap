@@ -157,32 +157,6 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
         </h4>
       </div>
     </div>
-    <p
-      class="lbh-body-s"
-    >
-      Global Web Consultant Alverta Denesik
-       contact details:
-    </p>
-    <p
-      class="lbh-body-s"
-    >
-      Phone:
-      <span
-        style="margin-left: 1em;"
-      >
-        075949281
-      </span>
-    </p>
-    <p
-      class="lbh-body-s"
-    >
-      Email:
-      <span
-        style="margin-left: 1em;"
-      >
-        Gay.Jacobi@hotmail.com
-      </span>
-    </p>
     <div
       class="mtfh-box mtfh-box--success"
     >
@@ -223,11 +197,6 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
     >
       Sole to Joint application approved, next steps:
     </h2>
-    <p
-      class="lbh-body-m"
-    >
-      You must make an office appointment with the applicant to sign a new tenancy agreement
-    </p>
     <div
       class="mtfh-box"
     >
@@ -278,6 +247,32 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
         Change
       </button>
     </div>
+    <p
+      class="lbh-body-s"
+    >
+      Global Web Consultant Alverta Denesik
+       contact details:
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Phone:
+      <span
+        style="margin-left: 1em;"
+      >
+        075949281
+      </span>
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Email:
+      <span
+        style="margin-left: 1em;"
+      >
+        Gay.Jacobi@hotmail.com
+      </span>
+    </p>
     <button
       class="govuk-button lbh-button"
       disabled=""
@@ -446,32 +441,6 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
         </h4>
       </div>
     </div>
-    <p
-      class="lbh-body-s"
-    >
-      Global Web Consultant Alverta Denesik
-       contact details:
-    </p>
-    <p
-      class="lbh-body-s"
-    >
-      Phone:
-      <span
-        style="margin-left: 1em;"
-      >
-        075949281
-      </span>
-    </p>
-    <p
-      class="lbh-body-s"
-    >
-      Email:
-      <span
-        style="margin-left: 1em;"
-      >
-        Gay.Jacobi@hotmail.com
-      </span>
-    </p>
     <div
       class="mtfh-box mtfh-box--success"
     >
@@ -512,11 +481,6 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
     >
       Sole to Joint application approved, next steps:
     </h2>
-    <p
-      class="lbh-body-m"
-    >
-      You must make an office appointment with the applicant to sign a new tenancy agreement
-    </p>
     <div
       class="mtfh-box"
     >
@@ -612,6 +576,32 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
         Change
       </button>
     </div>
+    <p
+      class="lbh-body-s"
+    >
+      Global Web Consultant Alverta Denesik
+       contact details:
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Phone:
+      <span
+        style="margin-left: 1em;"
+      >
+        075949281
+      </span>
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Email:
+      <span
+        style="margin-left: 1em;"
+      >
+        Gay.Jacobi@hotmail.com
+      </span>
+    </p>
     <button
       class="govuk-button lbh-button"
       disabled=""

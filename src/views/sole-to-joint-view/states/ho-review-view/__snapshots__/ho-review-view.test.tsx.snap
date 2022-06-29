@@ -157,32 +157,6 @@ exports[`ho-review-view it renders ReviewApplication view correctly for HOApprov
         </h4>
       </div>
     </div>
-    <p
-      class="lbh-body-s"
-    >
-      Global Web Consultant Alverta Denesik
-       contact details:
-    </p>
-    <p
-      class="lbh-body-s"
-    >
-      Phone:
-      <span
-        style="margin-left: 1em;"
-      >
-        075949281
-      </span>
-    </p>
-    <p
-      class="lbh-body-s"
-    >
-      Email:
-      <span
-        style="margin-left: 1em;"
-      >
-        Gay.Jacobi@hotmail.com
-      </span>
-    </p>
     <div
       class="mtfh-box mtfh-box--success"
     >
@@ -227,6 +201,32 @@ exports[`ho-review-view it renders ReviewApplication view correctly for HOApprov
       class="lbh-body-m"
     >
       You must make an office appointment with the applicant to sign a new tenancy agreement
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Global Web Consultant Alverta Denesik
+       contact details:
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Phone:
+      <span
+        style="margin-left: 1em;"
+      >
+        075949281
+      </span>
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Email:
+      <span
+        style="margin-left: 1em;"
+      >
+        Gay.Jacobi@hotmail.com
+      </span>
     </p>
     <form
       action="#"
