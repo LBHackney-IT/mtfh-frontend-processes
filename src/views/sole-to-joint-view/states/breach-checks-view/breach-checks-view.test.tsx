@@ -4,9 +4,9 @@ import { render } from "@hackney/mtfh-test-utils";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { processes } from "../../../../services";
+import { locale, processes } from "../../../../services";
 import { mockManualChecksPassedState } from "../../../../test-utils";
-import { BreachCheckForm } from "./breach-checks-view";
+import { BreachCheckForm, BreachChecksView } from "./breach-checks-view";
 
 const url = "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735";
 const path = "/processes/soletojoint/:processId";
@@ -14,6 +14,12 @@ const options = {
   url,
   path,
 };
+let submitted = false;
+const setSubmitted = jest.fn();
+
+beforeEach(() => {
+  submitted = false;
+});
 
 test("it should show sub options for Cautionary contact only if Yes selected", async () => {
   render(
@@ -55,4 +61,43 @@ test("it should show sub options for Cautionary contact only if Yes selected", a
 
   await expect(allowApplicationRadio).toBeInTheDocument();
   expect(allowApplicationRadio).not.toBeChecked();
+});
+
+test("it renders CheckEligibility for state=ManualChecksPassed, submitted=false", async () => {
+  render(
+    <BreachChecksView
+      processConfig={processes.soletojoint}
+      process={mockManualChecksPassedState}
+      mutate={() => {}}
+      optional={{ submitted, setSubmitted }}
+    />,
+    options,
+  );
+  await expect(
+    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
+      exact: false,
+    }),
+  ).resolves.toBeInTheDocument();
+  await expect(screen.findByText("Breach of tenure")).resolves.toBeInTheDocument();
+});
+
+test("it renders CheckEligibility for state=ManualChecksPassed, submitted=true", async () => {
+  submitted = true;
+  render(
+    <BreachChecksView
+      processConfig={processes.soletojoint}
+      process={mockManualChecksPassedState}
+      mutate={() => {}}
+      optional={{ submitted, setSubmitted }}
+    />,
+    options,
+  );
+  await expect(
+    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
+      exact: false,
+    }),
+  ).resolves.toBeInTheDocument();
+  await expect(screen.findByText("Next Steps:")).resolves.toBeInTheDocument();
+  await userEvent.click(screen.getByText("Continue"));
+  expect(setSubmitted.mock.calls[0][0]).toBe(false);
 });

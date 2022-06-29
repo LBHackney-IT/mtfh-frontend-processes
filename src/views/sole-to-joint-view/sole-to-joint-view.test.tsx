@@ -121,7 +121,7 @@ test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibili
   useStateMock.mockImplementation(() => [false, jest.fn()]);
   render(<SoleToJointView />, options);
   await expect(
-    screen.findByTestId("soletojoint-CheckEligibility"),
+    screen.findByTestId("soletojoint-ManualChecksPassed"),
   ).resolves.toBeInTheDocument();
 
   const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
@@ -172,7 +172,7 @@ test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibili
     .mockReturnValueOnce([false, jest.fn()]);
   render(<SoleToJointView />, options);
   await expect(
-    screen.findByTestId("soletojoint-CheckEligibility"),
+    screen.findByTestId("soletojoint-ManualChecksPassed"),
   ).resolves.toBeInTheDocument();
 
   const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");

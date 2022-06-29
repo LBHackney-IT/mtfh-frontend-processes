@@ -1,7 +1,8 @@
+import { useState } from "react";
+
 import { SoleToJointHeader } from "../../../../components";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
-import { BreachCheckForm } from "../breach-checks-view";
 import { CloseProcessView } from "../close-process-view";
 import { AutomatedChecksPassedBox } from "../shared";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
@@ -9,9 +10,9 @@ import { FurtherEligibilityForm } from "./further-eligibility-form";
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
   Box,
-  Button,
   Heading,
   List,
+  StatusErrorSummary,
   StatusHeading,
   Text,
 } from "@mtfh/common/lib/components";
@@ -32,76 +33,35 @@ export const CheckEligibilityView = ({
   mutate,
   optional,
 }: CheckEligibilityViewProps) => {
-  const {
-    automatedChecksFailed,
-    automatedChecksPassed,
-    manualChecksPassed,
-    processClosed,
-  } = processConfig.states;
-  const { submitted, setSubmitted } = optional;
+  const [globalError, setGlobalError] = useState<number>();
+  const { automatedChecksFailed, automatedChecksPassed, processClosed } =
+    processConfig.states;
+  const { setSubmitted } = optional;
   const {
     currentState: { state },
-    previousStates,
   } = process;
-
-  const isPreviousState = (state) =>
-    previousStates.find((previousState) => previousState.state === state);
 
   return (
     <div data-testid="soletojoint-CheckEligibility">
       <SoleToJointHeader processConfig={processConfig} process={process} />
-      {([automatedChecksPassed.state, automatedChecksFailed.state].includes(state) ||
-        (processClosed.state === state &&
-          isPreviousState(automatedChecksFailed.state))) && (
-        <Text>{checkEligibility.autoCheckIntro}</Text>
+      {globalError && (
+        <StatusErrorSummary id="check-eligibility-global-error" code={globalError} />
       )}
-      {state === manualChecksPassed.state && submitted && (
-        <>
-          <Heading variant="h3">Next Steps:</Heading>
-          <Text size="sm">
-            The current tenant and the applicant have passed the initial eligibility
-            requirements. The next steps are:
-          </Text>
-          <List variant="bullets">
-            <Text size="sm">Background checks carried out by the Housing Officer</Text>
-            <Text size="sm">A check carried out by the Tenancy Investigation Team</Text>
-            <Text size="sm">
-              If successful the tenant and proposed joint tenant will need to sign a new
-              tenancy agreement
-            </Text>
-          </List>
-          <Button
-            style={{ width: 180, marginRight: "100%" }}
-            onClick={() => setSubmitted(false)}
-          >
-            Continue
-          </Button>
-        </>
-      )}
-      {state === manualChecksPassed.state && !submitted && (
-        <BreachCheckForm
-          process={process}
-          processConfig={processConfig}
-          mutate={mutate}
-        />
-      )}
+      <Text>{checkEligibility.autoCheckIntro}</Text>
       {state === automatedChecksPassed.state && (
         <>
           <Heading variant="h5">{checkEligibility.autoCheckInfo}</Heading>
           <AutomatedChecksPassedBox />
           <FurtherEligibilityForm
-            process={process}
             processConfig={processConfig}
-            onSuccessfulSubmit={() => {
-              mutate();
-              setSubmitted(true);
-            }}
+            process={process}
+            mutate={mutate}
+            optional={{ setSubmitted }}
+            setGlobalError={setGlobalError}
           />
         </>
       )}
-      {(state === automatedChecksFailed.state ||
-        (processClosed.state === state &&
-          isPreviousState(automatedChecksFailed.state))) && (
+      {(state === automatedChecksFailed.state || state === processClosed.state) && (
         <>
           <Heading variant="h5">{checkEligibility.autoCheckInfo}</Heading>
           <Box variant="warning">
