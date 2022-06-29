@@ -141,7 +141,7 @@ test("it renders CheckEligibility failed checks view correctly for process close
     screen.findByText(locale.views.checkEligibility.failedChecks),
   ).resolves.toBeInTheDocument();
   await expect(
-    screen.findByText(locale.views.closeCase.confirmationText),
+    screen.findByText(locale.views.closeProcess.confirmationText),
   ).resolves.toBeInTheDocument();
 });
 
