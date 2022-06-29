@@ -5,6 +5,7 @@ import { locale, processes } from "../../services";
 import { CommentsView } from "./comments-view";
 import {
   BreachChecksFailedView,
+  BreachChecksView,
   CheckEligibilityView,
   CloseProcessDialog,
   CloseProcessView,
@@ -77,7 +78,7 @@ const components = {
   [automatedChecksFailed.state]: CheckEligibilityView,
   [automatedChecksPassed.state]: CheckEligibilityView,
   [manualChecksFailed.state]: ManualChecksFailedView,
-  [manualChecksPassed.state]: CheckEligibilityView,
+  [manualChecksPassed.state]: BreachChecksView,
   [breachChecksFailed.state]: BreachChecksFailedView,
   [breachChecksPassed.state]: RequestDocumentsView,
   ...reviewDocumentsViewByStates,

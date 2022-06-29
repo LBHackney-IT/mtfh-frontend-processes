@@ -1,6 +1,8 @@
 import { Form, Formik } from "formik";
 
-import { editProcess } from "@mtfh/common/lib/api/process/v1";
+import { IProcess } from "../../../../types";
+
+import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Box,
   Button,
@@ -11,11 +13,22 @@ import {
   RadioGroup,
 } from "@mtfh/common/lib/components";
 
+interface FurtherEligibilityFormProps {
+  processConfig: IProcess;
+  process: Process;
+  mutate: () => void;
+  optional?: any;
+  setGlobalError: any;
+}
+
 export const FurtherEligibilityForm = ({
   process,
   processConfig,
-  onSuccessfulSubmit,
-}): JSX.Element => {
+  mutate,
+  optional,
+  setGlobalError,
+}: FurtherEligibilityFormProps): JSX.Element => {
+  const { setSubmitted } = optional;
   const stateConfig = processConfig.states.automatedChecksPassed;
   return (
     <Formik
@@ -38,52 +51,53 @@ export const FurtherEligibilityForm = ({
             formData: values,
             documents: [],
           });
-          onSuccessfulSubmit();
+          setSubmitted(true);
+          mutate();
         } catch (e: any) {
-          console.log(e.response?.status || 500);
+          setGlobalError(e.response?.status || 500);
         }
       }}
     >
       {(props) => (
-        <Form noValidate id="person-form">
+        <Form noValidate id="further-eligibility-form">
           <Box>
             <Heading variant="h4" style={{ marginBottom: "0.5em" }}>
               Further eligibility questions
             </Heading>
             <FormGroup
-              id="person-form-living-together"
+              id="further-eligibility-living-together"
               label="Have the tenant and proposed tenant been living together for 12 months or more, or are they married or in a civil partnership?"
               error={props.errors.br11}
               required
             >
               <RadioGroup>
                 <InlineField name="br11" type="radio">
-                  <Radio id="person-form-living-together-yes" value="true">
+                  <Radio id="further-eligibility-living-together-yes" value="true">
                     Yes (proposed tenant will be asked for proof e.g. marriage
                     certificate)
                   </Radio>
                 </InlineField>
                 <InlineField name="br11" type="radio">
-                  <Radio id="person-form-living-together-no" value="false">
+                  <Radio id="further-eligibility-living-together-no" value="false">
                     No
                   </Radio>
                 </InlineField>
               </RadioGroup>
             </FormGroup>
             <FormGroup
-              id="person-form-main-home"
+              id="further-eligibility-main-home"
               label="Do the tenant or proposed tenant intend to occupy any other property besides this one, as their only or main home?"
               error={props.errors.br12}
               required
             >
               <RadioGroup>
                 <InlineField name="br12" type="radio">
-                  <Radio id="person-form-main-home-yes" value="true">
+                  <Radio id="further-eligibility-main-home-yes" value="true">
                     Yes
                   </Radio>
                 </InlineField>
                 <InlineField name="br12" type="radio">
-                  <Radio id="person-form-main-home-no" value="false">
+                  <Radio id="further-eligibility-main-home-no" value="false">
                     No (proposed tenant will be asked for proof e.g. utility bills at
                     address of tenure)
                   </Radio>
@@ -91,57 +105,57 @@ export const FurtherEligibilityForm = ({
               </RadioGroup>
             </FormGroup>
             <FormGroup
-              id="person-form-survivor"
+              id="further-eligibility-survivor"
               label="Is the tenant the survivor of one or more joint tenants?"
               error={props.errors.br13}
               required
             >
               <RadioGroup>
                 <InlineField name="br13" type="radio">
-                  <Radio id="person-form-survivor-yes" value="true">
+                  <Radio id="further-eligibility-survivor-yes" value="true">
                     Yes
                   </Radio>
                 </InlineField>
                 <InlineField name="br13" type="radio">
-                  <Radio id="person-form-survivor-no" value="false">
+                  <Radio id="further-eligibility-survivor-no" value="false">
                     No
                   </Radio>
                 </InlineField>
               </RadioGroup>
             </FormGroup>
             <FormGroup
-              id="person-form-evicted"
+              id="further-eligibility-evicted"
               label="Has the prospective tenant been evicted by London Borough of Hackney, another local authority or a housing association?"
               error={props.errors.br15}
               required
             >
               <RadioGroup>
                 <InlineField name="br15" type="radio">
-                  <Radio id="person-form-evicted-yes" value="true">
+                  <Radio id="further-eligibility-evicted-yes" value="true">
                     Yes
                   </Radio>
                 </InlineField>
                 <InlineField name="br15" type="radio">
-                  <Radio id="person-form-evicted-no" value="false">
+                  <Radio id="further-eligibility-evicted-no" value="false">
                     No
                   </Radio>
                 </InlineField>
               </RadioGroup>
             </FormGroup>
             <FormGroup
-              id="person-form-immigration"
+              id="further-eligibility-immigration"
               label="Is the prospective tenant subject to immigration control under the Asylum And Immigration Act 1996?"
               error={props.errors.br16}
               required
             >
               <RadioGroup>
                 <InlineField name="br16" type="radio">
-                  <Radio id="person-form-immigration-yes" value="true">
+                  <Radio id="further-eligibility-immigration-yes" value="true">
                     Yes
                   </Radio>
                 </InlineField>
                 <InlineField name="br16" type="radio">
-                  <Radio id="person-form-immigration-no" value="false">
+                  <Radio id="further-eligibility-immigration-no" value="false">
                     No (proposed tenant will be asked for proof e.g. passport or
                     immigration status documentation)
                   </Radio>
@@ -149,38 +163,38 @@ export const FurtherEligibilityForm = ({
               </RadioGroup>
             </FormGroup>
             <FormGroup
-              id="person-form-seeking-possesion"
+              id="further-eligibility-seeking-possesion"
               label="Does the tenant have a live notice seeking possession?"
               error={props.errors.br8}
               required
             >
               <RadioGroup>
                 <InlineField name="br8" type="radio">
-                  <Radio id="person-form-seeking-possession-yes" value="true">
+                  <Radio id="further-eligibility-seeking-possession-yes" value="true">
                     Yes
                   </Radio>
                 </InlineField>
                 <InlineField name="br8" type="radio">
-                  <Radio id="person-form-seeking-possession-no" value="false">
+                  <Radio id="further-eligibility-seeking-possession-no" value="false">
                     No
                   </Radio>
                 </InlineField>
               </RadioGroup>
             </FormGroup>
             <FormGroup
-              id="person-form-rent-arrears"
+              id="further-eligibility-rent-arrears"
               label="Does the tenant have rent arrears over £500?"
               error={props.errors.br7}
               required
             >
               <RadioGroup>
                 <InlineField name="br7" type="radio">
-                  <Radio id="person-form-rent-arrears-yes" value="true">
+                  <Radio id="further-eligibility-rent-arrears-yes" value="true">
                     Yes
                   </Radio>
                 </InlineField>
                 <InlineField name="br7" type="radio">
-                  <Radio id="person-form-rent-arrears-no" value="false">
+                  <Radio id="further-eligibility-rent-arrears-no" value="false">
                     No
                   </Radio>
                 </InlineField>

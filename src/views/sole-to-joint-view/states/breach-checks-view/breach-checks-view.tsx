@@ -171,6 +171,55 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
   );
 };
 
+export const BreachChecksView = ({
+  process,
+  processConfig,
+  mutate,
+  optional,
+}): JSX.Element => {
+  const { manualChecksPassed } = processConfig.states;
+  const { submitted, setSubmitted } = optional;
+  const {
+    currentState: { state },
+  } = process;
+
+  return (
+    <div data-testid="soletojoint-ManualChecksPassed">
+      <SoleToJointHeader processConfig={processConfig} process={process} />
+      {state === manualChecksPassed.state && submitted && (
+        <>
+          <Heading variant="h3">Next Steps:</Heading>
+          <Text size="sm">
+            The current tenant and the applicant have passed the initial eligibility
+            requirements. The next steps are:
+          </Text>
+          <List variant="bullets">
+            <Text size="sm">Background checks carried out by the Housing Officer</Text>
+            <Text size="sm">A check carried out by the Tenancy Investigation Team</Text>
+            <Text size="sm">
+              If successful the tenant and proposed joint tenant will need to sign a new
+              tenancy agreement
+            </Text>
+          </List>
+          <Button
+            style={{ width: 180, marginRight: "100%" }}
+            onClick={() => setSubmitted(false)}
+          >
+            Continue
+          </Button>
+        </>
+      )}
+      {state === manualChecksPassed.state && !submitted && (
+        <BreachCheckForm
+          process={process}
+          processConfig={processConfig}
+          mutate={mutate}
+        />
+      )}
+    </div>
+  );
+};
+
 export const BreachChecksFailedView = ({
   process,
   processConfig,
