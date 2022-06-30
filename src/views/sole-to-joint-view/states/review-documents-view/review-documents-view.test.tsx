@@ -95,6 +95,8 @@ describe("review-documents-view", () => {
         locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
       ),
     );
+    await expect(screen.findByText("Date")).resolves.toBeInTheDocument();
+    await expect(screen.findByText("Time")).resolves.toBeInTheDocument();
     await typeDateTime(screen, userEvent, "2099");
     const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
     expect(bookAppointmentButton).toBeEnabled();

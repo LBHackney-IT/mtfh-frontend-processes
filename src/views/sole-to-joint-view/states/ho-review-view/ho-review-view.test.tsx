@@ -53,6 +53,8 @@ describe("ho-review-view", () => {
         exact: false,
       }),
     ).resolves.toBeInTheDocument();
+    await expect(screen.findByText("Date")).resolves.toBeInTheDocument();
+    await expect(screen.findByText("Time")).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
