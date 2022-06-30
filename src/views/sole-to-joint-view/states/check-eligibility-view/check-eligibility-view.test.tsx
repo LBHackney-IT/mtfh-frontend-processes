@@ -70,7 +70,7 @@ test("it enables Next button when all required fields are selected", async () =>
     />,
     options,
   );
-  const next = screen.getByText("Next");
+  const next = await screen.findByText("Next");
   expect(next).toBeDisabled();
   await selectRadios(screen);
   expect(next).toBeEnabled();
@@ -89,7 +89,7 @@ test("it displays error when submit fails", async () => {
     />,
     options,
   );
-  const next = screen.getByText("Next");
+  const next = await screen.findByText("Next");
   expect(next).toBeDisabled();
   await selectRadios(screen);
   expect(next).toBeEnabled();
