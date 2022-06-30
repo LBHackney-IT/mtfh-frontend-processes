@@ -2,13 +2,34 @@ import * as Yup from "yup";
 
 export const furtherEligibilityFormSchema = (errorMessages: Record<string, string>) =>
   Yup.object({
-    br11: Yup.boolean().required(errorMessages.W4).default(undefined),
-    br12: Yup.boolean().required(errorMessages.W4).default(undefined),
-    br13: Yup.boolean().required(errorMessages.W4).default(undefined),
-    br15: Yup.boolean().required(errorMessages.W4).default(undefined),
-    br16: Yup.boolean().required(errorMessages.W4).default(undefined),
-    br7: Yup.boolean().required(errorMessages.W4).default(undefined),
-    br8: Yup.boolean().required(errorMessages.W4).default(undefined),
+    br11: Yup.string()
+      .oneOf(["true", "false", null])
+      .required(errorMessages.W4)
+      .nullable(true),
+    br12: Yup.string()
+      .oneOf(["true", "false", null])
+      .required(errorMessages.W4)
+      .nullable(true),
+    br13: Yup.string()
+      .oneOf(["true", "false", null])
+      .required(errorMessages.W4)
+      .nullable(true),
+    br15: Yup.string()
+      .oneOf(["true", "false", null])
+      .required(errorMessages.W4)
+      .nullable(true),
+    br16: Yup.string()
+      .oneOf(["true", "false", null])
+      .required(errorMessages.W4)
+      .nullable(true),
+    br7: Yup.string()
+      .oneOf(["true", "false", null])
+      .required(errorMessages.W4)
+      .nullable(true),
+    br8: Yup.string()
+      .oneOf(["true", "false", null])
+      .required(errorMessages.W4)
+      .nullable(true),
   });
 
 export type FurtherEligibilityFormData = Yup.Asserts<

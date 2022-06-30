@@ -50,13 +50,13 @@ export const FurtherEligibilityForm = ({
   return (
     <Formik<FurtherEligibilityFormData>
       initialValues={{
-        br11: undefined,
-        br12: undefined,
-        br13: undefined,
-        br15: undefined,
-        br16: undefined,
-        br7: undefined,
-        br8: undefined,
+        br11: "",
+        br12: "",
+        br13: "",
+        br15: "",
+        br16: "",
+        br7: "",
+        br8: "",
       }}
       validateOnBlur={false}
       validateOnChange={false}
@@ -225,7 +225,7 @@ export const FurtherEligibilityForm = ({
             type="submit"
             disabled={
               !Object.values(values).some((value) => {
-                return value !== undefined;
+                return value !== "";
               })
             }
           >

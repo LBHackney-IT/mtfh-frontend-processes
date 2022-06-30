@@ -35,7 +35,7 @@ test("it should show sub options for Cautionary contact only if Yes selected", a
     screen.queryByText("Allow application to proceed", { exact: true }),
   ).toBeNull();
 
-  await userEvent.click(screen.getByTestId("breach-form-type-cautionary-yes"));
+  await userEvent.click(await screen.findByTestId("breach-form-type-cautionary-yes"));
   let allowApplicationRadio = screen.getByTestId(
     "breach-form-type-cautionary-yes-allow-application",
   );
