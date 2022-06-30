@@ -1,12 +1,15 @@
 import React from "react";
 
-import { render } from "@hackney/mtfh-test-utils";
+import { patchProcessV1, render, server } from "@hackney/mtfh-test-utils";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { locale, processes } from "../../../../services";
 import { mockManualChecksPassedState } from "../../../../test-utils";
 import { BreachCheckForm, BreachChecksView } from "./breach-checks-view";
+
+import * as processV1 from "@mtfh/common/lib/api/process/v1/service";
+import commonLocale from "@mtfh/common/lib/locale";
 
 const url = "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735";
 const path = "/processes/soletojoint/:processId";
@@ -27,6 +30,7 @@ test("it should show sub options for Cautionary contact only if Yes selected", a
       processConfig={processes.soletojoint}
       process={mockManualChecksPassedState}
       mutate={() => {}}
+      setGlobalError={() => {}}
     />,
     options,
   );
@@ -61,6 +65,35 @@ test("it should show sub options for Cautionary contact only if Yes selected", a
 
   await expect(allowApplicationRadio).toBeInTheDocument();
   expect(allowApplicationRadio).not.toBeChecked();
+});
+
+test("it submits form correctly", async () => {
+  const editProcessSpy = jest.spyOn(processV1, "editProcess");
+  server.use(patchProcessV1("error", 500));
+  render(
+    <BreachChecksView
+      processConfig={processes.soletojoint}
+      process={mockManualChecksPassedState}
+      mutate={() => {}}
+      optional={{ submitted, setSubmitted }}
+    />,
+    options,
+  );
+  const radios = await screen.findAllByRole("radio");
+  await userEvent.click(radios[1]);
+  await userEvent.click(radios[3]);
+  await userEvent.click(radios[5]);
+  await expect(screen.getByText("Next")).toBeEnabled();
+  await userEvent.click(screen.getByText("Next"));
+
+  expect(editProcessSpy).toHaveBeenCalledWith(
+    expect.objectContaining({
+      processTrigger: "CheckTenancyBreach",
+    }),
+  );
+  await expect(
+    screen.findByText(commonLocale.components.statusErrorSummary.statusTitle(-1)),
+  ).resolves.toBeInTheDocument();
 });
 
 test("it renders CheckEligibility for state=ManualChecksPassed, submitted=false", async () => {

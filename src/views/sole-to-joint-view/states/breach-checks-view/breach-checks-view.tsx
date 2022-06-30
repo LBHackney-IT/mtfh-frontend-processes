@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 import { Form, Formik } from "formik";
 
 import { SoleToJointHeader } from "../../../../components";
@@ -17,6 +19,7 @@ import {
   Radio,
   RadioGroup,
   Spinner,
+  StatusErrorSummary,
   StatusHeading,
   Text,
 } from "@mtfh/common/lib/components";
@@ -25,7 +28,12 @@ import { useErrorCodes } from "@mtfh/common/lib/hooks";
 const { views } = locale;
 const { checkEligibility } = views;
 
-export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element => {
+export const BreachCheckForm = ({
+  process,
+  processConfig,
+  mutate,
+  setGlobalError,
+}): JSX.Element => {
   const stateConfig = processConfig.states.manualChecksPassed;
   const errorMessages = useErrorCodes();
 
@@ -63,7 +71,7 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
           });
           mutate();
         } catch (e: any) {
-          console.log(e.response?.status || 500);
+          setGlobalError(e.response?.status || 500);
         }
       }}
     >
@@ -151,6 +159,9 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
                       id="breach-form-type-cautionary-no"
                       data-testid="breach-form-type-cautionary-no"
                       value="false"
+                      onClick={() => {
+                        setFieldValue("br10", "false");
+                      }}
                     >
                       No
                     </Radio>
@@ -203,6 +214,7 @@ export const BreachChecksView = ({
   mutate,
   optional,
 }): JSX.Element => {
+  const [globalError, setGlobalError] = useState<number>();
   const { manualChecksPassed } = processConfig.states;
   const { submitted, setSubmitted } = optional;
   const {
@@ -212,6 +224,9 @@ export const BreachChecksView = ({
   return (
     <div data-testid="soletojoint-ManualChecksPassed">
       <SoleToJointHeader processConfig={processConfig} process={process} />
+      {globalError && (
+        <StatusErrorSummary id="review-application-global-error" code={globalError} />
+      )}
       {state === manualChecksPassed.state && submitted && (
         <>
           <Heading variant="h3">Next Steps:</Heading>
@@ -240,6 +255,7 @@ export const BreachChecksView = ({
           process={process}
           processConfig={processConfig}
           mutate={mutate}
+          setGlobalError={setGlobalError}
         />
       )}
     </div>
