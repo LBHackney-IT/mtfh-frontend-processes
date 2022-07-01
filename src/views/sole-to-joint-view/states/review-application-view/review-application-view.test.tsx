@@ -147,12 +147,23 @@ describe("tenure-investigation-view", () => {
 
   test("it renders ReviewApplication view correctly for TenureUpdated state", async () => {
     server.use(getContactDetailsV2(mockContactDetailsV2));
-    render(
+    const { container } = render(
       <ReviewApplicationView
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
-          currentState: { ...mockProcessV1.currentState, state: "TenureUpdated" },
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: "TenureUpdated",
+          },
+          relatedEntities: [
+            {
+              id: "f8daaf21-edfc-4abc-9c39-403b84a142cb",
+              targetType: "tenure",
+              subType: "newTenure",
+              description: "New Tenure created for this process.",
+            },
+          ],
         }}
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
@@ -171,5 +182,6 @@ describe("tenure-investigation-view", () => {
     await expect(
       screen.findByText(locale.views.closeProcess.thankYouForConfirmation),
     ).resolves.toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
 });

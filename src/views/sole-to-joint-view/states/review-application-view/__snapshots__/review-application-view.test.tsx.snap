@@ -197,3 +197,272 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
   </div>
 </div>
 `;
+
+exports[`tenure-investigation-view it renders ReviewApplication view correctly for TenureUpdated state 1`] = `
+<div>
+  <div
+    data-testid="soletojoint-ReviewApplication"
+  >
+    <h1
+      class="lbh-heading-h1"
+    >
+      Sole tenant requests a joint tenure
+    </h1>
+    <h2
+      class="lbh-heading-h2 entity-summary__tenure-heading"
+    >
+      <div>
+        Tenure payment ref
+         
+        mt0xzvjp6g
+      </div>
+      <div>
+        72251 Champlin Trafficway, 99647
+      </div>
+      <div>
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
+        >
+          Global Web Consultant Alverta Denesik
+        </a>
+      </div>
+    </h2>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Eligibility checks passed
+        </h4>
+      </div>
+      <div
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        style="padding-left: 60px; margin-top: 17.5px;"
+      >
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
+        >
+          Show all eligibility checks
+        </a>
+      </div>
+    </div>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Supporting documents approved
+        </h4>
+      </div>
+      <div
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        style="margin-left: 60px; margin-top: 17.5px;"
+      >
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="http://des/teams/1/dashboard/requests"
+          target="_blank"
+        >
+          View documents on the Document Evidence Store
+        </a>
+      </div>
+    </div>
+    <div
+      class="mtfh-box"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#0B0C0C"
+            stroke-width="1.5"
+          />
+          <path
+            d="M20.2251 12.7026C20.2251 11.1991 21.0627 10.4473 22.7378 10.4473C24.4129 10.4473 25.2505 11.1991 25.2505 12.7026C25.2505 13.4191 25.0386 13.9792 24.6147 14.3828C24.201 14.7764 23.5754 14.9731 22.7378 14.9731C21.0627 14.9731 20.2251 14.2163 20.2251 12.7026ZM25.0386 34H20.4219V17.0771H25.0386V34Z"
+            fill="#0B0C0C"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Tenure investigator recommendation: Interview Applicant
+        </h4>
+      </div>
+    </div>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Sole to joint tenure application approved
+        </h4>
+      </div>
+    </div>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Tenancy signed: tenure created
+        </h4>
+      </div>
+      <div
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        style="margin-left: 60px; margin-top: 17.5px;"
+      >
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/tenure/f8daaf21-edfc-4abc-9c39-403b84a142cb"
+        >
+          View new tenure
+        </a>
+      </div>
+    </div>
+    <h3
+      class="lbh-heading-h3"
+    >
+      Thank you for your confirmation
+    </h3>
+    <ul
+      class="lbh-list lbh-list--bullet"
+      style="margin-left: 1em;"
+    >
+      <li>
+        <p
+          class="lbh-body-s"
+        >
+          This case is now closed and we have record this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history
+        </p>
+      </li>
+    </ul>
+    <div
+      style="margin-top: 1em;"
+    >
+      <a
+        class="govuk-back-link lbh-back-link lbh-link--no-visited-state"
+        href="/"
+      >
+        Return to home page
+      </a>
+    </div>
+  </div>
+</div>
+`;

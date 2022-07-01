@@ -70,7 +70,16 @@ export const NewTenancyView = ({
             style={{ marginLeft: 60, marginTop: 17.5 }}
             className="govuk-link lbh-link lbh-link--no-visited-state"
           >
-            <Link as={RouterLink} to={`/tenure/${process.targetId}`} variant="link">
+            <Link
+              as={RouterLink}
+              to={`/tenure/${
+                (process.relatedEntities as any[])?.find(
+                  (entity) =>
+                    entity.targetType === "tenure" && entity.subType === "newTenure",
+                )?.id
+              }`}
+              variant="link"
+            >
               {views.tenureInvestigation.viewNewTenure}
             </Link>
           </div>
