@@ -412,7 +412,6 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
       </div>
       <button
         class="govuk-button lbh-button"
-        disabled=""
         type="submit"
       >
         Next

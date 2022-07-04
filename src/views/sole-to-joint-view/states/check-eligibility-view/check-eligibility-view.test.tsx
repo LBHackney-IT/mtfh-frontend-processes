@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  getReferenceDataV1,
   getTenureV1,
   mockProcessV1,
   patchProcessV1,
@@ -35,6 +36,7 @@ const options = {
 };
 
 test("it renders CheckEligibility passed checks view correctly", async () => {
+  server.use(getReferenceDataV1({}, 200));
   const { container } = render(
     <CheckEligibilityView
       processConfig={processes.soletojoint}
