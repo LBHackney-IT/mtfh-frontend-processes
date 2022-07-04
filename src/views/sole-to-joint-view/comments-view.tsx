@@ -3,9 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { Form, Formik } from "formik";
 
-import { processes } from "../../services";
-
-import { CommentType, addComment } from "@mtfh/common/lib/api/comments/v2";
+import { addComment } from "@mtfh/common/lib/api/comments/v2";
 import {
   Button,
   CommentList,
@@ -20,12 +18,10 @@ import {
 
 import "./styles.scss";
 
-const processConfig = processes.soletojoint;
-
-export const CommentsView = ({ tenureId, mutate }) => {
+export const CommentsView = ({ targetType, targetId, mutate }) => {
   const [addCommentOpen, setAddCommentOpen] = useState<boolean>(false);
   const [closeCommentOpen, setCloseCommentOpen] = useState<boolean>(false);
-  const [refreshTenureId, setRefreshTenureId] = useState<string | undefined>();
+  const [refreshTargetId, setRefreshTargetId] = useState<string | undefined>();
 
   return (
     <>
@@ -43,17 +39,17 @@ export const CommentsView = ({ tenureId, mutate }) => {
                 addComment({
                   description: description!!,
                   title: title || null,
-                  targetType: processConfig.targetType as CommentType,
-                  targetId: tenureId,
+                  targetType,
+                  targetId,
                   highlight: false,
                 });
                 mutate();
               } catch (e: any) {
                 console.log(e.response?.status || 500);
               } finally {
-                setRefreshTenureId("a-temp-id"); // to force CommentList refresh itself
+                setRefreshTargetId("a-temp-id"); // to force CommentList refresh itself
                 setAddCommentOpen(false);
-                setRefreshTenureId(undefined);
+                setRefreshTargetId(undefined);
               }
             }}
           >
@@ -138,7 +134,7 @@ export const CommentsView = ({ tenureId, mutate }) => {
             Add comment
           </Button>
           <div>
-            <CommentList targetId={refreshTenureId || tenureId} />
+            <CommentList targetId={refreshTargetId || targetId} />
           </div>
         </>
       )}

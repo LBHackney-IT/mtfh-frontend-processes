@@ -468,7 +468,9 @@ export const SoleToJointView = () => {
 
       <hr className="divider" />
 
-      {tenureId && <CommentsView tenureId={tenureId} mutate={mutate} />}
+      {tenureId && (
+        <CommentsView targetType="process" targetId={processId} mutate={mutate} />
+      )}
     </Layout>
   );
 };
