@@ -1,5 +1,6 @@
 import {
   getContactDetailsV2,
+  getReferenceDataV1,
   mockContactDetailsV2,
   mockProcessV1,
   patchProcessV1,
@@ -25,6 +26,7 @@ describe("tenure-investigation-view", () => {
   });
 
   test("it renders NewTenancy view correctly for TenureAppointmentScheduled state", async () => {
+    server.use(getReferenceDataV1({}, 200));
     server.use(getContactDetailsV2(mockContactDetailsV2));
     const { container } = render(
       <ReviewApplicationView
@@ -102,6 +104,7 @@ describe("tenure-investigation-view", () => {
   });
 
   test("it renders TenureInvestigation view correctly for TenureAppointmentRescheduled state", async () => {
+    server.use(getReferenceDataV1({}, 200));
     server.use(getContactDetailsV2(mockContactDetailsV2));
     const { container } = render(
       <ReviewApplicationView

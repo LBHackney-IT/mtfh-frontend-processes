@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`appointment-form-component it doesnt renders appointment form 1`] = `<div />`;
+exports[`appointment-form-component it doesnt render appointment form 1`] = `<div />`;
 
 exports[`appointment-form-component it renders appointment form correctly 1`] = `
 <div>
