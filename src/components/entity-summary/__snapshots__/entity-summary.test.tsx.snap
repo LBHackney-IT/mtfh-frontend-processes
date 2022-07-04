@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntitySummary for asset it renders property summary details 1`] = `
+<div>
+  <h2
+    class="lbh-heading-h2"
+  >
+    1 Newcome House 151 Price Street Borders Port Leoraville Falkland Islands (Malvinas) PN NEE
+  </h2>
+</div>
+`;
+
+exports[`EntitySummary for person it renders person summary details 1`] = `
+<div>
+  <h2
+    class="lbh-heading-h2"
+  >
+    <div>
+      <a
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        href="/person/6fbe024f-2316-4265-a6e8-d65a837e308a"
+        target="_blank"
+      >
+        Haylee
+         
+        Macejkovic
+      </a>
+    </div>
+  </h2>
+</div>
+`;
+
+exports[`EntitySummary for tenure it renders tenure summary details 1`] = `
+<div>
+  <h2
+    class="lbh-heading-h2 entity-summary__tenure-heading"
+  >
+    <div>
+      Tenure payment ref
+       
+      mt0xzvjp6g
+    </div>
+    <div>
+      72251 Champlin Trafficway, 99647
+    </div>
+    <div>
+      <a
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+        target="_blank"
+      >
+        Global Web Consultant Alverta Denesik
+      </a>
+    </div>
+  </h2>
+</div>
+`;

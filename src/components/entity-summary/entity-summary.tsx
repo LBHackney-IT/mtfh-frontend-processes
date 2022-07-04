@@ -121,7 +121,11 @@ const PersonSummary = ({ id }: ComponentProps) => {
 
   return (
     <h2 className="lbh-heading-h2">
-      {person?.firstName} {person?.surname}
+      <div>
+        <Link as={RouterLink} to={`/person/${person.id}`} variant="link" target="_blank">
+          {person?.firstName} {person?.surname}
+        </Link>
+      </div>
     </h2>
   );
 };

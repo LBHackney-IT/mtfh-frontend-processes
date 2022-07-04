@@ -41,8 +41,7 @@ export const StartProcess = ({
 }: StartProcessProps) => {
   const history = useHistory();
   const [globalError, setGlobalError] = useState<number>();
-  const { thirdPartyCondition, thirdPartyComponent, riskHeading, riskComponent } =
-    process;
+  const { thirdPartyCondition, thirdPartyComponent, subHeading, subComponent } = process;
   const hasthirdPartyComponent = thirdPartyCondition && thirdPartyComponent;
 
   const renderComponent = (component) => {
@@ -84,8 +83,8 @@ export const StartProcess = ({
                 </InlineField>
               </>
             )}
-            {riskHeading && <h3>{riskHeading}</h3>}
-            {renderComponent(riskComponent)}
+            {subHeading && <h3>{subHeading}</h3>}
+            {renderComponent(subComponent)}
             <div className="start-process__actions">
               <Button
                 disabled={!properties.isValid}
