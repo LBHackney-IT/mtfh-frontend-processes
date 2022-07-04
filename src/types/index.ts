@@ -3,8 +3,8 @@ export type TargetType = "tenure" | "property" | "person";
 export interface IStartProcess {
   thirdPartyCondition?: string;
   thirdPartyComponent?: React.FC;
-  riskHeading?: string;
-  riskComponent?: React.FC;
+  subHeading?: string;
+  subComponent?: React.FC;
 }
 
 export interface IProcess {

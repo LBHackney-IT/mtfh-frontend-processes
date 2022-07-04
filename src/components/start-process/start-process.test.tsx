@@ -94,7 +94,7 @@ test("Renders without third party content", async () => {
 });
 
 test("Renders without risk content", async () => {
-  const { riskComponent, riskHeading, ...rest } = processes.soletojoint.startProcess;
+  const { subComponent, subHeading, ...rest } = processes.soletojoint.startProcess;
 
   const { container } = render(
     <StartProcess

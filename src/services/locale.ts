@@ -2,6 +2,8 @@ import reactHtmlParser from "react-html-parser";
 
 import { AssetAddress } from "@mtfh/common/lib/api/asset/v1";
 
+const supportingDocuments = "Supporting documents";
+
 const locale = {
   backButton: "Back",
   bookAppointment: "Book Appointment",
@@ -15,13 +17,14 @@ const locale = {
   reschedule: "Reschedule",
   returnHomePage: "Return to home page",
   submitCase: "Submit case",
+  supportingDocuments,
   views: {
     soleToJoint: {
       title: "Sole tenant requests a joint tenure",
       steps: {
         selectTenant: "Select person",
         checkEligibility: "Eligibility Checks",
-        supportingDocuments: "Supporting documents",
+        supportingDocuments,
         finish: "Finish",
         breachOfTenancy: "Breach of tenure check",
         requestDocuments: "Request Documents",
@@ -29,6 +32,21 @@ const locale = {
         submitCase: "Submit case",
         reviewApplication: "Review application",
         endCase: "End Case",
+      },
+      actions: {
+        reassignCase: "Reassign case",
+        cancelProcess: "Cancel process",
+        caseActivityHistory: "Case activity history",
+      },
+    },
+    changeOfName: {
+      title: "Change of Name",
+      steps: {
+        tenantsNewName: "Tenant's new name",
+        requestDocuments: "Request Documents",
+        reviewDocuments: "Review Documents",
+        submitCase: "Submit case",
+        finish: "Finish",
       },
       actions: {
         reassignCase: "Reassign case",

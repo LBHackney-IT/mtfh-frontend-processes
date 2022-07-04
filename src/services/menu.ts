@@ -60,7 +60,10 @@ const menu: MenuProps[] = [
   {
     label: "Sole to Joint",
     link: "https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform",
-    processes: [getProcessLink(processes.soletojoint.processName)],
+    processes: [
+      getProcessLink(processes.soletojoint.processName),
+      getProcessLink(processes.changeOfName.processName),
+    ],
   },
   {
     label: "Other tenancy changes",

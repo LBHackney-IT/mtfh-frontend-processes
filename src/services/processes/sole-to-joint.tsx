@@ -16,8 +16,8 @@ const startProcess: IStartProcess = {
   },
   thirdPartyCondition:
     "I have explained to the tenant and proposed tenant that their information will be shared with third parties.",
-  riskHeading: "Sole to joint tenure application risks",
-  riskComponent: () => {
+  subHeading: "Sole to joint tenure application risks",
+  subComponent: () => {
     return (
       <div>
         <Text>

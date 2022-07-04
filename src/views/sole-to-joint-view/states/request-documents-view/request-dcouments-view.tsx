@@ -67,7 +67,7 @@ export const RequestDocumentsView = ({
     <div data-testid="soletojoint-RequestDocuments">
       <SoleToJointHeader processConfig={processConfig} process={process} />
       <EligibilityChecksPassedBox />
-      <Heading variant="h3">Supporting documents</Heading>
+      <Heading variant="h3">{locale.supportingDocuments}</Heading>
       <Text size="sm">
         The following documentation is required from the secure tenant and/or proposed
         tenant, as proof to support their application:
