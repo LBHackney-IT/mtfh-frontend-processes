@@ -11,7 +11,8 @@ import { CommentsResponse } from "@mtfh/common/lib/api/comments/v2/services";
 import * as referenceDataV1 from "@mtfh/common/lib/api/reference-data/v1/service";
 import { AxiosSWRInfiniteResponse, AxiosSWRResponse } from "@mtfh/common/lib/http";
 
-const tenureId = "tenure-id-0";
+const targetType = "process";
+const targetId = "process-id-0";
 const mutate = () => undefined;
 
 const fullName = "Name Surname";
@@ -83,13 +84,17 @@ afterEach(() => {
 });
 
 test("it renders comments by default", async () => {
-  const { container } = render(<CommentsView tenureId={tenureId} mutate={mutate} />);
+  const { container } = render(
+    <CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />,
+  );
   await expect(screen.findByText("test description 1")).resolves.toBeInTheDocument();
   expect(container).toMatchSnapshot();
 });
 
 test("it renders inputs to add comments when user clicks Add Comment", async () => {
-  const { container } = render(<CommentsView tenureId={tenureId} mutate={mutate} />);
+  const { container } = render(
+    <CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />,
+  );
 
   await userEvent.click(screen.getByTestId("add-comment"));
 
@@ -105,7 +110,9 @@ test("it renders inputs to add comments when user clicks Add Comment", async () 
 });
 
 test(`it opens a modal when user click "Cancel comment" link`, async () => {
-  const { container } = render(<CommentsView tenureId={tenureId} mutate={mutate} />);
+  const { container } = render(
+    <CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />,
+  );
 
   await userEvent.click(screen.getByTestId("add-comment"));
   await userEvent.click(screen.getByText("Cancel comment"));
