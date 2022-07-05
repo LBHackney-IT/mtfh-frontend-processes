@@ -143,39 +143,39 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
       </h4>
       <div
         class="govuk-form-group lbh-form-group"
-        id="seen-photographic-id"
+        id="review-documents-form-group"
       >
         <label
           class="govuk-label lbh-label"
-          for="seen-photographic-id-field"
+          for="review-documents-form-group-field"
         >
           
           
         </label>
         <div
           class="govuk-checkboxes lbh-checkboxes"
-          id="seen-photographic-id-field"
+          id="review-documents-form-group-field"
         >
           <div
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="seen-photographic-id-check-hint"
+              aria-describedby="seen-photographic-id-hint"
               class="govuk-checkboxes__input"
-              id="seen-photographic-id-check"
+              id="seen-photographic-id"
               name="seenPhotographicId"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="seen-photographic-id-check"
+              for="seen-photographic-id"
             >
               I confirm I have seen a government issue photographic ID
             </label>
             <span
               class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="seen-photographic-id-check-hint"
+              id="seen-photographic-id-hint"
             >
               (for example: valid passport, driving licence)
             </span>
@@ -184,22 +184,22 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="seen-second-id-check-hint"
+              aria-describedby="seen-second-id-hint"
               class="govuk-checkboxes__input"
-              id="seen-second-id-check"
+              id="seen-second-id"
               name="seenSecondId"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="seen-second-id-check"
+              for="seen-second-id"
             >
               I confirm I have seen a second form of ID (does not have to be photographic)
             </label>
             <span
               class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="seen-second-id-check-hint"
+              id="seen-second-id-hint"
             >
               (for example: utility bill, bank statement, council letter)
             </span>
@@ -208,22 +208,22 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="is-not-immigration-control-check-hint"
+              aria-describedby="is-not-immigration-control-hint"
               class="govuk-checkboxes__input"
-              id="is-not-immigration-control-check"
+              id="is-not-immigration-control"
               name="isNotInImmigrationControl"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="is-not-immigration-control-check"
+              for="is-not-immigration-control"
             >
               I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996
             </label>
             <span
               class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="is-not-immigration-control-check-hint"
+              id="is-not-immigration-control-hint"
             >
               (for example: passport, home office letter, embassy letter, immigration status document)
             </span>
@@ -232,22 +232,22 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="seen-proof-of-relationship-check-hint"
+              aria-describedby="seen-proof-of-relationship-hint"
               class="govuk-checkboxes__input"
-              id="seen-proof-of-relationship-check"
+              id="seen-proof-of-relationship"
               name="seenProofOfRelationship"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="seen-proof-of-relationship-check"
+              for="seen-proof-of-relationship"
             >
               I confirm I have seen proof of relationship to the existing tenant
             </label>
             <span
               class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="seen-proof-of-relationship-check-hint"
+              id="seen-proof-of-relationship-hint"
             >
               (for example: marriage or civil partner certificate)
             </span>
@@ -256,22 +256,22 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="incoming-tenant-living-in-property-check-hint"
+              aria-describedby="incoming-tenant-living-in-property-hint"
               class="govuk-checkboxes__input"
-              id="incoming-tenant-living-in-property-check"
+              id="incoming-tenant-living-in-property"
               name="incomingTenantLivingInProperty"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="incoming-tenant-living-in-property-check"
+              for="incoming-tenant-living-in-property"
             >
               I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months
             </label>
             <span
               class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="incoming-tenant-living-in-property-check-hint"
+              id="incoming-tenant-living-in-property-hint"
             >
               (for example: letter, utility bill, council tax bill)
             </span>
@@ -446,39 +446,39 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
       </h4>
       <div
         class="govuk-form-group lbh-form-group"
-        id="seen-photographic-id"
+        id="review-documents-form-group"
       >
         <label
           class="govuk-label lbh-label"
-          for="seen-photographic-id-field"
+          for="review-documents-form-group-field"
         >
           
           
         </label>
         <div
           class="govuk-checkboxes lbh-checkboxes"
-          id="seen-photographic-id-field"
+          id="review-documents-form-group-field"
         >
           <div
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="seen-photographic-id-check-hint"
+              aria-describedby="seen-photographic-id-hint"
               class="govuk-checkboxes__input"
-              id="seen-photographic-id-check"
+              id="seen-photographic-id"
               name="seenPhotographicId"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="seen-photographic-id-check"
+              for="seen-photographic-id"
             >
               I confirm I have seen a government issue photographic ID
             </label>
             <span
               class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="seen-photographic-id-check-hint"
+              id="seen-photographic-id-hint"
             >
               (for example: valid passport, driving licence)
             </span>
@@ -487,22 +487,22 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="seen-second-id-check-hint"
+              aria-describedby="seen-second-id-hint"
               class="govuk-checkboxes__input"
-              id="seen-second-id-check"
+              id="seen-second-id"
               name="seenSecondId"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="seen-second-id-check"
+              for="seen-second-id"
             >
               I confirm I have seen a second form of ID (does not have to be photographic)
             </label>
             <span
               class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="seen-second-id-check-hint"
+              id="seen-second-id-hint"
             >
               (for example: utility bill, bank statement, council letter)
             </span>
@@ -511,22 +511,22 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="is-not-immigration-control-check-hint"
+              aria-describedby="is-not-immigration-control-hint"
               class="govuk-checkboxes__input"
-              id="is-not-immigration-control-check"
+              id="is-not-immigration-control"
               name="isNotInImmigrationControl"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="is-not-immigration-control-check"
+              for="is-not-immigration-control"
             >
               I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996
             </label>
             <span
               class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="is-not-immigration-control-check-hint"
+              id="is-not-immigration-control-hint"
             >
               (for example: passport, home office letter, embassy letter, immigration status document)
             </span>
@@ -535,22 +535,22 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="seen-proof-of-relationship-check-hint"
+              aria-describedby="seen-proof-of-relationship-hint"
               class="govuk-checkboxes__input"
-              id="seen-proof-of-relationship-check"
+              id="seen-proof-of-relationship"
               name="seenProofOfRelationship"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="seen-proof-of-relationship-check"
+              for="seen-proof-of-relationship"
             >
               I confirm I have seen proof of relationship to the existing tenant
             </label>
             <span
               class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="seen-proof-of-relationship-check-hint"
+              id="seen-proof-of-relationship-hint"
             >
               (for example: marriage or civil partner certificate)
             </span>
@@ -559,22 +559,22 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="incoming-tenant-living-in-property-check-hint"
+              aria-describedby="incoming-tenant-living-in-property-hint"
               class="govuk-checkboxes__input"
-              id="incoming-tenant-living-in-property-check"
+              id="incoming-tenant-living-in-property"
               name="incomingTenantLivingInProperty"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="incoming-tenant-living-in-property-check"
+              for="incoming-tenant-living-in-property"
             >
               I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months
             </label>
             <span
               class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="incoming-tenant-living-in-property-check-hint"
+              id="incoming-tenant-living-in-property-hint"
             >
               (for example: letter, utility bill, council tax bill)
             </span>
