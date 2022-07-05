@@ -59,7 +59,7 @@ const locale = {
         "This person will be asked for proof of relationship e.g. marriage or civil partnership certificate.",
       selectTenantLabel: "Who do you want to add as a joint tenant?",
       addToTenureText: "If the person you want to add is not listed you must first",
-      addToTenureLink: "add them to the tenure",
+      addToTenureLink: "add them as a household member",
       noHouseholdMembersOver18:
         "There are no household members over the age of 18 associated to this Tenancy.",
     },
