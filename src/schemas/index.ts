@@ -1,2 +1,1 @@
-export * from "./further-eligibility";
-export * from "./breach-checks";
+export * from "./sole-to-joint";

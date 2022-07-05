@@ -2,10 +2,7 @@ import { Form, Formik } from "formik";
 
 import { SoleToJointHeader } from "../../../../components";
 import { DateTimeFields } from "../../../../components/appointment-form/appointment-form";
-import {
-  RequestDocumentsFormData,
-  requestDocumentsSchema,
-} from "../../../../schemas/request-documents";
+import { RequestDocumentsFormData, requestDocumentsSchema } from "../../../../schemas";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
 import { dateToString, stringToDate } from "../../../../utils/date";

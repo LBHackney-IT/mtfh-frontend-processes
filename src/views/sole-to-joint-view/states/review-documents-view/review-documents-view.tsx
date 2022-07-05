@@ -5,10 +5,7 @@ import { Form, Formik } from "formik";
 import { SoleToJointHeader } from "../../../../components";
 import { AppointmentDetails } from "../../../../components/appointment-details/appointment-details";
 import { AppointmentForm } from "../../../../components/appointment-form/appointment-form";
-import {
-  ReviewDocumentsFormData,
-  reviewDocumentsSchema,
-} from "../../../../schemas/review-documents";
+import { ReviewDocumentsFormData, reviewDocumentsSchema } from "../../../../schemas";
 import { locale } from "../../../../services";
 import { Trigger } from "../../../../services/processes/types";
 import { IProcess } from "../../../../types";

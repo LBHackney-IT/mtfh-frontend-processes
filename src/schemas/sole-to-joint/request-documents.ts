@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-import { appointmentSchema } from "./appointment";
+import { appointmentSchema } from "../appointment";
 
 export const requestDocumentsSchema = (errorMessages: Record<string, string>) =>
   Yup.object({
