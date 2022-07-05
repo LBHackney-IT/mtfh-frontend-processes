@@ -121,7 +121,7 @@ export const ReviewDocumentsView = ({
                 >
                   <Heading variant="h4">{reviewDocuments.useFormBelow}</Heading>
                   <FormGroup
-                    id="seen-photographic-id"
+                    id="review-documents-form-group"
                     label=""
                     error={
                       errors.seenPhotographicId ||
@@ -134,7 +134,7 @@ export const ReviewDocumentsView = ({
                     <CheckboxGroup>
                       <InlineField name="seenPhotographicId" type="checkbox">
                         <Checkbox
-                          id="seen-photographic-id-check"
+                          id="seen-photographic-id"
                           hint={reviewDocuments.seenPhotographicIdHint}
                         >
                           {reviewDocuments.seenPhotographicId}
@@ -142,7 +142,7 @@ export const ReviewDocumentsView = ({
                       </InlineField>
                       <InlineField name="seenSecondId" type="checkbox">
                         <Checkbox
-                          id="seen-second-id-check"
+                          id="seen-second-id"
                           hint={reviewDocuments.seenSecondIdHint}
                         >
                           {reviewDocuments.seenSecondId}
@@ -150,7 +150,7 @@ export const ReviewDocumentsView = ({
                       </InlineField>
                       <InlineField name="isNotInImmigrationControl" type="checkbox">
                         <Checkbox
-                          id="is-not-immigration-control-check"
+                          id="is-not-immigration-control"
                           hint={reviewDocuments.isNotInImmigrationControlHint}
                         >
                           {reviewDocuments.isNotInImmigrationControl}
@@ -158,7 +158,7 @@ export const ReviewDocumentsView = ({
                       </InlineField>
                       <InlineField name="seenProofOfRelationship" type="checkbox">
                         <Checkbox
-                          id="seen-proof-of-relationship-check"
+                          id="seen-proof-of-relationship"
                           hint={reviewDocuments.seenProofOfRelationshipHint}
                         >
                           {reviewDocuments.seenProofOfRelationship}
@@ -166,7 +166,7 @@ export const ReviewDocumentsView = ({
                       </InlineField>
                       <InlineField name="incomingTenantLivingInProperty" type="checkbox">
                         <Checkbox
-                          id="incoming-tenant-living-in-property-check"
+                          id="incoming-tenant-living-in-property"
                           hint={reviewDocuments.incomingTenantLivingInPropertyHint}
                         >
                           {reviewDocuments.incomingTenantLivingInProperty}
