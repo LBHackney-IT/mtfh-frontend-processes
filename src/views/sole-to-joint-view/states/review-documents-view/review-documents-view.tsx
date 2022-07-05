@@ -5,6 +5,7 @@ import { Form, Formik } from "formik";
 import { SoleToJointHeader } from "../../../../components";
 import { AppointmentDetails } from "../../../../components/appointment-details/appointment-details";
 import { AppointmentForm } from "../../../../components/appointment-form/appointment-form";
+import { ReviewDocumentsFormData, reviewDocumentsSchema } from "../../../../schemas";
 import { locale } from "../../../../services";
 import { Trigger } from "../../../../services/processes/types";
 import { IProcess } from "../../../../types";
@@ -13,10 +14,16 @@ import { DesBox, EligibilityChecksPassedBox } from "../shared";
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Button,
+  Center,
   Checkbox,
+  CheckboxGroup,
+  FormGroup,
   Heading,
+  InlineField,
+  Spinner,
   StatusErrorSummary,
 } from "@mtfh/common/lib/components";
+import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
 const { views } = locale;
 const { reviewDocuments } = views;
@@ -33,14 +40,6 @@ export const ReviewDocumentsView = ({
   mutate,
   optional,
 }: ReviewDocumentsViewProps) => {
-  const [seenPhotographicId, setSeenPhotographicId] = useState<boolean>(false);
-  const [seenSecondId, setSeenSecondId] = useState<boolean>(false);
-  const [isNotInImmigrationControl, setIsNotInImmigrationControl] =
-    useState<boolean>(false);
-  const [seenProofOfRelationship, setSeenProofOfRelationship] = useState<boolean>(false);
-  const [incomingTenantLivingInProperty, setIncomingTenantLivingInProperty] =
-    useState<boolean>(false);
-
   const { states } = processConfig;
   const stateConfigs = {
     [states.documentsRequestedDes.state]: processConfig.states.documentsRequestedDes,
@@ -52,6 +51,15 @@ export const ReviewDocumentsView = ({
   };
   const stateConfig = stateConfigs[process.currentState.state];
   const [globalError, setGlobalError] = useState<number>();
+  const errorMessages = useErrorCodes();
+
+  if (!errorMessages) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
 
   return (
     <div data-testid="soletojoint-ReviewDocuments">
@@ -77,22 +85,25 @@ export const ReviewDocumentsView = ({
 
           <div style={{ paddingBottom: 35 }} />
 
-          <Formik
-            initialValues={{}}
-            onSubmit={async () => {
+          <Formik<ReviewDocumentsFormData>
+            initialValues={{
+              seenPhotographicId: false,
+              seenSecondId: false,
+              isNotInImmigrationControl: false,
+              seenProofOfRelationship: false,
+              incomingTenantLivingInProperty: false,
+            }}
+            validateOnBlur={false}
+            validateOnChange={false}
+            validationSchema={reviewDocumentsSchema(errorMessages)}
+            onSubmit={async (values) => {
               try {
                 await editProcess({
                   id: process.id,
                   processTrigger: stateConfig.triggers.reviewDocuments,
                   processName: process?.processName,
                   etag: process.etag || "",
-                  formData: {
-                    seenPhotographicId,
-                    seenSecondId,
-                    isNotInImmigrationControl,
-                    seenProofOfRelationship,
-                    incomingTenantLivingInProperty,
-                  },
+                  formData: values,
                   documents: [],
                 });
                 mutate();
@@ -101,7 +112,7 @@ export const ReviewDocumentsView = ({
               }
             }}
           >
-            {() => {
+            {({ values, errors }) => {
               return (
                 <Form
                   noValidate
@@ -109,58 +120,66 @@ export const ReviewDocumentsView = ({
                   className="review-documents-form"
                 >
                   <Heading variant="h4">{reviewDocuments.useFormBelow}</Heading>
-                  <Checkbox
+                  <FormGroup
                     id="seen-photographic-id"
-                    checked={seenPhotographicId}
-                    onChange={() => setSeenPhotographicId(!seenPhotographicId)}
-                    hint={reviewDocuments.seenPhotographicIdHint}
-                  >
-                    {reviewDocuments.seenPhotographicId}
-                  </Checkbox>
-                  <Checkbox
-                    id="seen-second-id"
-                    checked={seenSecondId}
-                    onChange={() => setSeenSecondId(!seenSecondId)}
-                    hint={reviewDocuments.seenSecondIdHint}
-                  >
-                    {reviewDocuments.seenSecondId}
-                  </Checkbox>
-                  <Checkbox
-                    id="is-not-immigration-control"
-                    checked={isNotInImmigrationControl}
-                    onChange={() =>
-                      setIsNotInImmigrationControl(!isNotInImmigrationControl)
+                    label=""
+                    error={
+                      errors.seenPhotographicId ||
+                      errors.incomingTenantLivingInProperty ||
+                      errors.seenSecondId ||
+                      errors.seenProofOfRelationship ||
+                      errors.isNotInImmigrationControl
                     }
-                    hint={reviewDocuments.isNotInImmigrationControlHint}
                   >
-                    {reviewDocuments.isNotInImmigrationControl}
-                  </Checkbox>
-                  <Checkbox
-                    id="seen-proof-of-relationship"
-                    checked={seenProofOfRelationship}
-                    onChange={() => setSeenProofOfRelationship(!seenProofOfRelationship)}
-                    hint={reviewDocuments.seenProofOfRelationshipHint}
-                  >
-                    {reviewDocuments.seenProofOfRelationship}
-                  </Checkbox>
-                  <Checkbox
-                    id="incoming-tenant-living-in-property"
-                    checked={incomingTenantLivingInProperty}
-                    onChange={() =>
-                      setIncomingTenantLivingInProperty(!incomingTenantLivingInProperty)
-                    }
-                    hint={reviewDocuments.incomingTenantLivingInPropertyHint}
-                  >
-                    {reviewDocuments.incomingTenantLivingInProperty}
-                  </Checkbox>
+                    <CheckboxGroup>
+                      <InlineField name="seenPhotographicId" type="checkbox">
+                        <Checkbox
+                          id="seen-photographic-id-check"
+                          hint={reviewDocuments.seenPhotographicIdHint}
+                        >
+                          {reviewDocuments.seenPhotographicId}
+                        </Checkbox>
+                      </InlineField>
+                      <InlineField name="seenSecondId" type="checkbox">
+                        <Checkbox
+                          id="seen-second-id-check"
+                          hint={reviewDocuments.seenSecondIdHint}
+                        >
+                          {reviewDocuments.seenSecondId}
+                        </Checkbox>
+                      </InlineField>
+                      <InlineField name="isNotInImmigrationControl" type="checkbox">
+                        <Checkbox
+                          id="is-not-immigration-control-check"
+                          hint={reviewDocuments.isNotInImmigrationControlHint}
+                        >
+                          {reviewDocuments.isNotInImmigrationControl}
+                        </Checkbox>
+                      </InlineField>
+                      <InlineField name="seenProofOfRelationship" type="checkbox">
+                        <Checkbox
+                          id="seen-proof-of-relationship-check"
+                          hint={reviewDocuments.seenProofOfRelationshipHint}
+                        >
+                          {reviewDocuments.seenProofOfRelationship}
+                        </Checkbox>
+                      </InlineField>
+                      <InlineField name="incomingTenantLivingInProperty" type="checkbox">
+                        <Checkbox
+                          id="incoming-tenant-living-in-property-check"
+                          hint={reviewDocuments.incomingTenantLivingInPropertyHint}
+                        >
+                          {reviewDocuments.incomingTenantLivingInProperty}
+                        </Checkbox>
+                      </InlineField>
+                    </CheckboxGroup>
+                  </FormGroup>
                   <Button
                     type="submit"
                     disabled={
-                      !seenPhotographicId ||
-                      !seenSecondId ||
-                      !isNotInImmigrationControl ||
-                      !seenProofOfRelationship ||
-                      !incomingTenantLivingInProperty
+                      !Object.values(values).some((value) => {
+                        return value;
+                      })
                     }
                     style={{ width: 222 }}
                   >

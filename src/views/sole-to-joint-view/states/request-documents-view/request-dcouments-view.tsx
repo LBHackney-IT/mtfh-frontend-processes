@@ -1,10 +1,8 @@
 import { Form, Formik } from "formik";
 
 import { SoleToJointHeader } from "../../../../components";
-import {
-  DateTimeFields,
-  validate,
-} from "../../../../components/appointment-form/appointment-form";
+import { DateTimeFields } from "../../../../components/appointment-form/appointment-form";
+import { RequestDocumentsFormData, requestDocumentsSchema } from "../../../../schemas";
 import { locale } from "../../../../services";
 import { IProcess } from "../../../../types";
 import { dateToString, stringToDate } from "../../../../utils/date";
@@ -28,6 +26,7 @@ import {
   Spinner,
   Text,
 } from "@mtfh/common/lib/components";
+import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
 export interface RequestDocumentsViewProps {
   process: Process;
@@ -40,6 +39,7 @@ export const RequestDocumentsView = ({
   processConfig,
   mutate,
 }: RequestDocumentsViewProps) => {
+  const errorMessages = useErrorCodes();
   const { data: tenure, error } = useTenure(process.targetId);
 
   if (error) {
@@ -52,7 +52,7 @@ export const RequestDocumentsView = ({
     );
   }
 
-  if (!tenure) {
+  if (!tenure || !errorMessages) {
     return (
       <Center>
         <Spinner />
@@ -99,9 +99,9 @@ export const RequestDocumentsView = ({
         can make an appointment with the tenant to check supporting documents in-person.
       </Text>
       {tenant ? <TenantContactDetails tenant={tenant} /> : <Text>Tenant not found.</Text>}
-      <Formik
+      <Formik<RequestDocumentsFormData>
         initialValues={{
-          requestType: undefined,
+          requestType: "",
           day: "",
           month: "",
           year: "",
@@ -109,6 +109,9 @@ export const RequestDocumentsView = ({
           minute: "",
           amPm: "",
         }}
+        validateOnBlur={false}
+        validateOnChange={false}
+        validationSchema={requestDocumentsSchema(errorMessages)}
         onSubmit={async (values) => {
           const { requestType, day, month, year, hour, minute, amPm } = values;
           let processTrigger = stateConfig.triggers.requestDocumentsDes;
@@ -140,7 +143,9 @@ export const RequestDocumentsView = ({
       >
         {(props) => {
           const {
+            values,
             values: { requestType },
+            setFieldValue,
           } = props;
           return (
             <Form
@@ -150,12 +155,38 @@ export const RequestDocumentsView = ({
             >
               <RadioGroup>
                 <InlineField name="requestType" type="radio">
-                  <Radio id="requestType-automatic" value="automatic">
+                  <Radio
+                    id="requestType-automatic"
+                    value="automatic"
+                    onClick={() => {
+                      if (requestType !== "automatic") {
+                        setFieldValue("day", "01");
+                        setFieldValue("month", "01");
+                        setFieldValue("year", "3000");
+                        setFieldValue("hour", "01");
+                        setFieldValue("minute", "01");
+                        setFieldValue("amPm", "am");
+                      }
+                    }}
+                  >
                     Request documents electronically
                   </Radio>
                 </InlineField>
                 <InlineField name="requestType" type="radio">
-                  <Radio id="requestType-manual" value="manual">
+                  <Radio
+                    id="requestType-manual"
+                    value="manual"
+                    onClick={() => {
+                      if (requestType !== "manual") {
+                        setFieldValue("day", "");
+                        setFieldValue("month", "");
+                        setFieldValue("year", "");
+                        setFieldValue("hour", "");
+                        setFieldValue("minute", "");
+                        setFieldValue("amPm", "");
+                      }
+                    }}
+                  >
                     I have made an appointment to check supporting documents
                   </Radio>
                 </InlineField>
@@ -164,7 +195,9 @@ export const RequestDocumentsView = ({
               <Button
                 type="submit"
                 disabled={
-                  !requestType || (requestType === "manual" && !validate(props.values))
+                  !Object.values(values).some((value) => {
+                    return value !== "";
+                  })
                 }
               >
                 Next

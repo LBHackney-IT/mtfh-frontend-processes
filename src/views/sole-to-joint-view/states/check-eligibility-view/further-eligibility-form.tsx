@@ -1,17 +1,24 @@
 import { Form, Formik } from "formik";
 
+import {
+  FurtherEligibilityFormData,
+  furtherEligibilityFormSchema,
+} from "../../../../schemas";
 import { IProcess } from "../../../../types";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Box,
   Button,
+  Center,
   FormGroup,
   Heading,
   InlineField,
   Radio,
   RadioGroup,
+  Spinner,
 } from "@mtfh/common/lib/components";
+import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
 interface FurtherEligibilityFormProps {
   processConfig: IProcess;
@@ -30,17 +37,30 @@ export const FurtherEligibilityForm = ({
 }: FurtherEligibilityFormProps): JSX.Element => {
   const { setSubmitted } = optional;
   const stateConfig = processConfig.states.automatedChecksPassed;
+  const errorMessages = useErrorCodes();
+
+  if (!errorMessages) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
   return (
-    <Formik
+    <Formik<FurtherEligibilityFormData>
       initialValues={{
-        br11: null,
-        br12: null,
-        br13: null,
-        br15: null,
-        br16: null,
-        br7: null,
-        br8: null,
+        br11: "",
+        br12: "",
+        br13: "",
+        br15: "",
+        br16: "",
+        br7: "",
+        br8: "",
       }}
+      validateOnBlur={false}
+      validateOnChange={false}
+      validationSchema={furtherEligibilityFormSchema(errorMessages)}
       onSubmit={async (values) => {
         try {
           await editProcess({
@@ -58,7 +78,7 @@ export const FurtherEligibilityForm = ({
         }
       }}
     >
-      {(props) => (
+      {({ values, errors }) => (
         <Form noValidate id="further-eligibility-form">
           <Box>
             <Heading variant="h4" style={{ marginBottom: "0.5em" }}>
@@ -67,7 +87,7 @@ export const FurtherEligibilityForm = ({
             <FormGroup
               id="further-eligibility-living-together"
               label="Have the tenant and proposed tenant been living together for 12 months or more, or are they married or in a civil partnership?"
-              error={props.errors.br11}
+              error={errors.br11}
               required
             >
               <RadioGroup>
@@ -87,7 +107,7 @@ export const FurtherEligibilityForm = ({
             <FormGroup
               id="further-eligibility-main-home"
               label="Do the tenant or proposed tenant intend to occupy any other property besides this one, as their only or main home?"
-              error={props.errors.br12}
+              error={errors.br12}
               required
             >
               <RadioGroup>
@@ -107,7 +127,7 @@ export const FurtherEligibilityForm = ({
             <FormGroup
               id="further-eligibility-survivor"
               label="Is the tenant the survivor of one or more joint tenants?"
-              error={props.errors.br13}
+              error={errors.br13}
               required
             >
               <RadioGroup>
@@ -126,7 +146,7 @@ export const FurtherEligibilityForm = ({
             <FormGroup
               id="further-eligibility-evicted"
               label="Has the prospective tenant been evicted by London Borough of Hackney, another local authority or a housing association?"
-              error={props.errors.br15}
+              error={errors.br15}
               required
             >
               <RadioGroup>
@@ -145,7 +165,7 @@ export const FurtherEligibilityForm = ({
             <FormGroup
               id="further-eligibility-immigration"
               label="Is the prospective tenant subject to immigration control under the Asylum And Immigration Act 1996?"
-              error={props.errors.br16}
+              error={errors.br16}
               required
             >
               <RadioGroup>
@@ -165,7 +185,7 @@ export const FurtherEligibilityForm = ({
             <FormGroup
               id="further-eligibility-seeking-possesion"
               label="Does the tenant have a live notice seeking possession?"
-              error={props.errors.br8}
+              error={errors.br8}
               required
             >
               <RadioGroup>
@@ -184,7 +204,7 @@ export const FurtherEligibilityForm = ({
             <FormGroup
               id="further-eligibility-rent-arrears"
               label="Does the tenant have rent arrears over £500?"
-              error={props.errors.br7}
+              error={errors.br7}
               required
             >
               <RadioGroup>
@@ -201,7 +221,14 @@ export const FurtherEligibilityForm = ({
               </RadioGroup>
             </FormGroup>
           </Box>
-          <Button type="submit" disabled={Object.values(props.values).includes(null)}>
+          <Button
+            type="submit"
+            disabled={
+              !Object.values(values).some((value) => {
+                return value !== "";
+              })
+            }
+          >
             Next
           </Button>
         </Form>

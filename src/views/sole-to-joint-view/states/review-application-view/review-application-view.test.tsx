@@ -1,5 +1,6 @@
 import {
   getContactDetailsV2,
+  getReferenceDataV1,
   getTenureV1,
   mockContactDetailsV2,
   mockProcessV1,
@@ -147,6 +148,7 @@ describe("tenure-investigation-view", () => {
 
   test("it renders ReviewApplication view correctly for TenureUpdated state", async () => {
     server.use(getContactDetailsV2(mockContactDetailsV2));
+    server.use(getReferenceDataV1());
     const { container } = render(
       <ReviewApplicationView
         processConfig={processes.soletojoint}

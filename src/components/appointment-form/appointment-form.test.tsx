@@ -1,12 +1,12 @@
 import React from "react";
 
-import { render } from "@hackney/mtfh-test-utils";
-import { screen } from "@testing-library/react";
+import { getReferenceDataV1, render, server } from "@hackney/mtfh-test-utils";
+import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { processes } from "../../services";
 import { Trigger } from "../../services/processes/types";
-import { mockDocumentsRequestedDes, typeDateTime } from "../../test-utils";
+import { mockDocumentsRequestedDes } from "../../test-utils";
 import { AppointmentForm } from "./appointment-form";
 
 const setNeedAppointment = jest.fn();
@@ -15,7 +15,8 @@ describe("appointment-form-component", () => {
     jest.resetModules();
   });
 
-  test("it renders appointment form correctly", () => {
+  test("it renders appointment form correctly", async () => {
+    server.use(getReferenceDataV1({}, 200));
     const { states } = processes.soletojoint;
     const { container } = render(
       <AppointmentForm
@@ -33,11 +34,15 @@ describe("appointment-form-component", () => {
         }}
       />,
     );
-    expect(screen.getByText("Continue")).toBeDisabled();
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     expect(container).toMatchSnapshot();
+    expect(screen.getByText("Continue")).toBeDisabled();
+    await userEvent.type(screen.getByPlaceholderText(/yy/i), "2000");
+    expect(screen.getByText("Continue")).toBeEnabled();
   });
 
-  test("it doesnt renders appointment form", () => {
+  test("it doesnt render appointment form", async () => {
+    server.use(getReferenceDataV1({}, 200));
     const { states } = processes.soletojoint;
     const { container } = render(
       <AppointmentForm
@@ -55,31 +60,7 @@ describe("appointment-form-component", () => {
         }}
       />,
     );
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     expect(container).toMatchSnapshot();
-  });
-
-  test("it enables/disables continue button if date is future/past", async () => {
-    const { states } = processes.soletojoint;
-    render(
-      <AppointmentForm
-        process={mockDocumentsRequestedDes}
-        mutate={() => {}}
-        needAppointment
-        setGlobalError={() => {}}
-        setNeedAppointment={setNeedAppointment}
-        options={{
-          buttonText: "Continue",
-          requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
-          rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
-          appointmentRequestedState: states.documentsRequestedAppointment.state,
-          appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
-        }}
-      />,
-    );
-    await typeDateTime(screen, userEvent, "2099");
-    expect(screen.getByText("Continue")).toBeEnabled();
-    await userEvent.clear(screen.getByPlaceholderText(/yy/i));
-    await userEvent.type(screen.getByPlaceholderText(/yy/i), "2000");
-    expect(screen.getByText("Continue")).toBeDisabled();
   });
 });

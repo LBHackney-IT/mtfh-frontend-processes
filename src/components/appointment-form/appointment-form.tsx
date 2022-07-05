@@ -1,11 +1,19 @@
 import { isPast } from "date-fns";
 import { Form, Formik } from "formik";
 
+import { AppointmentFormData, appointmentSchema } from "../../schemas/appointment";
 import { locale } from "../../services";
 import { getAppointmentDateTime } from "../../views/sole-to-joint-view/states/shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
-import { Button, DateField, TimeField } from "@mtfh/common/lib/components";
+import {
+  Button,
+  Center,
+  DateField,
+  Spinner,
+  TimeField,
+} from "@mtfh/common/lib/components";
+import { useErrorCodes } from "@mtfh/common/lib/hooks";
 import { dateToString, isFutureDate } from "@mtfh/common/lib/utils";
 
 interface BookAppointmentFormProps {
@@ -35,10 +43,22 @@ export const AppointmentForm = ({
   const formData = process.currentState.processData.formData as {
     appointmentDateTime: string;
   };
+  const errorMessages = useErrorCodes();
+
+  if (!errorMessages) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
   return (
     <>
-      <Formik
+      <Formik<AppointmentFormData>
         initialValues={{ day: "", month: "", year: "", hour: "", minute: "", amPm: "" }}
+        validateOnBlur={false}
+        validateOnChange={false}
+        validationSchema={appointmentSchema(errorMessages)}
         onSubmit={async (values) => {
           const appointmentDateTime = getAppointmentDateTime(values);
           let processTrigger = options.requestAppointmentTrigger;
@@ -78,7 +98,7 @@ export const AppointmentForm = ({
           }
         }}
       >
-        {(props) => {
+        {({ values }) => {
           return (
             needAppointment && (
               <Form
@@ -89,7 +109,11 @@ export const AppointmentForm = ({
                 <DateTimeFields />
                 <Button
                   type="submit"
-                  disabled={!validate(props.values)}
+                  disabled={
+                    !Object.values(values).some((value) => {
+                      return value !== "";
+                    })
+                  }
                   style={{ width: 222 }}
                 >
                   {options.buttonText || locale.confirm}

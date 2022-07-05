@@ -1,6 +1,9 @@
+import { useState } from "react";
+
 import { Form, Formik } from "formik";
 
 import { SoleToJointHeader } from "../../../../components";
+import { BreachChecksFormData, breachChecksFormSchema } from "../../../../schemas";
 import { locale } from "../../../../services";
 import { CloseProcessView } from "../close-process-view";
 
@@ -8,46 +11,72 @@ import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Box,
   Button,
+  Center,
   FormGroup,
   Heading,
   InlineField,
   List,
   Radio,
   RadioGroup,
+  Spinner,
+  StatusErrorSummary,
   StatusHeading,
   Text,
 } from "@mtfh/common/lib/components";
+import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
 const { views } = locale;
 const { checkEligibility } = views;
 
-export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element => {
+export const BreachCheckForm = ({
+  process,
+  processConfig,
+  mutate,
+  setGlobalError,
+}): JSX.Element => {
   const stateConfig = processConfig.states.manualChecksPassed;
+  const errorMessages = useErrorCodes();
+
+  if (!errorMessages) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
   return (
-    <Formik
-      initialValues={{ br18: null, br5: null, br10: null, br17: null }}
+    <Formik<BreachChecksFormData>
+      initialValues={{
+        br18: "",
+        br5: "",
+        br10: "",
+        br17: "",
+      }}
+      validateOnBlur={false}
+      validateOnChange={false}
+      validationSchema={breachChecksFormSchema(errorMessages)}
       onSubmit={async (values) => {
-        const formData = {
-          ...values,
-          br10: values.br10 === null ? "false" : values.br10,
-        };
         try {
           await editProcess({
             id: process.id,
             processTrigger: stateConfig.triggers.checkTenancyBreach,
             processName: process?.processName,
             etag: process.etag || "",
-            formData,
+            formData: {
+              ...values,
+              br10: values.br10 ? values.br10 : false,
+            },
             documents: [],
           });
           mutate();
         } catch (e: any) {
-          console.log(e.response?.status || 500);
+          setGlobalError(e.response?.status || 500);
         }
       }}
     >
-      {(props) => {
-        const { br5 } = props.values;
+      {({ values, errors, setFieldValue }) => {
+        const { br5 } = values;
         return (
           <Form noValidate id="breach-form" className="mtfh-breach-form">
             <Box>
@@ -55,9 +84,9 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
                 Breach of tenure
               </Heading>
               <FormGroup
-                id="breach-form-tenancy"
+                id="breach-form-tenancy-br18"
                 label="Other than a NOSP, does the tenant have any live notices against the tenure, e.g. a breach of tenancy"
-                error={props.errors.br18}
+                error={errors.br18}
                 required
               >
                 <RadioGroup>
@@ -77,9 +106,9 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
                 Cautionary contact
               </Heading>
               <FormGroup
-                id="breach-form-tenancy"
+                id="breach-form-tenancy-br5"
                 label="Is the tenant or the proposed tenant a cautionary contact?"
-                error={props.errors.br5}
+                error={errors.br5}
                 required
               >
                 <RadioGroup>
@@ -90,7 +119,7 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
                       value="true"
                       onClick={() => {
                         if (br5 === "false") {
-                          props.setFieldValue("br10", null);
+                          setFieldValue("br10", null);
                         }
                       }}
                     >
@@ -98,31 +127,41 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
                     </Radio>
                   </InlineField>
                   {br5 === "true" && (
-                    <RadioGroup className="govuk-radios__conditional">
-                      <InlineField name="br10" type="radio">
-                        <Radio
-                          id="breach-form-type-cautionary-yes-allow-application"
-                          data-testid="breach-form-type-cautionary-yes-allow-application"
-                          value="true"
-                        >
-                          Allow application to proceed
-                        </Radio>
-                      </InlineField>
-                      <InlineField name="br10" type="radio">
-                        <Radio
-                          id="breach-form-type-cautionary-yes-deny-application"
-                          value="false"
-                        >
-                          Deny application
-                        </Radio>
-                      </InlineField>
-                    </RadioGroup>
+                    <FormGroup
+                      id="breach-form-tenancy-br10"
+                      label=""
+                      error={errors.br10}
+                      required={false}
+                    >
+                      <RadioGroup className="govuk-radios__conditional">
+                        <InlineField name="br10" type="radio">
+                          <Radio
+                            id="breach-form-type-cautionary-yes-allow-application"
+                            data-testid="breach-form-type-cautionary-yes-allow-application"
+                            value="true"
+                          >
+                            Allow application to proceed
+                          </Radio>
+                        </InlineField>
+                        <InlineField name="br10" type="radio">
+                          <Radio
+                            id="breach-form-type-cautionary-yes-deny-application"
+                            value="false"
+                          >
+                            Deny application
+                          </Radio>
+                        </InlineField>
+                      </RadioGroup>
+                    </FormGroup>
                   )}
                   <InlineField name="br5" type="radio">
                     <Radio
                       id="breach-form-type-cautionary-no"
                       data-testid="breach-form-type-cautionary-no"
                       value="false"
+                      onClick={() => {
+                        setFieldValue("br10", "false");
+                      }}
                     >
                       No
                     </Radio>
@@ -133,9 +172,9 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
                 Succession
               </Heading>
               <FormGroup
-                id="breach-form-tenancy"
+                id="breach-form-tenancy-br17"
                 label="Has the tenure previously been succeeded?"
-                error={props.errors.br17}
+                error={errors.br17}
                 required
               >
                 <RadioGroup>
@@ -155,11 +194,9 @@ export const BreachCheckForm = ({ process, processConfig, mutate }): JSX.Element
             <Button
               type="submit"
               disabled={
-                props.values.br5 === "true"
-                  ? Object.values(props.values).includes(null)
-                  : props.values.br5 === null ||
-                    props.values.br17 === null ||
-                    props.values.br18 === null
+                !Object.values(values).some((value) => {
+                  return value !== "";
+                })
               }
             >
               Next
@@ -177,6 +214,7 @@ export const BreachChecksView = ({
   mutate,
   optional,
 }): JSX.Element => {
+  const [globalError, setGlobalError] = useState<number>();
   const { manualChecksPassed } = processConfig.states;
   const { submitted, setSubmitted } = optional;
   const {
@@ -186,6 +224,9 @@ export const BreachChecksView = ({
   return (
     <div data-testid="soletojoint-ManualChecksPassed">
       <SoleToJointHeader processConfig={processConfig} process={process} />
+      {globalError && (
+        <StatusErrorSummary id="review-application-global-error" code={globalError} />
+      )}
       {state === manualChecksPassed.state && submitted && (
         <>
           <Heading variant="h3">Next Steps:</Heading>
@@ -214,6 +255,7 @@ export const BreachChecksView = ({
           process={process}
           processConfig={processConfig}
           mutate={mutate}
+          setGlobalError={setGlobalError}
         />
       )}
     </div>

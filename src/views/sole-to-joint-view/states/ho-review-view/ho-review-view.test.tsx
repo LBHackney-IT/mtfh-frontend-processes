@@ -17,6 +17,7 @@ import { ReviewApplicationView } from "../review-application-view/review-applica
 import { HoReviewView } from "./ho-review-view";
 
 import * as processV1 from "@mtfh/common/lib/api/process/v1/service";
+import * as errorMessages from "@mtfh/common/lib/hooks/use-error-codes";
 
 let submitted = false;
 let closeCase = false;
@@ -28,6 +29,7 @@ describe("ho-review-view", () => {
     jest.resetModules();
     submitted = false;
     closeCase = false;
+    jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
   });
 
   test("it renders ReviewApplication view correctly for HOApprovalPassed state", async () => {
@@ -53,6 +55,8 @@ describe("ho-review-view", () => {
         exact: false,
       }),
     ).resolves.toBeInTheDocument();
+    await expect(screen.findByText("Date")).resolves.toBeInTheDocument();
+    await expect(screen.findByText("Time")).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
@@ -178,7 +182,6 @@ describe("ho-review-view", () => {
       screen.findByText(locale.views.hoReviewView.receivedDecision),
     ).resolves.toBeInTheDocument();
     await userEvent.click(screen.getByText(locale.views.tenureInvestigation.approve));
-    await expect(screen.findByText(locale.confirm)).resolves.toBeDisabled();
   });
 
   test("it submits review", async () => {

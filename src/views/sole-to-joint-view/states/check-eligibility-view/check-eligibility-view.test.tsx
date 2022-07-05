@@ -1,6 +1,7 @@
 import React from "react";
 
 import {
+  getReferenceDataV1,
   getTenureV1,
   mockProcessV1,
   patchProcessV1,
@@ -35,6 +36,7 @@ const options = {
 };
 
 test("it renders CheckEligibility passed checks view correctly", async () => {
+  server.use(getReferenceDataV1({}, 200));
   const { container } = render(
     <CheckEligibilityView
       processConfig={processes.soletojoint}
@@ -70,7 +72,7 @@ test("it enables Next button when all required fields are selected", async () =>
     />,
     options,
   );
-  const next = screen.getByText("Next");
+  const next = await screen.findByText("Next");
   expect(next).toBeDisabled();
   await selectRadios(screen);
   expect(next).toBeEnabled();
@@ -89,7 +91,7 @@ test("it displays error when submit fails", async () => {
     />,
     options,
   );
-  const next = screen.getByText("Next");
+  const next = await screen.findByText("Next");
   expect(next).toBeDisabled();
   await selectRadios(screen);
   expect(next).toBeEnabled();

@@ -24,6 +24,7 @@ import { SoleToJointView } from "./sole-to-joint-view";
 
 import * as tenureV1 from "@mtfh/common/lib/api/tenure/v1/service";
 import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
+import * as errorMessages from "@mtfh/common/lib/hooks/use-error-codes";
 import { AxiosSWRResponse } from "@mtfh/common/lib/http";
 
 jest.mock("react", () => ({
@@ -186,6 +187,7 @@ test("it renders soletojoint view for state=BreachChecksPassed", async () => {
   server.use(getContactDetailsV2(mockContactDetailsV2));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
+  jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
   render(<SoleToJointView />, options);
   await expect(
     screen.findByTestId("soletojoint-RequestDocuments"),

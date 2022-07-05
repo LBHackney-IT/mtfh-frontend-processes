@@ -1,7 +1,12 @@
 import React from "react";
 
-import { patchProcessV1, render, server } from "@hackney/mtfh-test-utils";
-import { fireEvent, screen } from "@testing-library/react";
+import {
+  getReferenceDataV1,
+  patchProcessV1,
+  render,
+  server,
+} from "@hackney/mtfh-test-utils";
+import { fireEvent, screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { locale, processes } from "../../../../services";
@@ -13,12 +18,15 @@ import {
 } from "../../../../test-utils";
 import { ReviewDocumentsView } from "./review-documents-view";
 
+import commonLocale from "@mtfh/common/lib/locale";
+
 describe("review-documents-view", () => {
   beforeEach(() => {
     jest.resetModules();
   });
 
   test("it renders ReviewDocuments correctly on state DocumentsRequestedDes", async () => {
+    server.use(getReferenceDataV1({}, 200));
     const { container } = render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
@@ -44,6 +52,7 @@ describe("review-documents-view", () => {
   });
 
   test("it enables book appointment once checkbox is selected", async () => {
+    server.use(getReferenceDataV1({}, 200));
     render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
@@ -51,7 +60,7 @@ describe("review-documents-view", () => {
         mutate={() => {}}
       />,
     );
-
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
     const checkbox = screen.getByLabelText(
       locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
@@ -62,6 +71,7 @@ describe("review-documents-view", () => {
   });
 
   test("it disables book appointment if date is not in future", async () => {
+    server.use(getReferenceDataV1({}, 200));
     server.use(patchProcessV1("error", 500));
     render(
       <ReviewDocumentsView
@@ -70,18 +80,21 @@ describe("review-documents-view", () => {
         mutate={() => {}}
       />,
     );
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     const checkbox = screen.getByLabelText(
       locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
     );
     fireEvent.click(checkbox);
     await typeDateTime(screen, userEvent, "2000");
-    const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
-    expect(bookAppointmentButton).toBeDisabled();
+    expect(
+      screen.findByText(commonLocale.hooks.defaultErrorMessages.W9),
+    ).resolves.toBeInTheDocument();
   });
 
   test("it displays an error if there's an issue with book appointment", async () => {
     const user = userEvent.setup();
     server.use(patchProcessV1("error", 500));
+    server.use(getReferenceDataV1({}, 200));
     render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
@@ -89,12 +102,14 @@ describe("review-documents-view", () => {
         mutate={() => {}}
       />,
     );
-
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await userEvent.click(
       screen.getByLabelText(
         locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
       ),
     );
+    await expect(screen.findByText("Date")).resolves.toBeInTheDocument();
+    await expect(screen.findByText("Time")).resolves.toBeInTheDocument();
     await typeDateTime(screen, userEvent, "2099");
     const bookAppointmentButton = await screen.findByText(locale.bookAppointment);
     expect(bookAppointmentButton).toBeEnabled();
@@ -145,6 +160,7 @@ describe("review-documents-view", () => {
   });
 
   test("it displays reschedule button if date is past", async () => {
+    server.use(getReferenceDataV1({}, 200));
     render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
@@ -154,7 +170,7 @@ describe("review-documents-view", () => {
         mutate={() => {}}
       />,
     );
-
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
     const button = screen.getByText(locale.reschedule);
     fireEvent.click(button);
@@ -197,6 +213,7 @@ describe("review-documents-view", () => {
   });
 
   test("it renders ReviewDocuments correctly on state DocumentsRequestedAppointment", async () => {
+    server.use(getReferenceDataV1({}, 200));
     const { container } = render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
@@ -210,6 +227,9 @@ describe("review-documents-view", () => {
         path: "/processes/soletojoint/:processId",
       },
     );
+    await expect(
+      screen.findByText(locale.views.soleToJoint.title),
+    ).resolves.toBeInTheDocument();
     await expect(
       screen.findByText(locale.views.reviewDocuments.passedChecks),
     ).resolves.toBeInTheDocument();
