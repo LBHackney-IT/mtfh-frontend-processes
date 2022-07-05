@@ -18,7 +18,7 @@ import {
 } from "../../../../test-utils";
 import { ReviewDocumentsView } from "./review-documents-view";
 
-import commonLocale from "@mtfh/common/lib/locale";
+import * as errorMessages from "@mtfh/common/lib/hooks/use-error-codes";
 
 describe("review-documents-view", () => {
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe("review-documents-view", () => {
   });
 
   test("it renders ReviewDocuments correctly on state DocumentsRequestedDes", async () => {
-    server.use(getReferenceDataV1({}, 200));
+    jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
     const { container } = render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
@@ -70,7 +70,7 @@ describe("review-documents-view", () => {
     expect(bookAppointmentButton).toBeDisabled();
   });
 
-  test("it disables book appointment if date is not in future", async () => {
+  test("it enable book appointment button if date is typed in", async () => {
     server.use(getReferenceDataV1({}, 200));
     server.use(patchProcessV1("error", 500));
     render(
@@ -84,11 +84,10 @@ describe("review-documents-view", () => {
     const checkbox = screen.getByLabelText(
       locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
     );
-    fireEvent.click(checkbox);
+    await userEvent.click(checkbox);
     await typeDateTime(screen, userEvent, "2000");
-    expect(
-      screen.findByText(commonLocale.hooks.defaultErrorMessages.W9),
-    ).resolves.toBeInTheDocument();
+    await userEvent.click(screen.getByText(locale.bookAppointment));
+    await expect(screen.findByText(locale.bookAppointment)).resolves.toBeEnabled();
   });
 
   test("it displays an error if there's an issue with book appointment", async () => {
@@ -189,7 +188,7 @@ describe("review-documents-view", () => {
 
     const nextButton = await screen.findByText(locale.next);
     await expect(nextButton).toBeDisabled();
-    selectAllCheckBoxes();
+    await selectAllCheckBoxes();
     await expect(nextButton).toBeEnabled();
   });
 
@@ -202,18 +201,17 @@ describe("review-documents-view", () => {
         mutate={() => {}}
       />,
     );
-
-    const nextButton = await screen.findByText(locale.next);
-    selectAllCheckBoxes();
+    const nextButton = screen.getByText(locale.next);
+    await selectAllCheckBoxes();
     expect(nextButton).toBeEnabled();
-    nextButton.click();
+    await userEvent.click(nextButton);
     await expect(
       screen.findByText("There was a problem with completing the action"),
     ).resolves.toBeInTheDocument();
   });
 
   test("it renders ReviewDocuments correctly on state DocumentsRequestedAppointment", async () => {
-    server.use(getReferenceDataV1({}, 200));
+    jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
     const { container } = render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
@@ -246,16 +244,18 @@ describe("review-documents-view", () => {
   });
 });
 
-function selectAllCheckBoxes() {
-  fireEvent.click(screen.getByLabelText(locale.views.reviewDocuments.seenPhotographicId));
-  fireEvent.click(screen.getByLabelText(locale.views.reviewDocuments.seenSecondId));
-  fireEvent.click(
+async function selectAllCheckBoxes() {
+  await userEvent.click(
+    screen.getByLabelText(locale.views.reviewDocuments.seenPhotographicId),
+  );
+  await userEvent.click(screen.getByLabelText(locale.views.reviewDocuments.seenSecondId));
+  await userEvent.click(
     screen.getByLabelText(locale.views.reviewDocuments.seenProofOfRelationship),
   );
-  fireEvent.click(
+  await userEvent.click(
     screen.getByLabelText(locale.views.reviewDocuments.isNotInImmigrationControl),
   );
-  fireEvent.click(
+  await userEvent.click(
     screen.getByLabelText(locale.views.reviewDocuments.incomingTenantLivingInProperty),
   );
 }
