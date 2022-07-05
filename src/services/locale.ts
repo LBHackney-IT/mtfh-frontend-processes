@@ -149,11 +149,11 @@ const locale = {
       makeAppointment: "Make an appointment with the applicant for an interview",
       appointmentContactDetails:
         "To make an appointment with the applicant for an interview, please use the following details:",
-      receivedDecision: "The case has received area housing manager’s final decision.",
+      receivedDecision: "The case has received Area Housing Manager’s final decision.",
       passedForReview:
-        "I have passed the case to the Housing Manager for review and received a decision",
+        "I have passed the case to the Area Housing Manager for review and received a decision",
       confirmInstructionReceived:
-        "I confirm that this is an instruction received by the housing area manager",
+        "I confirm that this is an instruction received by the Area Housing Manager",
       managersName: "Enter manager's name",
       hoOutcome: (decision) => `Sole to joint tenure application ${decision}`,
     },
