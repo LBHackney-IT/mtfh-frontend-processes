@@ -123,7 +123,7 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
       return 2;
     }
     if (isSameState(previousState, states.hoApprovalFailed)) {
-      return 6;
+      return 7;
     }
   }
 
@@ -171,7 +171,6 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
       states.interviewScheduled.state,
       states.interviewRescheduled.state,
       states.hoApprovalPassed.state,
-      states.hoApprovalFailed.state,
       states.tenureAppointmentScheduled.state,
       states.tenureAppointmentRescheduled.state,
     ].includes(state) ||
@@ -182,7 +181,7 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
     }
     return 6;
   }
-  if ([states.tenureUpdated.state].includes(state)) {
+  if ([states.tenureUpdated.state, states.hoApprovalFailed.state].includes(state)) {
     return 7;
   }
   return 0;
