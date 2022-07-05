@@ -60,7 +60,7 @@ describe("review-documents-view", () => {
         mutate={() => {}}
       />,
     );
-
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
     const checkbox = screen.getByLabelText(
       locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
@@ -94,6 +94,7 @@ describe("review-documents-view", () => {
   test("it displays an error if there's an issue with book appointment", async () => {
     const user = userEvent.setup();
     server.use(patchProcessV1("error", 500));
+    server.use(getReferenceDataV1({}, 200));
     render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
@@ -101,7 +102,7 @@ describe("review-documents-view", () => {
         mutate={() => {}}
       />,
     );
-
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await userEvent.click(
       screen.getByLabelText(
         locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
@@ -159,6 +160,7 @@ describe("review-documents-view", () => {
   });
 
   test("it displays reschedule button if date is past", async () => {
+    server.use(getReferenceDataV1({}, 200));
     render(
       <ReviewDocumentsView
         processConfig={processes.soletojoint}
@@ -168,7 +170,7 @@ describe("review-documents-view", () => {
         mutate={() => {}}
       />,
     );
-
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
     const button = screen.getByText(locale.reschedule);
     fireEvent.click(button);
@@ -225,7 +227,9 @@ describe("review-documents-view", () => {
         path: "/processes/soletojoint/:processId",
       },
     );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    await expect(
+      screen.findByText(locale.views.soleToJoint.title),
+    ).resolves.toBeInTheDocument();
     await expect(
       screen.findByText(locale.views.reviewDocuments.passedChecks),
     ).resolves.toBeInTheDocument();

@@ -162,7 +162,7 @@ export const RequestDocumentsView = ({
                     id="requestType-automatic"
                     value="automatic"
                     onClick={() => {
-                      if (requestType === "manual") {
+                      if (requestType !== "automatic") {
                         setFieldValue("day", "01");
                         setFieldValue("month", "01");
                         setFieldValue("year", "3000");
@@ -180,7 +180,7 @@ export const RequestDocumentsView = ({
                     id="requestType-manual"
                     value="manual"
                     onClick={() => {
-                      if (requestType === "automatic") {
+                      if (requestType !== "manual") {
                         setFieldValue("day", "");
                         setFieldValue("month", "");
                         setFieldValue("year", "");

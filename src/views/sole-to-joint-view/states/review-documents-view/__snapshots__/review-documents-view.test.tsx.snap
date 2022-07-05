@@ -142,114 +142,141 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
         Use the form below to record the documents you have checked:
       </h4>
       <div
-        class="govuk-checkboxes__item"
+        class="govuk-form-group lbh-form-group"
+        id="seen-photographic-id"
       >
-        <input
-          aria-describedby="seen-photographic-id-hint"
-          class="govuk-checkboxes__input"
-          id="seen-photographic-id"
-          type="checkbox"
-        />
         <label
-          class="govuk-label govuk-checkboxes__label"
-          for="seen-photographic-id"
+          class="govuk-label lbh-label"
+          for="seen-photographic-id-field"
         >
-          I confirm I have seen a government issue photographic ID
+          
+          
         </label>
-        <span
-          class="govuk-hint govuk-checkboxes__hint lbh-hint"
-          id="seen-photographic-id-hint"
+        <div
+          class="govuk-checkboxes lbh-checkboxes"
+          id="seen-photographic-id-field"
         >
-          (for example: valid passport, driving licence)
-        </span>
-      </div>
-      <div
-        class="govuk-checkboxes__item"
-      >
-        <input
-          aria-describedby="seen-second-id-hint"
-          class="govuk-checkboxes__input"
-          id="seen-second-id"
-          type="checkbox"
-        />
-        <label
-          class="govuk-label govuk-checkboxes__label"
-          for="seen-second-id"
-        >
-          I confirm I have seen a second form of ID (does not have to be photographic)
-        </label>
-        <span
-          class="govuk-hint govuk-checkboxes__hint lbh-hint"
-          id="seen-second-id-hint"
-        >
-          (for example: utility bill, bank statement, council letter)
-        </span>
-      </div>
-      <div
-        class="govuk-checkboxes__item"
-      >
-        <input
-          aria-describedby="is-not-immigration-control-hint"
-          class="govuk-checkboxes__input"
-          id="is-not-immigration-control"
-          type="checkbox"
-        />
-        <label
-          class="govuk-label govuk-checkboxes__label"
-          for="is-not-immigration-control"
-        >
-          I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996
-        </label>
-        <span
-          class="govuk-hint govuk-checkboxes__hint lbh-hint"
-          id="is-not-immigration-control-hint"
-        >
-          (for example: passport, home office letter, embassy letter, immigration status document)
-        </span>
-      </div>
-      <div
-        class="govuk-checkboxes__item"
-      >
-        <input
-          aria-describedby="seen-proof-of-relationship-hint"
-          class="govuk-checkboxes__input"
-          id="seen-proof-of-relationship"
-          type="checkbox"
-        />
-        <label
-          class="govuk-label govuk-checkboxes__label"
-          for="seen-proof-of-relationship"
-        >
-          I confirm I have seen proof of relationship to the existing tenant
-        </label>
-        <span
-          class="govuk-hint govuk-checkboxes__hint lbh-hint"
-          id="seen-proof-of-relationship-hint"
-        >
-          (for example: marriage or civil partner certificate)
-        </span>
-      </div>
-      <div
-        class="govuk-checkboxes__item"
-      >
-        <input
-          aria-describedby="incoming-tenant-living-in-property-hint"
-          class="govuk-checkboxes__input"
-          id="incoming-tenant-living-in-property"
-          type="checkbox"
-        />
-        <label
-          class="govuk-label govuk-checkboxes__label"
-          for="incoming-tenant-living-in-property"
-        >
-          I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months
-        </label>
-        <span
-          class="govuk-hint govuk-checkboxes__hint lbh-hint"
-          id="incoming-tenant-living-in-property-hint"
-        >
-          (for example: letter, utility bill, council tax bill)
-        </span>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-photographic-id-check-hint"
+              class="govuk-checkboxes__input"
+              id="seen-photographic-id-check"
+              name="seenPhotographicId"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-photographic-id-check"
+            >
+              I confirm I have seen a government issue photographic ID
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-photographic-id-check-hint"
+            >
+              (for example: valid passport, driving licence)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-second-id-check-hint"
+              class="govuk-checkboxes__input"
+              id="seen-second-id-check"
+              name="seenSecondId"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-second-id-check"
+            >
+              I confirm I have seen a second form of ID (does not have to be photographic)
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-second-id-check-hint"
+            >
+              (for example: utility bill, bank statement, council letter)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="is-not-immigration-control-check-hint"
+              class="govuk-checkboxes__input"
+              id="is-not-immigration-control-check"
+              name="isNotInImmigrationControl"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="is-not-immigration-control-check"
+            >
+              I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="is-not-immigration-control-check-hint"
+            >
+              (for example: passport, home office letter, embassy letter, immigration status document)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-proof-of-relationship-check-hint"
+              class="govuk-checkboxes__input"
+              id="seen-proof-of-relationship-check"
+              name="seenProofOfRelationship"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-proof-of-relationship-check"
+            >
+              I confirm I have seen proof of relationship to the existing tenant
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-proof-of-relationship-check-hint"
+            >
+              (for example: marriage or civil partner certificate)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="incoming-tenant-living-in-property-check-hint"
+              class="govuk-checkboxes__input"
+              id="incoming-tenant-living-in-property-check"
+              name="incomingTenantLivingInProperty"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="incoming-tenant-living-in-property-check"
+            >
+              I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="incoming-tenant-living-in-property-check-hint"
+            >
+              (for example: letter, utility bill, council tax bill)
+            </span>
+          </div>
+        </div>
       </div>
       <button
         class="govuk-button lbh-button"
@@ -418,114 +445,141 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
         Use the form below to record the documents you have checked:
       </h4>
       <div
-        class="govuk-checkboxes__item"
+        class="govuk-form-group lbh-form-group"
+        id="seen-photographic-id"
       >
-        <input
-          aria-describedby="seen-photographic-id-hint"
-          class="govuk-checkboxes__input"
-          id="seen-photographic-id"
-          type="checkbox"
-        />
         <label
-          class="govuk-label govuk-checkboxes__label"
-          for="seen-photographic-id"
+          class="govuk-label lbh-label"
+          for="seen-photographic-id-field"
         >
-          I confirm I have seen a government issue photographic ID
+          
+          
         </label>
-        <span
-          class="govuk-hint govuk-checkboxes__hint lbh-hint"
-          id="seen-photographic-id-hint"
+        <div
+          class="govuk-checkboxes lbh-checkboxes"
+          id="seen-photographic-id-field"
         >
-          (for example: valid passport, driving licence)
-        </span>
-      </div>
-      <div
-        class="govuk-checkboxes__item"
-      >
-        <input
-          aria-describedby="seen-second-id-hint"
-          class="govuk-checkboxes__input"
-          id="seen-second-id"
-          type="checkbox"
-        />
-        <label
-          class="govuk-label govuk-checkboxes__label"
-          for="seen-second-id"
-        >
-          I confirm I have seen a second form of ID (does not have to be photographic)
-        </label>
-        <span
-          class="govuk-hint govuk-checkboxes__hint lbh-hint"
-          id="seen-second-id-hint"
-        >
-          (for example: utility bill, bank statement, council letter)
-        </span>
-      </div>
-      <div
-        class="govuk-checkboxes__item"
-      >
-        <input
-          aria-describedby="is-not-immigration-control-hint"
-          class="govuk-checkboxes__input"
-          id="is-not-immigration-control"
-          type="checkbox"
-        />
-        <label
-          class="govuk-label govuk-checkboxes__label"
-          for="is-not-immigration-control"
-        >
-          I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996
-        </label>
-        <span
-          class="govuk-hint govuk-checkboxes__hint lbh-hint"
-          id="is-not-immigration-control-hint"
-        >
-          (for example: passport, home office letter, embassy letter, immigration status document)
-        </span>
-      </div>
-      <div
-        class="govuk-checkboxes__item"
-      >
-        <input
-          aria-describedby="seen-proof-of-relationship-hint"
-          class="govuk-checkboxes__input"
-          id="seen-proof-of-relationship"
-          type="checkbox"
-        />
-        <label
-          class="govuk-label govuk-checkboxes__label"
-          for="seen-proof-of-relationship"
-        >
-          I confirm I have seen proof of relationship to the existing tenant
-        </label>
-        <span
-          class="govuk-hint govuk-checkboxes__hint lbh-hint"
-          id="seen-proof-of-relationship-hint"
-        >
-          (for example: marriage or civil partner certificate)
-        </span>
-      </div>
-      <div
-        class="govuk-checkboxes__item"
-      >
-        <input
-          aria-describedby="incoming-tenant-living-in-property-hint"
-          class="govuk-checkboxes__input"
-          id="incoming-tenant-living-in-property"
-          type="checkbox"
-        />
-        <label
-          class="govuk-label govuk-checkboxes__label"
-          for="incoming-tenant-living-in-property"
-        >
-          I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months
-        </label>
-        <span
-          class="govuk-hint govuk-checkboxes__hint lbh-hint"
-          id="incoming-tenant-living-in-property-hint"
-        >
-          (for example: letter, utility bill, council tax bill)
-        </span>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-photographic-id-check-hint"
+              class="govuk-checkboxes__input"
+              id="seen-photographic-id-check"
+              name="seenPhotographicId"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-photographic-id-check"
+            >
+              I confirm I have seen a government issue photographic ID
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-photographic-id-check-hint"
+            >
+              (for example: valid passport, driving licence)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-second-id-check-hint"
+              class="govuk-checkboxes__input"
+              id="seen-second-id-check"
+              name="seenSecondId"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-second-id-check"
+            >
+              I confirm I have seen a second form of ID (does not have to be photographic)
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-second-id-check-hint"
+            >
+              (for example: utility bill, bank statement, council letter)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="is-not-immigration-control-check-hint"
+              class="govuk-checkboxes__input"
+              id="is-not-immigration-control-check"
+              name="isNotInImmigrationControl"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="is-not-immigration-control-check"
+            >
+              I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="is-not-immigration-control-check-hint"
+            >
+              (for example: passport, home office letter, embassy letter, immigration status document)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-proof-of-relationship-check-hint"
+              class="govuk-checkboxes__input"
+              id="seen-proof-of-relationship-check"
+              name="seenProofOfRelationship"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-proof-of-relationship-check"
+            >
+              I confirm I have seen proof of relationship to the existing tenant
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-proof-of-relationship-check-hint"
+            >
+              (for example: marriage or civil partner certificate)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="incoming-tenant-living-in-property-check-hint"
+              class="govuk-checkboxes__input"
+              id="incoming-tenant-living-in-property-check"
+              name="incomingTenantLivingInProperty"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="incoming-tenant-living-in-property-check"
+            >
+              I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="incoming-tenant-living-in-property-check-hint"
+            >
+              (for example: letter, utility bill, council tax bill)
+            </span>
+          </div>
+        </div>
       </div>
       <button
         class="govuk-button lbh-button"
