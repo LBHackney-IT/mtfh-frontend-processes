@@ -31,7 +31,7 @@ interface ReviewApplicationViewProps {
   mutate: () => void;
   optional?: any;
 }
-type Recommendation = "approve" | "decline" | "int";
+type Recommendation = "Approve" | "Decline" | "Int";
 const isCurrentState = (state, process) => state === process.currentState.state;
 const isPreviousState = (state, process) =>
   process.previousStates.find((previousState) => state === previousState.state);
@@ -50,7 +50,7 @@ const getRecommendation = (
     isPreviousState(tenureInvestigationFailed.state, process)
   ) {
     return {
-      recommendation: "decline",
+      recommendation: "Decline",
       recommendationBoxVariant: "warning",
       recommendationHeadingVariant: "warning",
     };
@@ -60,13 +60,13 @@ const getRecommendation = (
     isPreviousState(tenureInvestigationPassed.state, process)
   ) {
     return {
-      recommendation: "approve",
+      recommendation: "Approve",
       recommendationBoxVariant: "success",
       recommendationHeadingVariant: "success",
     };
   }
   return {
-    recommendation: "int",
+    recommendation: "Int",
     recommendationBoxVariant: undefined,
     recommendationHeadingVariant: "base",
   };

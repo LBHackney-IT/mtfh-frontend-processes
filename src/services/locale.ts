@@ -59,7 +59,7 @@ const locale = {
         "This person will be asked for proof of relationship e.g. marriage or civil partnership certificate.",
       selectTenantLabel: "Who do you want to add as a joint tenant?",
       addToTenureText: "If the person you want to add is not listed you must first",
-      addToTenureLink: "add them to the tenure",
+      addToTenureLink: "add them as a household member",
       noHouseholdMembersOver18:
         "There are no household members over the age of 18 associated to this Tenancy.",
     },
@@ -138,7 +138,7 @@ const locale = {
         "I confirm that the tenure investigation has been completed",
       tenureInvestigatorRecommendation: (recommendation) => {
         return `Tenure investigator recommendation: ${
-          recommendation === "int"
+          recommendation === "Int"
             ? "Interview Applicant"
             : `${recommendation} application`
         }`;
@@ -149,11 +149,11 @@ const locale = {
       makeAppointment: "Make an appointment with the applicant for an interview",
       appointmentContactDetails:
         "To make an appointment with the applicant for an interview, please use the following details:",
-      receivedDecision: "The case has received area housing manager’s final decision.",
+      receivedDecision: "The case has received Area Housing Manager’s final decision.",
       passedForReview:
-        "I have passed the case to the Housing Manager for review and received a decision",
+        "I have passed the case to the Area Housing Manager for review and received a decision",
       confirmInstructionReceived:
-        "I confirm that this is an instruction received by the housing area manager",
+        "I confirm that this is an instruction received by the Area Housing Manager",
       managersName: "Enter manager's name",
       hoOutcome: (decision) => `Sole to joint tenure application ${decision}`,
     },
