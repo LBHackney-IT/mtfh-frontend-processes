@@ -138,7 +138,7 @@ const locale = {
         "I confirm that the tenure investigation has been completed",
       tenureInvestigatorRecommendation: (recommendation) => {
         return `Tenure investigator recommendation: ${
-          recommendation === "int"
+          recommendation === "Int"
             ? "Interview Applicant"
             : `${recommendation} application`
         }`;
