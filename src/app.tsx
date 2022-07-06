@@ -2,7 +2,7 @@ import { Route, Switch } from "react-router-dom";
 
 import { TargetType } from "./types";
 import { ProcessesMenuView, StartProcessView } from "./views";
-import { ProcessLayout } from "./views/process-layout/process-layout";
+import { ProcessLayout } from "./views/process-view/process-layout";
 
 export default function App(): JSX.Element {
   return (
