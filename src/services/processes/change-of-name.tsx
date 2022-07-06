@@ -1,5 +1,6 @@
 import { IProcess, IStartProcess } from "../../types";
 import locale from "../locale";
+import { Trigger } from "./types";
 
 import { Text } from "@mtfh/common/lib/components";
 
@@ -41,77 +42,89 @@ export const changeofname: IProcess = {
     nameSubmitted: {
       state: "NameSubmitted",
       triggers: {
-        requestDocumentsDES: "RequestDocumentsDES",
-        requestDocumentsAppointment: "RequestDocumentsAppointment",
-        cancelProcess: "CancelProcess",
+        requestDocumentsDES: Trigger.RequestDocumentsDES,
+        requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     documentsRequestedDES: {
       state: "DocumentsRequestedDES",
       triggers: {
-        reviewDocuments: "ReviewDocuments",
-        requestDocumentsAppointment: "RequestDocumentsAppointment",
-        cancelProcess: "CancelProcess",
+        reviewDocuments: Trigger.ReviewDocuments,
+        requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     documentsRequestedAppointment: {
       state: "DocumentsRequestedAppointment",
       triggers: {
-        reviewDocuments: "ReviewDocuments",
-        rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
-        cancelProcess: "CancelProcess",
+        reviewDocuments: Trigger.ReviewDocuments,
+        rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     documentsAppointmentRescheduled: {
       state: "DocumentsAppointmentRescheduled",
       triggers: {
-        reviewDocuments: "ReviewDocuments",
-        rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
-        cancelProcess: "CancelProcess",
+        reviewDocuments: Trigger.ReviewDocuments,
+        rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     documentChecksPassed: {
       state: "DocumentChecksPassed",
-      triggers: { submitApplication: "SubmitApplication", hOApproval: "HOApproval" },
+      triggers: {
+        submitApplication: Trigger.SubmitApplication,
+        hOApproval: Trigger.HOApproval,
+      },
     },
     applicationSubmitted: {
       state: "ApplicationSubmitted",
-      triggers: { tenureInvestigation: "TenureInvestigation" },
+      triggers: { tenureInvestigation: Trigger.TenureInvestigation },
     },
     tenureInvestigationFailed: {
       state: "TenureInvestigationFailed",
-      triggers: { hOApproval: "HOApproval", scheduleInterview: "ScheduleInterview" },
+      triggers: {
+        hOApproval: Trigger.HOApproval,
+        scheduleInterview: Trigger.ScheduleInterview,
+      },
     },
     tenureInvestigationPassed: {
       state: "TenureInvestigationPassed",
-      triggers: { hOApproval: "HOApproval", scheduleInterview: "ScheduleInterview" },
+      triggers: {
+        hOApproval: Trigger.HOApproval,
+        scheduleInterview: Trigger.ScheduleInterview,
+      },
     },
     tenureInvestigationPassedWithInt: {
       state: "TenureInvestigationPassedWithInt",
-      triggers: { hOApproval: "HOApproval", scheduleInterview: "ScheduleInterview" },
+      triggers: {
+        hOApproval: Trigger.HOApproval,
+        scheduleInterview: Trigger.ScheduleInterview,
+      },
     },
     interviewScheduled: {
       state: "InterviewScheduled",
       triggers: {
-        hOApproval: "HOApproval",
-        rescheduleInterview: "RescheduleInterview",
-        cancelProcess: "CancelProcess",
+        hOApproval: Trigger.HOApproval,
+        rescheduleInterview: Trigger.RescheduleInterview,
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     interviewRescheduled: {
       state: "InterviewRescheduled",
-      triggers: { hOApproval: "HOApproval", cancelProcess: "CancelProcess" },
+      triggers: { hOApproval: Trigger.HOApproval, cancelProcess: Trigger.CancelProcess },
     },
     hOApprovalFailed: {
       state: "HOApprovalFailed",
-      triggers: { cancelProcess: "CancelProcess" },
+      triggers: { cancelProcess: Trigger.CancelProcess },
     },
     hOApprovalPassed: {
       state: "HOApprovalPassed",
       triggers: {
-        scheduleTenureAppointment: "ScheduleTenureAppointment",
-        updateName: "UpdateName",
-        cancelProcess: "CancelProcess",
+        scheduleTenureAppointment: Trigger.ScheduleTenureAppointment,
+        updateName: Trigger.UpdateName,
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     nameUpdated: {
