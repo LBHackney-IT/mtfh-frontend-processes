@@ -6,16 +6,16 @@ import userEvent from "@testing-library/user-event";
 
 import { locale } from "../../services";
 import { mockDocumentsRequestedDes } from "../../test-utils";
-import { SoleToJointView } from "./sole-to-joint-view";
+import { ProcessLayout } from "../process-layout/process-layout";
 
 const options = {
   url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-  path: "/processes/soletojoint/:processId",
+  path: "/processes/:processName/:processId",
 };
 
 test("it displays close case dialog on close case button click and closes on cancel", async () => {
   server.use(getProcessV1(mockDocumentsRequestedDes));
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
   await expect(screen.findByText(locale.closeCase)).resolves.toBeInTheDocument();
 
   await userEvent.click(screen.getByText(locale.closeCase));

@@ -20,7 +20,7 @@ import {
   mockProcessInvalidState,
   mockProcessSelectTenants,
 } from "../../test-utils";
-import { SoleToJointView } from "./sole-to-joint-view";
+import { ProcessLayout } from "../process-layout/process-layout";
 
 import * as tenureV1 from "@mtfh/common/lib/api/tenure/v1/service";
 import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
@@ -36,14 +36,14 @@ const useStateMock: jest.Mock<typeof useState> = useState as never;
 
 const options = {
   url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-  path: "/processes/soletojoint/:processId",
+  path: "/processes/:processName/:processId",
 };
 
 test("it renders soletojoint view for SelectTenants", async () => {
   server.use(getProcessV1(mockProcessSelectTenants));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
 
   await expect(
     screen.findByTestId("soletojoint-SelectTenants"),
@@ -59,7 +59,7 @@ test("it renders stepper component", async () => {
   server.use(getProcessV1(mockProcessSelectTenants));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
 
   const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
   const steps = within(stepper).getAllByRole("listitem");
@@ -70,7 +70,7 @@ test("it renders sidebar buttons correctly", async () => {
   server.use(getProcessV1(mockProcessSelectTenants));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
 
   const { soleToJoint } = locale.views;
   const { cancelProcess, ...actions } = soleToJoint.actions;
@@ -87,7 +87,7 @@ test("it renders soletojoint view for AutomatedChecksFailed", async () => {
   server.use(getProcessV1(mockProcessAutomatedChecksFailed));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
   await expect(
     screen.findByTestId("soletojoint-CheckEligibility"),
   ).resolves.toBeInTheDocument();
@@ -105,7 +105,7 @@ test("it renders soletojoint view for AutomatedChecksPassed", async () => {
   server.use(getProcessV1(mockProcessAutomatedChecksPassed));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
   await expect(
     screen.findByTestId("soletojoint-CheckEligibility"),
   ).resolves.toBeInTheDocument();
@@ -120,7 +120,7 @@ test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibili
   server.use(getProcessV1(mockManualChecksPassedState));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
   await expect(
     screen.findByTestId("soletojoint-ManualChecksPassed"),
   ).resolves.toBeInTheDocument();
@@ -171,7 +171,7 @@ test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibili
     .mockReturnValueOnce([false, jest.fn()])
     // @ts-ignore
     .mockReturnValueOnce([false, jest.fn()]);
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
   await expect(
     screen.findByTestId("soletojoint-ManualChecksPassed"),
   ).resolves.toBeInTheDocument();
@@ -188,7 +188,7 @@ test("it renders soletojoint view for state=BreachChecksPassed", async () => {
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
   jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
   await expect(
     screen.findByTestId("soletojoint-RequestDocuments"),
   ).resolves.toBeInTheDocument();
@@ -213,7 +213,7 @@ test("it renders soletojoint for state=BreachChecksFailed", async () => {
   server.use(getProcessV1(mockBreachChecksFailedState));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
 
   await expect(
     screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
@@ -230,7 +230,7 @@ test("it renders soletojoint for state=BreachChecksFailed", async () => {
 
 test("it renders an error if an invalid state is returned", async () => {
   server.use(getProcessV1(mockProcessInvalidState));
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
 
   await expect(
     screen.findByText(locale.errors.unableToFindState),
@@ -242,7 +242,7 @@ test("it renders an error if an invalid state is returned", async () => {
 
 test("it renders an error if tenure details can't be fetched", async () => {
   server.use(getProcessV1("error", 500));
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
 
   await expect(
     screen.findByText(locale.errors.unableToFetchRecord),
@@ -256,7 +256,7 @@ test("it renders soletojoint for state=DocumentsRequestedDes", async () => {
   server.use(getProcessV1(mockDocumentsRequestedDes));
   // @ts-ignore
   useStateMock.mockImplementation(() => [false, jest.fn()]);
-  render(<SoleToJointView />, options);
+  render(<ProcessLayout />, options);
   await expect(
     screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
       exact: false,

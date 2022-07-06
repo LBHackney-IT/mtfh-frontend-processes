@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { Link as RouterLink, useParams } from "react-router-dom";
+import React from "react";
+import { Link as RouterLink } from "react-router-dom";
 
 import { locale, processes } from "../../services";
-import { CommentsView } from "./comments-view";
+import { ProcessComponentProps, ProcessSideBarProps } from "../../types";
 import {
   BreachChecksFailedView,
   BreachChecksView,
   CheckEligibilityView,
-  CloseProcessDialog,
   CloseProcessView,
   RequestDocumentsView,
   ReviewDocumentsView,
@@ -17,16 +16,10 @@ import {
 import { ManualChecksFailedView } from "./states/manual-checks-view";
 import { ReviewApplicationView } from "./states/review-application-view/review-application-view";
 
-import { useProcess } from "@mtfh/common/lib/api/process/v1";
-import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
   Box,
   Button,
-  Center,
   ErrorSummary,
-  Layout,
-  Link,
-  Spinner,
   StatusHeading,
   Step,
   Stepper,
@@ -35,6 +28,8 @@ import {
 
 import "./styles.scss";
 
+const { views } = locale;
+const { soleToJoint, reviewDocuments } = views;
 const processConfig = processes.soletojoint;
 
 const { states } = processConfig;
@@ -97,9 +92,6 @@ const components = {
   [processCancelled.state]: SubmitCaseView,
   [processClosed.state]: CheckEligibilityView,
 };
-
-const { views } = locale;
-const { soleToJoint, reviewDocuments } = views;
 
 const getActiveStep = (process: any, states, submitted: boolean, closeCase: boolean) => {
   const {
@@ -187,18 +179,7 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
   return 0;
 };
 
-interface SideBarProps {
-  process: any;
-  states: any;
-  submitted: boolean;
-  closeCase: boolean;
-  processId: string;
-  processName: string;
-  setCloseProcessDialogOpen: any;
-  setCancel: any;
-}
-
-const SideBar = (props: SideBarProps) => {
+export const SoleToJointSideBar = (props: ProcessSideBarProps) => {
   const {
     process,
     process: {
@@ -318,43 +299,16 @@ const getComponent = (process) => {
   return components[state];
 };
 
-export const SoleToJointView = () => {
-  const [isCloseProcessDialogOpen, setCloseProcessDialogOpen] = useState<boolean>(false);
-  const [closeProcessReason, setCloseProcessReason] = useState<string>();
-  const [isCancel, setCancel] = useState<boolean>(false);
-  const { processId } = useParams<{ processId: string }>();
-
+export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentProps) => {
   const {
-    data: process,
-    error,
-    mutate,
-  } = useProcess({
-    id: processId,
-    processName: processConfig.processName,
-  });
-
-  const [submitted, setSubmitted] = useState<boolean>(false);
-  const [closeCase, setCloseCase] = useState<boolean>(false);
-  const { data: tenure } = useTenure(process?.targetId || null);
-  const tenureId = tenure?.id;
-
-  if (error) {
-    return (
-      <ErrorSummary
-        id="sole-to-joint-view"
-        title={locale.errors.unableToFetchRecord}
-        description={locale.errors.unableToFetchRecordDescription}
-      />
-    );
-  }
-
-  if (!process) {
-    return (
-      <Center>
-        <Spinner />
-      </Center>
-    );
-  }
+    closeProcessReasonFinal,
+    submitted,
+    setSubmitted,
+    closeCase,
+    setCloseCase,
+    setCancel,
+    setCloseProcessDialogOpen,
+  } = optional;
 
   const Component = getComponent(process);
 
@@ -368,42 +322,8 @@ export const SoleToJointView = () => {
     );
   }
 
-  const {
-    currentState,
-    currentState: { state },
-  } = process;
-
-  let closeProcessReasonFinal = closeProcessReason;
-  if (!closeProcessReasonFinal && isSameState(currentState, processClosed)) {
-    closeProcessReasonFinal = process.currentState.processData.formData.Reason;
-  }
-
   return (
-    <Layout
-      data-testid="soletojoint"
-      sidePosition="right"
-      backLink={
-        <Link
-          as={RouterLink}
-          to={`/processes/soletojoint/start/tenure/${process.targetId}`}
-          variant="back-link"
-        >
-          {locale.backButton}
-        </Link>
-      }
-      side={
-        <SideBar
-          process={process}
-          states={states}
-          submitted={submitted}
-          closeCase={closeCase}
-          processId={processId}
-          processName={processConfig.processName}
-          setCloseProcessDialogOpen={setCloseProcessDialogOpen}
-          setCancel={setCancel}
-        />
-      }
-    >
+    <>
       <Component
         processConfig={processConfig}
         process={process}
@@ -417,21 +337,13 @@ export const SoleToJointView = () => {
         }}
       />
 
-      <CloseProcessDialog
-        isCloseProcessDialogOpen={isCloseProcessDialogOpen}
-        setCloseProcessDialogOpen={setCloseProcessDialogOpen}
-        setCloseProcessReason={setCloseProcessReason}
-        mutate={mutate}
-        isCancel={isCancel}
-      />
-
       {closeProcessReasonFinal && (
         <>
           <Box variant="warning">
             <StatusHeading
               variant="warning"
               title={
-                isSameState(currentState, processClosed)
+                isSameState(process.currentState, processClosed)
                   ? reviewDocuments.soleToJointClosed
                   : reviewDocuments.soleToJointWillBeClosed
               }
@@ -449,27 +361,22 @@ export const SoleToJointView = () => {
           />
         </>
       )}
-      {!closeProcessReasonFinal && reviewDocumentsPageStates.includes(state) && (
-        <>
-          <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
-          <Button
-            variant="secondary"
-            onClick={() => {
-              setCancel(false);
-              setCloseProcessDialogOpen(true);
-            }}
-            style={{ width: 222 }}
-          >
-            {locale.closeCase}
-          </Button>
-        </>
-      )}
-
-      <hr className="divider" />
-
-      {tenureId && (
-        <CommentsView targetType="process" targetId={processId} mutate={mutate} />
-      )}
-    </Layout>
+      {!closeProcessReasonFinal &&
+        reviewDocumentsPageStates.includes(process.currentState.state) && (
+          <>
+            <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setCancel(false);
+                setCloseProcessDialogOpen(true);
+              }}
+              style={{ width: 222 }}
+            >
+              {locale.closeCase}
+            </Button>
+          </>
+        )}
+    </>
   );
 };
