@@ -62,7 +62,7 @@ const menu: MenuProps[] = [
     link: "https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform",
     processes: [
       getProcessLink(processes.soletojoint.processName),
-      getProcessLink(processes.changeOfName.processName),
+      getProcessLink(processes.changeofname.processName),
     ],
   },
   {

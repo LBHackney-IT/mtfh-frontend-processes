@@ -28,10 +28,103 @@ const startProcess: IStartProcess = {
   },
 };
 
-export const changeOfName: IProcess = {
-  processName: "changeOfName",
+export const changeofname: IProcess = {
+  processName: "changeofname",
   targetType: "person",
-  title: locale.views.changeOfName.title,
+  title: locale.views.changeofname.title,
   startProcess,
-  states: {},
+  states: {
+    enterNewName: {
+      state: "EnterNewName",
+      triggers: { enterNewName: "EnterNewName" },
+    },
+    nameSubmitted: {
+      state: "NameSubmitted",
+      triggers: {
+        requestDocumentsDES: "RequestDocumentsDES",
+        requestDocumentsAppointment: "RequestDocumentsAppointment",
+        cancelProcess: "CancelProcess",
+      },
+    },
+    documentsRequestedDES: {
+      state: "DocumentsRequestedDES",
+      triggers: {
+        reviewDocuments: "ReviewDocuments",
+        requestDocumentsAppointment: "RequestDocumentsAppointment",
+        cancelProcess: "CancelProcess",
+      },
+    },
+    documentsRequestedAppointment: {
+      state: "DocumentsRequestedAppointment",
+      triggers: {
+        reviewDocuments: "ReviewDocuments",
+        rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
+        cancelProcess: "CancelProcess",
+      },
+    },
+    documentsAppointmentRescheduled: {
+      state: "DocumentsAppointmentRescheduled",
+      triggers: {
+        reviewDocuments: "ReviewDocuments",
+        rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
+        cancelProcess: "CancelProcess",
+      },
+    },
+    documentChecksPassed: {
+      state: "DocumentChecksPassed",
+      triggers: { submitApplication: "SubmitApplication", hOApproval: "HOApproval" },
+    },
+    applicationSubmitted: {
+      state: "ApplicationSubmitted",
+      triggers: { tenureInvestigation: "TenureInvestigation" },
+    },
+    tenureInvestigationFailed: {
+      state: "TenureInvestigationFailed",
+      triggers: { hOApproval: "HOApproval", scheduleInterview: "ScheduleInterview" },
+    },
+    tenureInvestigationPassed: {
+      state: "TenureInvestigationPassed",
+      triggers: { hOApproval: "HOApproval", scheduleInterview: "ScheduleInterview" },
+    },
+    tenureInvestigationPassedWithInt: {
+      state: "TenureInvestigationPassedWithInt",
+      triggers: { hOApproval: "HOApproval", scheduleInterview: "ScheduleInterview" },
+    },
+    interviewScheduled: {
+      state: "InterviewScheduled",
+      triggers: {
+        hOApproval: "HOApproval",
+        rescheduleInterview: "RescheduleInterview",
+        cancelProcess: "CancelProcess",
+      },
+    },
+    interviewRescheduled: {
+      state: "InterviewRescheduled",
+      triggers: { hOApproval: "HOApproval", cancelProcess: "CancelProcess" },
+    },
+    hOApprovalFailed: {
+      state: "HOApprovalFailed",
+      triggers: { cancelProcess: "CancelProcess" },
+    },
+    hOApprovalPassed: {
+      state: "HOApprovalPassed",
+      triggers: {
+        scheduleTenureAppointment: "ScheduleTenureAppointment",
+        updateName: "UpdateName",
+        cancelProcess: "CancelProcess",
+      },
+    },
+    nameUpdated: {
+      state: "NameUpdated",
+      triggers: {},
+    },
+    processClosed: {
+      state: "ProcessClosed",
+      triggers: {},
+    },
+    cancelledProcess: {
+      state: "CancelledProcess",
+      triggers: {},
+    },
+  },
 };
