@@ -5,21 +5,7 @@ import { parse } from "date-fns";
 
 import { config, locale } from "../../../../services";
 
-import {
-  splitContactDetailsByType,
-  useContactDetails,
-} from "@mtfh/common/lib/api/contact-details/v2";
-import { HouseholdMember } from "@mtfh/common/lib/api/tenure/v1/types";
-import {
-  Box,
-  Center,
-  ErrorSummary,
-  Heading,
-  Link,
-  Spinner,
-  StatusHeading,
-  Text,
-} from "@mtfh/common/lib/components";
+import { Box, Heading, Link, StatusHeading, Text } from "@mtfh/common/lib/components";
 
 const { views } = locale;
 const { breachOfTenancy, checkEligibility } = views;
@@ -170,44 +156,6 @@ export const AutomatedChecksPassedBox = (): JSX.Element => {
       <TickBulletPoint text="The proposed tenant is over 18 years of age" />
       <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
     </Box>
-  );
-};
-
-export const TenantContactDetails = ({ tenant }: { tenant: HouseholdMember }) => {
-  const { data: contacts, error } = useContactDetails(tenant.id);
-
-  if (error) {
-    return (
-      <ErrorSummary
-        id="request-documents-view-contact-details"
-        title={locale.errors.unableToFetchRecord}
-        description={locale.errors.unableToFetchRecordDescription}
-      />
-    );
-  }
-
-  if (!contacts) {
-    return (
-      <Center>
-        <Spinner />
-      </Center>
-    );
-  }
-
-  const { emails, phones } = splitContactDetailsByType(contacts?.results || []);
-
-  return (
-    <>
-      <Text size="sm">{tenant.fullName} contact details:</Text>
-      <Text size="sm">
-        Phone:
-        <span style={{ marginLeft: "1em" }}>{phones?.[0]?.contactInformation.value}</span>
-      </Text>
-      <Text size="sm">
-        Email:
-        <span style={{ marginLeft: "1em" }}>{emails?.[0]?.contactInformation.value}</span>
-      </Text>
-    </>
   );
 };
 

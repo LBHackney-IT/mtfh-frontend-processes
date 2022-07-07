@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
+import { TenantContactDetails } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
-import { TenantContactDetails } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import { Button, Checkbox, Text } from "@mtfh/common/lib/components";

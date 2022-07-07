@@ -1,6 +1,6 @@
-import { locale } from "../../../services";
-import { IProcess } from "../../../types";
-import { EntitySummary } from "../../entity-summary";
+import { locale } from "../../services";
+import { IProcess } from "../../types";
+import { EntitySummary } from "../entity-summary";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";

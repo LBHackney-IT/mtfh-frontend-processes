@@ -65,15 +65,8 @@ export const StartProcess = ({
         validationSchema={schema}
         onSubmit={async () => {
           try {
-            // todo: revert this change after process BE is ready
-            if (processName === "changeofname") {
-              history.push(
-                `/processes/${processName}/02373a9d-d0da-4cd0-8633-c0335397e7cf`,
-              );
-            } else {
-              const response = await addProcess({ targetID: targetId }, processName);
-              history.push(`/processes/${processName}/${response.id}`);
-            }
+            const response = await addProcess({ targetID: targetId }, processName);
+            history.push(`/processes/${processName}/${response.id}`);
           } catch (e: any) {
             setGlobalError(e.response?.status || 500);
           }

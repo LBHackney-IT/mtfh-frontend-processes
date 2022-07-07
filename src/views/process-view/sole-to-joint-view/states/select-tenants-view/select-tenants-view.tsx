@@ -37,11 +37,11 @@ interface SelectTenantsViewProps {
   mutate: () => void;
 }
 
-export const schema = Yup.object({
+const schema = Yup.object({
   tenant: Yup.string().required(),
 });
 
-export type FormData = Yup.Asserts<typeof schema>;
+type FormData = Yup.Asserts<typeof schema>;
 
 export const SelectTenantsView = ({
   processConfig,

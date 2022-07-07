@@ -3,13 +3,15 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { isPast } from "date-fns";
 
-import { AppointmentDetails } from "../../../../../components/appointment-details/appointment-details";
-import { AppointmentForm } from "../../../../../components/appointment-form/appointment-form";
+import {
+  AppointmentDetails,
+  AppointmentForm,
+  TenantContactDetails,
+} from "../../../../../components";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 import { IProcess } from "../../../../../types";
 import { CloseProcessView } from "../close-process-view";
-import { TenantContactDetails } from "../shared";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {

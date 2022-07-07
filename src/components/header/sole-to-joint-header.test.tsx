@@ -3,7 +3,7 @@ import React from "react";
 import { mockProcessV1, render } from "@hackney/mtfh-test-utils";
 import { screen, waitFor } from "@testing-library/react";
 
-import { processes } from "../../../services";
+import { processes } from "../../services";
 import { SoleToJointHeader } from "./sole-to-joint-header";
 
 describe("Sole to joint header", () => {

@@ -1,22 +1,17 @@
 import { Form, Formik } from "formik";
 
-import {
-  DateTimeFields,
-  SoleToJointHeader,
-  TenantContactDetails,
-} from "../../../../../components";
+import { ChangeOfNameHeader, DateTimeFields } from "../../../../../components";
 import { RequestDocumentsFormData, requestDocumentsSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
-import { IProcess } from "../../../../../types";
+import { Trigger } from "../../../../../services/processes/types";
+import { IProcess, ProcessComponentProps } from "../../../../../types";
 import { dateToString, stringToDate } from "../../../../../utils/date";
-import { BulletWithExplanation, EligibilityChecksPassedBox } from "../shared";
+import { BulletWithExplanation } from "../../../sole-to-joint-view/states/shared";
 
-import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
-import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
+import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Button,
   Center,
-  ErrorSummary,
   Heading,
   InlineField,
   List,
@@ -27,31 +22,18 @@ import {
 } from "@mtfh/common/lib/components";
 import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
-export interface RequestDocumentsViewProps {
-  process: Process;
+interface RequestDocumentsViewProps extends ProcessComponentProps {
   processConfig: IProcess;
-  mutate: any;
 }
 
 export const RequestDocumentsView = ({
   process,
   processConfig,
   mutate,
-}: RequestDocumentsViewProps) => {
+}: RequestDocumentsViewProps): JSX.Element => {
   const errorMessages = useErrorCodes();
-  const { data: tenure, error } = useTenure(process.targetId);
 
-  if (error) {
-    return (
-      <ErrorSummary
-        id="request-documents-view"
-        title={locale.errors.unableToFetchRecord}
-        description={locale.errors.unableToFetchRecordDescription}
-      />
-    );
-  }
-
-  if (!tenure || !errorMessages) {
+  if (!errorMessages) {
     return (
       <Center>
         <Spinner />
@@ -59,45 +41,49 @@ export const RequestDocumentsView = ({
     );
   }
 
-  const stateConfig = processConfig.states.breachChecksPassed;
-  const tenant = tenure?.householdMembers.find((m) => m.isResponsible);
-
   return (
-    <div data-testid="soletojoint-RequestDocuments">
-      <SoleToJointHeader processConfig={processConfig} process={process} />
-      <EligibilityChecksPassedBox />
+    <div data-testid="changeofname-RequestDocuments">
+      <ChangeOfNameHeader processConfig={processConfig} process={process} />
+
       <Heading variant="h3">{locale.supportingDocuments}</Heading>
+
       <Text size="sm">
-        The following documentation is required from the secure tenant and/or proposed
-        tenant, as proof to support their application:
+        The tenant needs to provide documents as proof to support their application:
       </Text>
       <List variant="bullets">
         <BulletWithExplanation
-          text="Secure and Proposed tenant: Two forms of proof of identity for both the
-              secure and proposed tenant. At least one each must be photographic ID"
+          text="Two forms of proof of identity. At least one must be photographic ID. Both must contain the tenants new name"
           explanation="for example: valid passport, driving licence, bank statement, utility bill"
         />
-        <BulletWithExplanation
-          text="Proposed tenant: Proof of immigration status"
-          explanation="for example: passport, home office letter, embassy letter, immigration status document"
-        />
-        <BulletWithExplanation
-          text="Proposed tenant: Proof of relationship to the existing tenant"
-          explanation="for example: marriage or civil partner certificate"
-        />
-        <BulletWithExplanation
-          text="Proposed tenant: Proof of co-habitation: three documents proving 12 months
-                residency at the property. If marriage certificate provided, any Proof of
-                Address can be accepted."
-          explanation="for example: letter, utility bill, council tax bill"
-        />
+        <div>
+          <Text size="sm" style={{ fontWeight: "bold" }}>
+            One of the following documents containing the tenant’s new name:
+            <ol type="1" style={{ marginLeft: "2em", marginTop: 15 }}>
+              {[
+                "Marriage certificate",
+                "Civil partnership certificate",
+                "Decree absolute",
+                "Final order",
+                "Deed poll document",
+                "Statutory declaration",
+              ].map((item) => (
+                <li key={item} style={{ marginTop: 0 }}>
+                  {item}
+                </li>
+              ))}
+            </ol>
+          </Text>
+        </div>
       </List>
+
       <Heading variant="h3">Checking supporting documents</Heading>
       <Text size="sm">
         You can request supporting documents through the Document Evidence Store or you
         can make an appointment with the tenant to check supporting documents in-person.
       </Text>
-      {tenant ? <TenantContactDetails tenant={tenant} /> : <Text>Tenant not found.</Text>}
+
+      {/*{tenant ? <TenantContactDetails tenant /> : <Text>Tenant not found.</Text>}*/}
+
       <Formik<RequestDocumentsFormData>
         initialValues={{
           requestType: "",
@@ -113,10 +99,10 @@ export const RequestDocumentsView = ({
         validationSchema={requestDocumentsSchema(errorMessages)}
         onSubmit={async (values) => {
           const { requestType, day, month, year, hour, minute, amPm } = values;
-          let processTrigger = stateConfig.triggers.requestDocumentsDes;
+          let processTrigger = Trigger.RequestDocumentsDes;
           let formData = {};
           if (requestType === "manual") {
-            processTrigger = stateConfig.triggers.requestDocumentsAppointment;
+            processTrigger = Trigger.RequestDocumentsAppointment;
             const date = stringToDate(
               `${day}/${month}/${year} ${hour}:${minute} ${amPm.toUpperCase()}`,
               "dd/MM/yyyy hh:mm a",

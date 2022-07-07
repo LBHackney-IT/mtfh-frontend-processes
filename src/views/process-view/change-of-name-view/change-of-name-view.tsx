@@ -3,7 +3,7 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
-import { TenantNewName } from "./states/tenant-new-name-view";
+import { RequestDocumentsView } from "./states/request-documents-view";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import { Button, ErrorSummary, Step, Stepper } from "@mtfh/common/lib/components";
@@ -13,10 +13,11 @@ import "./styles.scss";
 const processConfig = processes.changeofname;
 
 const { states } = processConfig;
-const { enterNewName } = states;
+const { enterNewName, nameSubmitted } = states;
 
 const components = {
-  [enterNewName.state]: TenantNewName,
+  [enterNewName.state]: RequestDocumentsView,
+  [nameSubmitted.state]: RequestDocumentsView,
 };
 
 const { views } = locale;

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { EntitySummary } from "../../../../../components";
+import { ChangeOfNameHeader } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 
@@ -29,11 +29,11 @@ interface TenantNewNameViewProps {
   optional?: any;
 }
 
-export const schema = Yup.object({
+const schema = Yup.object({
   tenant: Yup.string().required(),
 });
 
-export type FormData = Yup.Asserts<typeof schema>;
+type FormData = Yup.Asserts<typeof schema>;
 
 export const TenantNewName = ({
   processConfig,
@@ -56,8 +56,7 @@ export const TenantNewName = ({
 
   return (
     <div data-testid="changeofname-EnterNewName">
-      <Heading variant="h1">{processConfig.title}</Heading>
-      <EntitySummary id={process.targetId} type={processConfig.targetType} />
+      <ChangeOfNameHeader processConfig={processConfig} process={process} />
       {globalError && (
         <StatusErrorSummary id="select-tenant-global-error" code={globalError} />
       )}

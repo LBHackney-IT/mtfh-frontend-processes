@@ -3,13 +3,16 @@ import React, { useEffect, useState } from "react";
 import { isPast } from "date-fns";
 import { Form, Formik } from "formik";
 
-import { AppointmentDetails } from "../../../../../components/appointment-details/appointment-details";
-import { DateTimeFields } from "../../../../../components/appointment-form/appointment-form";
+import {
+  AppointmentDetails,
+  DateTimeFields,
+  TenantContactDetails,
+} from "../../../../../components";
 import { HoReviewFormData, hoReviewSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 import { IProcess } from "../../../../../types";
-import { TenantContactDetails, getAppointmentDateTime } from "../shared";
+import { getAppointmentDateTime } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
