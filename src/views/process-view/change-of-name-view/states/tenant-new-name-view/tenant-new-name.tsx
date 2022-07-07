@@ -6,7 +6,6 @@ import * as Yup from "yup";
 import { EntitySummary } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
-import { areAllTruthy } from "../../../../../utils/validation";
 
 import { PersonTitle } from "@mtfh/common/lib/api/person/v1";
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
@@ -93,7 +92,7 @@ export const TenantNewName = ({
           }
         }}
       >
-        {({ isValid, values, isSubmitting, validateForm }) => {
+        {({ dirty, isSubmitting, validateForm }) => {
           return (
             <Form id="person-form" className="mtfh-person-form">
               <FormGroup id="person-form-new-tenant-name" name="new-tenant-name">
@@ -143,10 +142,7 @@ export const TenantNewName = ({
               <div className="start-process__actions">
                 <Button
                   onClick={() => validateForm()}
-                  disabled={
-                    !areAllTruthy(values.title, values.firstName, values.surname) ||
-                    !isValid
-                  }
+                  disabled={!dirty}
                   isLoading={isSubmitting}
                   loadingText={locale.loadingText}
                   type="submit"
