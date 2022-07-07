@@ -4,11 +4,8 @@ export type TargetType = "tenure" | "property" | "person";
 
 export interface ProcessSideBarProps {
   process: any;
-  states: any;
   submitted: boolean;
   closeCase: boolean;
-  processId: string;
-  processName: string;
   setCloseProcessDialogOpen: any;
   setCancel: any;
 }

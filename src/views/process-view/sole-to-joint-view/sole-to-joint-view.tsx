@@ -183,13 +183,10 @@ export const SoleToJointSideBar = (props: ProcessSideBarProps) => {
   const {
     process,
     process: {
-      currentState: { state },
+      currentState: { state, id: processId, processName },
     },
-    states,
     submitted = false,
     closeCase = false,
-    processId,
-    processName,
     setCloseProcessDialogOpen,
     setCancel,
   } = props;
