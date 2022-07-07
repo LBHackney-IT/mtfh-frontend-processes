@@ -1,22 +1,16 @@
-import { ChangeOfNameHeader } from "../../../../../components";
 import { CheckSupportingDocuments } from "../../../../../components/check-supporting-documents";
 import { locale } from "../../../../../services";
-import { IProcess, ProcessComponentProps } from "../../../../../types";
+import { ProcessComponentProps } from "../../../../../types";
 import { BulletWithExplanation } from "../../../sole-to-joint-view/states/shared";
 
 import { Center, Heading, List, Spinner, Text } from "@mtfh/common/lib/components";
 import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
-interface RequestDocumentsViewProps extends ProcessComponentProps {
-  processConfig: IProcess;
-}
-
 export const RequestDocumentsView = ({
   process,
-  processConfig,
   mutate,
   optional,
-}: RequestDocumentsViewProps): JSX.Element => {
+}: ProcessComponentProps): JSX.Element => {
   const errorMessages = useErrorCodes();
 
   if (!errorMessages) {
@@ -29,8 +23,6 @@ export const RequestDocumentsView = ({
 
   return (
     <div data-testid="changeofname-RequestDocuments">
-      <ChangeOfNameHeader processConfig={processConfig} process={process} />
-
       <Heading variant="h3">{locale.supportingDocuments}</Heading>
 
       <Text size="sm">

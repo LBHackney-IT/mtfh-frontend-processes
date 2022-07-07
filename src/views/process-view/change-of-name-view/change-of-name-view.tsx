@@ -1,6 +1,7 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import { EntitySummary } from "../../../components";
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
 import { RequestDocumentsView } from "./states/request-documents-view";
@@ -134,18 +135,20 @@ export const ChangeOfNameView = ({
   }
 
   return (
-    <Component
-      processConfig={processConfig}
-      process={process}
-      mutate={mutate}
-      optional={{
-        person,
-        submitted,
-        setSubmitted,
-        closeCase,
-        setCloseCase,
-        closeProcessReasonFinal,
-      }}
-    />
+    <>
+      <EntitySummary id={process.targetId} type={processConfig.targetType} />
+      <Component
+        process={process}
+        mutate={mutate}
+        optional={{
+          person,
+          submitted,
+          setSubmitted,
+          closeCase,
+          setCloseCase,
+          closeProcessReasonFinal,
+        }}
+      />
+    </>
   );
 };

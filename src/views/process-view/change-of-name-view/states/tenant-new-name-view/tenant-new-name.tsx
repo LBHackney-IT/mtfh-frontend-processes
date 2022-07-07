@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { ChangeOfNameHeader } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 
@@ -56,7 +55,6 @@ export const TenantNewName = ({
 
   return (
     <div data-testid="changeofname-EnterNewName">
-      <ChangeOfNameHeader processConfig={processConfig} process={process} />
       {globalError && (
         <StatusErrorSummary id="select-tenant-global-error" code={globalError} />
       )}

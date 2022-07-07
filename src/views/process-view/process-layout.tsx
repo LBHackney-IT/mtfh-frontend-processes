@@ -12,7 +12,14 @@ import { locale, processes } from "../../services";
 import { CommentsView } from "./comments-view";
 
 import { useProcess } from "@mtfh/common/lib/api/process/v1";
-import { Center, ErrorSummary, Layout, Link, Spinner } from "@mtfh/common/lib/components";
+import {
+  Center,
+  ErrorSummary,
+  Heading,
+  Layout,
+  Link,
+  Spinner,
+} from "@mtfh/common/lib/components";
 
 const components = {
   [processes.soletojoint.processName]: SoleToJointView,
@@ -113,6 +120,7 @@ export const ProcessLayout = (): JSX.Element => {
         />
       }
     >
+      <Heading variant="h1">{processConfig.title}</Heading>
       <Component
         process={process}
         mutate={mutate}
