@@ -16,7 +16,7 @@ export interface ProcessSideBarProps {
 export interface ProcessComponentProps {
   process: Process;
   mutate: any;
-  optional: any;
+  optional?: any;
 }
 
 export interface IStartProcess {

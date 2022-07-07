@@ -1,36 +1,22 @@
-import { Form, Formik } from "formik";
-
-import {
-  ContactDetails,
-  DateTimeFields,
-  SoleToJointHeader,
-} from "../../../../../components";
-import { RequestDocumentsFormData, requestDocumentsSchema } from "../../../../../schemas";
+import { SoleToJointHeader } from "../../../../../components";
+import { CheckSupportingDocuments } from "../../../../../components/check-supporting-documents";
 import { locale } from "../../../../../services";
-import { IProcess } from "../../../../../types";
-import { dateToString, stringToDate } from "../../../../../utils/date";
+import { IProcess, ProcessComponentProps } from "../../../../../types";
 import { BulletWithExplanation, EligibilityChecksPassedBox } from "../shared";
 
-import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
-  Button,
   Center,
   ErrorSummary,
   Heading,
-  InlineField,
   List,
-  Radio,
-  RadioGroup,
   Spinner,
   Text,
 } from "@mtfh/common/lib/components";
 import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
-export interface RequestDocumentsViewProps {
-  process: Process;
+export interface RequestDocumentsViewProps extends ProcessComponentProps {
   processConfig: IProcess;
-  mutate: any;
 }
 
 export const RequestDocumentsView = ({
@@ -59,7 +45,6 @@ export const RequestDocumentsView = ({
     );
   }
 
-  const stateConfig = processConfig.states.breachChecksPassed;
   const tenant = tenure?.householdMembers.find((m) => m.isResponsible);
 
   return (
@@ -92,123 +77,8 @@ export const RequestDocumentsView = ({
           explanation="for example: letter, utility bill, council tax bill"
         />
       </List>
-      <Heading variant="h3">Checking supporting documents</Heading>
-      <Text size="sm">
-        You can request supporting documents through the Document Evidence Store or you
-        can make an appointment with the tenant to check supporting documents in-person.
-      </Text>
-      {tenant ? (
-        <ContactDetails fullName={tenant.fullName} personId={tenant.id} />
-      ) : (
-        <Text>Tenant not found.</Text>
-      )}
-      <Formik<RequestDocumentsFormData>
-        initialValues={{
-          requestType: "",
-          day: "",
-          month: "",
-          year: "",
-          hour: "",
-          minute: "",
-          amPm: "",
-        }}
-        validateOnBlur={false}
-        validateOnChange={false}
-        validationSchema={requestDocumentsSchema(errorMessages)}
-        onSubmit={async (values) => {
-          const { requestType, day, month, year, hour, minute, amPm } = values;
-          let processTrigger = stateConfig.triggers.requestDocumentsDes;
-          let formData = {};
-          if (requestType === "manual") {
-            processTrigger = stateConfig.triggers.requestDocumentsAppointment;
-            const date = stringToDate(
-              `${day}/${month}/${year} ${hour}:${minute} ${amPm.toUpperCase()}`,
-              "dd/MM/yyyy hh:mm a",
-            );
-            formData = {
-              appointmentDateTime: dateToString(date, "yyyy-MM-dd'T'HH:mm:ss"),
-            };
-          }
-          try {
-            await editProcess({
-              id: process.id,
-              processName: process?.processName,
-              etag: process.etag || "",
-              processTrigger,
-              formData,
-              documents: [],
-            });
-            mutate();
-          } catch (e: any) {
-            console.log(e.response?.status || 500);
-          }
-        }}
-      >
-        {(props) => {
-          const {
-            values,
-            values: { requestType },
-            setFieldValue,
-          } = props;
-          return (
-            <Form
-              noValidate
-              id="request-documents-form"
-              className="request-documents-form"
-            >
-              <RadioGroup>
-                <InlineField name="requestType" type="radio">
-                  <Radio
-                    id="requestType-automatic"
-                    value="automatic"
-                    onClick={() => {
-                      if (requestType !== "automatic") {
-                        setFieldValue("day", "01");
-                        setFieldValue("month", "01");
-                        setFieldValue("year", "3000");
-                        setFieldValue("hour", "01");
-                        setFieldValue("minute", "01");
-                        setFieldValue("amPm", "am");
-                      }
-                    }}
-                  >
-                    Request documents electronically
-                  </Radio>
-                </InlineField>
-                <InlineField name="requestType" type="radio">
-                  <Radio
-                    id="requestType-manual"
-                    value="manual"
-                    onClick={() => {
-                      if (requestType !== "manual") {
-                        setFieldValue("day", "");
-                        setFieldValue("month", "");
-                        setFieldValue("year", "");
-                        setFieldValue("hour", "");
-                        setFieldValue("minute", "");
-                        setFieldValue("amPm", "");
-                      }
-                    }}
-                  >
-                    I have made an appointment to check supporting documents
-                  </Radio>
-                </InlineField>
-              </RadioGroup>
-              {requestType === "manual" && <DateTimeFields />}
-              <Button
-                type="submit"
-                disabled={
-                  !Object.values(values).some((value) => {
-                    return value !== "";
-                  })
-                }
-              >
-                Next
-              </Button>
-            </Form>
-          );
-        }}
-      </Formik>
+
+      <CheckSupportingDocuments process={process} mutate={mutate} optional={{ tenant }} />
     </div>
   );
 };
