@@ -6,7 +6,7 @@ import { isPast } from "date-fns";
 import {
   AppointmentDetails,
   AppointmentForm,
-  TenantContactDetails,
+  ContactDetails,
 } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
@@ -123,7 +123,7 @@ export const NewTenancyView = ({
         )}
 
       {!documentsSigned && currentState.state !== tenureUpdated.state && tenant && (
-        <TenantContactDetails tenant={tenant} />
+        <ContactDetails fullName={tenant.fullName} personId={tenant.id} />
       )}
 
       <AppointmentForm

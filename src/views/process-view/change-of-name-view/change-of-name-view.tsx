@@ -5,8 +5,16 @@ import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
 import { RequestDocumentsView } from "./states/request-documents-view";
 
+import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { Process } from "@mtfh/common/lib/api/process/v1";
-import { Button, ErrorSummary, Step, Stepper } from "@mtfh/common/lib/components";
+import {
+  Button,
+  Center,
+  ErrorSummary,
+  Spinner,
+  Step,
+  Stepper,
+} from "@mtfh/common/lib/components";
 
 import "./styles.scss";
 
@@ -93,6 +101,26 @@ export const ChangeOfNameView = ({
 }): JSX.Element => {
   const { closeProcessReasonFinal, submitted, setSubmitted, closeCase, setCloseCase } =
     optional;
+  const { error, data: person } = usePerson(process.targetId);
+
+  if (error) {
+    return (
+      <ErrorSummary
+        id="entity-summary"
+        title={locale.errors.unableToFetchRecord}
+        description={locale.errors.unableToFetchRecordDescription}
+      />
+    );
+  }
+
+  if (!person) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
   const Component = getComponent(process);
 
   if (!Component) {
@@ -111,6 +139,7 @@ export const ChangeOfNameView = ({
       process={process}
       mutate={mutate}
       optional={{
+        person,
         submitted,
         setSubmitted,
         closeCase,

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { TenantContactDetails } from "../../../../../components";
+import { ContactDetails } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 
@@ -48,7 +48,11 @@ export const TenureInvestigationView = ({
 
   return (
     <>
-      {tenant ? <TenantContactDetails tenant={tenant} /> : <Text>Tenant not found.</Text>}
+      {tenant ? (
+        <ContactDetails fullName={tenant.fullName} personId={tenant.id} />
+      ) : (
+        <Text>Tenant not found.</Text>
+      )}
 
       <Checkbox
         id="tenure-investigation-completed"

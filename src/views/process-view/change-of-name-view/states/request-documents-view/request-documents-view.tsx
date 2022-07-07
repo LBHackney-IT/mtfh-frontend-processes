@@ -1,6 +1,10 @@
 import { Form, Formik } from "formik";
 
-import { ChangeOfNameHeader, DateTimeFields } from "../../../../../components";
+import {
+  ChangeOfNameHeader,
+  ContactDetails,
+  DateTimeFields,
+} from "../../../../../components";
 import { RequestDocumentsFormData, requestDocumentsSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
@@ -30,7 +34,9 @@ export const RequestDocumentsView = ({
   process,
   processConfig,
   mutate,
+  optional,
 }: RequestDocumentsViewProps): JSX.Element => {
+  const { person } = optional;
   const errorMessages = useErrorCodes();
 
   if (!errorMessages) {
@@ -82,7 +88,14 @@ export const RequestDocumentsView = ({
         can make an appointment with the tenant to check supporting documents in-person.
       </Text>
 
-      {/*{tenant ? <TenantContactDetails tenant /> : <Text>Tenant not found.</Text>}*/}
+      {person ? (
+        <ContactDetails
+          fullName={`${person.firstName} ${person.surname}`}
+          personId={person.id}
+        />
+      ) : (
+        <Text>Contact details not found.</Text>
+      )}
 
       <Formik<RequestDocumentsFormData>
         initialValues={{

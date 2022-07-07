@@ -1,9 +1,9 @@
 import { Form, Formik } from "formik";
 
 import {
+  ContactDetails,
   DateTimeFields,
   SoleToJointHeader,
-  TenantContactDetails,
 } from "../../../../../components";
 import { RequestDocumentsFormData, requestDocumentsSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
@@ -97,7 +97,11 @@ export const RequestDocumentsView = ({
         You can request supporting documents through the Document Evidence Store or you
         can make an appointment with the tenant to check supporting documents in-person.
       </Text>
-      {tenant ? <TenantContactDetails tenant={tenant} /> : <Text>Tenant not found.</Text>}
+      {tenant ? (
+        <ContactDetails fullName={tenant.fullName} personId={tenant.id} />
+      ) : (
+        <Text>Tenant not found.</Text>
+      )}
       <Formik<RequestDocumentsFormData>
         initialValues={{
           requestType: "",

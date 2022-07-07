@@ -1,23 +1,20 @@
-import { locale } from "../../services";
-
 import {
   splitContactDetailsByType,
   useContactDetails,
 } from "@mtfh/common/lib/api/contact-details/v2";
-import { HouseholdMember } from "@mtfh/common/lib/api/tenure/v1/types";
-import { Center, ErrorSummary, Spinner, Text } from "@mtfh/common/lib/components";
+import { Center, Spinner, Text } from "@mtfh/common/lib/components";
 
-export const TenantContactDetails = ({ tenant }: { tenant: HouseholdMember }) => {
-  const { data: contacts, error } = useContactDetails(tenant.id);
+export const ContactDetails = ({
+  fullName,
+  personId,
+}: {
+  fullName: string;
+  personId: string;
+}) => {
+  const { data: contacts, error } = useContactDetails(personId);
 
   if (error) {
-    return (
-      <ErrorSummary
-        id="contact-details"
-        title={locale.errors.unableToFetchRecord}
-        description={locale.errors.unableToFetchRecordDescription}
-      />
-    );
+    return <></>;
   }
 
   if (!contacts) {
@@ -32,7 +29,7 @@ export const TenantContactDetails = ({ tenant }: { tenant: HouseholdMember }) =>
 
   return (
     <>
-      <Text size="sm">{tenant.fullName} contact details:</Text>
+      <Text size="sm">{fullName} contact details:</Text>
       <Text size="sm">
         Phone:
         <span style={{ marginLeft: "1em" }}>{phones?.[0]?.contactInformation.value}</span>

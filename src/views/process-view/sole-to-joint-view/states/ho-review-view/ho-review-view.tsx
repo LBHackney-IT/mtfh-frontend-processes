@@ -5,8 +5,8 @@ import { Form, Formik } from "formik";
 
 import {
   AppointmentDetails,
+  ContactDetails,
   DateTimeFields,
-  TenantContactDetails,
 } from "../../../../../components";
 import { HoReviewFormData, hoReviewSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
@@ -211,7 +211,10 @@ export const HoReviewView = ({
                     </Text>
                     {optional.tenant ? (
                       <>
-                        <TenantContactDetails tenant={optional.tenant} />
+                        <ContactDetails
+                          fullName={optional.tenant.fullName}
+                          personId={optional.tenant.id}
+                        />
                       </>
                     ) : (
                       <Text>Tenant not found.</Text>
