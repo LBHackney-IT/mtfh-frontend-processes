@@ -55,7 +55,7 @@ exports[`feature toggle on it renders processes menu view correctly 1`] = `
                 <span
                   class="govuk-details__summary-text"
                 >
-                  Sole to Joint
+                  Change to a tenancy
                 </span>
               </summary>
               <div

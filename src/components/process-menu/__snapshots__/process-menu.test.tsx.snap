@@ -18,7 +18,7 @@ exports[`feature toggle on prepopulate query Other tenancy changes has the corre
           <span
             class="govuk-details__summary-text"
           >
-            Sole to Joint
+            Change to a tenancy
           </span>
         </summary>
         <div
@@ -161,7 +161,7 @@ exports[`feature toggle on prepopulate query Request a Legal referral has the co
           <span
             class="govuk-details__summary-text"
           >
-            Sole to Joint
+            Change to a tenancy
           </span>
         </summary>
         <div

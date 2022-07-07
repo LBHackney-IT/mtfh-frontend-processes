@@ -6,13 +6,14 @@ import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
 interface MenuProps {
   label: string;
   link: string;
-  processes?: { label: string; link: string; targetType: string }[];
+  processes?: { name: string; label: string; link: string; targetType: string }[];
   getPplQuery?: (context: any) => string;
 }
 
 const getProcessLink = (processName: string) => {
   const process = processes[processName];
   return {
+    name: processName,
     targetType: process.targetType,
     label: process.title,
     link: `/processes/${process.processName}/start`,
@@ -56,15 +57,17 @@ const getPplQueryTenancyChange = ({ tenure }): string => {
   return encodedQuery;
 };
 
+const changeToATenancy = {
+  label: "Change to a tenancy",
+  link: "https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform",
+  processes: [
+    getProcessLink(processes.soletojoint.processName),
+    getProcessLink(processes.changeOfName.processName),
+  ],
+};
+
 const menu: MenuProps[] = [
-  {
-    label: "Sole to Joint",
-    link: "https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform",
-    processes: [
-      getProcessLink(processes.soletojoint.processName),
-      getProcessLink(processes.changeOfName.processName),
-    ],
-  },
+  changeToATenancy,
   {
     label: "Other tenancy changes",
     link: "https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform",
@@ -107,6 +110,14 @@ const menu: MenuProps[] = [
     label: "Report overgrown garden",
     link: "https://docs.google.com/forms/d/e/1FAIpQLSc3mOUUEQhdRiDsS0k9XDWlfGJG0CEFAC2rnC1sYmM-idt-Nw/viewform?gxids=7628",
   },
+];
+
+export const legacyMenuProps: MenuProps[] = [
+  {
+    ...changeToATenancy,
+    label: "Sole to Joint",
+  },
+  ...menu.slice(1),
 ];
 
 export default menu;
