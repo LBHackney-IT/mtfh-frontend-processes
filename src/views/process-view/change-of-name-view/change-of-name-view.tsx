@@ -4,6 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { EntitySummary } from "../../../components";
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
+import { TenantNewName } from "./states";
 import { RequestDocumentsView } from "./states/request-documents-view";
 
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
@@ -25,7 +26,7 @@ const { states } = processConfig;
 const { enterNewName, nameSubmitted } = states;
 
 const components = {
-  [enterNewName.state]: RequestDocumentsView,
+  [enterNewName.state]: TenantNewName,
   [nameSubmitted.state]: RequestDocumentsView,
 };
 
@@ -138,6 +139,7 @@ export const ChangeOfNameView = ({
     <>
       <EntitySummary id={process.targetId} type={processConfig.targetType} />
       <Component
+        processConfig={processConfig}
         process={process}
         mutate={mutate}
         optional={{
