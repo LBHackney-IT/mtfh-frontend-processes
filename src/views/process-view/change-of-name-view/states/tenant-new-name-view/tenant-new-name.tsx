@@ -3,8 +3,10 @@ import { useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
+import { EntitySummary } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
+import { areAllTruthy } from "../../../../../utils/validation";
 
 import { PersonTitle } from "@mtfh/common/lib/api/person/v1";
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
@@ -28,17 +30,20 @@ interface TenantNewNameViewProps {
   optional?: any;
 }
 
-const schema = Yup.object({
-  tenant: Yup.string().required(),
+export const schema = Yup.object({
+  title: Yup.string().required(),
+  firstName: Yup.string().required(),
+  middleName: Yup.string().optional(),
+  surname: Yup.string().required(),
 });
 
-type FormData = Yup.Asserts<typeof schema>;
+export type FormData = Yup.Asserts<typeof schema>;
 
 export const TenantNewName = ({
-  processConfig,
-  process,
-  mutate,
-}: TenantNewNameViewProps) => {
+                                processConfig,
+                                process,
+                                mutate,
+                              }: TenantNewNameViewProps) => {
   const stateConfig = processConfig.states.enterNewName;
   const error = undefined;
   const [globalError, setGlobalError] = useState<number>();
@@ -55,24 +60,30 @@ export const TenantNewName = ({
 
   return (
     <div data-testid="changeofname-EnterNewName">
+      <Heading variant="h1">{processConfig.title}</Heading>
+      <EntitySummary id={process.targetId} type={processConfig.targetType} />
       {globalError && (
         <StatusErrorSummary id="select-tenant-global-error" code={globalError} />
       )}
       <Heading variant="h3">Enter tenant's new name</Heading>
       <Formik<FormData>
-        initialValues={{ tenant: "" }}
-        validateOnChange
+        initialValues={{ title: "", firstName: "", middleName: "", surname: "" }}
+        validateOnChange={false}
         validateOnBlur={false}
         validationSchema={schema}
+        isInitialValid={false}
         onSubmit={async (data) => {
           try {
             await editProcess({
               id: process.id,
-              processTrigger: stateConfig.triggers.checkAutomatedEligibility,
+              processTrigger: stateConfig.triggers.enterNewName,
               processName: process?.processName,
               etag: process.etag || "",
               formData: {
-                incomingTenantId: data.tenant,
+                title: data.title,
+                firstName: data.firstName,
+                middleName: data.middleName,
+                surname: data.surname,
               },
               documents: [],
             });
@@ -82,7 +93,7 @@ export const TenantNewName = ({
           }
         }}
       >
-        {(properties) => {
+        {({ isValid, values, isSubmitting, validateForm }) => {
           return (
             <Form id="person-form" className="mtfh-person-form">
               <FormGroup id="person-form-new-tenant-name" name="new-tenant-name">
@@ -131,8 +142,12 @@ export const TenantNewName = ({
               </FormGroup>
               <div className="start-process__actions">
                 <Button
-                  disabled={!properties.dirty || !properties.isValid}
-                  isLoading={properties.isSubmitting}
+                  onClick={() => validateForm()}
+                  disabled={
+                    !areAllTruthy(values.title, values.firstName, values.surname) ||
+                    !isValid
+                  }
+                  isLoading={isSubmitting}
                   loadingText={locale.loadingText}
                   type="submit"
                 >
