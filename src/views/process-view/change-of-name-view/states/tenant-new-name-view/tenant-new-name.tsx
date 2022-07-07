@@ -40,10 +40,10 @@ export const schema = Yup.object({
 export type FormData = Yup.Asserts<typeof schema>;
 
 export const TenantNewName = ({
-                                processConfig,
-                                process,
-                                mutate,
-                              }: TenantNewNameViewProps) => {
+  processConfig,
+  process,
+  mutate,
+}: TenantNewNameViewProps) => {
   const stateConfig = processConfig.states.enterNewName;
   const error = undefined;
   const [globalError, setGlobalError] = useState<number>();

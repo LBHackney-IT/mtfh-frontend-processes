@@ -36,21 +36,25 @@ export const RequestDocumentsView = ({
         <div>
           <Text size="sm" style={{ fontWeight: "bold" }}>
             One of the following documents containing the tenant’s new name:
-            <ol type="1" style={{ marginLeft: "2em", marginTop: 15 }}>
-              {[
-                "Marriage certificate",
-                "Civil partnership certificate",
-                "Decree absolute",
-                "Final order",
-                "Deed poll document",
-                "Statutory declaration",
-              ].map((item) => (
-                <li key={item} style={{ marginTop: 0 }}>
-                  {item}
-                </li>
-              ))}
-            </ol>
           </Text>
+          <ol
+            className="lbh-body-s"
+            type="1"
+            style={{ marginLeft: "2em", marginTop: 15, fontWeight: "bold" }}
+          >
+            {[
+              "Marriage certificate",
+              "Civil partnership certificate",
+              "Decree absolute",
+              "Final order",
+              "Deed poll document",
+              "Statutory declaration",
+            ].map((item) => (
+              <li key={item} style={{ marginTop: 0 }}>
+                {item}
+              </li>
+            ))}
+          </ol>
         </div>
       </List>
 

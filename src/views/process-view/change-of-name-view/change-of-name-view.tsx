@@ -33,18 +33,21 @@ const components = {
 const { views } = locale;
 const { changeofname } = views;
 
-const getActiveStep = () => {
+const getActiveStep = (currentState) => {
+  if (currentState === states.nameSubmitted.state) {
+    return 1;
+  }
   return 0;
 };
 
 export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
   const {
-    process: { processId, processName },
+    process: { processId, processName, currentState },
     setCloseProcessDialogOpen,
     setCancel,
   } = props;
 
-  const activeStep = getActiveStep();
+  const activeStep = getActiveStep(currentState.state);
   const steps: JSX.Element[] = [
     <Step key="step-breach-of-tenancy">{changeofname.steps.tenantsNewName}</Step>,
     <Step key="step-request-documents">{changeofname.steps.requestDocuments}</Step>,
