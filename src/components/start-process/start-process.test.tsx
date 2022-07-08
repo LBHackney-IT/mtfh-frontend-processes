@@ -5,11 +5,13 @@ import { locale, processes } from "../../services";
 import { StartProcess } from "./start-process";
 
 const targetId = "fee0914a-3e45-4a4f-95c7-a0adfd2026c9";
+const targetType = "tenure";
 
 test("it enables form once checkbox is selected", async () => {
   render(
     <StartProcess
       targetId={targetId}
+      targetType={targetType}
       process={processes.soletojoint.startProcess}
       backLink="back-link"
       processName={processes.soletojoint.processName}
@@ -45,6 +47,7 @@ test("it displays an error if there is a bad response", async () => {
   render(
     <StartProcess
       targetId={targetId}
+      targetType={targetType}
       process={processes.soletojoint.startProcess}
       backLink="back-link"
       processName={processes.soletojoint.processName}
@@ -78,6 +81,7 @@ test("Renders without third party content", async () => {
   const { container } = render(
     <StartProcess
       targetId={targetId}
+      targetType={targetType}
       process={rest}
       backLink="back-link"
       processName={processes.soletojoint.processName}
@@ -99,6 +103,7 @@ test("Renders without risk content", async () => {
   const { container } = render(
     <StartProcess
       targetId={targetId}
+      targetType={targetType}
       process={rest}
       backLink="back-link"
       processName={processes.soletojoint.processName}

@@ -5,11 +5,6 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
   <div
     data-testid="soletojoint-ReviewDocuments"
   >
-    <h1
-      class="lbh-heading-h1"
-    >
-      Sole tenant requests a joint tenure
-    </h1>
     <h2
       class="lbh-heading-h2 entity-summary__tenure-heading"
     >
@@ -296,11 +291,6 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
   <div
     data-testid="soletojoint-ReviewDocuments"
   >
-    <h1
-      class="lbh-heading-h1"
-    >
-      Sole tenant requests a joint tenure
-    </h1>
     <h2
       class="lbh-heading-h2 entity-summary__tenure-heading"
     >

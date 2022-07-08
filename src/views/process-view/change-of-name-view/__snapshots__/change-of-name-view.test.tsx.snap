@@ -287,6 +287,7 @@ exports[`changeofname/change-of-name-view it renders ChangeOfNameView correctly 
           </label>
           <select
             class="govuk-select lbh-select mtfh-person-form__input--contained"
+            data-testid="mtfh-person-form-title"
             id="person-form-title-field"
             name="title"
             required=""

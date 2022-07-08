@@ -16,7 +16,6 @@ import {
   Center,
   ErrorSummary,
   FormGroup,
-  Heading,
   InlineField,
   Link,
   Radio,
@@ -78,7 +77,6 @@ export const SelectTenantsView = ({
 
   return (
     <div data-testid="soletojoint-SelectTenants">
-      <Heading variant="h1">{processConfig.title}</Heading>
       <EntitySummary id={process.targetId} type={processConfig.targetType} />
       {globalError && (
         <StatusErrorSummary id="select-tenant-global-error" code={globalError} />

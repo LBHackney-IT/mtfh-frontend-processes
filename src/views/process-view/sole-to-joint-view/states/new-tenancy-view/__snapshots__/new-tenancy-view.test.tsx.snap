@@ -5,11 +5,6 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
   <div
     data-testid="soletojoint-ReviewApplication"
   >
-    <h1
-      class="lbh-heading-h1"
-    >
-      Sole tenant requests a joint tenure
-    </h1>
     <h2
       class="lbh-heading-h2 entity-summary__tenure-heading"
     >
@@ -289,11 +284,6 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
   <div
     data-testid="soletojoint-ReviewApplication"
   >
-    <h1
-      class="lbh-heading-h1"
-    >
-      Sole tenant requests a joint tenure
-    </h1>
     <h2
       class="lbh-heading-h2 entity-summary__tenure-heading"
     >

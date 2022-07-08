@@ -110,11 +110,8 @@ export const ProcessLayout = (): JSX.Element => {
       side={
         <Sidebar
           process={process}
-          states={states}
           submitted={submitted}
           closeCase={closeCase}
-          processId={processId}
-          processName={processConfig.processName}
           setCloseProcessDialogOpen={setCloseProcessDialogOpen}
           setCancel={setCancel}
         />

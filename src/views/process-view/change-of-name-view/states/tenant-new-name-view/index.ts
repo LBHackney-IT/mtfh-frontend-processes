@@ -1,1 +1,1 @@
-export * from "./tenant-new-name";
+export * from "./tenant-new-name-view";

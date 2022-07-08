@@ -5,11 +5,6 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
   <div
     data-testid="soletojoint-ReviewApplication"
   >
-    <h1
-      class="lbh-heading-h1"
-    >
-      Sole tenant requests a joint tenure
-    </h1>
     <h2
       class="lbh-heading-h2 entity-summary__tenure-heading"
     >

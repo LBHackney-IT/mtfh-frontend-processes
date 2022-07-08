@@ -5,11 +5,6 @@ exports[`it renders CheckEligibility passed checks view correctly 1`] = `
   <div
     data-testid="soletojoint-CheckEligibility"
   >
-    <h1
-      class="lbh-heading-h1"
-    >
-      Sole tenant requests a joint tenure
-    </h1>
     <h2
       class="lbh-heading-h2 entity-summary__tenure-heading"
     >

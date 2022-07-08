@@ -90,51 +90,32 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
     >
       You can request supporting documents through the Document Evidence Store or you can make an appointment with the tenant to check supporting documents in-person.
     </p>
-    <div
-      class="mtfh-center mtfh-center--horizontal mtfh-center--vertical"
+    <p
+      class="lbh-body-s"
     >
-      <svg
-        class="mtfh-icon"
-        focusable="false"
-        height="50"
-        stroke="#00703c"
-        viewBox="0 0 42 42"
-        width="50"
+      Haylee Macejkovic
+       contact details:
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Phone:
+      <span
+        style="margin-left: 1em;"
       >
-        <title>
-          Loading...
-        </title>
-        <g
-          fill="none"
-          fill-rule="evenodd"
-        >
-          <g
-            stroke-width="5"
-            transform="translate(3 3)"
-          >
-            <circle
-              cx="18"
-              cy="18"
-              r="18"
-              stroke-opacity=".5"
-            />
-            <path
-              d="M36 18c0-9.94-8.06-18-18-18"
-              transform="rotate(112.708 18 18)"
-            >
-              <animatetransform
-                attributeName="transform"
-                dur="1s"
-                from="0 18 18"
-                repeatCount="indefinite"
-                to="360 18 18"
-                type="rotate"
-              />
-            </path>
-          </g>
-        </g>
-      </svg>
-    </div>
+        075949281
+      </span>
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Email:
+      <span
+        style="margin-left: 1em;"
+      >
+        Gay.Jacobi@hotmail.com
+      </span>
+    </p>
     <form
       action="#"
       class="request-documents-form"

@@ -4,7 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { EntitySummary } from "../../../components";
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
-import { TenantNewName } from "./states";
+import { TenantNewNameView } from "./states";
 import { RequestDocumentsView } from "./states/request-documents-view";
 
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
@@ -26,7 +26,7 @@ const { states } = processConfig;
 const { enterNewName, nameSubmitted } = states;
 
 const components = {
-  [enterNewName.state]: TenantNewName,
+  [enterNewName.state]: TenantNewNameView,
   [nameSubmitted.state]: RequestDocumentsView,
 };
 
@@ -132,6 +132,7 @@ export const ChangeOfNameView = ({
     return (
       <ErrorSummary
         id="change-of-name-view"
+        data-testid="error-change-of-name-view"
         title={locale.errors.unableToFindState}
         description={locale.errors.unableToFindStateDescription}
       />

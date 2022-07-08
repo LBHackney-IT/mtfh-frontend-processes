@@ -226,9 +226,6 @@ describe("review-documents-view", () => {
       },
     );
     await expect(
-      screen.findByText(locale.views.soleToJoint.title),
-    ).resolves.toBeInTheDocument();
-    await expect(
       screen.findByText(locale.views.reviewDocuments.passedChecks),
     ).resolves.toBeInTheDocument();
     await expect(screen.queryByText(locale.views.reviewDocuments.viewInDes)).toBeNull();

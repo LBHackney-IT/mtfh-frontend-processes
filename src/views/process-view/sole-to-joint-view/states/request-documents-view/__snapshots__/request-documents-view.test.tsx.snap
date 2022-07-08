@@ -5,11 +5,6 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
   <div
     data-testid="soletojoint-RequestDocuments"
   >
-    <h1
-      class="lbh-heading-h1"
-    >
-      Sole tenant requests a joint tenure
-    </h1>
     <h2
       class="lbh-heading-h2 entity-summary__tenure-heading"
     >

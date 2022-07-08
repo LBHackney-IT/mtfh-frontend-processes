@@ -4,7 +4,7 @@ import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
 import { locale } from "../../../../../services";
-import { IProcess } from "../../../../../types";
+import { Trigger } from "../../../../../services/processes/types";
 
 import { PersonTitle } from "@mtfh/common/lib/api/person/v1";
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
@@ -18,10 +18,10 @@ import {
   Select,
   StatusErrorSummary,
 } from "@mtfh/common/lib/components";
+
 import "./styles.scss";
 
 interface TenantNewNameViewProps {
-  processConfig: IProcess;
   process: Process;
   mutate: () => void;
   // eslint-disable-next-line react/no-unused-prop-types
@@ -37,12 +37,7 @@ export const schema = Yup.object({
 
 export type FormData = Yup.Asserts<typeof schema>;
 
-export const TenantNewName = ({
-  processConfig,
-  process,
-  mutate,
-}: TenantNewNameViewProps) => {
-  const stateConfig = processConfig.states.enterNewName;
+export const TenantNewNameView = ({ process, mutate }: TenantNewNameViewProps) => {
   const error = undefined;
   const [globalError, setGlobalError] = useState<number>();
 
@@ -59,7 +54,7 @@ export const TenantNewName = ({
   return (
     <div data-testid="changeofname-EnterNewName">
       {globalError && (
-        <StatusErrorSummary id="select-tenant-global-error" code={globalError} />
+        <StatusErrorSummary id="enter-new-name-global-error" code={globalError} />
       )}
       <Heading variant="h3">Enter tenant's new name</Heading>
       <Formik<FormData>
@@ -72,7 +67,7 @@ export const TenantNewName = ({
           try {
             await editProcess({
               id: process.id,
-              processTrigger: stateConfig.triggers.enterNewName,
+              processTrigger: Trigger.EnterNewName,
               processName: process?.processName,
               etag: process.etag || "",
               formData: {
@@ -100,7 +95,10 @@ export const TenantNewName = ({
                     name="title"
                     required
                   >
-                    <Select className="mtfh-person-form__input--contained">
+                    <Select
+                      data-testid="mtfh-person-form-title"
+                      className="mtfh-person-form__input--contained"
+                    >
                       <option value="">{locale.views.person.titlePlaceholder}</option>
                       {(Object.keys(PersonTitle) as Array<keyof typeof PersonTitle>).map(
                         (key) => (

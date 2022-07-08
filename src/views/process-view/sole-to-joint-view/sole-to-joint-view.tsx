@@ -313,6 +313,7 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
     return (
       <ErrorSummary
         id="sole-to-joint-view"
+        data-testid="error-sole-to-joint-view"
         title={locale.errors.unableToFindState}
         description={locale.errors.unableToFindStateDescription}
       />

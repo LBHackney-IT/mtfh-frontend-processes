@@ -4,7 +4,7 @@ import { EntitySummary } from "../entity-summary";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
-import { Center, ErrorSummary, Heading, Spinner } from "@mtfh/common/lib/components";
+import { Center, ErrorSummary, Spinner } from "@mtfh/common/lib/components";
 
 interface SoleToJointHeaderProps {
   processConfig: IProcess;
@@ -49,7 +49,6 @@ export const SoleToJointHeader = ({
 
   return (
     <>
-      <Heading variant="h1">{processConfig.title}</Heading>
       <EntitySummary
         id={process.targetId}
         type={processConfig.targetType}

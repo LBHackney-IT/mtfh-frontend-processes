@@ -18,4 +18,5 @@ export enum Trigger {
   TenureInvestigation = "TenureInvestigation",
   UpdateName = "UpdateName",
   UpdateTenure = "UpdateTenure",
+  EnterNewName = "EnterNewName",
 }
