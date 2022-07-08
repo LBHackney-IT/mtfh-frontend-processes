@@ -143,7 +143,7 @@ const locale = {
         "You must make an office appointment with the applicant to sign a new tenancy agreement",
       recommendation: "Recommendation:",
       showReport: "Show investigator report",
-      tenancySigned: "Tenancy signed: tenure created",
+      tenancySigned: "Tenancy signed: Tenure created",
       tenureInvestigationCompleted:
         "I confirm that the tenure investigation has been completed",
       tenureInvestigatorRecommendation: (recommendation) => {
@@ -173,7 +173,7 @@ const locale = {
       outcomeLetterSent: "I confirm that an outcome letter has been sent to the resident",
       soleToJointClosed: "Sole to joint tenure application closed",
       confirmationText:
-        "This case is now closed and we have record this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history",
+        "This case is now closed and we have recorded this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history.",
       thankYouForConfirmation: "Thank you for your confirmation",
     },
   },
