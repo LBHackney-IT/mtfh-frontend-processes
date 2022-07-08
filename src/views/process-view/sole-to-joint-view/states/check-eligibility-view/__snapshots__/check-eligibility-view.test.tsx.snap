@@ -627,7 +627,7 @@ exports[`it renders CheckEligibility passed checks view correctly 1`] = `
             >
               <input
                 class="govuk-radios__input"
-                id="further-eligibility-already-joint-tenant"
+                id="further-eligibility-already-joint-tenant-yes"
                 name="br20"
                 required=""
                 type="radio"
@@ -635,7 +635,7 @@ exports[`it renders CheckEligibility passed checks view correctly 1`] = `
               />
               <label
                 class="govuk-label govuk-radios__label"
-                for="further-eligibility-already-joint-tenant"
+                for="further-eligibility-already-joint-tenant-yes"
               >
                 Yes
               </label>
@@ -645,7 +645,7 @@ exports[`it renders CheckEligibility passed checks view correctly 1`] = `
             >
               <input
                 class="govuk-radios__input"
-                id="further-eligibility-already-joint-tenant"
+                id="further-eligibility-already-joint-tenant-no"
                 name="br20"
                 required=""
                 type="radio"
@@ -653,7 +653,7 @@ exports[`it renders CheckEligibility passed checks view correctly 1`] = `
               />
               <label
                 class="govuk-label govuk-radios__label"
-                for="further-eligibility-already-joint-tenant"
+                for="further-eligibility-already-joint-tenant-no"
               >
                 No
               </label>

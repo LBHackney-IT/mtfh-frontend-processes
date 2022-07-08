@@ -230,7 +230,7 @@ export const FurtherEligibilityForm = ({
             >
               <RadioGroup>
                 <InlineField name="br20" type="radio">
-                  <Radio id="further-eligibility-already-joint-tenant" value="true">
+                  <Radio id="further-eligibility-already-joint-tenant-yes" value="true">
                     Yes
                   </Radio>
                 </InlineField>
@@ -271,7 +271,7 @@ export const FurtherEligibilityForm = ({
                   </FormGroup>
                 )}
                 <InlineField name="br20" type="radio">
-                  <Radio id="further-eligibility-already-joint-tenant" value="false">
+                  <Radio id="further-eligibility-already-joint-tenant-no" value="false">
                     No
                   </Radio>
                 </InlineField>
