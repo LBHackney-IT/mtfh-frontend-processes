@@ -1,6 +1,7 @@
 import { Link as RouterLink } from "react-router-dom";
 
 import { menu } from "../../services";
+import { legacyMenuProps } from "../../services/menu";
 import { TargetType } from "../../types";
 
 import { useAsset } from "@mtfh/common/lib/api/asset/v1";
@@ -61,6 +62,12 @@ interface ProcessMenuProps {
 
 export const ProcessMenu = ({ id, targetType }: ProcessMenuProps) => {
   const hasEnhancedProcessMenu = useFeatureToggle("MMH.EnhancedProcessMenu");
+  const enableChangeOfName = useFeatureToggle("MMH.EnableChangeOfName");
+
+  const processEnableStatus: Record<string, boolean> = {
+    soletojoint: true,
+    changeOfName: enableChangeOfName,
+  };
 
   const { data: tenure } = useTenure(id);
   const { data: asset } = useAsset(tenure?.tenuredAsset?.id || null);
@@ -83,7 +90,8 @@ export const ProcessMenu = ({ id, targetType }: ProcessMenuProps) => {
         link,
         ...(item.processes && {
           processes: item.processes.filter(
-            (process) => process.targetType === targetType,
+            (process) =>
+              process.targetType === targetType && processEnableStatus[process.name],
           ),
         }),
       };
@@ -94,7 +102,7 @@ export const ProcessMenu = ({ id, targetType }: ProcessMenuProps) => {
         (Array.isArray(item.processes) && item.processes.length),
     );
 
-  const legacyMenu = menu.map((item) => {
+  const legacyMenu = legacyMenuProps.map((item) => {
     let link = item.link;
     if (item.getPplQuery) {
       const query = item.getPplQuery(queryData);
