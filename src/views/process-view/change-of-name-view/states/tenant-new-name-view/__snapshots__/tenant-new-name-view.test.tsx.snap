@@ -1,0 +1,184 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`changeofname/tenant-new-name-view it renders TenantNewNameView correctly on state EnterNewName 1`] = `
+<div>
+  <div
+    data-testid="changeofname-EnterNewName"
+  >
+    <h3
+      class="lbh-heading-h3"
+    >
+      Enter tenant's new name
+    </h3>
+    <form
+      action="#"
+      class="mtfh-person-form"
+      id="person-form"
+    >
+      <div
+        class="govuk-form-group lbh-form-group"
+        id="person-form-new-tenant-name"
+      >
+        <label
+          class="govuk-label lbh-label"
+          for="person-form-new-tenant-name-field"
+        >
+          
+        </label>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="person-form-title"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="person-form-title-field"
+          >
+            Title
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <select
+            class="govuk-select lbh-select mtfh-person-form__input--contained"
+            data-testid="mtfh-person-form-title"
+            id="person-form-title-field"
+            name="title"
+            required=""
+          >
+            <option
+              value=""
+            >
+              Select Title
+            </option>
+            <option
+              value="Mr"
+            >
+              Mr
+            </option>
+            <option
+              value="Mrs"
+            >
+              Mrs
+            </option>
+            <option
+              value="Miss"
+            >
+              Miss
+            </option>
+            <option
+              value="Ms"
+            >
+              Ms
+            </option>
+            <option
+              value="Dr"
+            >
+              Dr
+            </option>
+            <option
+              value="Master"
+            >
+              Master
+            </option>
+            <option
+              value="Rabbi"
+            >
+              Rabbi
+            </option>
+            <option
+              value="Reverend"
+            >
+              Reverend
+            </option>
+            <option
+              value="Other"
+            >
+              Other
+            </option>
+          </select>
+        </div>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="person-form-firstName"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="person-form-firstName-field"
+          >
+            First name
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <input
+            class="govuk-input lbh-input"
+            id="person-form-firstName-field"
+            name="firstName"
+            placeholder="Enter first name"
+            required=""
+            value=""
+          />
+        </div>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="person-form-middleName"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="person-form-middleName-field"
+          >
+            Middle name
+            
+          </label>
+          <input
+            class="govuk-input lbh-input"
+            id="person-form-middleName-field"
+            name="middleName"
+            placeholder="Enter Middle name"
+            value=""
+          />
+        </div>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="person-form-surname"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="person-form-surname-field"
+          >
+            Last name
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <input
+            class="govuk-input lbh-input"
+            id="person-form-surname-field"
+            name="surname"
+            placeholder="Enter last name"
+            required=""
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="start-process__actions"
+      >
+        <button
+          class="govuk-button lbh-button"
+          disabled=""
+          type="submit"
+        >
+          Next
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+`;

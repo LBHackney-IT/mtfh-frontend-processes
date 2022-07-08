@@ -1,0 +1,467 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`request-documents-view it enables date/time option and next button 1`] = `
+<div>
+  <div
+    data-testid="soletojoint-RequestDocuments"
+  >
+    <h2
+      class="lbh-heading-h2 entity-summary__tenure-heading"
+    >
+      <div>
+        Tenure payment ref
+         
+        mt0xzvjp6g
+      </div>
+      <div>
+        72251 Champlin Trafficway, 99647
+      </div>
+      <div>
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
+        >
+          Global Web Consultant Alverta Denesik
+        </a>
+      </div>
+    </h2>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Eligibility checks passed
+        </h4>
+      </div>
+      <div
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        style="padding-left: 60px; margin-top: 17.5px;"
+      >
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
+        >
+          Show all eligibility checks
+        </a>
+      </div>
+    </div>
+    <h3
+      class="lbh-heading-h3"
+    >
+      Supporting documents
+    </h3>
+    <p
+      class="lbh-body-s"
+    >
+      The following documentation is required from the secure tenant and/or proposed tenant, as proof to support their application:
+    </p>
+    <ul
+      class="lbh-list lbh-list--bullet"
+    >
+      <li>
+        <p
+          class="lbh-body-s"
+          style="font-weight: bold;"
+        >
+          Secure and Proposed tenant: Two forms of proof of identity for both the secure and proposed tenant. At least one each must be photographic ID
+        </p>
+        <span
+          class="lbh-body-s"
+        >
+          (
+          for example: valid passport, driving licence, bank statement, utility bill
+          )
+        </span>
+      </li>
+      <li>
+        <p
+          class="lbh-body-s"
+          style="font-weight: bold;"
+        >
+          Proposed tenant: Proof of immigration status
+        </p>
+        <span
+          class="lbh-body-s"
+        >
+          (
+          for example: passport, home office letter, embassy letter, immigration status document
+          )
+        </span>
+      </li>
+      <li>
+        <p
+          class="lbh-body-s"
+          style="font-weight: bold;"
+        >
+          Proposed tenant: Proof of relationship to the existing tenant
+        </p>
+        <span
+          class="lbh-body-s"
+        >
+          (
+          for example: marriage or civil partner certificate
+          )
+        </span>
+      </li>
+      <li>
+        <p
+          class="lbh-body-s"
+          style="font-weight: bold;"
+        >
+          Proposed tenant: Proof of co-habitation: three documents proving 12 months residency at the property. If marriage certificate provided, any Proof of Address can be accepted.
+        </p>
+        <span
+          class="lbh-body-s"
+        >
+          (
+          for example: letter, utility bill, council tax bill
+          )
+        </span>
+      </li>
+    </ul>
+    <h3
+      class="lbh-heading-h3"
+    >
+      Checking supporting documents
+    </h3>
+    <p
+      class="lbh-body-s"
+    >
+      You can request supporting documents through the Document Evidence Store or you can make an appointment with the tenant to check supporting documents in-person.
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Global Web Consultant Alverta Denesik
+       contact details:
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Phone:
+      <span
+        style="margin-left: 1em;"
+      >
+        +44(0)7700 900251
+      </span>
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Email:
+      <span
+        style="margin-left: 1em;"
+      >
+        testtest34335@gmail.com
+      </span>
+    </p>
+    <form
+      action="#"
+      class="request-documents-form"
+      id="request-documents-form"
+      novalidate=""
+    >
+      <div
+        class="govuk-radios lbh-radios"
+      >
+        <div
+          class="govuk-radios__item"
+        >
+          <input
+            class="govuk-radios__input"
+            id="requestType-automatic"
+            name="requestType"
+            type="radio"
+            value="automatic"
+          />
+          <label
+            class="govuk-label govuk-radios__label"
+            for="requestType-automatic"
+          >
+            Request documents electronically
+          </label>
+        </div>
+        <div
+          class="govuk-radios__item"
+        >
+          <input
+            class="govuk-radios__input"
+            id="requestType-manual"
+            name="requestType"
+            type="radio"
+            value="manual"
+          />
+          <label
+            class="govuk-label govuk-radios__label"
+            for="requestType-manual"
+          >
+            I have made an appointment to check supporting documents
+          </label>
+        </div>
+      </div>
+      <div
+        style="display: flex;"
+      >
+        <fieldset
+          class="govuk-form-group lbh-form-group mtfh-appointment-form__date"
+          id="appointment-form-date"
+          style="margin-top: 1.5em; width: 100%;"
+        >
+          <legend
+            class="govuk-label lbh-label"
+            for="appointment-form-date-field"
+          >
+            Date
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </legend>
+          <div
+            class="govuk-date-input lbh-date-input"
+          >
+            <div
+              class="govuk-date-input__item"
+            >
+              <label
+                class="govuk-label lbh-label"
+                for="appointment-form-date-field-day"
+              />
+              <input
+                aria-label="Day"
+                aria-valuemax="31"
+                aria-valuemin="1"
+                aria-valuenow="1"
+                aria-valuetext="01"
+                class="govuk-input lbh-input govuk-date-input__input govuk-input--width-2"
+                name="day"
+                placeholder="dd"
+                required=""
+                role="spinbutton"
+                value="01"
+              />
+            </div>
+            <div
+              class="govuk-date-input__item"
+            >
+              <label
+                class="govuk-label lbh-label"
+                for="appointment-form-date-field-month"
+              />
+              <input
+                aria-label="Month"
+                aria-valuemax="12"
+                aria-valuemin="1"
+                aria-valuenow="1"
+                aria-valuetext="01"
+                class="govuk-input lbh-input govuk-date-input__input govuk-input--width-2"
+                name="month"
+                placeholder="mm"
+                required=""
+                role="spinbutton"
+                value="01"
+              />
+            </div>
+            <div
+              class="govuk-date-input__item"
+            >
+              <label
+                class="govuk-label lbh-label"
+                for="appointment-form-date-field-year"
+              />
+              <input
+                aria-label="Year"
+                aria-valuenow="2022"
+                aria-valuetext="2022"
+                class="govuk-input lbh-input govuk-input govuk-date-input__input govuk-input--width-4"
+                name="year"
+                placeholder="yy"
+                required=""
+                role="spinbutton"
+                value="2022"
+              />
+            </div>
+          </div>
+        </fieldset>
+        <fieldset
+          class="govuk-form-group lbh-form-group mtfh-appointment-form__time"
+          id="appointment-form-time"
+          style="margin-top: 1.5em; width: 100%;"
+        >
+          <legend
+            class="govuk-label lbh-label"
+            for="appointment-form-time-field"
+          >
+            Time
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </legend>
+          <div
+            class="govuk-date-input lbh-date-input"
+          >
+            <div
+              class="govuk-date-input__item"
+            >
+              <label
+                class="govuk-label lbh-label"
+                for="appointment-form-time-field-hour"
+              />
+              <input
+                aria-label="Hour"
+                aria-valuemax="12"
+                aria-valuemin="0"
+                aria-valuenow="1"
+                aria-valuetext="01"
+                class="govuk-input lbh-input govuk-date-input__input govuk-input--width-2"
+                name="hour"
+                placeholder="00"
+                required=""
+                role="spinbutton"
+                value="01"
+              />
+            </div>
+            <div
+              class="govuk-date-input__item"
+            >
+              <label
+                class="govuk-label lbh-label"
+                for="appointment-form-time-field-minute"
+              />
+              <input
+                aria-label="Minute"
+                aria-valuemax="59"
+                aria-valuemin="0"
+                aria-valuenow="1"
+                aria-valuetext="01"
+                class="govuk-input lbh-input govuk-date-input__input govuk-input--width-2"
+                name="minute"
+                placeholder="00"
+                required=""
+                role="spinbutton"
+                value="01"
+              />
+            </div>
+            <div
+              class="govuk-date-input__item"
+            >
+              <label
+                class="govuk-label lbh-label"
+                for="appointment-form-time-field-amPm"
+              />
+              <select
+                aria-label="AM/PM"
+                class="govuk-select lbh-select"
+                id="amPm"
+                name="amPm"
+              >
+                <option
+                  value=""
+                >
+                  AM/PM
+                </option>
+                <option
+                  value="am"
+                >
+                  AM
+                </option>
+                <option
+                  value="pm"
+                >
+                  PM
+                </option>
+              </select>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <button
+        class="govuk-button lbh-button"
+        type="submit"
+      >
+        Next
+      </button>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`request-documents-view it renders RequestDocuments correctly on state BreachChecksPassed 1`] = `
+<div>
+  <div
+    class="mtfh-center mtfh-center--horizontal mtfh-center--vertical"
+  >
+    <svg
+      class="mtfh-icon"
+      focusable="false"
+      height="50"
+      stroke="#00703c"
+      viewBox="0 0 42 42"
+      width="50"
+    >
+      <title>
+        Loading...
+      </title>
+      <g
+        fill="none"
+        fill-rule="evenodd"
+      >
+        <g
+          stroke-width="5"
+          transform="translate(3 3)"
+        >
+          <circle
+            cx="18"
+            cy="18"
+            r="18"
+            stroke-opacity=".5"
+          />
+          <path
+            d="M36 18c0-9.94-8.06-18-18-18"
+            transform="rotate(112.708 18 18)"
+          >
+            <animatetransform
+              attributeName="transform"
+              dur="1s"
+              from="0 18 18"
+              repeatCount="indefinite"
+              to="360 18 18"
+              type="rotate"
+            />
+          </path>
+        </g>
+      </g>
+    </svg>
+  </div>
+</div>
+`;

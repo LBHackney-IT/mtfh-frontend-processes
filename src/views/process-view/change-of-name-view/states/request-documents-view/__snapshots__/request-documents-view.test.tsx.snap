@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`changeofname/request-documents-view it renders RequestDocuments correctly on state NameSubmitted 1`] = `
+<div>
+  <div
+    data-testid="changeofname-RequestDocuments"
+  >
+    <h3
+      class="lbh-heading-h3"
+    >
+      Supporting documents
+    </h3>
+    <p
+      class="lbh-body-s"
+    >
+      The tenant needs to provide documents as proof to support their application:
+    </p>
+    <ul
+      class="lbh-list lbh-list--bullet"
+    >
+      <li>
+        <p
+          class="lbh-body-s"
+          style="font-weight: bold;"
+        >
+          Two forms of proof of identity. At least one must be photographic ID. Both must contain the tenants new name
+        </p>
+        <span
+          class="lbh-body-s"
+        >
+          (
+          for example: valid passport, driving licence, bank statement, utility bill
+          )
+        </span>
+      </li>
+      <li>
+        <div>
+          <p
+            class="lbh-body-s"
+            style="font-weight: bold;"
+          >
+            One of the following documents containing the tenant’s new name:
+          </p>
+          <ol
+            class="lbh-body-s"
+            style="margin-left: 2em; margin-top: 15px; font-weight: bold;"
+            type="1"
+          >
+            <li
+              style="margin-top: 0px;"
+            >
+              Marriage certificate
+            </li>
+            <li
+              style="margin-top: 0px;"
+            >
+              Civil partnership certificate
+            </li>
+            <li
+              style="margin-top: 0px;"
+            >
+              Decree absolute
+            </li>
+            <li
+              style="margin-top: 0px;"
+            >
+              Final order
+            </li>
+            <li
+              style="margin-top: 0px;"
+            >
+              Deed poll document
+            </li>
+            <li
+              style="margin-top: 0px;"
+            >
+              Statutory declaration
+            </li>
+          </ol>
+        </div>
+      </li>
+    </ul>
+    <h3
+      class="lbh-heading-h3"
+    >
+      Checking supporting documents
+    </h3>
+    <p
+      class="lbh-body-s"
+    >
+      You can request supporting documents through the Document Evidence Store or you can make an appointment with the tenant to check supporting documents in-person.
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Haylee Macejkovic
+       contact details:
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Phone:
+      <span
+        style="margin-left: 1em;"
+      >
+        075949281
+      </span>
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Email:
+      <span
+        style="margin-left: 1em;"
+      >
+        Gay.Jacobi@hotmail.com
+      </span>
+    </p>
+    <form
+      action="#"
+      class="request-documents-form"
+      id="request-documents-form"
+      novalidate=""
+    >
+      <div
+        class="govuk-radios lbh-radios"
+      >
+        <div
+          class="govuk-radios__item"
+        >
+          <input
+            class="govuk-radios__input"
+            id="requestType-automatic"
+            name="requestType"
+            type="radio"
+            value="automatic"
+          />
+          <label
+            class="govuk-label govuk-radios__label"
+            for="requestType-automatic"
+          >
+            Request documents electronically
+          </label>
+        </div>
+        <div
+          class="govuk-radios__item"
+        >
+          <input
+            class="govuk-radios__input"
+            id="requestType-manual"
+            name="requestType"
+            type="radio"
+            value="manual"
+          />
+          <label
+            class="govuk-label govuk-radios__label"
+            for="requestType-manual"
+          >
+            I have made an appointment to check supporting documents
+          </label>
+        </div>
+      </div>
+      <button
+        class="govuk-button lbh-button"
+        disabled=""
+        type="submit"
+      >
+        Next
+      </button>
+    </form>
+  </div>
+</div>
+`;

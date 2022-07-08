@@ -1,0 +1,194 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tenure-investigation-view it renders ReviewApplication view correctly for ApplicationSubmitted state 1`] = `
+<div>
+  <div
+    data-testid="soletojoint-ReviewApplication"
+  >
+    <h2
+      class="lbh-heading-h2 entity-summary__tenure-heading"
+    >
+      <div>
+        Tenure payment ref
+         
+        mt0xzvjp6g
+      </div>
+      <div>
+        72251 Champlin Trafficway, 99647
+      </div>
+      <div>
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
+        >
+          Global Web Consultant Alverta Denesik
+        </a>
+      </div>
+    </h2>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Eligibility checks passed
+        </h4>
+      </div>
+      <div
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        style="padding-left: 60px; margin-top: 17.5px;"
+      >
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
+        >
+          Show all eligibility checks
+        </a>
+      </div>
+    </div>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Supporting documents approved
+        </h4>
+      </div>
+      <div
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        style="margin-left: 60px; margin-top: 17.5px;"
+      >
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="http://des/teams/1/dashboard/requests"
+          target="_blank"
+        >
+          View documents on the Document Evidence Store
+        </a>
+      </div>
+    </div>
+    <p
+      class="lbh-body-s"
+    >
+      Global Web Consultant Alverta Denesik
+       contact details:
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Phone:
+      <span
+        style="margin-left: 1em;"
+      >
+        075949281
+      </span>
+    </p>
+    <p
+      class="lbh-body-s"
+    >
+      Email:
+      <span
+        style="margin-left: 1em;"
+      >
+        Gay.Jacobi@hotmail.com
+      </span>
+    </p>
+    <div
+      class="govuk-checkboxes__item"
+    >
+      <input
+        class="govuk-checkboxes__input"
+        id="tenure-investigation-completed"
+        type="checkbox"
+      />
+      <label
+        class="govuk-label govuk-checkboxes__label"
+        for="tenure-investigation-completed"
+      >
+        I confirm that the tenure investigation has been completed
+      </label>
+    </div>
+    <p
+      class="lbh-body-m"
+    >
+      Recommendation:
+    </p>
+    <button
+      class="govuk-button lbh-button"
+      disabled=""
+      style="width: 222px; margin-right: 100%;"
+      type="submit"
+    >
+      Approve
+    </button>
+    <button
+      class="govuk-button lbh-button"
+      disabled=""
+      style="width: 222px; margin-right: 100%;"
+      type="submit"
+    >
+      Appointment
+    </button>
+    <button
+      class="govuk-button lbh-button"
+      disabled=""
+      style="width: 222px; margin-right: 100%;"
+      type="submit"
+    >
+      Decline
+    </button>
+  </div>
+</div>
+`;

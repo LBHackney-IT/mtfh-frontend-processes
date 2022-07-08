@@ -1,0 +1,126 @@
+import React from "react";
+
+import {
+  getContactDetailsV2,
+  getReferenceDataV1,
+  mockContactDetailsV2,
+  mockProcessV1,
+  render,
+  server,
+} from "@hackney/mtfh-test-utils";
+import { screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
+
+import { changeofname } from "../../../../../services/processes";
+import { Trigger } from "../../../../../services/processes/types";
+import { TenantNewNameView } from "./tenant-new-name-view";
+
+import * as processApi from "@mtfh/common/lib/api/process/v1/service";
+
+const options = {
+  url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+  path: "/processes/:processName/:processId",
+};
+
+describe("changeofname/tenant-new-name-view", () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  test("it renders TenantNewNameView correctly on state EnterNewName", async () => {
+    server.use(getReferenceDataV1({}));
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    const { container } = render(
+      <TenantNewNameView
+        process={{
+          ...mockProcessV1,
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: changeofname.states.enterNewName.state,
+          },
+        }}
+        mutate={() => {}}
+      />,
+      options,
+    );
+    expect(container).toMatchSnapshot();
+  });
+
+  test("it shows validation messages on the relevant fields if they are empty", async () => {
+    server.use(getReferenceDataV1({}));
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    const user = userEvent.setup();
+    render(
+      <TenantNewNameView
+        process={{
+          ...mockProcessV1,
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: changeofname.states.enterNewName.state,
+          },
+        }}
+        mutate={() => {}}
+      />,
+      options,
+    );
+
+    const nextButton = await screen.findByText("Next");
+    expect(nextButton).toBeDisabled();
+
+    await user.type(screen.getByPlaceholderText("Enter first name"), "t");
+    expect(nextButton).not.toBeDisabled();
+
+    await user.click(nextButton);
+    await expect(
+      screen.findByText("title is a required field"),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.queryByText("firstName is a required field"),
+    ).not.toBeInTheDocument();
+    await expect(
+      screen.findByText("surname is a required field"),
+    ).resolves.toBeInTheDocument();
+  });
+
+  test("it submits the form", async () => {
+    server.use(getReferenceDataV1({}));
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    const editProcessSpy = jest.spyOn(processApi, "editProcess");
+    const user = userEvent.setup();
+    render(
+      <TenantNewNameView
+        process={{
+          ...mockProcessV1,
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: changeofname.states.enterNewName.state,
+          },
+        }}
+        mutate={() => {}}
+      />,
+      options,
+    );
+
+    const nextButton = await screen.findByText("Next");
+
+    await user.selectOptions(screen.getByTestId("mtfh-person-form-title"), "Mr");
+    await user.type(screen.getByPlaceholderText("Enter first name"), "name");
+    await user.type(screen.getByPlaceholderText("Enter last name"), "lastname");
+
+    await user.click(nextButton);
+
+    expect(editProcessSpy).toBeCalledWith({
+      id: mockProcessV1.id,
+      processTrigger: Trigger.EnterNewName,
+      processName: mockProcessV1?.processName,
+      etag: "",
+      formData: {
+        title: "Mr",
+        firstName: "name",
+        middleName: "",
+        surname: "lastname",
+      },
+      documents: [],
+    });
+  });
+});
