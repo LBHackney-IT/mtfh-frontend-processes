@@ -1,7 +1,7 @@
 import React from "react";
 
-import { render } from "@hackney/mtfh-test-utils";
-import { screen } from "@testing-library/react";
+import { getPersonV1, render, server } from "@hackney/mtfh-test-utils";
+import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 
 import { locale } from "../../services";
 import { ProcessLayout } from "./process-layout";
@@ -35,9 +35,9 @@ describe("process-layout", () => {
       path: "/processes/:processName/:processId",
       url: `/processes/${processName}/${processId}`,
     };
-
+    server.use(getPersonV1());
     render(<ProcessLayout />, options);
-
+    await waitForElementToBeRemoved(screen.queryByText(/Loading/));
     await expect(screen.findByText("Change of Name")).resolves.toBeInTheDocument();
     await expect(screen.getByTestId("mtfh-stepper-change-of-name")).toBeInTheDocument();
     await expect(screen.getByTestId("error-change-of-name-view")).toBeInTheDocument();
