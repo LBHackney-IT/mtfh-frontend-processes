@@ -411,7 +411,7 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
         <h4
           class="lbh-heading-h4 mtfh-status-heading__title"
         >
-          Tenancy signed: tenure created
+          Tenancy signed: Tenure created
         </h4>
       </div>
       <div
@@ -439,7 +439,7 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
         <p
           class="lbh-body-s"
         >
-          This case is now closed and we have record this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history
+          This case is now closed and we have recorded this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history.
         </p>
       </li>
     </ul>
