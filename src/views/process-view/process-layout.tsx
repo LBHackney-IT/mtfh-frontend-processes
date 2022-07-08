@@ -101,7 +101,7 @@ export const ProcessLayout = (): JSX.Element => {
       backLink={
         <Link
           as={RouterLink}
-          to={`/processes/${processName}/start/${process.processName}/${process.targetId}`}
+          to={`/processes/${processName}/start/${process.targetType}/${process.targetId}`}
           variant="back-link"
         >
           {locale.backButton}
