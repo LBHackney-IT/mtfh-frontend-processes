@@ -45,10 +45,6 @@ export const ProcessLayout = (): JSX.Element => {
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [closeCase, setCloseCase] = useState<boolean>(false);
 
-  const processConfig = processes[processName];
-  const { states } = processConfig;
-  const { processClosed } = states;
-
   const {
     data: process,
     error,
@@ -88,6 +84,10 @@ export const ProcessLayout = (): JSX.Element => {
       />
     );
   }
+
+  const processConfig = processName && processes[processName];
+  const { states } = processConfig;
+  const { processClosed } = states;
 
   let closeProcessReasonFinal = closeProcessReason;
   if (!closeProcessReasonFinal && isSameState(process.currentState, processClosed)) {

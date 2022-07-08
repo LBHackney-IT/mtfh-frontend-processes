@@ -3,6 +3,7 @@ import React from "react";
 import { render } from "@hackney/mtfh-test-utils";
 import { screen } from "@testing-library/react";
 
+import { locale } from "../../services";
 import { ProcessLayout } from "./process-layout";
 
 const processId = "e63e68c7-84b0-3a48-b450-896e2c3d7735";
@@ -40,5 +41,19 @@ describe("process-layout", () => {
     await expect(screen.findByText("Change of Name")).resolves.toBeInTheDocument();
     await expect(screen.getByTestId("mtfh-stepper-change-of-name")).toBeInTheDocument();
     await expect(screen.getByTestId("error-change-of-name-view")).toBeInTheDocument();
+  });
+
+  test("it renders error when component not found", async () => {
+    const processName = "unknown";
+    const options = {
+      path: "/processes/:processName/:processId",
+      url: `/processes/${processName}/${processId}`,
+    };
+
+    render(<ProcessLayout />, options);
+
+    await expect(
+      screen.findByText(locale.errors.unableToFindState),
+    ).resolves.toBeInTheDocument();
   });
 });

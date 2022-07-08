@@ -1,7 +1,6 @@
 import React from "react";
 
 import {
-  getContactDetailsV2,
   getReferenceDataV1,
   mockContactDetailsV2,
   mockPersonV1,
@@ -13,6 +12,10 @@ import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 
 import { RequestDocumentsView } from "./request-documents-view";
 
+import * as contactDetailsService from "@mtfh/common/lib/api/contact-details/v2/service";
+import { ContactDetailsResponse } from "@mtfh/common/lib/api/contact-details/v2/service";
+import { AxiosSWRResponse } from "@mtfh/common/lib/http";
+
 const options = {
   url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
   path: "/processes/:processName/:processId",
@@ -21,11 +24,13 @@ const options = {
 describe("changeofname/request-documents-view", () => {
   beforeEach(() => {
     jest.resetModules();
+    server.use(getReferenceDataV1());
   });
 
   test("it renders RequestDocuments correctly on state NameSubmitted", async () => {
-    server.use(getReferenceDataV1({}));
-    server.use(getContactDetailsV2(mockContactDetailsV2));
+    jest.spyOn(contactDetailsService, "useContactDetails").mockReturnValue({
+      data: mockContactDetailsV2,
+    } as AxiosSWRResponse<ContactDetailsResponse>);
     const { container } = render(
       <RequestDocumentsView
         process={{

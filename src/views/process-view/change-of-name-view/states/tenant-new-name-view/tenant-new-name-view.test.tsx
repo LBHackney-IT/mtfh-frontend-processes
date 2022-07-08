@@ -5,6 +5,7 @@ import {
   getReferenceDataV1,
   mockContactDetailsV2,
   mockProcessV1,
+  patchProcessV1,
   render,
   server,
 } from "@hackney/mtfh-test-utils";
@@ -16,6 +17,7 @@ import { Trigger } from "../../../../../services/processes/types";
 import { TenantNewNameView } from "./tenant-new-name-view";
 
 import * as processApi from "@mtfh/common/lib/api/process/v1/service";
+import commonLocale from "@mtfh/common/lib/locale";
 
 const options = {
   url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -122,5 +124,33 @@ describe("changeofname/tenant-new-name-view", () => {
       },
       documents: [],
     });
+  });
+
+  test("it renders error when submit fails", async () => {
+    server.use(patchProcessV1({}, 500));
+    server.use(getReferenceDataV1({}));
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    render(
+      <TenantNewNameView
+        process={{
+          ...mockProcessV1,
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: changeofname.states.enterNewName.state,
+          },
+        }}
+        mutate={() => {}}
+      />,
+      options,
+    );
+    const nextButton = await screen.findByText("Next");
+    await userEvent.selectOptions(screen.getByTestId("mtfh-person-form-title"), "Mr");
+    await userEvent.type(screen.getByPlaceholderText("Enter first name"), "name");
+    await userEvent.type(screen.getByPlaceholderText("Enter last name"), "lastname");
+    await userEvent.click(nextButton);
+
+    expect(
+      screen.findByText(commonLocale.components.statusErrorSummary.statusTitle(500)),
+    ).resolves.toBeInTheDocument();
   });
 });
