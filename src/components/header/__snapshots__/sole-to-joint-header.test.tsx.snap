@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sole to joint header it renders sole to joint header correctly 1`] = `
+<div>
+  <h2
+    class="lbh-heading-h2 entity-summary__tenure-heading"
+  >
+    <div>
+      Tenure payment ref
+       
+      mt0xzvjp6g
+    </div>
+    <div>
+      72251 Champlin Trafficway, 99647
+    </div>
+    <div>
+      <a
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+        target="_blank"
+      >
+        Global Web Consultant Alverta Denesik
+      </a>
+    </div>
+  </h2>
+</div>
+`;

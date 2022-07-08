@@ -56,6 +56,7 @@ export const StartProcessView = () => {
           processName={processName}
           process={startProcess}
           backLink={backLink}
+          targetType={targetType}
         />
       </>
     </Layout>

@@ -25,6 +25,7 @@ interface StartProcessProps {
   backLink: string;
   processName: string;
   targetId: string;
+  targetType: string;
 }
 
 export const schema = Yup.object({
@@ -38,6 +39,7 @@ export const StartProcess = ({
   process,
   backLink,
   targetId,
+  targetType,
 }: StartProcessProps) => {
   const history = useHistory();
   const [globalError, setGlobalError] = useState<number>();
@@ -65,7 +67,10 @@ export const StartProcess = ({
         validationSchema={schema}
         onSubmit={async () => {
           try {
-            const response = await addProcess({ targetID: targetId }, processName);
+            const response = await addProcess(
+              { targetID: targetId, targetType },
+              processName,
+            );
             history.push(`/processes/${processName}/${response.id}`);
           } catch (e: any) {
             setGlobalError(e.response?.status || 500);

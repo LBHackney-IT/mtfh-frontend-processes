@@ -1,0 +1,585 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`review-documents-view it renders ReviewDocuments correctly on state DocumentsRequestedAppointment 1`] = `
+<div>
+  <div
+    data-testid="soletojoint-ReviewDocuments"
+  >
+    <h2
+      class="lbh-heading-h2 entity-summary__tenure-heading"
+    >
+      <div>
+        Tenure payment ref
+         
+        mt0xzvjp6g
+      </div>
+      <div>
+        72251 Champlin Trafficway, 99647
+      </div>
+      <div>
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
+        >
+          Global Web Consultant Alverta Denesik
+        </a>
+      </div>
+    </h2>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Eligibility checks passed
+        </h4>
+      </div>
+      <div
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        style="padding-left: 60px; margin-top: 17.5px;"
+      >
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
+        >
+          Show all eligibility checks
+        </a>
+      </div>
+    </div>
+    <div
+      class="mtfh-box"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#0B0C0C"
+            stroke-width="1.5"
+          />
+          <path
+            d="M20.2251 12.7026C20.2251 11.1991 21.0627 10.4473 22.7378 10.4473C24.4129 10.4473 25.2505 11.1991 25.2505 12.7026C25.2505 13.4191 25.0386 13.9792 24.6147 14.3828C24.201 14.7764 23.5754 14.9731 22.7378 14.9731C21.0627 14.9731 20.2251 14.2163 20.2251 12.7026ZM25.0386 34H20.4219V17.0771H25.0386V34Z"
+            fill="#0B0C0C"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Office appointment scheduled
+        </h4>
+      </div>
+      <p
+        class="lbh-body-m"
+        style="margin-left: 60px;"
+      >
+        Date: 
+        Monday 12th October 2099
+        <br />
+        Time: 
+        08:59 am
+      </p>
+      <button
+        class="govuk-link lbh-link"
+        style="margin-left: 60px;"
+        type="button"
+      >
+        Change
+      </button>
+    </div>
+    <div
+      style="padding-bottom: 35px;"
+    />
+    <form
+      action="#"
+      class="review-documents-form"
+      id="review-documents-form"
+      novalidate=""
+    >
+      <h4
+        class="lbh-heading-h4"
+      >
+        Use the form below to record the documents you have checked:
+      </h4>
+      <div
+        class="govuk-form-group lbh-form-group"
+        id="review-documents-form-group"
+      >
+        <label
+          class="govuk-label lbh-label"
+          for="review-documents-form-group-field"
+        >
+          
+          
+        </label>
+        <div
+          class="govuk-checkboxes lbh-checkboxes"
+          id="review-documents-form-group-field"
+        >
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-photographic-id-hint"
+              class="govuk-checkboxes__input"
+              id="seen-photographic-id"
+              name="seenPhotographicId"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-photographic-id"
+            >
+              I confirm I have seen a government issue photographic ID
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-photographic-id-hint"
+            >
+              (for example: valid passport, driving licence)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-second-id-hint"
+              class="govuk-checkboxes__input"
+              id="seen-second-id"
+              name="seenSecondId"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-second-id"
+            >
+              I confirm I have seen a second form of ID (does not have to be photographic)
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-second-id-hint"
+            >
+              (for example: utility bill, bank statement, council letter)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="is-not-immigration-control-hint"
+              class="govuk-checkboxes__input"
+              id="is-not-immigration-control"
+              name="isNotInImmigrationControl"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="is-not-immigration-control"
+            >
+              I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="is-not-immigration-control-hint"
+            >
+              (for example: passport, home office letter, embassy letter, immigration status document)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-proof-of-relationship-hint"
+              class="govuk-checkboxes__input"
+              id="seen-proof-of-relationship"
+              name="seenProofOfRelationship"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-proof-of-relationship"
+            >
+              I confirm I have seen proof of relationship to the existing tenant
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-proof-of-relationship-hint"
+            >
+              (for example: marriage or civil partner certificate)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="incoming-tenant-living-in-property-hint"
+              class="govuk-checkboxes__input"
+              id="incoming-tenant-living-in-property"
+              name="incomingTenantLivingInProperty"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="incoming-tenant-living-in-property"
+            >
+              I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="incoming-tenant-living-in-property-hint"
+            >
+              (for example: letter, utility bill, council tax bill)
+            </span>
+          </div>
+        </div>
+      </div>
+      <button
+        class="govuk-button lbh-button"
+        disabled=""
+        style="width: 222px;"
+        type="submit"
+      >
+        Next
+      </button>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`review-documents-view it renders ReviewDocuments correctly on state DocumentsRequestedDes 1`] = `
+<div>
+  <div
+    data-testid="soletojoint-ReviewDocuments"
+  >
+    <h2
+      class="lbh-heading-h2 entity-summary__tenure-heading"
+    >
+      <div>
+        Tenure payment ref
+         
+        mt0xzvjp6g
+      </div>
+      <div>
+        72251 Champlin Trafficway, 99647
+      </div>
+      <div>
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
+        >
+          Global Web Consultant Alverta Denesik
+        </a>
+      </div>
+    </h2>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Eligibility checks passed
+        </h4>
+      </div>
+      <div
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        style="padding-left: 60px; margin-top: 17.5px;"
+      >
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
+        >
+          Show all eligibility checks
+        </a>
+      </div>
+    </div>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Documents requested
+        </h4>
+      </div>
+      <div
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        style="margin-left: 60px; margin-top: 17.5px;"
+      >
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="http://des/teams/1/dashboard/requests"
+          target="_blank"
+        >
+          View request in Document Evidence Store
+        </a>
+      </div>
+    </div>
+    <div
+      class="govuk-checkboxes__item"
+    >
+      <input
+        class="govuk-checkboxes__input"
+        id="condition"
+        type="checkbox"
+      />
+      <label
+        class="govuk-label govuk-checkboxes__label"
+        for="condition"
+      >
+        I need to make an appointment to check supporting documents
+      </label>
+    </div>
+    <div
+      style="padding-bottom: 35px;"
+    />
+    <form
+      action="#"
+      class="review-documents-form"
+      id="review-documents-form"
+      novalidate=""
+    >
+      <h4
+        class="lbh-heading-h4"
+      >
+        Use the form below to record the documents you have checked:
+      </h4>
+      <div
+        class="govuk-form-group lbh-form-group"
+        id="review-documents-form-group"
+      >
+        <label
+          class="govuk-label lbh-label"
+          for="review-documents-form-group-field"
+        >
+          
+          
+        </label>
+        <div
+          class="govuk-checkboxes lbh-checkboxes"
+          id="review-documents-form-group-field"
+        >
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-photographic-id-hint"
+              class="govuk-checkboxes__input"
+              id="seen-photographic-id"
+              name="seenPhotographicId"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-photographic-id"
+            >
+              I confirm I have seen a government issue photographic ID
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-photographic-id-hint"
+            >
+              (for example: valid passport, driving licence)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-second-id-hint"
+              class="govuk-checkboxes__input"
+              id="seen-second-id"
+              name="seenSecondId"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-second-id"
+            >
+              I confirm I have seen a second form of ID (does not have to be photographic)
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-second-id-hint"
+            >
+              (for example: utility bill, bank statement, council letter)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="is-not-immigration-control-hint"
+              class="govuk-checkboxes__input"
+              id="is-not-immigration-control"
+              name="isNotInImmigrationControl"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="is-not-immigration-control"
+            >
+              I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="is-not-immigration-control-hint"
+            >
+              (for example: passport, home office letter, embassy letter, immigration status document)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="seen-proof-of-relationship-hint"
+              class="govuk-checkboxes__input"
+              id="seen-proof-of-relationship"
+              name="seenProofOfRelationship"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="seen-proof-of-relationship"
+            >
+              I confirm I have seen proof of relationship to the existing tenant
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="seen-proof-of-relationship-hint"
+            >
+              (for example: marriage or civil partner certificate)
+            </span>
+          </div>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              aria-describedby="incoming-tenant-living-in-property-hint"
+              class="govuk-checkboxes__input"
+              id="incoming-tenant-living-in-property"
+              name="incomingTenantLivingInProperty"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="incoming-tenant-living-in-property"
+            >
+              I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months
+            </label>
+            <span
+              class="govuk-hint govuk-checkboxes__hint lbh-hint"
+              id="incoming-tenant-living-in-property-hint"
+            >
+              (for example: letter, utility bill, council tax bill)
+            </span>
+          </div>
+        </div>
+      </div>
+      <button
+        class="govuk-button lbh-button"
+        disabled=""
+        style="width: 222px;"
+        type="submit"
+      >
+        Next
+      </button>
+    </form>
+  </div>
+</div>
+`;

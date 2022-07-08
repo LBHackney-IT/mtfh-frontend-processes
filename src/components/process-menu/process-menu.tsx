@@ -66,7 +66,7 @@ export const ProcessMenu = ({ id, targetType }: ProcessMenuProps) => {
 
   const processEnableStatus: Record<string, boolean> = {
     soletojoint: true,
-    changeOfName: enableChangeOfName,
+    changeofname: enableChangeOfName,
   };
 
   const { data: tenure } = useTenure(id);

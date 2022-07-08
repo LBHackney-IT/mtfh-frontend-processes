@@ -1,0 +1,617 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it renders CheckEligibility passed checks view correctly 1`] = `
+<div>
+  <div
+    data-testid="soletojoint-CheckEligibility"
+  >
+    <h2
+      class="lbh-heading-h2 entity-summary__tenure-heading"
+    >
+      <div>
+        Tenure payment ref
+         
+        mt0xzvjp6g
+      </div>
+      <div>
+        72251 Champlin Trafficway, 99647
+      </div>
+      <div>
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/person/a302fe28-e5c3-4c84-a3e6-cd575e65093f"
+          target="_blank"
+        >
+          Global Web Consultant Alverta Denesik
+        </a>
+      </div>
+    </h2>
+    <p
+      class="lbh-body-m"
+    >
+      Manage My Home has used tenure, person and property information to automatically check eligibility for this application.
+    </p>
+    <h5
+      class="lbh-heading-h5"
+    >
+      This is an automated check based on the data the system has. At this stage, the system does not have all the data required to make a decision, so these results are for guidance only and do not reflect accurate information.
+    </h5>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <h4
+        class="lbh-heading-h4"
+        style="margin-bottom: 0.5em;"
+      >
+        Passed automatic eligibility checks
+      </h4>
+      <div
+        style="display: flex; align-items: center; margin: 0px 0px 0px -7px;"
+      >
+        <svg
+          fill="none"
+          height="32"
+          viewBox="0 0 45 45"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <p
+          class="lbh-body-s"
+          style="margin: 0px;"
+        >
+          Applicant is a named tenure holder on the tenure
+        </p>
+      </div>
+      <div
+        style="display: flex; align-items: center; margin: 0px 0px 0px -7px;"
+      >
+        <svg
+          fill="none"
+          height="32"
+          viewBox="0 0 45 45"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <p
+          class="lbh-body-s"
+          style="margin: 0px;"
+        >
+          Applicant is currently a sole tenant
+        </p>
+      </div>
+      <div
+        style="display: flex; align-items: center; margin: 0px 0px 0px -7px;"
+      >
+        <svg
+          fill="none"
+          height="32"
+          viewBox="0 0 45 45"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <p
+          class="lbh-body-s"
+          style="margin: 0px;"
+        >
+          Secure tenures can be changed from a sole to joint tenancy
+        </p>
+      </div>
+      <div
+        style="display: flex; align-items: center; margin: 0px 0px 0px -7px;"
+      >
+        <svg
+          fill="none"
+          height="32"
+          viewBox="0 0 45 45"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <p
+          class="lbh-body-s"
+          style="margin: 0px;"
+        >
+          Tenant's tenure is active
+        </p>
+      </div>
+      <div
+        style="display: flex; align-items: center; margin: 0px 0px 0px -7px;"
+      >
+        <svg
+          fill="none"
+          height="32"
+          viewBox="0 0 45 45"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <p
+          class="lbh-body-s"
+          style="margin: 0px;"
+        >
+          The proposed tenant is over 18 years of age
+        </p>
+      </div>
+      <div
+        style="display: flex; align-items: center; margin: 0px 0px 0px -7px;"
+      >
+        <svg
+          fill="none"
+          height="32"
+          viewBox="0 0 45 45"
+          width="32"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <p
+          class="lbh-body-s"
+          style="margin: 0px;"
+        >
+          Proposed tenant is not a tenure holder or household member within the London Borough of Hackney
+        </p>
+      </div>
+    </div>
+    <form
+      action="#"
+      id="further-eligibility-form"
+      novalidate=""
+    >
+      <div
+        class="mtfh-box"
+      >
+        <h4
+          class="lbh-heading-h4"
+          style="margin-bottom: 0.5em;"
+        >
+          Further eligibility questions
+        </h4>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="further-eligibility-living-together"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="further-eligibility-living-together-field"
+          >
+            Have the tenant and proposed tenant been living together for 12 months or more, or are they married or in a civil partnership?
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <div
+            class="govuk-radios lbh-radios"
+            id="further-eligibility-living-together-field"
+          >
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-living-together-yes"
+                name="br11"
+                required=""
+                type="radio"
+                value="true"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-living-together-yes"
+              >
+                Yes (proposed tenant will be asked for proof e.g. marriage certificate)
+              </label>
+            </div>
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-living-together-no"
+                name="br11"
+                required=""
+                type="radio"
+                value="false"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-living-together-no"
+              >
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="further-eligibility-main-home"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="further-eligibility-main-home-field"
+          >
+            Do the tenant or proposed tenant intend to occupy any other property besides this one, as their only or main home?
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <div
+            class="govuk-radios lbh-radios"
+            id="further-eligibility-main-home-field"
+          >
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-main-home-yes"
+                name="br12"
+                required=""
+                type="radio"
+                value="true"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-main-home-yes"
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-main-home-no"
+                name="br12"
+                required=""
+                type="radio"
+                value="false"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-main-home-no"
+              >
+                No (proposed tenant will be asked for proof e.g. utility bills at address of tenure)
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="further-eligibility-survivor"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="further-eligibility-survivor-field"
+          >
+            Is the tenant the survivor of one or more joint tenants?
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <div
+            class="govuk-radios lbh-radios"
+            id="further-eligibility-survivor-field"
+          >
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-survivor-yes"
+                name="br13"
+                required=""
+                type="radio"
+                value="true"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-survivor-yes"
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-survivor-no"
+                name="br13"
+                required=""
+                type="radio"
+                value="false"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-survivor-no"
+              >
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="further-eligibility-evicted"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="further-eligibility-evicted-field"
+          >
+            Has the prospective tenant been evicted by London Borough of Hackney, another local authority or a housing association?
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <div
+            class="govuk-radios lbh-radios"
+            id="further-eligibility-evicted-field"
+          >
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-evicted-yes"
+                name="br15"
+                required=""
+                type="radio"
+                value="true"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-evicted-yes"
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-evicted-no"
+                name="br15"
+                required=""
+                type="radio"
+                value="false"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-evicted-no"
+              >
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="further-eligibility-immigration"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="further-eligibility-immigration-field"
+          >
+            Is the prospective tenant subject to immigration control under the Asylum And Immigration Act 1996?
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <div
+            class="govuk-radios lbh-radios"
+            id="further-eligibility-immigration-field"
+          >
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-immigration-yes"
+                name="br16"
+                required=""
+                type="radio"
+                value="true"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-immigration-yes"
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-immigration-no"
+                name="br16"
+                required=""
+                type="radio"
+                value="false"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-immigration-no"
+              >
+                No (proposed tenant will be asked for proof e.g. passport or immigration status documentation)
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="further-eligibility-seeking-possesion"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="further-eligibility-seeking-possesion-field"
+          >
+            Does the tenant have a live notice seeking possession?
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <div
+            class="govuk-radios lbh-radios"
+            id="further-eligibility-seeking-possesion-field"
+          >
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-seeking-possession-yes"
+                name="br8"
+                required=""
+                type="radio"
+                value="true"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-seeking-possession-yes"
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-seeking-possession-no"
+                name="br8"
+                required=""
+                type="radio"
+                value="false"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-seeking-possession-no"
+              >
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="further-eligibility-rent-arrears"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="further-eligibility-rent-arrears-field"
+          >
+            Does the tenant have rent arrears over £500?
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <div
+            class="govuk-radios lbh-radios"
+            id="further-eligibility-rent-arrears-field"
+          >
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-rent-arrears-yes"
+                name="br7"
+                required=""
+                type="radio"
+                value="true"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-rent-arrears-yes"
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-rent-arrears-no"
+                name="br7"
+                required=""
+                type="radio"
+                value="false"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-rent-arrears-no"
+              >
+                No
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        class="govuk-button lbh-button"
+        disabled=""
+        type="submit"
+      >
+        Next
+      </button>
+    </form>
+  </div>
+</div>
+`;

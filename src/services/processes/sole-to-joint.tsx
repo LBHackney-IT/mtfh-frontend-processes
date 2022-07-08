@@ -62,23 +62,23 @@ export const soletojoint: IProcess = {
   states: {
     selectTenants: {
       state: "SelectTenants",
-      triggers: { checkAutomatedEligibility: "CheckAutomatedEligibility" },
+      triggers: { checkAutomatedEligibility: Trigger.CheckAutomatedEligibility },
     },
     automatedChecksFailed: {
       state: "AutomatedChecksFailed",
-      triggers: { exitApplication: "ExitApplication" },
+      triggers: { closeProcess: Trigger.CloseProcess },
     },
     automatedChecksPassed: {
       state: "AutomatedChecksPassed",
-      triggers: { checkManualEligibility: "CheckManualEligibility" },
+      triggers: { checkManualEligibility: Trigger.CheckManualEligibility },
     },
     manualChecksFailed: {
       state: "ManualChecksFailed",
-      triggers: { checkManualEligibility: "CheckManualEligibility" },
+      triggers: { checkManualEligibility: Trigger.CheckManualEligibility },
     },
     manualChecksPassed: {
       state: "ManualChecksPassed",
-      triggers: { checkTenancyBreach: "CheckTenancyBreach" },
+      triggers: { checkTenancyBreach: Trigger.CheckTenancyBreach },
     },
     breachChecksFailed: {
       state: "BreachChecksFailed",
@@ -87,44 +87,44 @@ export const soletojoint: IProcess = {
     breachChecksPassed: {
       state: "BreachChecksPassed",
       triggers: {
-        requestDocumentsDes: "RequestDocumentsDes",
-        requestDocumentsAppointment: "RequestDocumentsAppointment",
+        requestDocumentsDes: Trigger.RequestDocumentsDes,
+        requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
       },
     },
     documentsRequestedDes: {
       state: "DocumentsRequestedDes",
       triggers: {
-        reviewDocuments: "ReviewDocuments",
-        requestDocumentsAppointment: "RequestDocumentsAppointment",
+        reviewDocuments: Trigger.ReviewDocuments,
+        requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
         closeProcess: Trigger.CloseProcess,
       },
     },
     documentsRequestedAppointment: {
       state: "DocumentsRequestedAppointment",
       triggers: {
-        reviewDocuments: "ReviewDocuments",
-        rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
+        reviewDocuments: Trigger.ReviewDocuments,
+        rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
         closeProcess: Trigger.CloseProcess,
       },
     },
     documentsAppointmentRescheduled: {
       state: "DocumentsAppointmentRescheduled",
       triggers: {
-        reviewDocuments: "ReviewDocuments",
-        rescheduleDocumentsAppointment: "RescheduleDocumentsAppointment",
+        reviewDocuments: Trigger.ReviewDocuments,
+        rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
         closeProcess: Trigger.CloseProcess,
       },
     },
     documentChecksPassed: {
       state: "DocumentChecksPassed",
       triggers: {
-        submitApplication: "SubmitApplication",
+        submitApplication: Trigger.SubmitApplication,
       },
     },
     applicationSubmitted: {
       state: "ApplicationSubmitted",
       triggers: {
-        tenureInvestigation: "TenureInvestigation",
+        tenureInvestigation: Trigger.TenureInvestigation,
       },
     },
     tenureInvestigationFailed: {
@@ -166,30 +166,30 @@ export const soletojoint: IProcess = {
     hoApprovalFailed: {
       state: "HOApprovalFailed",
       triggers: {
-        cancelProcess: "CancelProcess",
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     hoApprovalPassed: {
       state: "HOApprovalPassed",
       triggers: {
-        scheduleTenureAppointment: "ScheduleTenureAppointment",
-        cancelProcess: "CancelProcess",
+        scheduleTenureAppointment: Trigger.ScheduleTenureAppointment,
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     tenureAppointmentScheduled: {
       state: "TenureAppointmentScheduled",
       triggers: {
-        rescheduleTenureAppointment: "RescheduleTenureAppointment",
+        rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
         updateTenure: Trigger.UpdateTenure,
-        cancelProcess: "CancelProcess",
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     tenureAppointmentRescheduled: {
       state: "TenureAppointmentRescheduled",
       triggers: {
-        rescheduleTenureAppointment: "RescheduleTenureAppointment",
+        rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
         updateTenure: Trigger.UpdateTenure,
-        cancelProcess: "CancelProcess",
+        cancelProcess: Trigger.CancelProcess,
       },
     },
     tenureUpdated: {

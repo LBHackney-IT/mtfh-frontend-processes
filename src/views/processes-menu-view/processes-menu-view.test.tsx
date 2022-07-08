@@ -7,7 +7,7 @@ import { ProcessesMenuView } from "./processes-menu-view";
 import { $configuration } from "@mtfh/common/lib/configuration";
 
 test("it renders processes menu view correctly", () => {
-  const { container } = render(<ProcessesMenuView />, {
+  const { container } = render(<ProcessesMenuView targetType="tenure" />, {
     url: "/processes/tenure/1234",
     path: "/processes/:targetType/:id",
   });
@@ -28,7 +28,7 @@ describe("feature toggle on", () => {
   });
 
   test("it renders processes menu view correctly", () => {
-    const { container } = render(<ProcessesMenuView />, {
+    const { container } = render(<ProcessesMenuView targetType="tenure" />, {
       url: "/processes/tenure/1234",
       path: "/processes/:targetType/:id",
     });

@@ -19,6 +19,16 @@ const locale = {
   submitCase: "Submit case",
   supportingDocuments,
   views: {
+    person: {
+      title: "Title",
+      titlePlaceholder: "Select Title",
+      firstName: "First name",
+      firstNamePlaceholder: "Enter first name",
+      middleName: "Middle name",
+      middleNamePlaceholder: "Enter Middle name",
+      surname: "Last name",
+      surnamePlaceholder: "Enter last name",
+    },
     soleToJoint: {
       title: "Sole tenant requests a joint tenure",
       steps: {
@@ -39,7 +49,7 @@ const locale = {
         caseActivityHistory: "Case activity history",
       },
     },
-    changeOfName: {
+    changeofname: {
       title: "Change of Name",
       steps: {
         tenantsNewName: "Tenant's new name",

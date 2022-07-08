@@ -11,8 +11,8 @@ import "./styles.scss";
 const { views, title, backButton } = locale;
 const { processesMenu } = views;
 
-export const ProcessesMenuView = () => {
-  const { id, targetType } = useParams<{ id: string; targetType: TargetType }>();
+export const ProcessesMenuView = ({ targetType }: { targetType: TargetType }) => {
+  const { id } = useParams<{ id: string }>();
 
   return (
     <Layout data-testid="processes-menu" className="mtfh-processes-menu">
