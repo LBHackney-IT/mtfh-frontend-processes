@@ -603,6 +603,63 @@ exports[`it renders CheckEligibility passed checks view correctly 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="further-eligibility-already-joint-tenant"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="further-eligibility-already-joint-tenant-field"
+          >
+            Does the proposed joint tenant hold a tenancy or property elsewhere?
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </label>
+          <div
+            class="govuk-radios lbh-radios"
+            id="further-eligibility-already-joint-tenant-field"
+          >
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-already-joint-tenant"
+                name="br20"
+                required=""
+                type="radio"
+                value="true"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-already-joint-tenant"
+              >
+                Yes
+              </label>
+            </div>
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="further-eligibility-already-joint-tenant"
+                name="br20"
+                required=""
+                type="radio"
+                value="false"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="further-eligibility-already-joint-tenant"
+              >
+                No
+              </label>
+            </div>
+          </div>
+        </div>
       </div>
       <button
         class="govuk-button lbh-button"

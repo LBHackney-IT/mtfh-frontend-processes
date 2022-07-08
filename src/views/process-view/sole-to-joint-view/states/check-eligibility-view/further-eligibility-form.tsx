@@ -57,6 +57,8 @@ export const FurtherEligibilityForm = ({
         br16: "",
         br7: "",
         br8: "",
+        br20: "",
+        br21: "",
       }}
       validateOnBlur={false}
       validateOnChange={false}
@@ -215,6 +217,61 @@ export const FurtherEligibilityForm = ({
                 </InlineField>
                 <InlineField name="br7" type="radio">
                   <Radio id="further-eligibility-rent-arrears-no" value="false">
+                    No
+                  </Radio>
+                </InlineField>
+              </RadioGroup>
+            </FormGroup>
+            <FormGroup
+              id="further-eligibility-already-joint-tenant"
+              label="Does the proposed joint tenant hold a tenancy or property elsewhere?"
+              error={errors.br20}
+              required
+            >
+              <RadioGroup>
+                <InlineField name="br20" type="radio">
+                  <Radio id="further-eligibility-already-joint-tenant" value="true">
+                    Yes
+                  </Radio>
+                </InlineField>
+                {values.br20 === "true" && (
+                  <FormGroup
+                    id="breach-form-tenancy-br10"
+                    label=""
+                    error={errors.br21}
+                    required={false}
+                  >
+                    <RadioGroup className="govuk-radios__conditional">
+                      <InlineField name="br21" type="radio">
+                        <Radio
+                          id="further-eligibility-already-joint-tenant-yes-tenancy"
+                          data-testid="further-eligibility-already-joint-tenant-yes-tenancy"
+                          value="tenancy"
+                        >
+                          Tenancy
+                        </Radio>
+                      </InlineField>
+                      <InlineField name="br21" type="radio">
+                        <Radio
+                          id="further-eligibility-already-joint-tenant-yes-property"
+                          value="property"
+                        >
+                          Property
+                        </Radio>
+                      </InlineField>
+                      <InlineField name="br21" type="radio">
+                        <Radio
+                          id="further-eligibility-already-joint-tenant-yes-both"
+                          value="both"
+                        >
+                          Both
+                        </Radio>
+                      </InlineField>
+                    </RadioGroup>
+                  </FormGroup>
+                )}
+                <InlineField name="br20" type="radio">
+                  <Radio id="further-eligibility-already-joint-tenant" value="false">
                     No
                   </Radio>
                 </InlineField>

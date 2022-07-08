@@ -9,6 +9,13 @@ export const furtherEligibilityFormSchema = (errorMessages: Record<string, strin
     br16: Yup.string().oneOf(["true", "false"]).required(errorMessages.W4),
     br7: Yup.string().oneOf(["true", "false"]).required(errorMessages.W4),
     br8: Yup.string().oneOf(["true", "false"]).required(errorMessages.W4),
+    br20: Yup.string().oneOf(["true", "false"]).required(errorMessages.W4),
+    br21: Yup.string().when("br20", {
+      is: "true",
+      then: Yup.string()
+        .oneOf(["tenancy", "property", "both"])
+        .required(errorMessages.W4),
+    }),
   });
 
 export type FurtherEligibilityFormData = Yup.Asserts<
