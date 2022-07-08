@@ -3,7 +3,6 @@ import { useState } from "react";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { EntitySummary } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 
@@ -59,8 +58,6 @@ export const TenantNewName = ({
 
   return (
     <div data-testid="changeofname-EnterNewName">
-      <Heading variant="h1">{processConfig.title}</Heading>
-      <EntitySummary id={process.targetId} type={processConfig.targetType} />
       {globalError && (
         <StatusErrorSummary id="select-tenant-global-error" code={globalError} />
       )}
