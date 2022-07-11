@@ -189,41 +189,53 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
       novalidate=""
     >
       <div
-        class="govuk-radios lbh-radios"
+        class="govuk-form-group lbh-form-group"
+        id="request-type-form-group"
       >
-        <div
-          class="govuk-radios__item"
+        <label
+          class="govuk-label lbh-label"
+          for="request-type-form-group-field"
         >
-          <input
-            class="govuk-radios__input"
-            id="requestType-automatic"
-            name="requestType"
-            type="radio"
-            value="automatic"
-          />
-          <label
-            class="govuk-label govuk-radios__label"
-            for="requestType-automatic"
-          >
-            Request documents electronically
-          </label>
-        </div>
+          
+        </label>
         <div
-          class="govuk-radios__item"
+          class="govuk-radios lbh-radios"
+          id="request-type-form-group-field"
         >
-          <input
-            class="govuk-radios__input"
-            id="requestType-manual"
-            name="requestType"
-            type="radio"
-            value="manual"
-          />
-          <label
-            class="govuk-label govuk-radios__label"
-            for="requestType-manual"
+          <div
+            class="govuk-radios__item"
           >
-            I have made an appointment to check supporting documents
-          </label>
+            <input
+              class="govuk-radios__input"
+              id="requestType-automatic"
+              name="requestType"
+              type="radio"
+              value="automatic"
+            />
+            <label
+              class="govuk-label govuk-radios__label"
+              for="requestType-automatic"
+            >
+              Request documents electronically
+            </label>
+          </div>
+          <div
+            class="govuk-radios__item"
+          >
+            <input
+              class="govuk-radios__input"
+              id="requestType-manual"
+              name="requestType"
+              type="radio"
+              value="manual"
+            />
+            <label
+              class="govuk-label govuk-radios__label"
+              for="requestType-manual"
+            >
+              I have made an appointment to check supporting documents
+            </label>
+          </div>
         </div>
       </div>
       <div
@@ -404,6 +416,55 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
             </div>
           </div>
         </fieldset>
+      </div>
+      <h3
+        class="lbh-heading-h3"
+      >
+        Tenant declaration
+      </h3>
+      <p
+        class="lbh-body-s"
+      >
+        Please read this out to the applicant before you proceed to the next step. Applicant has to accept the declaration before the application can be proceeded:
+      </p>
+      <p
+        class="lbh-body-s"
+      >
+        “You are declaring that to the best of your knowledge and belief the information given is correct in every detail. You understand it is an offence to give false or misleading information or to hold back relevant information. You also understand that you will check this information and if any information is found to be false, you may be prosecuted and you may repossess my home.
+      </p>
+      <p
+        class="lbh-body-s"
+      >
+        If you are prosecuted and found guilty, you understand that you could be ordered to pay a fine of up to £5000. It is your duty to make sure that your application form is honest. You hereby give your consent for Housing Services to carry out a credit reference check and obtain relevant information from the Council and other external agencies.”
+      </p>
+      <div
+        class="govuk-form-group lbh-form-group"
+        id="declaration-form-group"
+      >
+        <label
+          class="govuk-label lbh-label"
+          for="declaration-form-group-field"
+        >
+          
+        </label>
+        <div
+          class="govuk-checkboxes__item"
+        >
+          <input
+            class="govuk-checkboxes__input"
+            data-testid="declaration"
+            id="declaration-form-group-field"
+            name="declaration"
+            type="checkbox"
+            value="false"
+          />
+          <label
+            class="govuk-label govuk-checkboxes__label"
+            for="declaration-form-group-field"
+          >
+            I confirm that the applicant has accepted this declaration
+          </label>
+        </div>
       </div>
       <button
         class="govuk-button lbh-button"

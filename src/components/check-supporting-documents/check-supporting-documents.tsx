@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Form, Formik } from "formik";
 
 import { ContactDetails, DateTimeFields } from "..";
@@ -10,6 +12,8 @@ import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Button,
   Center,
+  Checkbox,
+  FormGroup,
   Heading,
   InlineField,
   Radio,
@@ -24,7 +28,7 @@ export const CheckSupportingDocuments = ({
   mutate,
   optional,
 }: ProcessComponentProps): JSX.Element => {
-  const { person, tenant } = optional;
+  const { person, tenant, declaration } = optional;
   const errorMessages = useErrorCodes();
 
   if (!errorMessages) {
@@ -63,6 +67,8 @@ export const CheckSupportingDocuments = ({
           hour: "",
           minute: "",
           amPm: "",
+          isDeclaration: declaration,
+          declaration: false,
         }}
         validateOnBlur={false}
         validateOnChange={false}
@@ -98,9 +104,10 @@ export const CheckSupportingDocuments = ({
       >
         {(props) => {
           const {
-            values,
+            errors,
             values: { requestType },
             setFieldValue,
+            dirty,
           } = props;
           return (
             <Form
@@ -108,53 +115,83 @@ export const CheckSupportingDocuments = ({
               id="request-documents-form"
               className="request-documents-form"
             >
-              <RadioGroup>
-                <InlineField name="requestType" type="radio">
-                  <Radio
-                    id="requestType-automatic"
-                    value="automatic"
-                    onClick={() => {
-                      if (requestType !== "automatic") {
-                        setFieldValue("day", "01");
-                        setFieldValue("month", "01");
-                        setFieldValue("year", "3000");
-                        setFieldValue("hour", "01");
-                        setFieldValue("minute", "01");
-                        setFieldValue("amPm", "am");
-                      }
-                    }}
-                  >
-                    Request documents electronically
-                  </Radio>
-                </InlineField>
-                <InlineField name="requestType" type="radio">
-                  <Radio
-                    id="requestType-manual"
-                    value="manual"
-                    onClick={() => {
-                      if (requestType !== "manual") {
-                        setFieldValue("day", "");
-                        setFieldValue("month", "");
-                        setFieldValue("year", "");
-                        setFieldValue("hour", "");
-                        setFieldValue("minute", "");
-                        setFieldValue("amPm", "");
-                      }
-                    }}
-                  >
-                    I have made an appointment to check supporting documents
-                  </Radio>
-                </InlineField>
-              </RadioGroup>
+              <FormGroup id="request-type-form-group" error={errors.requestType}>
+                <RadioGroup>
+                  <InlineField name="requestType" type="radio">
+                    <Radio
+                      id="requestType-automatic"
+                      value="automatic"
+                      onClick={() => {
+                        if (requestType !== "automatic") {
+                          setFieldValue("day", "01");
+                          setFieldValue("month", "01");
+                          setFieldValue("year", "3000");
+                          setFieldValue("hour", "01");
+                          setFieldValue("minute", "01");
+                          setFieldValue("amPm", "am");
+                        }
+                      }}
+                    >
+                      Request documents electronically
+                    </Radio>
+                  </InlineField>
+                  <InlineField name="requestType" type="radio">
+                    <Radio
+                      id="requestType-manual"
+                      value="manual"
+                      onClick={() => {
+                        if (requestType !== "manual") {
+                          setFieldValue("day", "");
+                          setFieldValue("month", "");
+                          setFieldValue("year", "");
+                          setFieldValue("hour", "");
+                          setFieldValue("minute", "");
+                          setFieldValue("amPm", "");
+                        }
+                      }}
+                    >
+                      I have made an appointment to check supporting documents
+                    </Radio>
+                  </InlineField>
+                </RadioGroup>
+              </FormGroup>
+
               {requestType === "manual" && <DateTimeFields />}
-              <Button
-                type="submit"
-                disabled={
-                  !Object.values(values).some((value) => {
-                    return value !== "";
-                  })
-                }
-              >
+
+              {declaration && (
+                <>
+                  <Heading variant="h3">Tenant declaration</Heading>
+                  <Text size="sm">
+                    Please read this out to the applicant before you proceed to the next
+                    step. Applicant has to accept the declaration before the application
+                    can be proceeded:
+                  </Text>
+                  <Text size="sm">
+                    “You are declaring that to the best of your knowledge and belief the
+                    information given is correct in every detail. You understand it is an
+                    offence to give false or misleading information or to hold back
+                    relevant information. You also understand that you will check this
+                    information and if any information is found to be false, you may be
+                    prosecuted and you may repossess my home.
+                  </Text>
+                  <Text size="sm">
+                    If you are prosecuted and found guilty, you understand that you could
+                    be ordered to pay a fine of up to £5000. It is your duty to make sure
+                    that your application form is honest. You hereby give your consent for
+                    Housing Services to carry out a credit reference check and obtain
+                    relevant information from the Council and other external agencies.”
+                  </Text>
+
+                  <FormGroup id="declaration-form-group" error={errors.declaration}>
+                    <InlineField name="declaration" type="checkbox">
+                      <Checkbox id="declaration" data-testid="declaration">
+                        I confirm that the applicant has accepted this declaration
+                      </Checkbox>
+                    </InlineField>
+                  </FormGroup>
+                </>
+              )}
+              <Button type="submit" disabled={!dirty}>
                 Next
               </Button>
             </Form>

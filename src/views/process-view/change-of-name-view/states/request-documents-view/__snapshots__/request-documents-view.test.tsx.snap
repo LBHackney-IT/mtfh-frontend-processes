@@ -123,41 +123,53 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
       novalidate=""
     >
       <div
-        class="govuk-radios lbh-radios"
+        class="govuk-form-group lbh-form-group"
+        id="request-type-form-group"
       >
-        <div
-          class="govuk-radios__item"
+        <label
+          class="govuk-label lbh-label"
+          for="request-type-form-group-field"
         >
-          <input
-            class="govuk-radios__input"
-            id="requestType-automatic"
-            name="requestType"
-            type="radio"
-            value="automatic"
-          />
-          <label
-            class="govuk-label govuk-radios__label"
-            for="requestType-automatic"
-          >
-            Request documents electronically
-          </label>
-        </div>
+          
+        </label>
         <div
-          class="govuk-radios__item"
+          class="govuk-radios lbh-radios"
+          id="request-type-form-group-field"
         >
-          <input
-            class="govuk-radios__input"
-            id="requestType-manual"
-            name="requestType"
-            type="radio"
-            value="manual"
-          />
-          <label
-            class="govuk-label govuk-radios__label"
-            for="requestType-manual"
+          <div
+            class="govuk-radios__item"
           >
-            I have made an appointment to check supporting documents
-          </label>
+            <input
+              class="govuk-radios__input"
+              id="requestType-automatic"
+              name="requestType"
+              type="radio"
+              value="automatic"
+            />
+            <label
+              class="govuk-label govuk-radios__label"
+              for="requestType-automatic"
+            >
+              Request documents electronically
+            </label>
+          </div>
+          <div
+            class="govuk-radios__item"
+          >
+            <input
+              class="govuk-radios__input"
+              id="requestType-manual"
+              name="requestType"
+              type="radio"
+              value="manual"
+            />
+            <label
+              class="govuk-label govuk-radios__label"
+              for="requestType-manual"
+            >
+              I have made an appointment to check supporting documents
+            </label>
+          </div>
         </div>
       </div>
       <button

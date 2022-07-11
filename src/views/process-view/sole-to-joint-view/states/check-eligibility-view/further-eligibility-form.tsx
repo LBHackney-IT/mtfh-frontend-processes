@@ -4,9 +4,10 @@ import {
   FurtherEligibilityFormData,
   furtherEligibilityFormSchema,
 } from "../../../../../schemas";
-import { IProcess } from "../../../../../types";
+import { Trigger } from "../../../../../services/processes/types";
+import { ProcessComponentProps } from "../../../../../types";
 
-import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
+import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Box,
   Button,
@@ -20,23 +21,17 @@ import {
 } from "@mtfh/common/lib/components";
 import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
-interface FurtherEligibilityFormProps {
-  processConfig: IProcess;
-  process: Process;
-  mutate: () => void;
-  optional?: any;
+interface FurtherEligibilityFormProps extends ProcessComponentProps {
   setGlobalError: any;
 }
 
 export const FurtherEligibilityForm = ({
   process,
-  processConfig,
   mutate,
   optional,
   setGlobalError,
 }: FurtherEligibilityFormProps): JSX.Element => {
   const { setSubmitted } = optional;
-  const stateConfig = processConfig.states.automatedChecksPassed;
   const errorMessages = useErrorCodes();
 
   if (!errorMessages) {
@@ -57,6 +52,8 @@ export const FurtherEligibilityForm = ({
         br16: "",
         br7: "",
         br8: "",
+        br9: "",
+        proposedTenantExistingPropertyOrTenure: "",
       }}
       validateOnBlur={false}
       validateOnChange={false}
@@ -65,7 +62,7 @@ export const FurtherEligibilityForm = ({
         try {
           await editProcess({
             id: process.id,
-            processTrigger: stateConfig.triggers.checkManualEligibility,
+            processTrigger: Trigger.CheckManualEligibility,
             processName: process?.processName,
             etag: process.etag || "",
             formData: values,
@@ -215,6 +212,70 @@ export const FurtherEligibilityForm = ({
                 </InlineField>
                 <InlineField name="br7" type="radio">
                   <Radio id="further-eligibility-rent-arrears-no" value="false">
+                    No
+                  </Radio>
+                </InlineField>
+              </RadioGroup>
+            </FormGroup>
+            <FormGroup
+              id="further-eligibility-already-joint-tenant"
+              label="Does the proposed joint tenant hold a tenancy or property elsewhere?"
+              error={errors.br9}
+              required
+            >
+              <RadioGroup>
+                <InlineField name="br9" type="radio">
+                  <Radio id="further-eligibility-already-joint-tenant-yes" value="true">
+                    Yes
+                  </Radio>
+                </InlineField>
+                {values.br9 === "true" && (
+                  <FormGroup
+                    id="breach-form-tenancy-br10"
+                    label=""
+                    error={errors.proposedTenantExistingPropertyOrTenure}
+                    required={false}
+                  >
+                    <RadioGroup className="govuk-radios__conditional">
+                      <InlineField
+                        name="proposedTenantExistingPropertyOrTenure"
+                        type="radio"
+                      >
+                        <Radio
+                          id="further-eligibility-already-joint-tenant-yes-tenancy"
+                          data-testid="further-eligibility-already-joint-tenant-yes-tenancy"
+                          value="tenancy"
+                        >
+                          Tenancy
+                        </Radio>
+                      </InlineField>
+                      <InlineField
+                        name="proposedTenantExistingPropertyOrTenure"
+                        type="radio"
+                      >
+                        <Radio
+                          id="further-eligibility-already-joint-tenant-yes-property"
+                          value="property"
+                        >
+                          Property
+                        </Radio>
+                      </InlineField>
+                      <InlineField
+                        name="proposedTenantExistingPropertyOrTenure"
+                        type="radio"
+                      >
+                        <Radio
+                          id="further-eligibility-already-joint-tenant-yes-both"
+                          value="both"
+                        >
+                          Both
+                        </Radio>
+                      </InlineField>
+                    </RadioGroup>
+                  </FormGroup>
+                )}
+                <InlineField name="br9" type="radio">
+                  <Radio id="further-eligibility-already-joint-tenant-no" value="false">
                     No
                   </Radio>
                 </InlineField>

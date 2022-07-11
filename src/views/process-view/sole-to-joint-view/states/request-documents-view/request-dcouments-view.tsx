@@ -78,7 +78,11 @@ export const RequestDocumentsView = ({
         />
       </List>
 
-      <CheckSupportingDocuments process={process} mutate={mutate} optional={{ tenant }} />
+      <CheckSupportingDocuments
+        process={process}
+        mutate={mutate}
+        optional={{ tenant, declaration: true }}
+      />
     </div>
   );
 };

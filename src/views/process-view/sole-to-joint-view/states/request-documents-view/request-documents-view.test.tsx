@@ -117,6 +117,7 @@ describe("request-documents-view", () => {
     await userEvent.click(radioButton);
     await typeDateTime(screen, userEvent, "2099");
     await expect(screen.findByText("Next")).resolves.toBeEnabled();
+    await userEvent.click(screen.getByTestId("declaration"));
     await userEvent.click(screen.getByText("Next"));
     expect(editProcessSpy).toHaveBeenCalledWith(
       expect.objectContaining({
