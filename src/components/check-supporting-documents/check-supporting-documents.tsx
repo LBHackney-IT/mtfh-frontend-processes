@@ -2,7 +2,7 @@ import React from "react";
 
 import { Form, Formik } from "formik";
 
-import { ContactDetails, DateTimeFields } from "..";
+import { ContactDetails, DateTimeFields, validate } from "..";
 import { RequestDocumentsFormData, requestDocumentsSchema } from "../../schemas";
 import { Trigger } from "../../services/processes/types";
 import { ProcessComponentProps } from "../../types";
@@ -73,6 +73,9 @@ export const CheckSupportingDocuments = ({
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={requestDocumentsSchema(errorMessages)}
+        validate={(values) => {
+          return validate(errorMessages, values);
+        }}
         onSubmit={async (values) => {
           const { requestType, day, month, year, hour, minute, amPm } = values;
           let processTrigger = Trigger.RequestDocumentsDes;
@@ -156,7 +159,7 @@ export const CheckSupportingDocuments = ({
                 </RadioGroup>
               </FormGroup>
 
-              {requestType === "manual" && <DateTimeFields />}
+              {requestType === "manual" && <DateTimeFields errors={errors} />}
 
               {declaration && (
                 <>

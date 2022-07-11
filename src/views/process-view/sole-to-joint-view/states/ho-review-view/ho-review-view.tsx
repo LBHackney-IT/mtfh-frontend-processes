@@ -7,6 +7,7 @@ import {
   AppointmentDetails,
   ContactDetails,
   DateTimeFields,
+  validate,
 } from "../../../../../components";
 import { HoReviewFormData, hoReviewSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
@@ -115,6 +116,9 @@ export const HoReviewView = ({
         validateOnBlur={false}
         validateOnChange={false}
         validationSchema={hoReviewSchema(errorMessages)}
+        validate={(values) => {
+          return validate(errorMessages, values);
+        }}
         onSubmit={async (values) => {
           if (choice === Choice.Appointment) {
             const appointmentDateTime = getAppointmentDateTime(values);
@@ -222,6 +226,7 @@ export const HoReviewView = ({
                     <DateTimeFields
                       dateLabel="Interview Date"
                       timeLabel="Interview Time"
+                      errors={errors}
                     />
                   </div>
                 )}
