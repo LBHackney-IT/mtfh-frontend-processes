@@ -452,6 +452,7 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
         >
           <input
             class="govuk-checkboxes__input"
+            data-testid="declaration"
             id="declaration-form-group-field"
             name="declaration"
             type="checkbox"

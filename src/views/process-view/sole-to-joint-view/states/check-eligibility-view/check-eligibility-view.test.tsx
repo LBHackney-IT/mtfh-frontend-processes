@@ -225,4 +225,5 @@ const selectRadios = async (screen) => {
   await userEvent.click(screen.getAllByRole("radio")[9]);
   await userEvent.click(screen.getAllByRole("radio")[11]);
   await userEvent.click(screen.getAllByRole("radio")[13]);
+  await userEvent.click(screen.getAllByRole("radio")[15]);
 };

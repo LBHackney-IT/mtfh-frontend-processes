@@ -184,7 +184,7 @@ export const CheckSupportingDocuments = ({
 
                   <FormGroup id="declaration-form-group" error={errors.declaration}>
                     <InlineField name="declaration" type="checkbox">
-                      <Checkbox id="declaration">
+                      <Checkbox id="declaration" data-testid="declaration">
                         I confirm that the applicant has accepted this declaration
                       </Checkbox>
                     </InlineField>

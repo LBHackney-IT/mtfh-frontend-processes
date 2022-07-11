@@ -628,7 +628,7 @@ exports[`it renders CheckEligibility passed checks view correctly 1`] = `
               <input
                 class="govuk-radios__input"
                 id="further-eligibility-already-joint-tenant-yes"
-                name="br20"
+                name="br9"
                 required=""
                 type="radio"
                 value="true"
@@ -646,7 +646,7 @@ exports[`it renders CheckEligibility passed checks view correctly 1`] = `
               <input
                 class="govuk-radios__input"
                 id="further-eligibility-already-joint-tenant-no"
-                name="br20"
+                name="br9"
                 required=""
                 type="radio"
                 value="false"
