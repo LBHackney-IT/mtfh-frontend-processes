@@ -300,7 +300,7 @@ exports[`ho-review-view it renders ReviewApplication view correctly for HOApprov
                 aria-label="Year"
                 class="govuk-input lbh-input govuk-input govuk-date-input__input govuk-input--width-4"
                 name="year"
-                placeholder="yy"
+                placeholder="yyyy"
                 required=""
                 role="spinbutton"
                 value=""

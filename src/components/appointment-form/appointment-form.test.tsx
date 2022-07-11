@@ -37,7 +37,7 @@ describe("appointment-form-component", () => {
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     expect(container).toMatchSnapshot();
     expect(screen.getByText("Continue")).toBeDisabled();
-    await userEvent.type(screen.getByPlaceholderText(/yy/i), "2000");
+    await userEvent.type(screen.getByPlaceholderText(/yyyy/i), "2000");
     expect(screen.getByText("Continue")).toBeEnabled();
   });
 

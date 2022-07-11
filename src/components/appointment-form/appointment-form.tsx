@@ -165,7 +165,7 @@ export const DateTimeFields = ({
         yearLabel=""
         dayProps={{ name: "day", placeholder: "dd" }}
         monthProps={{ name: "month", placeholder: "mm" }}
-        yearProps={{ name: "year", placeholder: "yy" }}
+        yearProps={{ name: "year", placeholder: "yyyy" }}
         style={{ marginTop: "1.5em", width: "100%" }}
         required
       />

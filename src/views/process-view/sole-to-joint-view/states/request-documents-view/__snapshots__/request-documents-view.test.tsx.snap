@@ -303,7 +303,7 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
                 aria-valuetext="2022"
                 class="govuk-input lbh-input govuk-input govuk-date-input__input govuk-input--width-4"
                 name="year"
-                placeholder="yy"
+                placeholder="yyyy"
                 required=""
                 role="spinbutton"
                 value="2022"
