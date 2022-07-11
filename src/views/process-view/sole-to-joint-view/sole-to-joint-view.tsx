@@ -183,7 +183,9 @@ export const SoleToJointSideBar = (props: ProcessSideBarProps) => {
   const {
     process,
     process: {
-      currentState: { state, id: processId, processName },
+      id: processId,
+      processName,
+      currentState: { state },
     },
     submitted = false,
     closeCase = false,

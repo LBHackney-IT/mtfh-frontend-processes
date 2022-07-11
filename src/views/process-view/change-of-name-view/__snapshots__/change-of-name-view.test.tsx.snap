@@ -223,7 +223,7 @@ exports[`changeofname/change-of-name-view it renders ChangeOfNameSideBar correct
   </button>
   <a
     class="govuk-button lbh-button govuk-button--secondary lbh-button--secondary"
-    href="/activities/process/ab/undefined"
+    href="/activities/process/ab/6fbe024f-2316-4265-a6e8-d65a837e308a"
   >
     Case activity history
   </a>

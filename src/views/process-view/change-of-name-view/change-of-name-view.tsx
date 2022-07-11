@@ -42,7 +42,7 @@ const getActiveStep = (currentState) => {
 
 export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
   const {
-    process: { processId, processName, currentState },
+    process: { id: processId, processName, currentState },
     setCloseProcessDialogOpen,
     setCancel,
   } = props;
