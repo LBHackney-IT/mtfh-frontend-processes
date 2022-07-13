@@ -28,7 +28,16 @@ describe("ho-review-failed-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
-          currentState: { ...mockProcessV1.currentState, state: "HOApprovalFailed" },
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: "HOApprovalFailed",
+            processData: {
+              formData: {
+                reason: "Test",
+              },
+              documents: [],
+            },
+          },
         }}
         mutate={() => {}}
         optional={{ closeCase, setCloseCase }}

@@ -140,7 +140,9 @@ describe("tenure-investigation-view", () => {
               permittedTriggers: [],
               assignment: "",
               processData: {
-                formData: {},
+                formData: {
+                  reason: "Test",
+                },
                 documents: [],
               },
               createdAt: "",

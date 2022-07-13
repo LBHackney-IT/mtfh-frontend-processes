@@ -19,6 +19,7 @@ import {
   Button,
   Heading,
   Link,
+  StatusBox,
   StatusHeading,
   Text,
 } from "@mtfh/common/lib/components";
@@ -53,14 +54,20 @@ export const NewTenancyView = ({
   const formData = process.currentState.processData.formData as {
     appointmentDateTime: string;
   };
+
+  const hoApprovalPassedState =
+    currentState.state === hoApprovalPassed.state
+      ? currentState
+      : process.previousStates.find(
+          (previous) => previous.state === hoApprovalPassed.state,
+        );
   return (
     <>
-      <Box variant="success">
-        <StatusHeading
-          variant="success"
-          title={views.hoReviewView.hoOutcome("approved")}
-        />
-      </Box>
+      <StatusBox variant="success" title={views.hoReviewView.hoOutcome("approved")}>
+        {hoApprovalPassedState?.processData.formData.reason && (
+          <Text>{hoApprovalPassedState.processData.formData.reason}</Text>
+        )}
+      </StatusBox>
 
       {currentState.state === tenureUpdated.state ? (
         <Box variant="success">

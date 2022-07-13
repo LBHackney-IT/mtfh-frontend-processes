@@ -1,5 +1,7 @@
 import reactHtmlParser from "react-html-parser";
 
+import { Process } from "./processes/types";
+
 import { AssetAddress } from "@mtfh/common/lib/api/asset/v1";
 
 const supportingDocuments = "Supporting documents";
@@ -174,6 +176,10 @@ const locale = {
         "I confirm that this is an instruction received by the Area Housing Manager",
       managersName: "Enter manager's name",
       hoOutcome: (decision) => `Sole to joint tenure application ${decision}`,
+    },
+    hoReviewModal: {
+      [Process.SoleToJoint]: "sole to joint tenure",
+      [Process.ChangeOfName]: "change of name",
     },
     closeProcess: {
       reasonForCancellation: "Reason for Cancellation",

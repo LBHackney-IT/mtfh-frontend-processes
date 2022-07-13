@@ -1,6 +1,6 @@
 import { IProcess, IStartProcess } from "../../types";
 import locale from "../locale";
-import { Trigger } from "./types";
+import { Process, Trigger } from "./types";
 
 import { Heading, Link, List, Text } from "@mtfh/common/lib/components";
 
@@ -55,7 +55,7 @@ const startProcess: IStartProcess = {
 };
 
 export const soletojoint: IProcess = {
-  processName: "soletojoint",
+  processName: Process.SoleToJoint,
   targetType: "tenure",
   title: locale.views.soleToJoint.title,
   startProcess,
