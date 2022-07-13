@@ -1,6 +1,5 @@
-import { SoleToJointHeader } from "../../../../../components";
+import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
-import { CloseProcessView } from "../close-process-view";
 import { AutomatedChecksPassedBox } from "../shared";
 
 import { Box, Heading, List, StatusHeading, Text } from "@mtfh/common/lib/components";
@@ -15,7 +14,6 @@ export const ManualChecksFailedView = ({
 }): JSX.Element => {
   return (
     <div data-testid={`soletojoint-${process.currentState.state}`}>
-      <SoleToJointHeader processConfig={processConfig} process={process} />
       <Text>{checkEligibility.autoCheckIntro}</Text>
       <Heading variant="h5">{checkEligibility.autoCheckInfo}</Heading>
       <AutomatedChecksPassedBox />

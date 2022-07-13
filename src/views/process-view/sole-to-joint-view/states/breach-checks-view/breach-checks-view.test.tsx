@@ -4,7 +4,7 @@ import { patchProcessV1, render, server } from "@hackney/mtfh-test-utils";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { locale, processes } from "../../../../../services";
+import { processes } from "../../../../../services";
 import { mockManualChecksPassedState } from "../../../../../test-utils";
 import { BreachCheckForm, BreachChecksView } from "./breach-checks-view";
 
@@ -106,11 +106,6 @@ test("it renders CheckEligibility for state=ManualChecksPassed, submitted=false"
     />,
     options,
   );
-  await expect(
-    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-      exact: false,
-    }),
-  ).resolves.toBeInTheDocument();
   await expect(screen.findByText("Breach of tenure")).resolves.toBeInTheDocument();
 });
 
@@ -125,11 +120,6 @@ test("it renders CheckEligibility for state=ManualChecksPassed, submitted=true",
     />,
     options,
   );
-  await expect(
-    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-      exact: false,
-    }),
-  ).resolves.toBeInTheDocument();
   await expect(screen.findByText("Next Steps:")).resolves.toBeInTheDocument();
   await userEvent.click(screen.getByText("Continue"));
   expect(setSubmitted.mock.calls[0][0]).toBe(false);

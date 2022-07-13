@@ -13,7 +13,7 @@ import { HoReviewFormData, hoReviewSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 import { IProcess } from "../../../../../types";
-import { getAppointmentDateTime } from "../shared";
+import { getAppointmentDateTime } from "../../../../../utils/processUtil";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {

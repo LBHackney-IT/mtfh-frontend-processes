@@ -47,8 +47,8 @@ export const changeofname: IProcess = {
         cancelProcess: Trigger.CancelProcess,
       },
     },
-    documentsRequestedDES: {
-      state: "DocumentsRequestedDES",
+    documentsRequestedDes: {
+      state: "DocumentsRequestedDes",
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,

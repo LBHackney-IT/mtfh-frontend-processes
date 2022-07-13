@@ -6,12 +6,12 @@ import { isPast } from "date-fns";
 import {
   AppointmentDetails,
   AppointmentForm,
+  CloseProcessView,
   ContactDetails,
 } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 import { IProcess } from "../../../../../types";
-import { CloseProcessView } from "../close-process-view";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {

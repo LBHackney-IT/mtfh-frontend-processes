@@ -9,7 +9,7 @@ import {
   dateTimeIsValid,
 } from "../../schemas/appointment";
 import { locale } from "../../services";
-import { getAppointmentDateTime } from "../../views/process-view/sole-to-joint-view/states/shared";
+import { getAppointmentDateTime } from "../../utils/processUtil";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {

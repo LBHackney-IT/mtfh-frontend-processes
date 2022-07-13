@@ -1,21 +1,26 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { EntitySummary } from "../../../components";
+import { CloseProcessView, EntitySummary } from "../../../components";
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
+import { isSameState } from "../../../utils/processUtil";
 import { TenantNewNameView } from "./states";
 import { RequestDocumentsView } from "./states/request-documents-view";
+import { ReviewDocumentsView } from "./states/review-documents-view";
 
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
+  Box,
   Button,
   Center,
   ErrorSummary,
   Spinner,
+  StatusHeading,
   Step,
   Stepper,
+  Text,
 } from "@mtfh/common/lib/components";
 
 import "./styles.scss";
@@ -23,20 +28,39 @@ import "./styles.scss";
 const processConfig = processes.changeofname;
 
 const { states } = processConfig;
-const { enterNewName, nameSubmitted } = states;
+const {
+  enterNewName,
+  nameSubmitted,
+  documentsRequestedDes,
+  documentsRequestedAppointment,
+  documentsAppointmentRescheduled,
+  processClosed,
+} = states;
+
+const reviewDocumentsViewByStates = {
+  [documentsRequestedDes.state]: ReviewDocumentsView,
+  [documentsRequestedAppointment.state]: ReviewDocumentsView,
+  [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
+};
+const reviewDocumentsPageStates = Object.keys(reviewDocumentsViewByStates);
 
 const components = {
   [enterNewName.state]: TenantNewNameView,
   [nameSubmitted.state]: RequestDocumentsView,
+  ...reviewDocumentsViewByStates,
 };
 
 const { views } = locale;
-const { changeofname } = views;
+const { changeofname, reviewDocuments } = views;
 
 const getActiveStep = (currentState) => {
-  if (currentState === states.nameSubmitted.state) {
+  if (currentState === nameSubmitted.state) {
     return 1;
   }
+  if ([...reviewDocumentsPageStates, processClosed.state].includes(currentState)) {
+    return 2;
+  }
+
   return 0;
 };
 
@@ -104,8 +128,15 @@ export const ChangeOfNameView = ({
   mutate: any;
   optional: any;
 }): JSX.Element => {
-  const { closeProcessReasonFinal, submitted, setSubmitted, closeCase, setCloseCase } =
-    optional;
+  const {
+    closeProcessReasonFinal,
+    submitted,
+    setSubmitted,
+    closeCase,
+    setCloseCase,
+    setCancel,
+    setCloseProcessDialogOpen,
+  } = optional;
   const { error, data: person } = usePerson(process.targetId);
 
   if (error) {
@@ -155,6 +186,46 @@ export const ChangeOfNameView = ({
           closeProcessReasonFinal,
         }}
       />
+      {closeProcessReasonFinal && (
+        <>
+          <Box variant="warning">
+            <StatusHeading
+              variant="warning"
+              title={
+                isSameState(process.currentState, processClosed)
+                  ? reviewDocuments.soleToJointClosed
+                  : reviewDocuments.soleToJointWillBeClosed
+              }
+            />
+            <Text style={{ marginLeft: 60 }}>
+              <strong>Reason of close case:</strong> <br />
+              {closeProcessReasonFinal}
+            </Text>
+          </Box>
+          <CloseProcessView
+            closeProcessReason={closeProcessReasonFinal}
+            process={process}
+            processConfig={processConfig}
+            mutate={mutate}
+          />
+        </>
+      )}
+      {!closeProcessReasonFinal &&
+        reviewDocumentsPageStates.includes(process.currentState.state) && (
+          <>
+            <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setCancel(false);
+                setCloseProcessDialogOpen(true);
+              }}
+              style={{ width: 222 }}
+            >
+              {locale.closeCase}
+            </Button>
+          </>
+        )}
     </>
   );
 };

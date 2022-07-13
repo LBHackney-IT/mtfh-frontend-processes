@@ -2,12 +2,15 @@ import React, { useState } from "react";
 
 import { Form, Formik } from "formik";
 
-import { ReviewDocumentsFormData, reviewDocumentsSchema } from "../../../../../schemas";
+import {
+  ReviewDocumentsFormData,
+  reviewDocumentsSchema,
+} from "../../../../../schemas/change-of-name/review-documents";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 import { DesBox } from "../../../process-components";
 import { ReviewDocumentsAppointmentForm } from "../../../review-documents-appointment-form";
-import { EligibilityChecksPassedBox } from "../shared";
+import { changeOfNameDocuments } from "../../view-utils";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -60,13 +63,12 @@ export const ReviewDocumentsView = ({
   }
 
   return (
-    <div data-testid="soletojoint-ReviewDocuments">
+    <div data-testid="changeofname-ReviewDocuments">
       {globalError && (
         <StatusErrorSummary id="review-documents-global-error" code={globalError} />
       )}
       {!optional?.closeProcessReasonFinal && (
         <>
-          <EligibilityChecksPassedBox />
           {(states.documentsRequestedDes.state === process.currentState.state ||
             process.previousStates.find(
               (previous) => previous.state === states.documentsRequestedDes.state,
@@ -85,9 +87,7 @@ export const ReviewDocumentsView = ({
             initialValues={{
               seenPhotographicId: false,
               seenSecondId: false,
-              isNotInImmigrationControl: false,
-              seenProofOfRelationship: false,
-              incomingTenantLivingInProperty: false,
+              confirmationForValidDocuments: false,
             }}
             validateOnBlur={false}
             validateOnChange={false}
@@ -121,10 +121,8 @@ export const ReviewDocumentsView = ({
                     label=""
                     error={
                       errors.seenPhotographicId ||
-                      errors.incomingTenantLivingInProperty ||
                       errors.seenSecondId ||
-                      errors.seenProofOfRelationship ||
-                      errors.isNotInImmigrationControl
+                      errors.confirmationForValidDocuments
                     }
                   >
                     <CheckboxGroup>
@@ -144,28 +142,17 @@ export const ReviewDocumentsView = ({
                           {reviewDocuments.seenSecondId}
                         </Checkbox>
                       </InlineField>
-                      <InlineField name="isNotInImmigrationControl" type="checkbox">
-                        <Checkbox
-                          id="is-not-immigration-control"
-                          hint={reviewDocuments.isNotInImmigrationControlHint}
-                        >
-                          {reviewDocuments.isNotInImmigrationControl}
-                        </Checkbox>
-                      </InlineField>
-                      <InlineField name="seenProofOfRelationship" type="checkbox">
-                        <Checkbox
-                          id="seen-proof-of-relationship"
-                          hint={reviewDocuments.seenProofOfRelationshipHint}
-                        >
-                          {reviewDocuments.seenProofOfRelationship}
-                        </Checkbox>
-                      </InlineField>
-                      <InlineField name="incomingTenantLivingInProperty" type="checkbox">
-                        <Checkbox
-                          id="incoming-tenant-living-in-property"
-                          hint={reviewDocuments.incomingTenantLivingInPropertyHint}
-                        >
-                          {reviewDocuments.incomingTenantLivingInProperty}
+                      <InlineField name="confirmationForValidDocuments" type="checkbox">
+                        <Checkbox id="confirmation-for-valid-documents">
+                          {reviewDocuments.confirmationForValidDocuments}
+                          {changeOfNameDocuments.map((documentName, index) => {
+                            return (
+                              <>
+                                <br />
+                                {index + 1}.{documentName}
+                              </>
+                            );
+                          })}
                         </Checkbox>
                       </InlineField>
                     </CheckboxGroup>

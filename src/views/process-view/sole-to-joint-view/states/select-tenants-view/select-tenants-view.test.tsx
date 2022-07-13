@@ -36,11 +36,6 @@ describe("select-tenants-view", () => {
         path: "/processes/soletojoint/:processId",
       },
     );
-    await expect(
-      screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-        exact: false,
-      }),
-    ).resolves.toBeInTheDocument();
   });
 
   test("it renders an error if tenure details can't be fetched", async () => {

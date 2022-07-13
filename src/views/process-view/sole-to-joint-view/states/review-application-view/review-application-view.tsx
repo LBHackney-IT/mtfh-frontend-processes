@@ -1,13 +1,13 @@
 import { useState } from "react";
 
-import { SoleToJointHeader } from "../../../../../components";
+import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
-import { CloseProcessView } from "../close-process-view";
+import { DesBox } from "../../../process-components";
 import { HoReviewFailedView } from "../ho-review-view/ho-review-failed-view";
 import { HoReviewView } from "../ho-review-view/ho-review-view";
 import { NewTenancyView } from "../new-tenancy-view/new-tenancy-view";
-import { DesBox, EligibilityChecksPassedBox } from "../shared";
+import { EligibilityChecksPassedBox } from "../shared";
 import { TenureInvestigationView } from "../tenure-investigation-view";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -128,7 +128,6 @@ export const ReviewApplicationView = ({
 
   return (
     <div data-testid="soletojoint-ReviewApplication">
-      <SoleToJointHeader processConfig={processConfig} process={process} />
       {globalError && (
         <StatusErrorSummary id="review-application-global-error" code={globalError} />
       )}

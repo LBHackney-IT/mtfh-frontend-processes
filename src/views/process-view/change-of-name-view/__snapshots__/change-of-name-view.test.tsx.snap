@@ -425,5 +425,6 @@ exports[`changeofname/change-of-name-view it renders ChangeOfNameView correctly 
       </div>
     </form>
   </div>
+  
 </div>
 `;

@@ -3,54 +3,8 @@
 exports[`review-documents-view it renders ReviewDocuments correctly on state DocumentsRequestedAppointment 1`] = `
 <div>
   <div
-    data-testid="soletojoint-ReviewDocuments"
+    data-testid="changeofname-ReviewDocuments"
   >
-    <div
-      class="mtfh-box mtfh-box--success"
-    >
-      <div
-        class="mtfh-status-heading"
-      >
-        <svg
-          fill="none"
-          height="45"
-          viewBox="0 0 45 45"
-          width="45"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="22.5"
-            cy="22.5"
-            fill="white"
-            r="21.75"
-            stroke="#00664F"
-            stroke-width="1.5"
-          />
-          <path
-            clip-rule="evenodd"
-            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
-            fill="#00664F"
-            fill-rule="evenodd"
-          />
-        </svg>
-        <h4
-          class="lbh-heading-h4 mtfh-status-heading__title"
-        >
-          Eligibility checks passed
-        </h4>
-      </div>
-      <div
-        class="govuk-link lbh-link lbh-link--no-visited-state"
-        style="padding-left: 60px; margin-top: 17.5px;"
-      >
-        <a
-          class="govuk-link lbh-link lbh-link--no-visited-state"
-          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
-        >
-          Show all eligibility checks
-        </a>
-      </div>
-    </div>
     <div
       class="mtfh-box"
     >
@@ -182,73 +136,42 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="is-not-immigration-control-hint"
               class="govuk-checkboxes__input"
-              id="is-not-immigration-control"
-              name="isNotInImmigrationControl"
+              id="confirmation-for-valid-documents"
+              name="confirmationForValidDocuments"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="is-not-immigration-control"
+              for="confirmation-for-valid-documents"
             >
-              I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996
+              I confirm I have seen a valid example of one of the following documents
+              <br />
+              1
+              .
+              Marriage certificate
+              <br />
+              2
+              .
+              Civil partnership certificate
+              <br />
+              3
+              .
+              Decree absolute
+              <br />
+              4
+              .
+              Final order
+              <br />
+              5
+              .
+              Deed poll document
+              <br />
+              6
+              .
+              Statutory declaration
             </label>
-            <span
-              class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="is-not-immigration-control-hint"
-            >
-              (for example: passport, home office letter, embassy letter, immigration status document)
-            </span>
-          </div>
-          <div
-            class="govuk-checkboxes__item"
-          >
-            <input
-              aria-describedby="seen-proof-of-relationship-hint"
-              class="govuk-checkboxes__input"
-              id="seen-proof-of-relationship"
-              name="seenProofOfRelationship"
-              type="checkbox"
-              value="false"
-            />
-            <label
-              class="govuk-label govuk-checkboxes__label"
-              for="seen-proof-of-relationship"
-            >
-              I confirm I have seen proof of relationship to the existing tenant
-            </label>
-            <span
-              class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="seen-proof-of-relationship-hint"
-            >
-              (for example: marriage or civil partner certificate)
-            </span>
-          </div>
-          <div
-            class="govuk-checkboxes__item"
-          >
-            <input
-              aria-describedby="incoming-tenant-living-in-property-hint"
-              class="govuk-checkboxes__input"
-              id="incoming-tenant-living-in-property"
-              name="incomingTenantLivingInProperty"
-              type="checkbox"
-              value="false"
-            />
-            <label
-              class="govuk-label govuk-checkboxes__label"
-              for="incoming-tenant-living-in-property"
-            >
-              I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months
-            </label>
-            <span
-              class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="incoming-tenant-living-in-property-hint"
-            >
-              (for example: letter, utility bill, council tax bill)
-            </span>
           </div>
         </div>
       </div>
@@ -268,54 +191,8 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
 exports[`review-documents-view it renders ReviewDocuments correctly on state DocumentsRequestedDes 1`] = `
 <div>
   <div
-    data-testid="soletojoint-ReviewDocuments"
+    data-testid="changeofname-ReviewDocuments"
   >
-    <div
-      class="mtfh-box mtfh-box--success"
-    >
-      <div
-        class="mtfh-status-heading"
-      >
-        <svg
-          fill="none"
-          height="45"
-          viewBox="0 0 45 45"
-          width="45"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="22.5"
-            cy="22.5"
-            fill="white"
-            r="21.75"
-            stroke="#00664F"
-            stroke-width="1.5"
-          />
-          <path
-            clip-rule="evenodd"
-            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
-            fill="#00664F"
-            fill-rule="evenodd"
-          />
-        </svg>
-        <h4
-          class="lbh-heading-h4 mtfh-status-heading__title"
-        >
-          Eligibility checks passed
-        </h4>
-      </div>
-      <div
-        class="govuk-link lbh-link lbh-link--no-visited-state"
-        style="padding-left: 60px; margin-top: 17.5px;"
-      >
-        <a
-          class="govuk-link lbh-link lbh-link--no-visited-state"
-          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
-        >
-          Show all eligibility checks
-        </a>
-      </div>
-    </div>
     <div
       class="mtfh-box mtfh-box--success"
     >
@@ -459,73 +336,42 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
             class="govuk-checkboxes__item"
           >
             <input
-              aria-describedby="is-not-immigration-control-hint"
               class="govuk-checkboxes__input"
-              id="is-not-immigration-control"
-              name="isNotInImmigrationControl"
+              id="confirmation-for-valid-documents"
+              name="confirmationForValidDocuments"
               type="checkbox"
               value="false"
             />
             <label
               class="govuk-label govuk-checkboxes__label"
-              for="is-not-immigration-control"
+              for="confirmation-for-valid-documents"
             >
-              I confirm that the prospective tenant is not subject to immigration control under the Asylum And Immigration Act 1996
+              I confirm I have seen a valid example of one of the following documents
+              <br />
+              1
+              .
+              Marriage certificate
+              <br />
+              2
+              .
+              Civil partnership certificate
+              <br />
+              3
+              .
+              Decree absolute
+              <br />
+              4
+              .
+              Final order
+              <br />
+              5
+              .
+              Deed poll document
+              <br />
+              6
+              .
+              Statutory declaration
             </label>
-            <span
-              class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="is-not-immigration-control-hint"
-            >
-              (for example: passport, home office letter, embassy letter, immigration status document)
-            </span>
-          </div>
-          <div
-            class="govuk-checkboxes__item"
-          >
-            <input
-              aria-describedby="seen-proof-of-relationship-hint"
-              class="govuk-checkboxes__input"
-              id="seen-proof-of-relationship"
-              name="seenProofOfRelationship"
-              type="checkbox"
-              value="false"
-            />
-            <label
-              class="govuk-label govuk-checkboxes__label"
-              for="seen-proof-of-relationship"
-            >
-              I confirm I have seen proof of relationship to the existing tenant
-            </label>
-            <span
-              class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="seen-proof-of-relationship-hint"
-            >
-              (for example: marriage or civil partner certificate)
-            </span>
-          </div>
-          <div
-            class="govuk-checkboxes__item"
-          >
-            <input
-              aria-describedby="incoming-tenant-living-in-property-hint"
-              class="govuk-checkboxes__input"
-              id="incoming-tenant-living-in-property"
-              name="incomingTenantLivingInProperty"
-              type="checkbox"
-              value="false"
-            />
-            <label
-              class="govuk-label govuk-checkboxes__label"
-              for="incoming-tenant-living-in-property"
-            >
-              I confirm I have seen 3 separate documents proving the proposed tenant has been living at the property for a minimum of 12 months
-            </label>
-            <span
-              class="govuk-hint govuk-checkboxes__hint lbh-hint"
-              id="incoming-tenant-living-in-property-hint"
-            >
-              (for example: letter, utility bill, council tax bill)
-            </span>
           </div>
         </div>
       </div>

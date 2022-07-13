@@ -29,18 +29,15 @@ describe("review-documents-view", () => {
     jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
     const { container } = render(
       <ReviewDocumentsView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
       />,
       {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
+        url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+        path: "/processes/changeofname/:processId",
       },
     );
-    await expect(
-      screen.findByText(locale.views.reviewDocuments.passedChecks),
-    ).resolves.toBeInTheDocument();
     await expect(
       screen.findByText(locale.views.reviewDocuments.viewInDes),
     ).resolves.toBeInTheDocument();
@@ -55,7 +52,7 @@ describe("review-documents-view", () => {
     server.use(getReferenceDataV1({}, 200));
     render(
       <ReviewDocumentsView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
       />,
@@ -74,7 +71,7 @@ describe("review-documents-view", () => {
     server.use(patchProcessV1("error", 500));
     render(
       <ReviewDocumentsView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
       />,
@@ -94,7 +91,7 @@ describe("review-documents-view", () => {
     server.use(getReferenceDataV1({}, 200));
     render(
       <ReviewDocumentsView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
       />,
@@ -118,18 +115,15 @@ describe("review-documents-view", () => {
   test("it renders requested via des and book appointment", async () => {
     render(
       <ReviewDocumentsView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={mockDocumentsRequestedDesAppointment}
         mutate={() => {}}
       />,
       {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
+        url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+        path: "/processes/changeofname/:processId",
       },
     );
-    await expect(
-      screen.findByText(locale.views.reviewDocuments.passedChecks),
-    ).resolves.toBeInTheDocument();
     await expect(
       screen.findByText(locale.views.reviewDocuments.viewInDes),
     ).resolves.toBeInTheDocument();
@@ -141,7 +135,7 @@ describe("review-documents-view", () => {
   test("it displays change button if date is future", async () => {
     render(
       <ReviewDocumentsView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={mockDocumentsRequestedAppointment({
           appointmentDateTime: "2099-10-12T08:59:00.000Z",
         })}
@@ -159,7 +153,7 @@ describe("review-documents-view", () => {
     server.use(getReferenceDataV1({}, 200));
     render(
       <ReviewDocumentsView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={mockDocumentsRequestedAppointment({
           appointmentDateTime: "2010-10-12T08:59:00.000Z",
         })}
@@ -176,7 +170,7 @@ describe("review-documents-view", () => {
   test("it enables next once all checkboxes are selected", async () => {
     render(
       <ReviewDocumentsView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
       />,
@@ -192,7 +186,7 @@ describe("review-documents-view", () => {
     server.use(patchProcessV1("error", 500));
     render(
       <ReviewDocumentsView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
       />,
@@ -210,20 +204,17 @@ describe("review-documents-view", () => {
     jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
     const { container } = render(
       <ReviewDocumentsView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={mockDocumentsRequestedAppointment({
           appointmentDateTime: "2099-10-12T08:59:00.000Z",
         })}
         mutate={() => {}}
       />,
       {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
+        url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+        path: "/processes/changeofname/:processId",
       },
     );
-    await expect(
-      screen.findByText(locale.views.reviewDocuments.passedChecks),
-    ).resolves.toBeInTheDocument();
     await expect(screen.queryByText(locale.views.reviewDocuments.viewInDes)).toBeNull();
     await expect(
       screen.findByText(locale.components.appointment.scheduled),
@@ -243,12 +234,8 @@ async function selectAllCheckBoxes() {
   );
   await userEvent.click(screen.getByLabelText(locale.views.reviewDocuments.seenSecondId));
   await userEvent.click(
-    screen.getByLabelText(locale.views.reviewDocuments.seenProofOfRelationship),
-  );
-  await userEvent.click(
-    screen.getByLabelText(locale.views.reviewDocuments.isNotInImmigrationControl),
-  );
-  await userEvent.click(
-    screen.getByLabelText(locale.views.reviewDocuments.incomingTenantLivingInProperty),
+    screen.getByLabelText(locale.views.reviewDocuments.confirmationForValidDocuments, {
+      exact: false,
+    }),
   );
 }

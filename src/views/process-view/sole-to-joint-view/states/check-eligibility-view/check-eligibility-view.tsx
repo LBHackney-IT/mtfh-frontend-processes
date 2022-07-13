@@ -1,9 +1,8 @@
 import { useState } from "react";
 
-import { SoleToJointHeader } from "../../../../../components";
+import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
-import { CloseProcessView } from "../close-process-view";
 import { AutomatedChecksPassedBox } from "../shared";
 import { FurtherEligibilityForm } from "./further-eligibility-form";
 
@@ -43,7 +42,6 @@ export const CheckEligibilityView = ({
 
   return (
     <div data-testid="soletojoint-CheckEligibility">
-      <SoleToJointHeader processConfig={processConfig} process={process} />
       {globalError && (
         <StatusErrorSummary id="check-eligibility-global-error" code={globalError} />
       )}
