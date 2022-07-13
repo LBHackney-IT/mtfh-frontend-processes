@@ -2,9 +2,8 @@ import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { locale } from "../../../../services";
-import { TickBulletPoint } from "../../process-components";
-
 import { IProcess, Recommendation, RecommendationType } from "../../../../types";
+import { TickBulletPoint } from "../../process-components";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {

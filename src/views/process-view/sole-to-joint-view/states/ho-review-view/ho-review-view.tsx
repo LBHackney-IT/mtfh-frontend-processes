@@ -14,10 +14,7 @@ import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 import { IProcess, Recommendation } from "../../../../../types";
 import { getAppointmentDateTime } from "../../../../../utils/processUtil";
-import {
-  TenureInvestigationRecommendationBox,
-  getRecommendation,
-} from "../shared";
+import { TenureInvestigationRecommendationBox, getRecommendation } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
