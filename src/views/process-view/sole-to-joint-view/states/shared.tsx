@@ -1,8 +1,11 @@
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import { format } from "date-fns";
+
 import { locale } from "../../../../services";
 import { IProcess, Recommendation, RecommendationType } from "../../../../types";
+import { isCurrentState, isPreviousState } from "../../../../utils/processUtil";
 import { TickBulletPoint } from "../../process-components";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -97,10 +100,6 @@ export const AutomatedChecksPassedBox = (): JSX.Element => {
     </Box>
   );
 };
-
-export const isCurrentState = (state, process) => state === process.currentState.state;
-export const isPreviousState = (state, process) =>
-  process.previousStates.find((previousState) => state === previousState.state);
 
 export const getRecommendation = (
   processConfig: IProcess,

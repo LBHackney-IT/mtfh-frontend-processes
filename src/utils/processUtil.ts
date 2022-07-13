@@ -1,5 +1,9 @@
 import { parse } from "date-fns";
 
+export const isCurrentState = (state, process) => state === process.currentState.state;
+export const isPreviousState = (state, process) =>
+  process.previousStates.find((previousState) => state === previousState.state);
+
 export const isSameState = (firstState, secondState) => {
   return firstState.state === secondState.state;
 };
