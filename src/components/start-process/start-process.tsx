@@ -68,7 +68,7 @@ export const StartProcess = ({
         onSubmit={async () => {
           try {
             const response = await addProcess(
-              { targetID: targetId, targetType },
+              { targetID: targetId, targetType, relatedEntities: [] },
               processName,
             );
             history.push(`/processes/${processName}/${response.id}`);
