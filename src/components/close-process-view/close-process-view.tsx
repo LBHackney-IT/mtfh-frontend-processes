@@ -3,9 +3,9 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { Form, Formik } from "formik";
 
-import { locale } from "../../../../../services";
-import { Trigger } from "../../../../../services/processes/types";
-import { IProcess } from "../../../../../types";
+import { locale } from "../../services";
+import { Trigger } from "../../services/processes/types";
+import { IProcess } from "../../types";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import { Button, Checkbox, Heading, Link, List, Text } from "@mtfh/common/lib/components";

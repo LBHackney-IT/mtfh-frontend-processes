@@ -2,7 +2,7 @@ import React from "react";
 
 import * as Yup from "yup";
 
-import { locale } from "../../../../../services";
+import { locale } from "../../services";
 
 import { Field, TextArea } from "@mtfh/common/lib/components";
 

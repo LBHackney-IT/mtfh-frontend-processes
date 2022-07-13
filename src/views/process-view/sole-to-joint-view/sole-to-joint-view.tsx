@@ -1,13 +1,14 @@
 import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import { CloseProcessView, SoleToJointHeader } from "../../../components";
 import { locale, processes } from "../../../services";
 import { ProcessComponentProps, ProcessSideBarProps } from "../../../types";
+import { getPreviousState, isSameState } from "../../../utils/processUtil";
 import {
   BreachChecksFailedView,
   BreachChecksView,
   CheckEligibilityView,
-  CloseProcessView,
   RequestDocumentsView,
   ReviewDocumentsView,
   SelectTenantsView,
@@ -259,15 +260,6 @@ export const SoleToJointSideBar = (props: ProcessSideBarProps) => {
   );
 };
 
-const isSameState = (firstState, secondState) => {
-  return firstState.state === secondState.state;
-};
-
-const getPreviousState = (process) => {
-  const { previousStates } = process;
-  return previousStates[previousStates.length - 1];
-};
-
 const getComponent = (process) => {
   const {
     currentState: { state },
@@ -324,6 +316,7 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
 
   return (
     <>
+      <SoleToJointHeader processConfig={processConfig} process={process} />
       <Component
         processConfig={processConfig}
         process={process}

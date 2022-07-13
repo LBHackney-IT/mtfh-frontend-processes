@@ -1,8 +1,8 @@
-import { SoleToJointHeader } from "../../../../../components";
 import { CheckSupportingDocuments } from "../../../../../components/check-supporting-documents";
 import { locale } from "../../../../../services";
 import { IProcess, ProcessComponentProps } from "../../../../../types";
-import { BulletWithExplanation, EligibilityChecksPassedBox } from "../shared";
+import { BulletWithExplanation } from "../../../process-components";
+import { EligibilityChecksPassedBox } from "../shared";
 
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
@@ -19,11 +19,7 @@ export interface RequestDocumentsViewProps extends ProcessComponentProps {
   processConfig: IProcess;
 }
 
-export const RequestDocumentsView = ({
-  process,
-  processConfig,
-  mutate,
-}: RequestDocumentsViewProps) => {
+export const RequestDocumentsView = ({ process, mutate }: RequestDocumentsViewProps) => {
   const errorMessages = useErrorCodes();
   const { data: tenure, error } = useTenure(process.targetId);
 
@@ -49,7 +45,6 @@ export const RequestDocumentsView = ({
 
   return (
     <div data-testid="soletojoint-RequestDocuments">
-      <SoleToJointHeader processConfig={processConfig} process={process} />
       <EligibilityChecksPassedBox />
       <Heading variant="h3">{locale.supportingDocuments}</Heading>
       <Text size="sm">

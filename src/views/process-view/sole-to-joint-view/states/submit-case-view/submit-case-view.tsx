@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-import { SoleToJointHeader } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
+import { DesBox } from "../../../process-components";
 import { ReviewApplicationView } from "../review-application-view/review-application-view";
-import { DesBox, EligibilityChecksPassedBox } from "../shared";
+import { EligibilityChecksPassedBox } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import { Button, Heading, StatusErrorSummary, Text } from "@mtfh/common/lib/components";
@@ -43,7 +43,6 @@ export const SubmitCaseView = ({
 
   return (
     <>
-      <SoleToJointHeader processConfig={processConfig} process={process} />
       {globalError && (
         <StatusErrorSummary id="review-documents-global-error" code={globalError} />
       )}

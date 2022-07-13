@@ -122,6 +122,14 @@ const locale = {
         "The outcome has been recorded and can be viewed in the activity history",
       documentsNotSuitableCloseCase:
         "If the documents are not suitable and all avenues to obtain the right documents have been exhausted, then close the case.",
+      confirmationForValidDocuments:
+        "I confirm I have seen a valid example of one of the following documents",
+      marriageCertificate: "Marriage certificate",
+      civilPartnershipCertificate: "Civil partnership certificate",
+      decreeAbsolute: "Decree absolute",
+      finalOrder: "Final order",
+      deedPollDocument: "Deed poll document",
+      statuoryDeclaration: "Statutory declaration",
     },
     submitCase: {
       tenureInvestigation: "Tenure Investigation",

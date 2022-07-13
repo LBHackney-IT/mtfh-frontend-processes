@@ -2,10 +2,9 @@ import { useState } from "react";
 
 import { Form, Formik } from "formik";
 
-import { SoleToJointHeader } from "../../../../../components";
+import { CloseProcessView } from "../../../../../components";
 import { BreachChecksFormData, breachChecksFormSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
-import { CloseProcessView } from "../close-process-view";
 
 import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -223,7 +222,6 @@ export const BreachChecksView = ({
 
   return (
     <div data-testid="soletojoint-ManualChecksPassed">
-      <SoleToJointHeader processConfig={processConfig} process={process} />
       {globalError && (
         <StatusErrorSummary id="review-application-global-error" code={globalError} />
       )}
@@ -269,7 +267,6 @@ export const BreachChecksFailedView = ({
 }): JSX.Element => {
   return (
     <div data-testid="soletojoint-BreachChecksFailed">
-      <SoleToJointHeader processConfig={processConfig} process={process} />
       <Text>{checkEligibility.autoCheckIntro}</Text>
       <Box variant="warning">
         <StatusHeading variant="warning" title={checkEligibility.failedChecks} />{" "}

@@ -4,10 +4,10 @@ import { Link as RouterLink, useParams } from "react-router-dom";
 import {
   ChangeOfNameSideBar,
   ChangeOfNameView,
-  CloseProcessDialog,
   SoleToJointSideBar,
   SoleToJointView,
 } from "..";
+import { CloseProcessDialog } from "../../components";
 import { locale, processes } from "../../services";
 import { CommentsView } from "./comments-view";
 

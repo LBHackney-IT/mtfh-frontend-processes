@@ -1,5 +1,5 @@
 import { mockProcessV1, patchProcessV1, render, server } from "@hackney/mtfh-test-utils";
-import { screen, waitForElementToBeRemoved } from "@testing-library/react";
+import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { locale, processes } from "../../../../../services";
@@ -55,7 +55,6 @@ describe("submit-case-view", () => {
         path: "/processes/soletojoint/:processId",
       },
     );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await userEvent.click(screen.getByText(locale.submitCase));
   });
 

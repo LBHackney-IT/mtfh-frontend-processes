@@ -1,7 +1,8 @@
 import { CheckSupportingDocuments } from "../../../../../components/check-supporting-documents";
 import { locale } from "../../../../../services";
 import { ProcessComponentProps } from "../../../../../types";
-import { BulletWithExplanation } from "../../../sole-to-joint-view/states/shared";
+import { BulletWithExplanation } from "../../../process-components";
+import { changeOfNameDocuments } from "../../view-utils";
 
 import { Center, Heading, List, Spinner, Text } from "@mtfh/common/lib/components";
 import { useErrorCodes } from "@mtfh/common/lib/hooks";
@@ -42,14 +43,7 @@ export const RequestDocumentsView = ({
             type="1"
             style={{ marginLeft: "2em", marginTop: 15, fontWeight: "bold" }}
           >
-            {[
-              "Marriage certificate",
-              "Civil partnership certificate",
-              "Decree absolute",
-              "Final order",
-              "Deed poll document",
-              "Statutory declaration",
-            ].map((item) => (
+            {changeOfNameDocuments.map((item) => (
               <li key={item} style={{ marginTop: 0 }}>
                 {item}
               </li>

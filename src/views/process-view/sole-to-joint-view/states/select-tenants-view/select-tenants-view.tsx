@@ -4,7 +4,6 @@ import { Link as RouterLink } from "react-router-dom";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { EntitySummary } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 
@@ -77,7 +76,6 @@ export const SelectTenantsView = ({
 
   return (
     <div data-testid="soletojoint-SelectTenants">
-      <EntitySummary id={process.targetId} type={processConfig.targetType} />
       {globalError && (
         <StatusErrorSummary id="select-tenant-global-error" code={globalError} />
       )}

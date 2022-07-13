@@ -1,55 +1,13 @@
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
-import { parse } from "date-fns";
+import { locale } from "../../../../services";
+import { TickBulletPoint } from "../../process-components";
 
-import { config, locale } from "../../../../services";
-
-import { Box, Heading, Link, StatusHeading, Text } from "@mtfh/common/lib/components";
+import { Box, Heading, Link, StatusHeading } from "@mtfh/common/lib/components";
 
 const { views } = locale;
 const { breachOfTenancy, checkEligibility } = views;
-
-export const TickIcon = () => {
-  return (
-    <svg
-      width="32"
-      height="32"
-      viewBox="0 0 45 45"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        fillRule="evenodd"
-        clipRule="evenodd"
-        d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
-        fill="#00664F"
-      />
-    </svg>
-  );
-};
-
-export const TickBulletPoint = ({ text }) => {
-  return (
-    <div style={{ display: "flex", alignItems: "center", margin: "0 0 0 -7px" }}>
-      <TickIcon />
-      <Text size="sm" style={{ margin: 0 }}>
-        {text}
-      </Text>
-    </div>
-  );
-};
-
-export const BulletWithExplanation = ({ text, explanation }) => {
-  return (
-    <>
-      <Text size="sm" style={{ fontWeight: "bold" }}>
-        {text}
-      </Text>
-      <span className="lbh-body-s">({explanation})</span>
-    </>
-  );
-};
 
 export const EligibilityChecksPassedBox = () => {
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -114,35 +72,6 @@ export const EligibilityChecksPassedBox = () => {
   );
 };
 
-export const DesBox = ({
-  title,
-  description,
-}: {
-  title: string;
-  description?: string;
-}): JSX.Element => {
-  return (
-    <Box variant="success">
-      <StatusHeading variant="success" title={title} />
-      <div
-        style={{ marginLeft: 60, marginTop: 17.5 }}
-        className="govuk-link lbh-link lbh-link--no-visited-state"
-      >
-        <Link
-          as={RouterLink}
-          to={{
-            pathname: `${config.desURL}/teams/1/dashboard/requests`,
-          }}
-          target="_blank"
-          variant="link"
-        >
-          {description || views.reviewDocuments.viewInDes}
-        </Link>
-      </div>
-    </Box>
-  );
-};
-
 export const AutomatedChecksPassedBox = (): JSX.Element => {
   return (
     <Box variant="success">
@@ -156,27 +85,5 @@ export const AutomatedChecksPassedBox = (): JSX.Element => {
       <TickBulletPoint text="The proposed tenant is over 18 years of age" />
       <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
     </Box>
-  );
-};
-
-export const getAppointmentDateTime = ({
-  day,
-  month,
-  year,
-  hour,
-  minute,
-  amPm,
-}: {
-  day: string;
-  month: string;
-  year: string;
-  hour: string;
-  minute: string;
-  amPm: string;
-}) => {
-  return parse(
-    `${year}-${month}-${day} ${hour}:${minute} ${amPm.toUpperCase()}`,
-    "yyyy-MM-dd hh:mm a",
-    new Date(),
   );
 };

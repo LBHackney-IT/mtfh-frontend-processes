@@ -47,11 +47,6 @@ test("it renders CheckEligibility passed checks view correctly", async () => {
     options,
   );
   await expect(
-    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-      exact: false,
-    }),
-  ).resolves.toBeInTheDocument();
-  await expect(
     screen.findByText(locale.views.checkEligibility.autoCheckIntro),
   ).resolves.toBeInTheDocument();
   await expect(
@@ -129,17 +124,11 @@ test("it renders CheckEligibility correctly if there is an incoming tenant", asy
     options,
   );
   await expect(
-    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-      exact: false,
-    }),
-  ).resolves.toBeInTheDocument();
-  await expect(
     screen.findByText(locale.views.checkEligibility.autoCheckIntro),
   ).resolves.toBeInTheDocument();
   await expect(
     screen.findByText(locale.views.checkEligibility.passedChecks),
   ).resolves.toBeInTheDocument();
-  await expect(screen.findByText(`adding ${fullName}`)).resolves.toBeInTheDocument();
 });
 
 test("it renders CheckEligibility failed checks view correctly", async () => {
@@ -152,11 +141,6 @@ test("it renders CheckEligibility failed checks view correctly", async () => {
     />,
     options,
   );
-  await expect(
-    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-      exact: false,
-    }),
-  ).resolves.toBeInTheDocument();
   await expect(
     screen.findByText(locale.views.checkEligibility.autoCheckIntro),
   ).resolves.toBeInTheDocument();
@@ -182,11 +166,6 @@ test("it renders CheckEligibility failed checks view correctly for process close
     options,
   );
   await expect(
-    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-      exact: false,
-    }),
-  ).resolves.toBeInTheDocument();
-  await expect(
     screen.findByText(locale.views.checkEligibility.autoCheckIntro),
   ).resolves.toBeInTheDocument();
   await expect(
@@ -194,26 +173,6 @@ test("it renders CheckEligibility failed checks view correctly for process close
   ).resolves.toBeInTheDocument();
   await expect(
     screen.findByText(locale.views.closeProcess.confirmationText),
-  ).resolves.toBeInTheDocument();
-});
-
-test("it renders an error if tenure details can't be fetched", async () => {
-  server.use(getTenureV1("error", 500));
-  render(
-    <CheckEligibilityView
-      processConfig={processes.soletojoint}
-      process={mockProcessAutomatedChecksPassed}
-      mutate={() => {}}
-      optional={{ submitted, setSubmitted }}
-    />,
-    options,
-  );
-
-  await expect(
-    screen.findByText(locale.errors.unableToFetchRecord),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.errors.unableToFetchRecordDescription),
   ).resolves.toBeInTheDocument();
 });
 

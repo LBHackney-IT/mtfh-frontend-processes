@@ -5,51 +5,6 @@ exports[`manual-checks-view it renders ManualChecksView correctly 1`] = `
   <div
     data-testid="soletojoint-ManualChecksFailed"
   >
-    <div
-      class="mtfh-center mtfh-center--horizontal mtfh-center--vertical"
-    >
-      <svg
-        class="mtfh-icon"
-        focusable="false"
-        height="50"
-        stroke="#00703c"
-        viewBox="0 0 42 42"
-        width="50"
-      >
-        <title>
-          Loading...
-        </title>
-        <g
-          fill="none"
-          fill-rule="evenodd"
-        >
-          <g
-            stroke-width="5"
-            transform="translate(3 3)"
-          >
-            <circle
-              cx="18"
-              cy="18"
-              r="18"
-              stroke-opacity=".5"
-            />
-            <path
-              d="M36 18c0-9.94-8.06-18-18-18"
-              transform="rotate(112.708 18 18)"
-            >
-              <animatetransform
-                attributeName="transform"
-                dur="1s"
-                from="0 18 18"
-                repeatCount="indefinite"
-                to="360 18 18"
-                type="rotate"
-              />
-            </path>
-          </g>
-        </g>
-      </svg>
-    </div>
     <p
       class="lbh-body-m"
     >
