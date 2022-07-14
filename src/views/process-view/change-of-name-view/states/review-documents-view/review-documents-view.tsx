@@ -87,7 +87,7 @@ export const ReviewDocumentsView = ({
             initialValues={{
               seenPhotographicId: false,
               seenSecondId: false,
-              confirmationForValidDocuments: false,
+              atLeastOneDocument: false,
             }}
             validateOnBlur={false}
             validateOnChange={false}
@@ -122,7 +122,7 @@ export const ReviewDocumentsView = ({
                     error={
                       errors.seenPhotographicId ||
                       errors.seenSecondId ||
-                      errors.confirmationForValidDocuments
+                      errors.atLeastOneDocument
                     }
                   >
                     <CheckboxGroup>
@@ -142,9 +142,9 @@ export const ReviewDocumentsView = ({
                           {reviewDocuments.seenSecondId}
                         </Checkbox>
                       </InlineField>
-                      <InlineField name="confirmationForValidDocuments" type="checkbox">
+                      <InlineField name="atLeastOneDocument" type="checkbox">
                         <Checkbox id="confirmation-for-valid-documents">
-                          {reviewDocuments.confirmationForValidDocuments}
+                          {reviewDocuments.atLeastOneDocument}
                           {changeOfNameDocuments.map((documentName, index) => {
                             return (
                               <>
