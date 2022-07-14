@@ -234,7 +234,7 @@ async function selectAllCheckBoxes() {
   );
   await userEvent.click(screen.getByLabelText(locale.views.reviewDocuments.seenSecondId));
   await userEvent.click(
-    screen.getByLabelText(locale.views.reviewDocuments.confirmationForValidDocuments, {
+    screen.getByLabelText(locale.views.reviewDocuments.atLeastOneDocument, {
       exact: false,
     }),
   );
