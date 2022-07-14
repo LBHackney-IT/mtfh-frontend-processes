@@ -1,10 +1,11 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 import { isCurrentState } from "../../../../../utils/processUtil";
 import { DesBox } from "../../../shared/process-components";
+import { SubmitCaseView } from "../../../shared/submit-case-view";
 import { HoReviewFailedView } from "../ho-review-view/ho-review-failed-view";
 import { HoReviewView } from "../ho-review-view/ho-review-view";
 import { NewTenancyView } from "../new-tenancy-view/new-tenancy-view";
@@ -42,7 +43,7 @@ export const ReviewApplicationView = ({
 }: ReviewApplicationViewProps): JSX.Element => {
   const [globalError, setGlobalError] = useState<number>();
   const [documentsSigned, setDocumentsSigned] = useState<boolean>(false);
-  const { closeCase, setCloseCase } = optional;
+  const { submitted, closeCase, setCloseCase } = optional;
   const { data: tenure, error } = useTenure(process.targetId);
   const {
     applicationSubmitted,
@@ -78,6 +79,17 @@ export const ReviewApplicationView = ({
   }
 
   const tenant = tenure?.householdMembers.find((m) => m.isResponsible);
+
+  if (applicationSubmitted.state === process.currentState.state && submitted) {
+    return (
+      <SubmitCaseView
+        processConfig={processConfig}
+        process={process}
+        mutate={mutate}
+        optional={optional}
+      />
+    );
+  }
 
   return (
     <div data-testid="soletojoint-ReviewApplication">

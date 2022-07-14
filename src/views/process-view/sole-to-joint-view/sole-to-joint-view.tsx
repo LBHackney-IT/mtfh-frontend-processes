@@ -79,7 +79,7 @@ const components = {
   [breachChecksPassed.state]: RequestDocumentsView,
   ...reviewDocumentsViewByStates,
   [documentChecksPassed.state]: SubmitCaseView,
-  [applicationSubmitted.state]: SubmitCaseView,
+  [applicationSubmitted.state]: ReviewApplicationView,
   [tenureInvestigationFailed.state]: ReviewApplicationView,
   [tenureInvestigationPassed.state]: ReviewApplicationView,
   [tenureInvestigationPassedWithInt.state]: ReviewApplicationView,

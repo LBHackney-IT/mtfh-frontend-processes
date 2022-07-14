@@ -10,7 +10,7 @@ import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { locale, processes } from "../../../../../services";
-import { SubmitCaseView } from "../submit-case-view";
+import { ReviewApplicationView } from "../review-application-view/review-application-view";
 
 let submitted = false;
 let closeCase = false;
@@ -27,7 +27,7 @@ describe("tenure-investigation-view", () => {
   test("it renders ReviewApplication view correctly for ApplicationSubmitted state", async () => {
     server.use(getContactDetailsV2(mockContactDetailsV2));
     const { container } = render(
-      <SubmitCaseView
+      <ReviewApplicationView
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
@@ -52,7 +52,7 @@ describe("tenure-investigation-view", () => {
 
   test("it enables buttons when checkbox is checked", async () => {
     render(
-      <SubmitCaseView
+      <ReviewApplicationView
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
@@ -88,7 +88,7 @@ describe("tenure-investigation-view", () => {
   test("it renders error if submit fails", async () => {
     server.use(patchProcessV1(null, 500));
     render(
-      <SubmitCaseView
+      <ReviewApplicationView
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
