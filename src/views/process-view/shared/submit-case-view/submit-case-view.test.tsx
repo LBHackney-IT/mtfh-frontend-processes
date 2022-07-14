@@ -6,7 +6,7 @@ import { locale, processes } from "../../../../services";
 import { SubmitCaseView } from "./submit-case-view";
 
 let submitted = false;
-const setSubmitted = jest.fn(() => {});
+const setSubmitted = jest.fn();
 
 const mockDocumentChecksPassedProcess = {
   ...mockProcessV1,
@@ -128,6 +128,7 @@ describe("submit-case-view", () => {
     await expect(
       screen.findByText(locale.views.submitCase.nextStepsText),
     ).resolves.toBeInTheDocument();
-    await expect(screen.findByText("Continue")).resolves.toBeInTheDocument();
+    await userEvent.click(screen.getByText("Continue"));
+    expect(setSubmitted).toHaveBeenCalledWith(false);
   });
 });
