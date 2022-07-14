@@ -283,7 +283,7 @@ export const HoReviewView = ({
                           <Radio
                             id="ho-review-decline"
                             name="hoRecommendation"
-                            value={Recommendation.Decline.toLowerCase()}
+                            value={Recommendation.Decline}
                           >
                             {locale.views.tenureInvestigation.decline}
                           </Radio>
