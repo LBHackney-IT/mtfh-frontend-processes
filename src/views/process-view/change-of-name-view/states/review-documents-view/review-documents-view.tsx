@@ -8,8 +8,8 @@ import {
 } from "../../../../../schemas/change-of-name/review-documents";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
-import { DesBox } from "../../../process-components";
-import { ReviewDocumentsAppointmentForm } from "../../../review-documents-appointment-form";
+import { DesBox } from "../../../shared/process-components";
+import { ReviewDocumentsAppointmentForm } from "../../../shared/review-documents-appointment-form";
 import { changeOfNameDocuments } from "../../view-utils";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";

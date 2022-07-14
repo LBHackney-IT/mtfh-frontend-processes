@@ -9,7 +9,7 @@ import {
 } from "..";
 import { CloseProcessDialog } from "../../components";
 import { locale, processes } from "../../services";
-import { CommentsView } from "./comments-view";
+import { CommentsView } from "./shared/comments-view";
 
 import { useProcess } from "@mtfh/common/lib/api/process/v1";
 import {

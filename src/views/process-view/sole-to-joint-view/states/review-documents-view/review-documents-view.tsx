@@ -5,8 +5,8 @@ import { Form, Formik } from "formik";
 import { ReviewDocumentsFormData, reviewDocumentsSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
-import { DesBox } from "../../../process-components";
-import { ReviewDocumentsAppointmentForm } from "../../../review-documents-appointment-form";
+import { DesBox } from "../../../shared/process-components";
+import { ReviewDocumentsAppointmentForm } from "../../../shared/review-documents-appointment-form";
 import { EligibilityChecksPassedBox } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";

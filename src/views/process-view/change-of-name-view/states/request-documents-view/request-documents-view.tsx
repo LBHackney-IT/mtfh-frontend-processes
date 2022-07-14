@@ -1,7 +1,7 @@
 import { CheckSupportingDocuments } from "../../../../../components/check-supporting-documents";
 import { locale } from "../../../../../services";
 import { ProcessComponentProps } from "../../../../../types";
-import { BulletWithExplanation } from "../../../process-components";
+import { BulletWithExplanation } from "../../../shared/process-components";
 import { changeOfNameDocuments } from "../../view-utils";
 
 import { Center, Heading, List, Spinner, Text } from "@mtfh/common/lib/components";

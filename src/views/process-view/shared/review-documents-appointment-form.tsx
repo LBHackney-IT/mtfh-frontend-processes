@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 
-import { AppointmentDetails } from "../../components/appointment-details/appointment-details";
-import { AppointmentForm } from "../../components/appointment-form/appointment-form";
-import { locale } from "../../services";
-import { Trigger } from "../../services/processes/types";
-import { IProcess } from "../../types";
+import { AppointmentDetails, AppointmentForm } from "../../../components";
+import { locale } from "../../../services";
+import { Trigger } from "../../../services/processes/types";
+import { IProcess } from "../../../types";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import { Checkbox } from "@mtfh/common/lib/components";

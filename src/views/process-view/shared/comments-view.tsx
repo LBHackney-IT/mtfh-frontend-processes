@@ -16,7 +16,7 @@ import {
   TextArea,
 } from "@mtfh/common/lib/components";
 
-import "./sole-to-joint-view/styles.scss";
+import "../sole-to-joint-view/styles.scss";
 
 export const CommentsView = ({ targetType, targetId, mutate }) => {
   const [addCommentOpen, setAddCommentOpen] = useState<boolean>(false);
