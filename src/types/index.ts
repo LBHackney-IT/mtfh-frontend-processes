@@ -1,5 +1,12 @@
 import { Process } from "@mtfh/common/lib/api/process/v1";
 
+export enum Recommendation {
+  Approve = "Approve",
+  Decline = "Decline",
+  Int = "Int",
+}
+export type RecommendationType = "Approve" | "Decline" | "Int";
+
 export type TargetType = "tenure" | "property" | "person";
 
 export interface ProcessSideBarProps {

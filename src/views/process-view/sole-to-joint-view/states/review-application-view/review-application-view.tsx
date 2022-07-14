@@ -3,11 +3,15 @@ import { useState } from "react";
 import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
+import { isCurrentState } from "../../../../../utils/processUtil";
 import { DesBox } from "../../../process-components";
 import { HoReviewFailedView } from "../ho-review-view/ho-review-failed-view";
 import { HoReviewView } from "../ho-review-view/ho-review-view";
 import { NewTenancyView } from "../new-tenancy-view/new-tenancy-view";
-import { EligibilityChecksPassedBox } from "../shared";
+import {
+  EligibilityChecksPassedBox,
+  TenureInvestigationRecommendationBox,
+} from "../shared";
 import { TenureInvestigationView } from "../tenure-investigation-view";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -20,8 +24,6 @@ import {
   StatusErrorSummary,
   StatusHeading,
 } from "@mtfh/common/lib/components";
-import { BoxVariant } from "@mtfh/common/lib/components/box";
-import { StatusHeadingVariant } from "@mtfh/common/lib/components/status-heading";
 
 const { views } = locale;
 
@@ -31,46 +33,6 @@ interface ReviewApplicationViewProps {
   mutate: () => void;
   optional?: any;
 }
-type Recommendation = "Approve" | "Decline" | "Int";
-const isCurrentState = (state, process) => state === process.currentState.state;
-const isPreviousState = (state, process) =>
-  process.previousStates.find((previousState) => state === previousState.state);
-
-const getRecommendation = (
-  processConfig: IProcess,
-  process: Process,
-): {
-  recommendation: Recommendation;
-  recommendationBoxVariant: BoxVariant;
-  recommendationHeadingVariant: StatusHeadingVariant;
-} => {
-  const { tenureInvestigationFailed, tenureInvestigationPassed } = processConfig.states;
-  if (
-    isCurrentState(tenureInvestigationFailed.state, process) ||
-    isPreviousState(tenureInvestigationFailed.state, process)
-  ) {
-    return {
-      recommendation: "Decline",
-      recommendationBoxVariant: "warning",
-      recommendationHeadingVariant: "warning",
-    };
-  }
-  if (
-    isCurrentState(tenureInvestigationPassed.state, process) ||
-    isPreviousState(tenureInvestigationPassed.state, process)
-  ) {
-    return {
-      recommendation: "Approve",
-      recommendationBoxVariant: "success",
-      recommendationHeadingVariant: "success",
-    };
-  }
-  return {
-    recommendation: "Int",
-    recommendationBoxVariant: undefined,
-    recommendationHeadingVariant: "base",
-  };
-};
 
 export const ReviewApplicationView = ({
   processConfig,
@@ -96,15 +58,6 @@ export const ReviewApplicationView = ({
     tenureUpdated,
     processClosed,
   } = processConfig.states;
-  const {
-    recommendation,
-    recommendationBoxVariant,
-    recommendationHeadingVariant,
-  }: {
-    recommendation: Recommendation;
-    recommendationBoxVariant: BoxVariant;
-    recommendationHeadingVariant: StatusHeadingVariant;
-  } = getRecommendation(processConfig, process);
 
   if (error) {
     return (
@@ -138,14 +91,10 @@ export const ReviewApplicationView = ({
       />
 
       {!isCurrentState(applicationSubmitted.state, process) && (
-        <Box variant={recommendationBoxVariant}>
-          <StatusHeading
-            variant={recommendationHeadingVariant}
-            title={views.tenureInvestigation.tenureInvestigatorRecommendation(
-              recommendation,
-            )}
-          />
-        </Box>
+        <TenureInvestigationRecommendationBox
+          processConfig={processConfig}
+          process={process}
+        />
       )}
 
       {applicationSubmitted.state === process.currentState.state && (

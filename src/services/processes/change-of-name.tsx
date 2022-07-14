@@ -1,6 +1,6 @@
 import { IProcess, IStartProcess } from "../../types";
 import locale from "../locale";
-import { Trigger } from "./types";
+import { Process, Trigger } from "./types";
 
 import { Text } from "@mtfh/common/lib/components";
 
@@ -30,7 +30,7 @@ const startProcess: IStartProcess = {
 };
 
 export const changeofname: IProcess = {
-  processName: "changeofname",
+  processName: Process.ChangeOfName,
   targetType: "person",
   title: locale.views.changeofname.title,
   startProcess,

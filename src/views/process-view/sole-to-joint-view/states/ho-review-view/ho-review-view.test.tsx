@@ -8,7 +8,7 @@ import {
   render,
   server,
 } from "@hackney/mtfh-test-utils";
-import { screen, waitForElementToBeRemoved } from "@testing-library/react";
+import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { locale, processes } from "../../../../../services";
@@ -19,10 +19,16 @@ import { HoReviewView } from "./ho-review-view";
 import * as processV1 from "@mtfh/common/lib/api/process/v1/service";
 import * as errorMessages from "@mtfh/common/lib/hooks/use-error-codes";
 
+const options = {
+  url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+  path: "/processes/soletojoint/:processId",
+};
+
 let submitted = false;
 let closeCase = false;
 const setSubmitted = () => {};
 const setCloseCase = () => {};
+const setGlobalError = jest.fn();
 
 describe("ho-review-view", () => {
   beforeEach(() => {
@@ -39,15 +45,21 @@ describe("ho-review-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
-          currentState: { ...mockProcessV1.currentState, state: "HOApprovalPassed" },
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: "HOApprovalPassed",
+            processData: {
+              formData: {
+                reason: "Test",
+              },
+              documents: [],
+            },
+          },
         }}
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(
@@ -75,10 +87,7 @@ describe("ho-review-view", () => {
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText("approve application", { exact: false }),
@@ -100,10 +109,7 @@ describe("ho-review-view", () => {
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText("decline application", { exact: false }),
@@ -125,10 +131,7 @@ describe("ho-review-view", () => {
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText("Interview Applicant", { exact: false }),
@@ -151,10 +154,7 @@ describe("ho-review-view", () => {
         setGlobalError={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     const appointmentRadio = screen.getByLabelText(
       locale.views.hoReviewView.makeAppointment,
@@ -185,9 +185,6 @@ describe("ho-review-view", () => {
   });
 
   test("it submits review", async () => {
-    const setState = jest.fn();
-    const useStateSpy = jest.spyOn(React, "useState");
-    useStateSpy.mockImplementation(() => [false, setState]);
     const editProcessSpy = jest.spyOn(processV1, "editProcess");
     server.use(getContactDetailsV2(mockContactDetailsV2));
     server.use(patchProcessV1({}, 200));
@@ -196,6 +193,7 @@ describe("ho-review-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "TenureInvestigationFailed",
@@ -205,39 +203,32 @@ describe("ho-review-view", () => {
         setGlobalError={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
-    await userEvent.click(
-      screen.getByLabelText(locale.views.hoReviewView.passedForReview, {
-        exact: false,
-      }),
-    );
-    await userEvent.click(
-      screen.getByLabelText(locale.views.tenureInvestigation.approve),
-    );
-    await userEvent.type(
-      screen.getByPlaceholderText(locale.views.hoReviewView.managersName),
-      "test",
-    );
-    await userEvent.click(
-      screen.getByText(locale.views.hoReviewView.confirmInstructionReceived),
-    );
+    await fillInHoReview();
+    await expect(
+      screen.findByText(
+        `Approve ${locale.views.hoReviewModal["soletojoint"]} application?`,
+        { exact: false },
+      ),
+    ).resolves.toBeInTheDocument();
+    await userEvent.click(screen.getByText("Back"));
+    expect(screen.queryByTestId("confirm-recommendation-modal-submit")).toBeNull();
     await userEvent.click(screen.getByText(locale.confirm));
+    await userEvent.click(screen.getByTestId("confirm-recommendation-modal-submit"));
     expect(editProcessSpy).toHaveBeenCalledWith(
       expect.objectContaining({
-        formData: { hoRecommendation: "approve", housingAreaManagerName: "test" },
+        formData: {
+          hoRecommendation: "approve",
+          housingAreaManagerName: "test",
+          reason: "",
+        },
         processTrigger: "HOApproval",
       }),
     );
   });
 
   test("it submits appointment", async () => {
-    const setState = jest.fn();
-    const useStateSpy = jest.spyOn(React, "useState");
-    useStateSpy.mockImplementation(() => [false, setState]);
     const editProcessSpy = jest.spyOn(processV1, "editProcess");
     server.use(getContactDetailsV2(mockContactDetailsV2));
     server.use(patchProcessV1({}, 200));
@@ -255,10 +246,7 @@ describe("ho-review-view", () => {
         setGlobalError={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await userEvent.click(
       screen.getByLabelText(locale.views.hoReviewView.makeAppointment, {
@@ -275,9 +263,6 @@ describe("ho-review-view", () => {
   });
 
   test("it submits reschedule appointment", async () => {
-    const setState = jest.fn();
-    const useStateSpy = jest.spyOn(React, "useState");
-    useStateSpy.mockImplementation(() => [false, setState]);
     const editProcessSpy = jest.spyOn(processV1, "editProcess");
     server.use(getContactDetailsV2(mockContactDetailsV2));
     server.use(patchProcessV1({}, 200));
@@ -301,10 +286,7 @@ describe("ho-review-view", () => {
         setGlobalError={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await userEvent.click(
       screen.getByLabelText(locale.views.hoReviewView.makeAppointment, {
@@ -321,9 +303,6 @@ describe("ho-review-view", () => {
   });
 
   test("it submits schedule appointment date not passed", async () => {
-    const setState = jest.fn();
-    const useStateSpy = jest.spyOn(React, "useState");
-    useStateSpy.mockImplementation(() => [false, setState]);
     const editProcessSpy = jest.spyOn(processV1, "editProcess");
     server.use(getContactDetailsV2(mockContactDetailsV2));
     server.use(patchProcessV1({}, 200));
@@ -347,10 +326,7 @@ describe("ho-review-view", () => {
         setGlobalError={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await userEvent.click(
       screen.getByLabelText(locale.views.hoReviewView.makeAppointment, {
@@ -365,4 +341,51 @@ describe("ho-review-view", () => {
       }),
     );
   });
+
+  test("it fails submitting review", async () => {
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    server.use(patchProcessV1({}, 500));
+    render(
+      <HoReviewView
+        processConfig={processes.soletojoint}
+        process={{
+          ...mockProcessV1,
+          processName: "soletojoint",
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: "TenureInvestigationFailed",
+          },
+        }}
+        mutate={() => {}}
+        setGlobalError={setGlobalError}
+        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+      />,
+      options,
+    );
+    await fillInHoReview();
+    await expect(
+      screen.findByTestId("confirm-recommendation-modal-submit"),
+    ).resolves.toBeInTheDocument();
+    await userEvent.click(screen.getByTestId("confirm-recommendation-modal-submit"));
+    await waitFor(() => {
+      expect(setGlobalError.mock.calls.length).toBe(1);
+    });
+  });
 });
+
+const fillInHoReview = async () => {
+  await userEvent.click(
+    screen.getByLabelText(locale.views.hoReviewView.passedForReview, {
+      exact: false,
+    }),
+  );
+  await userEvent.click(screen.getByLabelText(locale.views.tenureInvestigation.approve));
+  await userEvent.type(
+    screen.getByPlaceholderText(locale.views.hoReviewView.managersName),
+    "test",
+  );
+  await userEvent.click(
+    screen.getByText(locale.views.hoReviewView.confirmInstructionReceived),
+  );
+  await userEvent.click(screen.getByText(locale.confirm));
+};

@@ -274,7 +274,7 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
       class="mtfh-box"
     >
       <div
-        class="mtfh-status-heading"
+        class="mtfh-status-box"
       >
         <svg
           fill="none"
@@ -296,18 +296,24 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
             fill="#0B0C0C"
           />
         </svg>
-        <h4
-          class="lbh-heading-h4 mtfh-status-heading__title"
-        >
-          Tenure investigator recommendation: Interview Applicant
-        </h4>
+        <div>
+          <div
+            class="mtfh-status-heading__title"
+          >
+            <h4
+              class="lbh-heading-h4"
+            >
+              Tenure investigator recommendation: Interview Applicant
+            </h4>
+          </div>
+        </div>
       </div>
     </div>
     <div
       class="mtfh-box mtfh-box--success"
     >
       <div
-        class="mtfh-status-heading"
+        class="mtfh-status-box"
       >
         <svg
           fill="none"
@@ -331,11 +337,17 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
             fill-rule="evenodd"
           />
         </svg>
-        <h4
-          class="lbh-heading-h4 mtfh-status-heading__title"
-        >
-          Sole to joint tenure application approved
-        </h4>
+        <div>
+          <div
+            class="mtfh-status-heading__title"
+          >
+            <h4
+              class="lbh-heading-h4"
+            >
+              Sole to joint tenure application approved
+            </h4>
+          </div>
+        </div>
       </div>
     </div>
     <div

@@ -1,10 +1,23 @@
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
+import { format } from "date-fns";
+
 import { locale } from "../../../../services";
+import { IProcess, Recommendation, RecommendationType } from "../../../../types";
+import { isCurrentState, isPreviousState } from "../../../../utils/processUtil";
 import { TickBulletPoint } from "../../process-components";
 
-import { Box, Heading, Link, StatusHeading } from "@mtfh/common/lib/components";
+import { Process } from "@mtfh/common/lib/api/process/v1";
+import {
+  Box,
+  Heading,
+  Link,
+  StatusBox,
+  StatusHeading,
+  Text,
+} from "@mtfh/common/lib/components";
+import { BoxVariant } from "@mtfh/common/lib/components/box";
 
 const { views } = locale;
 const { breachOfTenancy, checkEligibility } = views;
@@ -85,5 +98,71 @@ export const AutomatedChecksPassedBox = (): JSX.Element => {
       <TickBulletPoint text="The proposed tenant is over 18 years of age" />
       <TickBulletPoint text="Proposed tenant is not a tenure holder or household member within the London Borough of Hackney" />
     </Box>
+  );
+};
+
+export const getRecommendation = (
+  processConfig: IProcess,
+  process: Process,
+): {
+  recommendation: RecommendationType;
+  recommendationBoxVariant: BoxVariant;
+} => {
+  const { tenureInvestigationFailed, tenureInvestigationPassed } = processConfig.states;
+  if (
+    isCurrentState(tenureInvestigationFailed.state, process) ||
+    isPreviousState(tenureInvestigationFailed.state, process)
+  ) {
+    return {
+      recommendation: Recommendation.Decline,
+      recommendationBoxVariant: "warning",
+    };
+  }
+  if (
+    isCurrentState(tenureInvestigationPassed.state, process) ||
+    isPreviousState(tenureInvestigationPassed.state, process)
+  ) {
+    return {
+      recommendation: Recommendation.Approve,
+      recommendationBoxVariant: "success",
+    };
+  }
+  return {
+    recommendation: Recommendation.Int,
+    recommendationBoxVariant: undefined,
+  };
+};
+
+export const TenureInvestigationRecommendationBox = ({
+  processConfig,
+  process,
+  showInterviewDateTime = false,
+}: {
+  processConfig: IProcess;
+  process: Process;
+  showInterviewDateTime?: boolean;
+}): JSX.Element => {
+  const { recommendation, recommendationBoxVariant } = getRecommendation(
+    processConfig,
+    process,
+  );
+  const formData = process.currentState.processData.formData as {
+    appointmentDateTime: string;
+  };
+  return (
+    <StatusBox
+      title={`${views.tenureInvestigation.tenureInvestigatorRecommendation(
+        recommendation,
+      )}`}
+      variant={recommendationBoxVariant}
+    >
+      {showInterviewDateTime && formData.appointmentDateTime && (
+        <Text style={{ width: "100%", marginTop: 15 }}>
+          Date: {format(new Date(formData.appointmentDateTime), "eeee do MMMM yyyy")}
+          <br />
+          Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}
+        </Text>
+      )}
+    </StatusBox>
   );
 };

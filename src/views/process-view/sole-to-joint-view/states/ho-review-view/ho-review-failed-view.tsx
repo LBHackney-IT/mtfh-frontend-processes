@@ -3,7 +3,7 @@ import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
-import { Box, StatusHeading } from "@mtfh/common/lib/components";
+import { StatusBox, Text } from "@mtfh/common/lib/components";
 
 const { views } = locale;
 interface HoReviewFailedViewProps {
@@ -17,14 +17,21 @@ export const HoReviewFailedView = ({
   process,
   mutate,
 }: HoReviewFailedViewProps): JSX.Element => {
+  const { states } = processConfig;
+  const { hoApprovalFailed } = states;
+  const { currentState, previousStates } = process;
+  const hoApprovalFailedState =
+    currentState.state === hoApprovalFailed.state
+      ? currentState
+      : previousStates.find((previous) => previous.state === hoApprovalFailed.state);
+
   return (
     <>
-      <Box variant="warning">
-        <StatusHeading
-          variant="warning"
-          title={views.hoReviewView.hoOutcome("declined")}
-        />
-      </Box>
+      <StatusBox variant="warning" title={views.hoReviewView.hoOutcome("declined")}>
+        {hoApprovalFailedState?.processData.formData.reason && (
+          <Text>{hoApprovalFailedState.processData.formData.reason}</Text>
+        )}
+      </StatusBox>
 
       <CloseProcessView
         process={process}

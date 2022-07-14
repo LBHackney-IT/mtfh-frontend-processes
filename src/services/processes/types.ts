@@ -1,3 +1,8 @@
+export enum Process {
+  SoleToJoint = "soletojoint",
+  ChangeOfName = "changeofname",
+}
+
 export enum Trigger {
   CancelProcess = "CancelProcess",
   CheckTenancyBreach = "CheckTenancyBreach",
