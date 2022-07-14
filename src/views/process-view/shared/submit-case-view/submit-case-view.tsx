@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 
-import { locale } from "../../../../../services";
-import { IProcess } from "../../../../../types";
-import { DesBox } from "../../../shared/process-components";
-import { ReviewApplicationView } from "../review-application-view/review-application-view";
-import { EligibilityChecksPassedBox } from "../shared";
+import { locale } from "../../../../services";
+import { Trigger } from "../../../../services/processes/types";
+import { IProcess } from "../../../../types";
+import { EligibilityChecksPassedBox } from "../../sole-to-joint-view/states/shared";
+import { DesBox } from "../process-components";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import { Button, Heading, StatusErrorSummary, Text } from "@mtfh/common/lib/components";
@@ -30,21 +30,10 @@ export const SubmitCaseView = ({
   const { states } = processConfig;
   const { documentChecksPassed, applicationSubmitted } = states;
 
-  if (applicationSubmitted.state === process.currentState.state && !submitted) {
-    return (
-      <ReviewApplicationView
-        processConfig={processConfig}
-        process={process}
-        mutate={mutate}
-        optional={optional}
-      />
-    );
-  }
-
   return (
     <>
       {globalError && (
-        <StatusErrorSummary id="review-documents-global-error" code={globalError} />
+        <StatusErrorSummary id="submit-case-global-error" code={globalError} />
       )}
 
       {applicationSubmitted.state === process.currentState.state && submitted && (
@@ -63,7 +52,9 @@ export const SubmitCaseView = ({
 
       {documentChecksPassed.state === process.currentState.state && (
         <>
-          <EligibilityChecksPassedBox />
+          {process.previousStates.find(
+            (previous) => previous.state === "ManualChecksPassed",
+          ) && <EligibilityChecksPassedBox />}
           <DesBox
             title={views.submitCase.supportingDocumentsApproved}
             description={views.submitCase.viewDocumentsOnDes}
@@ -77,7 +68,7 @@ export const SubmitCaseView = ({
               try {
                 await editProcess({
                   id: process.id,
-                  processTrigger: states.documentChecksPassed.triggers.submitApplication,
+                  processTrigger: Trigger.SubmitApplication,
                   processName: process?.processName,
                   etag: process.etag || "",
                   formData: {},

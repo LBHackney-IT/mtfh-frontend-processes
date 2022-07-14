@@ -5,6 +5,7 @@ import { CloseProcessView, EntitySummary } from "../../../components";
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
 import { isSameState } from "../../../utils/processUtil";
+import { SubmitCaseView } from "../shared/submit-case-view";
 import { TenantNewNameView } from "./states";
 import { RequestDocumentsView } from "./states/request-documents-view";
 import { ReviewDocumentsView } from "./states/review-documents-view";
@@ -34,6 +35,8 @@ const {
   documentsRequestedDes,
   documentsRequestedAppointment,
   documentsAppointmentRescheduled,
+  documentChecksPassed,
+  applicationSubmitted,
   processClosed,
 } = states;
 
@@ -48,17 +51,24 @@ const components = {
   [enterNewName.state]: TenantNewNameView,
   [nameSubmitted.state]: RequestDocumentsView,
   ...reviewDocumentsViewByStates,
+  [documentChecksPassed.state]: SubmitCaseView,
 };
 
 const { views } = locale;
 const { changeofname, reviewDocuments } = views;
 
-const getActiveStep = (currentState) => {
+const getActiveStep = (currentState, submitted: boolean) => {
   if (currentState === nameSubmitted.state) {
     return 1;
   }
   if ([...reviewDocumentsPageStates, processClosed.state].includes(currentState)) {
     return 2;
+  }
+  if (currentState === documentChecksPassed.state) {
+    return 3;
+  }
+  if (currentState === applicationSubmitted.state && submitted) {
+    return 4;
   }
 
   return 0;
@@ -69,9 +79,10 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
     process: { id: processId, processName, currentState },
     setCloseProcessDialogOpen,
     setCancel,
+    submitted = false,
   } = props;
 
-  const activeStep = getActiveStep(currentState.state);
+  const activeStep = getActiveStep(currentState.state, submitted);
   const steps: JSX.Element[] = [
     <Step key="step-breach-of-tenancy">{changeofname.steps.tenantsNewName}</Step>,
     <Step key="step-request-documents">{changeofname.steps.requestDocuments}</Step>,

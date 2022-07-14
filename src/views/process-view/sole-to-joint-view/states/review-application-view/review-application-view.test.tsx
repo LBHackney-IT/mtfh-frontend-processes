@@ -10,7 +10,6 @@ import {
 import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 
 import { locale, processes } from "../../../../../services";
-import { SubmitCaseView } from "../submit-case-view";
 import { ReviewApplicationView } from "./review-application-view";
 
 let submitted = false;
@@ -28,7 +27,7 @@ describe("tenure-investigation-view", () => {
   test("it renders ReviewApplication view correctly for ApplicationSubmitted state", async () => {
     server.use(getContactDetailsV2(mockContactDetailsV2));
     const { container } = render(
-      <SubmitCaseView
+      <ReviewApplicationView
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
@@ -54,7 +53,7 @@ describe("tenure-investigation-view", () => {
   test("it renders no tenant found if no tenant", async () => {
     server.use(getTenureV1({ householdMembers: [] }));
     render(
-      <SubmitCaseView
+      <ReviewApplicationView
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
@@ -78,7 +77,7 @@ describe("tenure-investigation-view", () => {
   test("it renders error if tenure cannot be fetched", async () => {
     server.use(getTenureV1(null, 500));
     render(
-      <SubmitCaseView
+      <ReviewApplicationView
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
