@@ -1,6 +1,6 @@
 import { Link as RouterLink } from "react-router-dom";
 
-import { config, locale } from "../../services";
+import { config, locale } from "../../../services";
 
 import { Box, Link, StatusHeading, Text } from "@mtfh/common/lib/components";
 

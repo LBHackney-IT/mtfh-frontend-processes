@@ -4,7 +4,7 @@ import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 import { isCurrentState } from "../../../../../utils/processUtil";
-import { DesBox } from "../../../process-components";
+import { DesBox } from "../../../shared/process-components";
 import { HoReviewFailedView } from "../ho-review-view/ho-review-failed-view";
 import { HoReviewView } from "../ho-review-view/ho-review-view";
 import { NewTenancyView } from "../new-tenancy-view/new-tenancy-view";

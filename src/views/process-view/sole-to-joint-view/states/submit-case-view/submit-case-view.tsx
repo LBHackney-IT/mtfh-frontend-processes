@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
-import { DesBox } from "../../../process-components";
+import { DesBox } from "../../../shared/process-components";
 import { ReviewApplicationView } from "../review-application-view/review-application-view";
 import { EligibilityChecksPassedBox } from "../shared";
 

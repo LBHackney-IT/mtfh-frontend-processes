@@ -1,7 +1,7 @@
 import { CheckSupportingDocuments } from "../../../../../components/check-supporting-documents";
 import { locale } from "../../../../../services";
 import { IProcess, ProcessComponentProps } from "../../../../../types";
-import { BulletWithExplanation } from "../../../process-components";
+import { BulletWithExplanation } from "../../../shared/process-components";
 import { EligibilityChecksPassedBox } from "../shared";
 
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";

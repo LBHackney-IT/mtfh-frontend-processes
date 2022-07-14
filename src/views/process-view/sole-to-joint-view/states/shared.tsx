@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import { locale } from "../../../../services";
 import { IProcess, Recommendation, RecommendationType } from "../../../../types";
 import { isCurrentState, isPreviousState } from "../../../../utils/processUtil";
-import { TickBulletPoint } from "../../process-components";
+import { TickBulletPoint } from "../../shared/process-components";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
