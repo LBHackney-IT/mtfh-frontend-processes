@@ -8,11 +8,11 @@ import {
 } from "../../../../../schemas/tenure-investigation";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
-import { IProcess, Recommendation } from "../../../../../types";
+import { ProcessComponentProps, Recommendation } from "../../../../../types";
 import { DesBox } from "../../../shared/process-components";
 import { SubmitCaseView } from "../../../shared/submit-case-view";
 
-import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
+import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Button,
   Center,
@@ -29,21 +29,13 @@ import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
 const { views } = locale;
 
-interface TenureInvestigationViewProps {
-  processConfig: IProcess;
-  process: Process;
-  mutate: () => void;
-  optional?: any;
-}
-
 export const TenureInvestigationView = ({
   processConfig,
   process,
   mutate,
   optional,
-}: TenureInvestigationViewProps): JSX.Element => {
+}: ProcessComponentProps): JSX.Element => {
   const [globalError, setGlobalError] = useState<number>();
-  const { applicationSubmitted } = processConfig.states;
   const { submitted } = optional;
   const errorMessages = useErrorCodes();
 
@@ -55,7 +47,10 @@ export const TenureInvestigationView = ({
     );
   }
 
-  if (applicationSubmitted.state === process.currentState.state && submitted) {
+  if (
+    processConfig?.states.applicationSubmitted.state === process.currentState.state &&
+    submitted
+  ) {
     return (
       <SubmitCaseView
         processConfig={processConfig}

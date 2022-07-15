@@ -1,0 +1,196 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`tenure-investigation-view it renders TenureInvestigation view correctly for ApplicationSubmitted state, submitted=false 1`] = `
+<div>
+  <div
+    data-testid="changeofname-tenure-investigation"
+  >
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-heading"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <h4
+          class="lbh-heading-h4 mtfh-status-heading__title"
+        >
+          Supporting documents approved
+        </h4>
+      </div>
+      <div
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        style="margin-left: 60px; margin-top: 17.5px;"
+      >
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="http://des/teams/1/dashboard/requests"
+          target="_blank"
+        >
+          View documents on the Document Evidence Store
+        </a>
+      </div>
+    </div>
+    <form
+      action="#"
+      novalidate=""
+      style="margin-top: 65px;"
+    >
+      <fieldset
+        class="govuk-form-group lbh-form-group"
+        id="tenure-investigation-recommendation"
+      >
+        <legend
+          class="govuk-label lbh-label"
+          for="tenure-investigation-recommendation-field"
+        >
+          What is the recommended outcome?
+          <sup
+            aria-hidden="true"
+          >
+            *
+          </sup>
+        </legend>
+        <div
+          class="govuk-radios lbh-radios"
+          id="tenure-investigation-recommendation-field"
+        >
+          <div
+            class="govuk-radios__item"
+          >
+            <input
+              class="govuk-radios__input"
+              id="tenure-investigation-recommendation-approve"
+              name="tenureInvestigationRecommendation"
+              required=""
+              type="radio"
+              value="Approve"
+            />
+            <label
+              class="govuk-label govuk-radios__label"
+              for="tenure-investigation-recommendation-approve"
+            >
+              Approve
+            </label>
+          </div>
+          <div
+            class="govuk-radios__item"
+          >
+            <input
+              class="govuk-radios__input"
+              id="tenure-investigation-recommendation-appointment"
+              name="tenureInvestigationRecommendation"
+              required=""
+              type="radio"
+              value="Appointment"
+            />
+            <label
+              class="govuk-label govuk-radios__label"
+              for="tenure-investigation-recommendation-appointment"
+            >
+              Appointment
+            </label>
+          </div>
+          <div
+            class="govuk-radios__item"
+          >
+            <input
+              class="govuk-radios__input"
+              id="tenure-investigation-recommendation-decline"
+              name="tenureInvestigationRecommendation"
+              required=""
+              type="radio"
+              value="Decline"
+            />
+            <label
+              class="govuk-label govuk-radios__label"
+              for="tenure-investigation-recommendation-decline"
+            >
+              Decline
+            </label>
+          </div>
+        </div>
+      </fieldset>
+      <div
+        class="govuk-form-group lbh-form-group"
+        id="tenure-investigation-completed"
+      >
+        <label
+          class="govuk-label lbh-label"
+          for="tenure-investigation-completed-field"
+        >
+          
+        </label>
+        <div
+          class="govuk-checkboxes__item"
+        >
+          <input
+            class="govuk-checkboxes__input"
+            id="tenure-investigation-completed-field"
+            name="completed"
+            type="checkbox"
+            value="true"
+          />
+          <label
+            class="govuk-label govuk-checkboxes__label"
+            for="tenure-investigation-completed-field"
+          >
+            I confirm that the tenure investigation has been completed
+          </label>
+        </div>
+      </div>
+      <button
+        class="govuk-button lbh-button"
+        style="margin-top: 65px; width: 222px;"
+        type="submit"
+      >
+        Confirm
+      </button>
+    </form>
+  </div>
+</div>
+`;
+
+exports[`tenure-investigation-view it renders TenureInvestigation view correctly for ApplicationSubmitted state, submitted=true 1`] = `
+<div>
+  <h2
+    class="lbh-heading-h2"
+  >
+    Next Steps
+    :
+  </h2>
+  <p
+    class="lbh-body-m"
+  >
+    Based upon the documents submitted by the tenant and the proposed joint tenant, and the investigation undertaken by the Housing Officer, the application now needs to be assessed by the Tenancy Investigation Team.
+  </p>
+  <button
+    class="govuk-button lbh-button"
+    style="width: 180px; margin-right: 100%;"
+    type="button"
+  >
+    Continue
+  </button>
+</div>
+`;
