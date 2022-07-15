@@ -1,5 +1,6 @@
 import reactHtmlParser from "react-html-parser";
 
+import { Recommendation } from "../types";
 import { Process } from "./processes/types";
 
 import { AssetAddress } from "@mtfh/common/lib/api/asset/v1";
@@ -59,6 +60,8 @@ const locale = {
         reviewDocuments: "Review Documents",
         submitCase: "Submit case",
         finish: "Finish",
+        reviewApplication: "Review application",
+        endCase: "End Case",
       },
       actions: {
         reassignCase: "Reassign case",
@@ -144,6 +147,7 @@ const locale = {
       viewDocumentsOnDes: "View documents on the Document Evidence Store",
     },
     tenureInvestigation: {
+      recommendedOutcome: "What is the recommended outcome?",
       appointment: "Appointment",
       approve: "Approve",
       decline: "Decline",
@@ -158,7 +162,7 @@ const locale = {
         "I confirm that the tenure investigation has been completed",
       tenureInvestigatorRecommendation: (recommendation) => {
         return `Tenure investigator recommendation: ${
-          recommendation === "Int"
+          recommendation === Recommendation.Appointment
             ? "Interview Applicant"
             : `${recommendation} application`
         }`;

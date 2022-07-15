@@ -3,9 +3,9 @@ import { Process } from "@mtfh/common/lib/api/process/v1";
 export enum Recommendation {
   Approve = "Approve",
   Decline = "Decline",
-  Int = "Int",
+  Appointment = "Appointment",
 }
-export type RecommendationType = "Approve" | "Decline" | "Int";
+export type RecommendationType = "Approve" | "Decline" | "Appointment";
 
 export type TargetType = "tenure" | "property" | "person";
 
