@@ -1,3 +1,5 @@
+import React, { useState } from "react";
+
 import { Form, Formik } from "formik";
 
 import {
@@ -21,6 +23,7 @@ import {
   Radio,
   RadioGroup,
   Spinner,
+  StatusErrorSummary,
 } from "@mtfh/common/lib/components";
 import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
@@ -39,6 +42,7 @@ export const TenureInvestigationView = ({
   mutate,
   optional,
 }: TenureInvestigationViewProps): JSX.Element => {
+  const [globalError, setGlobalError] = useState<number>();
   const { applicationSubmitted } = processConfig.states;
   const { submitted } = optional;
   const errorMessages = useErrorCodes();
@@ -63,7 +67,10 @@ export const TenureInvestigationView = ({
   }
 
   return (
-    <>
+    <div data-testid="changeofname-tenure-investigation">
+      {globalError && (
+        <StatusErrorSummary id="tenure-investigation-global-error" code={globalError} />
+      )}
       <DesBox
         title={views.submitCase.supportingDocumentsApproved}
         description={views.submitCase.viewDocumentsOnDes}
@@ -91,7 +98,7 @@ export const TenureInvestigationView = ({
             });
             mutate();
           } catch (e: any) {
-            console.log(e.response?.status || 500);
+            setGlobalError(e.response?.status || 500);
           }
         }}
       >
@@ -140,6 +147,6 @@ export const TenureInvestigationView = ({
           </Form>
         )}
       </Formik>
-    </>
+    </div>
   );
 };
