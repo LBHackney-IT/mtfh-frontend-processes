@@ -15,6 +15,8 @@ import { locale } from "../../../services";
 import { ProcessLayout } from "../process-layout";
 import { ChangeOfNameSideBar, ChangeOfNameView } from "./change-of-name-view";
 
+import { $configuration } from "@mtfh/common";
+
 const options = {
   url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
   path: "/processes/:processName/:processId",
@@ -102,6 +104,14 @@ describe("changeofname/change-of-name-view", () => {
   });
 
   test("it renders ChangeOfNameSideBar correctly", async () => {
+    $configuration.next({
+      MMH: {
+        configuration: {},
+        featureToggles: {
+          ReassignCase: true,
+        },
+      },
+    });
     const { container } = render(
       <ChangeOfNameSideBar
         process={{

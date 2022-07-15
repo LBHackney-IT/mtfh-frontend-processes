@@ -26,6 +26,7 @@ import {
   Stepper,
   Text,
 } from "@mtfh/common/lib/components";
+import { useFeatureToggle } from "@mtfh/common/lib/hooks";
 
 import "./styles.scss";
 
@@ -181,6 +182,7 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
 };
 
 export const SoleToJointSideBar = (props: ProcessSideBarProps) => {
+  const hasReassignCase = useFeatureToggle("MMH.ReassignCase");
   const {
     process,
     process: {
@@ -230,7 +232,9 @@ export const SoleToJointSideBar = (props: ProcessSideBarProps) => {
       >
         {steps}
       </Stepper>
-      <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
+      {hasReassignCase && (
+        <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
+      )}
       {([
         states.interviewScheduled.state,
         states.interviewRescheduled.state,
