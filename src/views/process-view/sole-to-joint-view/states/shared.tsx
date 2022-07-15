@@ -128,7 +128,7 @@ export const getRecommendation = (
     };
   }
   return {
-    recommendation: Recommendation.Int,
+    recommendation: Recommendation.Appointment,
     recommendationBoxVariant: undefined,
   };
 };

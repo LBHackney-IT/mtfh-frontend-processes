@@ -9,6 +9,7 @@ import { SubmitCaseView } from "../shared/submit-case-view";
 import { TenantNewNameView } from "./states";
 import { RequestDocumentsView } from "./states/request-documents-view";
 import { ReviewDocumentsView } from "./states/review-documents-view";
+import { TenureInvestigationView } from "./states/tenure-investigation-view";
 
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -52,6 +53,7 @@ const components = {
   [nameSubmitted.state]: RequestDocumentsView,
   ...reviewDocumentsViewByStates,
   [documentChecksPassed.state]: SubmitCaseView,
+  [applicationSubmitted.state]: TenureInvestigationView,
 };
 
 const { views } = locale;
@@ -70,6 +72,9 @@ const getActiveStep = (currentState, submitted: boolean) => {
   if (currentState === applicationSubmitted.state && submitted) {
     return 4;
   }
+  if (currentState === applicationSubmitted.state) {
+    return 5;
+  }
 
   return 0;
 };
@@ -82,14 +87,24 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
     submitted = false,
   } = props;
 
-  const activeStep = getActiveStep(currentState.state, submitted);
-  const steps: JSX.Element[] = [
-    <Step key="step-breach-of-tenancy">{changeofname.steps.tenantsNewName}</Step>,
-    <Step key="step-request-documents">{changeofname.steps.requestDocuments}</Step>,
-    <Step key="step-review-documents">{changeofname.steps.reviewDocuments}</Step>,
-    <Step key="step-submit-case">{changeofname.steps.submitCase}</Step>,
-    <Step key="step-finish">{changeofname.steps.finish}</Step>,
-  ];
+  let activeStep = getActiveStep(currentState.state, submitted);
+  let steps: JSX.Element[];
+  if (activeStep > 4 || (!submitted && activeStep === 4)) {
+    activeStep -= 5;
+    steps = [
+      <Step key="step-review-application">{changeofname.steps.reviewApplication}</Step>,
+      <Step key="step-end-case">{changeofname.steps.endCase}</Step>,
+    ];
+  } else {
+    steps = [
+      <Step key="step-tenants-new-name">{changeofname.steps.tenantsNewName}</Step>,
+      <Step key="step-request-documents">{changeofname.steps.requestDocuments}</Step>,
+      <Step key="step-review-documents">{changeofname.steps.reviewDocuments}</Step>,
+      <Step key="step-submit-case">{changeofname.steps.submitCase}</Step>,
+      <Step key="step-finish">{changeofname.steps.finish}</Step>,
+    ];
+  }
+
   const startIndex = 0;
 
   return (
