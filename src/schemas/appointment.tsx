@@ -11,7 +11,7 @@ export const dateTimeIsValid = (
     values.minute
   } ${values.amPm?.toUpperCase()}`;
 
-  if (dateString.includes("undefined")) {
+  if (dateString.includes("undefined") || values.year < 1000) {
     return false;
   }
   const date = parse(dateString, "yyyy-MM-dd hh:mm a", new Date());
@@ -40,7 +40,7 @@ export const appointmentSchema = (errorMessages: Record<string, string>) =>
       .matches(/^0[1-9]|1[0-2]$/, errorMessages.W11)
       .required(errorMessages.W11),
     year: Yup.string()
-      .matches(/^\d{4}$/, errorMessages.W13)
+      .matches(/^[1-9]\d{3}$/, errorMessages.W13)
       .required(errorMessages.W13),
     amPm: Yup.string().oneOf(["am", "pm"]).required(errorMessages.W4).nullable(true),
   }).required();
