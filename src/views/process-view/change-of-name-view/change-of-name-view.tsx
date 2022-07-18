@@ -24,6 +24,7 @@ import {
   Stepper,
   Text,
 } from "@mtfh/common/lib/components";
+import { useFeatureToggle } from "@mtfh/common/lib/hooks";
 
 import "./styles.scss";
 
@@ -80,6 +81,8 @@ const getActiveStep = (currentState, submitted: boolean) => {
 };
 
 export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
+  const hasReassignCase = useFeatureToggle("MMH.ReassignCase");
+
   const {
     process: { id: processId, processName, currentState },
     setCloseProcessDialogOpen,
@@ -116,7 +119,9 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
       >
         {steps}
       </Stepper>
-      <Button variant="secondary">{changeofname.actions.reassignCase}</Button>
+      {hasReassignCase && (
+        <Button variant="secondary">{changeofname.actions.reassignCase}</Button>
+      )}
       <Button
         variant="secondary"
         onClick={() => {

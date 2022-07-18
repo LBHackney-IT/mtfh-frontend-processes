@@ -4,6 +4,7 @@ import {
   getContactDetailsV2,
   getProcessV1,
   mockContactDetailsV2,
+  mockProcessV1,
   render,
   server,
 } from "@hackney/mtfh-test-utils";
@@ -21,6 +22,7 @@ import {
   mockProcessSelectTenants,
 } from "../../../test-utils";
 import { ProcessLayout } from "../process-layout";
+import { SoleToJointSideBar } from "./sole-to-joint-view";
 
 import * as tenureV1 from "@mtfh/common/lib/api/tenure/v1/service";
 import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
@@ -67,10 +69,21 @@ test("it renders stepper component", async () => {
 });
 
 test("it renders sidebar buttons correctly", async () => {
-  server.use(getProcessV1(mockProcessSelectTenants));
   // @ts-ignore
-  useStateMock.mockImplementation(() => [false, jest.fn()]);
-  render(<ProcessLayout />, options);
+  useStateMock.mockImplementation(() => [true, jest.fn()]);
+  render(
+    <SoleToJointSideBar
+      process={{
+        ...mockProcessV1,
+        currentState: { ...mockProcessV1.currentState, state: "UnknownState" },
+      }}
+      submitted={false}
+      closeCase={false}
+      setCloseProcessDialogOpen={() => {}}
+      setCancel={() => {}}
+    />,
+    options,
+  );
 
   const { soleToJoint } = locale.views;
   const { cancelProcess, ...actions } = soleToJoint.actions;
