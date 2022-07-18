@@ -45,6 +45,9 @@ export const ManualChecksFailedView = ({
             </Text>
             <Text size="sm">The tenant has a live notice seeking possession</Text>
             <Text size="sm">The tenant has rent arrears over £500</Text>
+            <Text size="sm">
+              Proposed joint tenant holds a tenancy or property elsewhere
+            </Text>
           </List>
         </div>
       </Box>

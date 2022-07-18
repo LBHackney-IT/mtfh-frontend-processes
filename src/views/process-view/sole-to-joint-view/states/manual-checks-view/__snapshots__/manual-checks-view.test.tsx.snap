@@ -269,6 +269,13 @@ exports[`manual-checks-view it renders ManualChecksView correctly 1`] = `
               The tenant has rent arrears over £500
             </p>
           </li>
+          <li>
+            <p
+              class="lbh-body-s"
+            >
+              Proposed joint tenant holds a tenancy or property elsewhere
+            </p>
+          </li>
         </ul>
       </div>
     </div>
