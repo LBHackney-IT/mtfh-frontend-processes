@@ -14,6 +14,7 @@ import userEvent from "@testing-library/user-event";
 import { locale } from "../../../services";
 import { ProcessLayout } from "../process-layout";
 import { ChangeOfNameSideBar, ChangeOfNameView } from "./change-of-name-view";
+import { cancelButtonStates } from "./view-utils";
 
 import { $configuration } from "@mtfh/common";
 
@@ -103,56 +104,6 @@ describe("changeofname/change-of-name-view", () => {
     ).resolves.toBeInTheDocument();
   });
 
-  test("it renders ChangeOfNameSideBar correctly", async () => {
-    $configuration.next({
-      MMH: {
-        configuration: {},
-        featureToggles: {
-          ReassignCase: true,
-        },
-      },
-    });
-    const { container } = render(
-      <ChangeOfNameSideBar
-        process={{
-          ...mockProcessV1,
-          currentState: { ...mockProcessV1.currentState, state: "UnknownState" },
-        }}
-        submitted={false}
-        closeCase={false}
-        setCloseProcessDialogOpen={setCloseProcessDialogOpen}
-        setCancel={setCancel}
-      />,
-      options,
-    );
-    await userEvent.click(
-      screen.getByText(locale.views.changeofname.actions.cancelProcess),
-    );
-    expect(setCancel.mock.calls[0][0]).toBe(true);
-    expect(container).toMatchSnapshot();
-  });
-
-  test("it renders ChangeOfNameSideBar correctly for NameSubmitted state", async () => {
-    render(
-      <ChangeOfNameSideBar
-        process={{
-          ...mockProcessV1,
-          currentState: { ...mockProcessV1.currentState, state: "NameSubmitted" },
-        }}
-        submitted={false}
-        closeCase={false}
-        setCloseProcessDialogOpen={setCloseProcessDialogOpen}
-        setCancel={setCancel}
-      />,
-      options,
-    );
-
-    const stepper = await screen.findByTestId("mtfh-stepper-change-of-name");
-    const steps = within(stepper).getAllByRole("listitem");
-    expect(steps[0].className).not.toContain("active");
-    expect(steps[1].className).toContain("active");
-  });
-
   test("it renders ChangeOfName correctly for DocumentsRequestedDes state", async () => {
     server.use(
       getProcessV1({
@@ -218,48 +169,6 @@ describe("changeofname/change-of-name-view", () => {
     ).resolves.toBeInTheDocument();
   });
 
-  test("it renders ChangeOfName sidebar correctly for ApplicationSubmitted state, submitted=true", async () => {
-    render(
-      <ChangeOfNameSideBar
-        process={{
-          ...mockProcessV1,
-          currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
-        }}
-        submitted
-        closeCase={false}
-        setCloseProcessDialogOpen={setCloseProcessDialogOpen}
-        setCancel={setCancel}
-      />,
-      options,
-    );
-
-    const stepper = await screen.findByTestId("mtfh-stepper-change-of-name");
-    const steps = within(stepper).getAllByRole("listitem");
-    expect(steps[3].className).not.toContain("active");
-    expect(steps[4].className).toContain("active");
-  });
-
-  test("it renders ChangeOfName sidebar correctly for ApplicationSubmitted state, submitted false", async () => {
-    render(
-      <ChangeOfNameSideBar
-        process={{
-          ...mockProcessV1,
-          currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
-        }}
-        submitted={false}
-        closeCase={false}
-        setCloseProcessDialogOpen={setCloseProcessDialogOpen}
-        setCancel={setCancel}
-      />,
-      options,
-    );
-
-    const stepper = await screen.findByTestId("mtfh-stepper-change-of-name");
-    const steps = within(stepper).getAllByRole("listitem");
-    expect(steps[1].className).not.toContain("active");
-    expect(steps[0].className).toContain("active");
-  });
-
   test("it renders ChangeOfName correctly for ApplicationSubmitted state", async () => {
     server.use(
       getProcessV1({
@@ -272,5 +181,123 @@ describe("changeofname/change-of-name-view", () => {
     await expect(
       screen.findByTestId("changeofname-tenure-investigation"),
     ).resolves.toBeInTheDocument();
+  });
+
+  describe("ChangeOfNameSideBar", () => {
+    test("it renders ChangeOfNameSideBar correctly", async () => {
+      $configuration.next({
+        MMH: {
+          configuration: {},
+          featureToggles: {
+            ReassignCase: true,
+          },
+        },
+      });
+      const { container } = render(
+        <ChangeOfNameSideBar
+          process={{
+            ...mockProcessV1,
+            currentState: { ...mockProcessV1.currentState, state: "UnknownState" },
+          }}
+          submitted={false}
+          closeCase={false}
+          setCloseProcessDialogOpen={setCloseProcessDialogOpen}
+          setCancel={setCancel}
+        />,
+        options,
+      );
+      expect(container).toMatchSnapshot();
+    });
+
+    test("it renders ChangeOfNameSideBar correctly for NameSubmitted state", async () => {
+      render(
+        <ChangeOfNameSideBar
+          process={{
+            ...mockProcessV1,
+            currentState: { ...mockProcessV1.currentState, state: "NameSubmitted" },
+          }}
+          submitted={false}
+          closeCase={false}
+          setCloseProcessDialogOpen={setCloseProcessDialogOpen}
+          setCancel={setCancel}
+        />,
+        options,
+      );
+
+      const stepper = await screen.findByTestId("mtfh-stepper-change-of-name");
+      const steps = within(stepper).getAllByRole("listitem");
+      expect(steps[0].className).not.toContain("active");
+      expect(steps[1].className).toContain("active");
+    });
+
+    test("it renders ChangeOfName sidebar correctly for ApplicationSubmitted state, submitted=true", async () => {
+      render(
+        <ChangeOfNameSideBar
+          process={{
+            ...mockProcessV1,
+            currentState: {
+              ...mockProcessV1.currentState,
+              state: "ApplicationSubmitted",
+            },
+          }}
+          submitted
+          closeCase={false}
+          setCloseProcessDialogOpen={setCloseProcessDialogOpen}
+          setCancel={setCancel}
+        />,
+        options,
+      );
+
+      const stepper = await screen.findByTestId("mtfh-stepper-change-of-name");
+      const steps = within(stepper).getAllByRole("listitem");
+      expect(steps[3].className).not.toContain("active");
+      expect(steps[4].className).toContain("active");
+    });
+
+    test("it renders ChangeOfName sidebar correctly for ApplicationSubmitted state, submitted false", async () => {
+      render(
+        <ChangeOfNameSideBar
+          process={{
+            ...mockProcessV1,
+            currentState: {
+              ...mockProcessV1.currentState,
+              state: "ApplicationSubmitted",
+            },
+          }}
+          submitted={false}
+          closeCase={false}
+          setCloseProcessDialogOpen={setCloseProcessDialogOpen}
+          setCancel={setCancel}
+        />,
+        options,
+      );
+
+      const stepper = await screen.findByTestId("mtfh-stepper-change-of-name");
+      const steps = within(stepper).getAllByRole("listitem");
+      expect(steps[1].className).not.toContain("active");
+      expect(steps[0].className).toContain("active");
+    });
+
+    cancelButtonStates.forEach((state) => {
+      test(`it shows Cancel button in ChangeOfNameSideBar for ${state} state`, async () => {
+        render(
+          <ChangeOfNameSideBar
+            process={{
+              ...mockProcessV1,
+              currentState: { ...mockProcessV1.currentState, state },
+            }}
+            submitted={false}
+            closeCase={false}
+            setCloseProcessDialogOpen={setCloseProcessDialogOpen}
+            setCancel={setCancel}
+          />,
+          options,
+        );
+        await userEvent.click(
+          screen.getByText(locale.views.changeofname.actions.cancelProcess),
+        );
+        expect(setCancel.mock.calls[0][0]).toBe(true);
+      });
+    });
   });
 });

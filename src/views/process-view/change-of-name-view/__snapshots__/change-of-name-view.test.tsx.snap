@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`changeofname/change-of-name-view it renders ChangeOfNameSideBar correctly 1`] = `
+exports[`changeofname/change-of-name-view ChangeOfNameSideBar it renders ChangeOfNameSideBar correctly 1`] = `
 <div>
   <div
     data-testid="mtfh-stepper-change-of-name"
@@ -214,12 +214,6 @@ exports[`changeofname/change-of-name-view it renders ChangeOfNameSideBar correct
     type="button"
   >
     Reassign case
-  </button>
-  <button
-    class="govuk-button lbh-button govuk-button--secondary lbh-button--secondary"
-    type="button"
-  >
-    Cancel process
   </button>
   <a
     class="govuk-button lbh-button govuk-button--secondary lbh-button--secondary"
