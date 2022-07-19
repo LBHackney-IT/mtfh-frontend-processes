@@ -181,6 +181,45 @@ exports[`ho-review-failed-view it renders ReviewApplication view correctly for H
         </div>
       </div>
     </div>
+    <div
+      class="mtfh-box mtfh-box--warning"
+    >
+      <div
+        class="mtfh-status-box"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#BE3A34"
+            stroke-width="1.5"
+          />
+          <path
+            d="M24.2969 26.6587H20.6035L19.8315 11.8701H25.0688L24.2969 26.6587ZM19.771 31.8354C19.771 30.9878 19.998 30.347 20.4521 29.9131C20.9062 29.4792 21.5672 29.2622 22.4351 29.2622C23.2726 29.2622 23.9185 29.4842 24.3726 29.9282C24.8368 30.3722 25.0688 31.008 25.0688 31.8354C25.0688 32.6326 24.8368 33.2633 24.3726 33.7275C23.9084 34.1816 23.2625 34.4087 22.4351 34.4087C21.5874 34.4087 20.9315 34.1867 20.4673 33.7427C20.0031 33.2886 19.771 32.6528 19.771 31.8354Z"
+            fill="#BE3A34"
+          />
+        </svg>
+        <div>
+          <div
+            class="mtfh-status-heading__title"
+          >
+            <h4
+              class="lbh-heading-h4"
+            >
+              Sole to joint application will be closed
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
     <h3
       class="lbh-heading-h3"
     >

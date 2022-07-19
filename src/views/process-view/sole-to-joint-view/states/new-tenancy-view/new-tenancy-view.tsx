@@ -168,11 +168,8 @@ export const NewTenancyView = ({
           process={process}
           mutate={mutate}
           setGlobalError={setGlobalError}
-          optional={{
-            trigger: Trigger.UpdateTenure,
-            nextStepsDescription: false,
-            closed: currentState.state === tenureUpdated.state,
-          }}
+          statusBox={false}
+          trigger={Trigger.UpdateTenure}
         />
       )}
     </>

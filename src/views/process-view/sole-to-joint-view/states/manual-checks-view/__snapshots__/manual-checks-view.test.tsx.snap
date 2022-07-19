@@ -279,49 +279,6 @@ exports[`manual-checks-view it renders ManualChecksView correctly 1`] = `
         </ul>
       </div>
     </div>
-    <h3
-      class="lbh-heading-h3"
-    >
-      Next steps:
-    </h3>
-    <p
-      class="lbh-body-s"
-    >
-      The applicant is not eligible for sole to joint tenure. 
-      <br />
-      This case will be closed once you have sent an outcome letter to the resident.
-    </p>
-    <form
-      action="#"
-      class="mtfh-close-process-form"
-      id="close-process-form"
-      novalidate=""
-    >
-      <div
-        class="govuk-checkboxes__item"
-      >
-        <input
-          class="govuk-checkboxes__input"
-          id="condition"
-          name="hasNotifiedResident"
-          type="checkbox"
-          value="false"
-        />
-        <label
-          class="govuk-label govuk-checkboxes__label"
-          for="condition"
-        >
-          I confirm that an outcome letter has been sent to the resident
-        </label>
-      </div>
-      <button
-        class="govuk-button lbh-button"
-        disabled=""
-        type="submit"
-      >
-        Confirm
-      </button>
-    </form>
   </div>
 </div>
 `;

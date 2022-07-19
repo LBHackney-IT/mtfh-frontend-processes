@@ -64,14 +64,14 @@ export const ReviewDocumentsView = ({
       {globalError && (
         <StatusErrorSummary id="review-documents-global-error" code={globalError} />
       )}
+      <EligibilityChecksPassedBox />
+      {(states.documentsRequestedDes.state === process.currentState.state ||
+        process.previousStates.find(
+          (previous) => previous.state === states.documentsRequestedDes.state,
+        )) && <DesBox title={reviewDocuments.documentsRequested} />}
+
       {!optional?.closeProcessReason && (
         <>
-          <EligibilityChecksPassedBox />
-          {(states.documentsRequestedDes.state === process.currentState.state ||
-            process.previousStates.find(
-              (previous) => previous.state === states.documentsRequestedDes.state,
-            )) && <DesBox title={reviewDocuments.documentsRequested} />}
-
           <ReviewDocumentsAppointmentForm
             processConfig={processConfig}
             process={process}

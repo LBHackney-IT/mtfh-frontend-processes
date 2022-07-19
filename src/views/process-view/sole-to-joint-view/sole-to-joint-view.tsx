@@ -18,21 +18,13 @@ import {
 import { ManualChecksFailedView } from "./states/manual-checks-view";
 import { ReviewApplicationView } from "./states/review-application-view/review-application-view";
 
-import {
-  Box,
-  Button,
-  ErrorSummary,
-  StatusHeading,
-  Step,
-  Stepper,
-  Text,
-} from "@mtfh/common/lib/components";
+import { Button, ErrorSummary, Step, Stepper } from "@mtfh/common/lib/components";
 import { useFeatureToggle } from "@mtfh/common/lib/hooks";
 
 import "./styles.scss";
 
 const { views } = locale;
-const { soleToJoint, reviewDocuments } = views;
+const { soleToJoint } = views;
 const processConfig = processes.soletojoint;
 
 const { states } = processConfig;
@@ -334,29 +326,19 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
         }}
       />
 
-      {closeProcessReason && (
-        <>
-          <Box variant="warning">
-            <StatusHeading
-              variant="warning"
-              title={
-                isSameState(process.currentState, processClosed)
-                  ? reviewDocuments.soleToJointClosed
-                  : reviewDocuments.soleToJointWillBeClosed
-              }
-            />
-            <Text style={{ marginLeft: 60 }}>
-              <strong>Reason of close case:</strong> <br />
-              {closeProcessReason}
-            </Text>
-          </Box>
-          <CloseProcessView
-            closeProcessReason={closeProcessReason}
-            process={process}
-            processConfig={processConfig}
-            mutate={mutate}
-          />
-        </>
+      {(closeProcessReason ||
+        [
+          processClosed.state,
+          processCancelled.state,
+          breachChecksFailed.state,
+          manualChecksFailed.state,
+        ].includes(process.currentState.state)) && (
+        <CloseProcessView
+          closeProcessReason={closeProcessReason}
+          process={process}
+          processConfig={processConfig}
+          mutate={mutate}
+        />
       )}
 
       {!closeProcessReason &&

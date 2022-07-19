@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 import {
@@ -56,11 +56,17 @@ export const ProcessLayout = (): JSX.Element => {
     processName,
   });
 
-  const [closeProcessReason, setCloseProcessReason] = useState<string | undefined>(
-    process && processClosed && isSameState(process.currentState, processClosed)
-      ? process?.currentState.processData.formData?.Reason
-      : process?.currentState.processData.formData?.comment,
-  );
+  const [closeProcessReason, setCloseProcessReason] = useState<string>();
+
+  useEffect(() => {
+    if (!closeProcessReason) {
+      setCloseProcessReason(
+        process && processClosed && isSameState(process.currentState, processClosed)
+          ? process?.currentState.processData.formData?.Reason
+          : process?.currentState.processData.formData?.comment,
+      );
+    }
+  }, [process, closeProcessReason, processClosed]);
 
   if (error) {
     return (

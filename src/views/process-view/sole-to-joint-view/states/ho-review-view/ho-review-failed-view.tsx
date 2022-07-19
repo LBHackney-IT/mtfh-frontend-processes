@@ -33,12 +33,7 @@ export const HoReviewFailedView = ({
         )}
       </StatusBox>
 
-      <CloseProcessView
-        process={process}
-        processConfig={processConfig}
-        mutate={mutate}
-        optional={{ nextStepsDescription: false }}
-      />
+      <CloseProcessView process={process} processConfig={processConfig} mutate={mutate} />
     </>
   );
 };
