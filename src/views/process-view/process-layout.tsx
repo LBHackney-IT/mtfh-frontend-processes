@@ -40,10 +40,12 @@ export const ProcessLayout = (): JSX.Element => {
     useParams<{ processId: string; processName: string }>();
 
   const [isCloseProcessDialogOpen, setCloseProcessDialogOpen] = useState<boolean>(false);
-  const [closeProcessReason, setCloseProcessReason] = useState<string>();
   const [isCancel, setCancel] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
   const [closeCase, setCloseCase] = useState<boolean>(false);
+  const processConfig = processName && processes[processName];
+  const { states } = processConfig || {};
+  const { processClosed } = states || {};
 
   const {
     data: process,
@@ -53,6 +55,12 @@ export const ProcessLayout = (): JSX.Element => {
     id: processId,
     processName,
   });
+
+  const [closeProcessReason, setCloseProcessReason] = useState<string | undefined>(
+    process && processClosed && isSameState(process.currentState, processClosed)
+      ? process?.currentState.processData.formData.Reason
+      : process?.currentState.processData.formData.comment,
+  );
 
   if (error) {
     return (
@@ -83,15 +91,6 @@ export const ProcessLayout = (): JSX.Element => {
         description={locale.errors.unableToFindStateDescription}
       />
     );
-  }
-
-  const processConfig = processName && processes[processName];
-  const { states } = processConfig;
-  const { processClosed } = states;
-
-  let closeProcessReasonFinal = closeProcessReason;
-  if (!closeProcessReasonFinal && isSameState(process.currentState, processClosed)) {
-    closeProcessReasonFinal = process.currentState.processData.formData.Reason;
   }
 
   return (
@@ -128,7 +127,7 @@ export const ProcessLayout = (): JSX.Element => {
           setCloseCase,
           setCancel,
           setCloseProcessDialogOpen,
-          closeProcessReasonFinal,
+          closeProcessReason,
         }}
       />
 

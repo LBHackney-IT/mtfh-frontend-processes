@@ -166,7 +166,7 @@ export const ChangeOfNameView = ({
   optional: any;
 }): JSX.Element => {
   const {
-    closeProcessReasonFinal,
+    closeProcessReason,
     submitted,
     setSubmitted,
     closeCase,
@@ -220,10 +220,10 @@ export const ChangeOfNameView = ({
           setSubmitted,
           closeCase,
           setCloseCase,
-          closeProcessReasonFinal,
+          closeProcessReason,
         }}
       />
-      {closeProcessReasonFinal && (
+      {closeProcessReason && (
         <>
           <Box variant="warning">
             <StatusHeading
@@ -236,18 +236,18 @@ export const ChangeOfNameView = ({
             />
             <Text style={{ marginLeft: 60 }}>
               <strong>Reason of close case:</strong> <br />
-              {closeProcessReasonFinal}
+              {closeProcessReason}
             </Text>
           </Box>
           <CloseProcessView
-            closeProcessReason={closeProcessReasonFinal}
+            closeProcessReason={closeProcessReason}
             process={process}
             processConfig={processConfig}
             mutate={mutate}
           />
         </>
       )}
-      {!closeProcessReasonFinal &&
+      {!closeProcessReason &&
         reviewDocumentsPageStates.includes(process.currentState.state) && (
           <>
             <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>

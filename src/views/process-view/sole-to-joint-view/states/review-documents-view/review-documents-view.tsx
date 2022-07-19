@@ -64,7 +64,7 @@ export const ReviewDocumentsView = ({
       {globalError && (
         <StatusErrorSummary id="review-documents-global-error" code={globalError} />
       )}
-      {!optional?.closeProcessReasonFinal && (
+      {!optional?.closeProcessReason && (
         <>
           <EligibilityChecksPassedBox />
           {(states.documentsRequestedDes.state === process.currentState.state ||
