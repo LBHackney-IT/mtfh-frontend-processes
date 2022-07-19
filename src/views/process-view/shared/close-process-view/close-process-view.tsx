@@ -3,9 +3,9 @@ import { Link as RouterLink } from "react-router-dom";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
-import { locale } from "../../services";
-import { Trigger } from "../../services/processes/types";
-import { IProcess, ProcessComponentProps } from "../../types";
+import { locale } from "../../../../services";
+import { Trigger } from "../../../../services/processes/types";
+import { IProcess, ProcessComponentProps } from "../../../../types";
 
 import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import {

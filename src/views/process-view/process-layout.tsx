@@ -58,8 +58,8 @@ export const ProcessLayout = (): JSX.Element => {
 
   const [closeProcessReason, setCloseProcessReason] = useState<string | undefined>(
     process && processClosed && isSameState(process.currentState, processClosed)
-      ? process?.currentState.processData.formData.Reason
-      : process?.currentState.processData.formData.comment,
+      ? process?.currentState.processData.formData?.Reason
+      : process?.currentState.processData.formData?.comment,
   );
 
   if (error) {

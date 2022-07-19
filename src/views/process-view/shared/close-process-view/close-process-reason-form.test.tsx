@@ -5,7 +5,7 @@ import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Form, Formik } from "formik";
 
-import { locale } from "../../services";
+import { locale } from "../../../../services";
 import {
   CloseProcessFormData,
   CloseProcessReasonForm,

@@ -5,4 +5,4 @@ export * from "./header";
 export * from "./contact-details";
 export * from "./appointment-form";
 export * from "./appointment-details";
-export * from "./close-process-view";
+export * from "../views/process-view/shared/close-process-view";

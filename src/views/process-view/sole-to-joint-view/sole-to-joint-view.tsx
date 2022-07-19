@@ -2,6 +2,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { CloseProcessView, SoleToJointHeader } from "../../../components";
+import { CloseCase } from "../../../components/close-case/close-case";
 import { locale, processes } from "../../../services";
 import { ProcessComponentProps, ProcessSideBarProps } from "../../../types";
 import { getPreviousState, isSameState } from "../../../utils/processUtil";
@@ -301,7 +302,6 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
     setSubmitted,
     closeCase,
     setCloseCase,
-    setCancel,
     setCloseProcessDialogOpen,
   } = optional;
 
@@ -358,21 +358,10 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
           />
         </>
       )}
+
       {!closeProcessReason &&
         reviewDocumentsPageStates.includes(process.currentState.state) && (
-          <>
-            <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setCancel(false);
-                setCloseProcessDialogOpen(true);
-              }}
-              style={{ width: 222 }}
-            >
-              {locale.closeCase}
-            </Button>
-          </>
+          <CloseCase setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
         )}
     </>
   );
