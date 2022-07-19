@@ -198,7 +198,9 @@ exports[`ho-review-failed-view it renders ReviewApplication view correctly for H
         <input
           class="govuk-checkboxes__input"
           id="condition"
+          name="hasNotifiedResident"
           type="checkbox"
+          value="false"
         />
         <label
           class="govuk-label govuk-checkboxes__label"

@@ -1,19 +1,32 @@
-import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { Form, Formik } from "formik";
+import * as Yup from "yup";
 
 import { locale } from "../../services";
 import { Trigger } from "../../services/processes/types";
-import { IProcess } from "../../types";
+import { IProcess, ProcessComponentProps } from "../../types";
 
-import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
-import { Button, Checkbox, Heading, Link, List, Text } from "@mtfh/common/lib/components";
+import { editProcess } from "@mtfh/common/lib/api/process/v1";
+import {
+  Button,
+  Checkbox,
+  Heading,
+  InlineField,
+  Link,
+  List,
+  Text,
+} from "@mtfh/common/lib/components";
 
-interface CloseProcessViewProps {
+const closeProcessSchema = () =>
+  Yup.object({
+    hasNotifiedResident: Yup.boolean(),
+  });
+
+type CloseProcessFormData = Yup.Asserts<ReturnType<typeof closeProcessSchema>>;
+
+interface CloseProcessViewProps extends ProcessComponentProps {
   processConfig: IProcess;
-  process: Process;
-  mutate: () => void;
   setGlobalError?: any;
   closeProcessReason?: string;
   optional?: {
@@ -33,7 +46,6 @@ export const CloseProcessView = ({
     nextStepsDescription: true,
   },
 }: CloseProcessViewProps): JSX.Element => {
-  const [confirmed, setConfirmed] = useState<boolean>(false);
   const { closed, trigger, nextStepsDescription } = optional;
   const { state } = process.currentState;
   const { processClosed } = processConfig.states;
@@ -59,8 +71,10 @@ export const CloseProcessView = ({
           This case will be closed once you have sent an outcome letter to the resident.
         </Text>
       )}
-      <Formik
-        initialValues={{}}
+      <Formik<CloseProcessFormData>
+        initialValues={{
+          hasNotifiedResident: false,
+        }}
         onSubmit={async () => {
           try {
             await editProcess({
@@ -84,16 +98,14 @@ export const CloseProcessView = ({
           }
         }}
       >
-        {() => (
+        {({ values }) => (
           <Form noValidate id="close-process-form" className="mtfh-close-process-form">
-            <Checkbox
-              id="condition"
-              checked={confirmed}
-              onChange={() => setConfirmed(!confirmed)}
-            >
-              {locale.views.closeProcess.outcomeLetterSent}
-            </Checkbox>
-            <Button type="submit" disabled={!confirmed}>
+            <InlineField name="hasNotifiedResident" type="checkbox">
+              <Checkbox id="condition">
+                {locale.views.closeProcess.outcomeLetterSent}
+              </Checkbox>
+            </InlineField>
+            <Button type="submit" disabled={!values.hasNotifiedResident}>
               {locale.confirm}
             </Button>
           </Form>
