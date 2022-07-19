@@ -41,7 +41,7 @@ describe("changeofname/change-of-name-view", () => {
         }}
         mutate={() => {}}
         optional={{
-          closeProcessReasonFinal: "",
+          closeProcessReason: "",
           submitted: false,
           setSubmitted: () => {},
           closeCase: false,
@@ -66,7 +66,7 @@ describe("changeofname/change-of-name-view", () => {
         }}
         mutate={() => {}}
         optional={{
-          closeProcessReasonFinal: "",
+          closeProcessReason: "",
           submitted: false,
           setSubmitted: () => {},
           closeCase: false,
@@ -90,7 +90,7 @@ describe("changeofname/change-of-name-view", () => {
         }}
         mutate={() => {}}
         optional={{
-          closeProcessReasonFinal: "",
+          closeProcessReason: "",
           submitted: false,
           setSubmitted: () => {},
           closeCase: false,
@@ -134,7 +134,7 @@ describe("changeofname/change-of-name-view", () => {
         }}
         mutate={() => {}}
         optional={{
-          closeProcessReasonFinal: "",
+          closeProcessReason: "",
           submitted: false,
           setSubmitted: () => {},
           closeCase: false,
