@@ -115,11 +115,11 @@ export const changeofname: IProcess = {
       state: "InterviewRescheduled",
       triggers: { hOApproval: Trigger.HOApproval, cancelProcess: Trigger.CancelProcess },
     },
-    hOApprovalFailed: {
+    hoApprovalFailed: {
       state: "HOApprovalFailed",
       triggers: { cancelProcess: Trigger.CancelProcess },
     },
-    hOApprovalPassed: {
+    hoApprovalPassed: {
       state: "HOApprovalPassed",
       triggers: {
         scheduleTenureAppointment: Trigger.ScheduleTenureAppointment,

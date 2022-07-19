@@ -10,6 +10,7 @@ import { TenantNewNameView } from "./states";
 import { RequestDocumentsView } from "./states/request-documents-view";
 import { ReviewDocumentsView } from "./states/review-documents-view";
 import { TenureInvestigationView } from "./states/tenure-investigation-view";
+import { cancelButtonStates } from "./view-utils";
 
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -84,13 +85,17 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
   const hasReassignCase = useFeatureToggle("MMH.ReassignCase");
 
   const {
-    process: { id: processId, processName, currentState },
+    process: {
+      id: processId,
+      processName,
+      currentState: { state },
+    },
     setCloseProcessDialogOpen,
     setCancel,
     submitted = false,
   } = props;
 
-  let activeStep = getActiveStep(currentState.state, submitted);
+  let activeStep = getActiveStep(state, submitted);
   let steps: JSX.Element[];
   if (activeStep > 4 || (!submitted && activeStep === 4)) {
     activeStep -= 5;
@@ -109,7 +114,6 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
   }
 
   const startIndex = 0;
-
   return (
     <>
       <Stepper
@@ -122,15 +126,17 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
       {hasReassignCase && (
         <Button variant="secondary">{changeofname.actions.reassignCase}</Button>
       )}
-      <Button
-        variant="secondary"
-        onClick={() => {
-          setCancel(true);
-          setCloseProcessDialogOpen(true);
-        }}
-      >
-        {changeofname.actions.cancelProcess}
-      </Button>
+      {cancelButtonStates.includes(state) && (
+        <Button
+          variant="secondary"
+          onClick={() => {
+            setCancel(true);
+            setCloseProcessDialogOpen(true);
+          }}
+        >
+          {changeofname.actions.cancelProcess}
+        </Button>
+      )}
       <Button
         variant="secondary"
         as={RouterLink}
