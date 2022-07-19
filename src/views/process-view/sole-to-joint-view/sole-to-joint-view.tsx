@@ -2,7 +2,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { CloseProcessView, SoleToJointHeader } from "../../../components";
-import { CloseCase } from "../../../components/close-case/close-case";
+import { CloseCaseButton } from "../../../components/close-case-button/close-case-button";
 import { locale, processes } from "../../../services";
 import { ProcessComponentProps, ProcessSideBarProps } from "../../../types";
 import { getPreviousState, isSameState } from "../../../utils/processUtil";
@@ -361,7 +361,7 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
 
       {!closeProcessReason &&
         reviewDocumentsPageStates.includes(process.currentState.state) && (
-          <CloseCase setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
+          <CloseCaseButton setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
         )}
     </>
   );

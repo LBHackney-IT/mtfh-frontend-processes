@@ -2,7 +2,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { CloseProcessView, EntitySummary } from "../../../components";
-import { CloseCase } from "../../../components/close-case/close-case";
+import { CloseCaseButton } from "../../../components/close-case-button/close-case-button";
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
 import { isSameState } from "../../../utils/processUtil";
@@ -245,7 +245,7 @@ export const ChangeOfNameView = ({
 
       {!closeProcessReason &&
         reviewDocumentsStates.includes(process.currentState.state) && (
-          <CloseCase setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
+          <CloseCaseButton setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
         )}
     </>
   );

@@ -2,7 +2,7 @@ import { locale } from "../../services";
 
 import { Button, Text } from "@mtfh/common/lib/components";
 
-export const CloseCase = ({ setCloseProcessDialogOpen }): JSX.Element => {
+export const CloseCaseButton = ({ setCloseProcessDialogOpen }): JSX.Element => {
   return (
     <>
       <Text size="md">{locale.views.reviewDocuments.documentsNotSuitableCloseCase}</Text>
