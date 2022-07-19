@@ -91,14 +91,13 @@ const components = {
 const getActiveStep = (process: any, states, submitted: boolean, closeCase: boolean) => {
   const {
     currentState: { state },
-    currentState,
   } = process;
 
   if (state === states.selectTenants.state) {
     return 0;
   }
 
-  if (isSameState(currentState, states.processClosed)) {
+  if ([processCancelled.state, processClosed.state].includes(state)) {
     const previousState = getPreviousState(process);
     if (
       isSameState(previousState, states.manualChecksFailed) ||
@@ -109,7 +108,13 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
     if (isSameState(previousState, states.breachChecksFailed)) {
       return 2;
     }
-    if (isSameState(previousState, states.hoApprovalFailed)) {
+    if (
+      [
+        hoApprovalFailed.state,
+        interviewScheduled.state,
+        interviewRescheduled.state,
+      ].includes(previousState.state)
+    ) {
       return 7;
     }
   }
@@ -262,7 +267,7 @@ const getComponent = (process) => {
     currentState: { state },
   } = process;
 
-  if (state === processConfig.states.processClosed.state) {
+  if ([processCancelled.state, processClosed.state].includes(state)) {
     const previousState = getPreviousState(process);
     if (isSameState(previousState, manualChecksFailed)) {
       return ManualChecksFailedView;
@@ -273,14 +278,16 @@ const getComponent = (process) => {
     if (isSameState(previousState, breachChecksFailed)) {
       return BreachChecksFailedView;
     }
-    if (
-      isSameState(previousState, documentsRequestedDes) ||
-      isSameState(previousState, documentsRequestedAppointment) ||
-      isSameState(previousState, documentsAppointmentRescheduled)
-    ) {
+    if (reviewDocumentsPageStates.includes(previousState.state)) {
       return ReviewDocumentsView;
     }
-    if (isSameState(previousState, hoApprovalFailed)) {
+    if (
+      [
+        hoApprovalFailed.state,
+        interviewScheduled.state,
+        interviewRescheduled.state,
+      ].includes(previousState.state)
+    ) {
       return ReviewApplicationView;
     }
   }
@@ -295,6 +302,7 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
     closeCase,
     setCloseCase,
     setCloseProcessDialogOpen,
+    isCancel,
   } = optional;
 
   const Component = getComponent(process);
@@ -338,6 +346,7 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
           process={process}
           processConfig={processConfig}
           mutate={mutate}
+          isCancel={isCancel}
         />
       )}
 

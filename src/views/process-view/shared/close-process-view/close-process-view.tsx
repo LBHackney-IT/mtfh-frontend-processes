@@ -34,6 +34,7 @@ interface CloseProcessViewProps extends ProcessComponentProps {
   closeProcessReason?: string;
   statusBox?: boolean;
   trigger?: string;
+  isCancel?: boolean;
 }
 
 export const CloseProcessView = ({
@@ -44,6 +45,7 @@ export const CloseProcessView = ({
   closeProcessReason,
   statusBox = true,
   trigger,
+  isCancel = false,
 }: CloseProcessViewProps): JSX.Element => {
   const { state } = process.currentState;
   const { processCancelled, processClosed, tenureUpdated } = processConfig.states;
@@ -88,17 +90,24 @@ export const CloseProcessView = ({
             initialValues={{
               hasNotifiedResident: false,
             }}
-            onSubmit={async () => {
+            onSubmit={async ({ hasNotifiedResident }) => {
+              const formData = isCancel
+                ? {
+                    hasNotifiedResident,
+                    comment: closeProcessReason,
+                  }
+                : {
+                    hasNotifiedResident,
+                    Reason: closeProcessReason,
+                  };
               try {
                 await editProcess({
                   id: process.id,
-                  processTrigger: trigger || Trigger.CloseProcess,
+                  processTrigger:
+                    trigger || isCancel ? Trigger.CancelProcess : Trigger.CloseProcess,
                   processName: process?.processName,
                   etag: process.etag || "",
-                  formData: {
-                    hasNotifiedResident: true,
-                    Reason: closeProcessReason,
-                  },
+                  formData,
                   documents: [],
                 });
                 mutate();

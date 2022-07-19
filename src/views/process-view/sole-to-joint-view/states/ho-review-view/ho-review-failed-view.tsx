@@ -1,4 +1,3 @@
-import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 
@@ -9,13 +8,11 @@ const { views } = locale;
 interface HoReviewFailedViewProps {
   processConfig: IProcess;
   process: Process;
-  mutate: () => void;
 }
 
 export const HoReviewFailedView = ({
   processConfig,
   process,
-  mutate,
 }: HoReviewFailedViewProps): JSX.Element => {
   const { states } = processConfig;
   const { hoApprovalFailed } = states;
@@ -32,8 +29,6 @@ export const HoReviewFailedView = ({
           <Text>{hoApprovalFailedState.processData.formData.reason}</Text>
         )}
       </StatusBox>
-
-      <CloseProcessView process={process} processConfig={processConfig} mutate={mutate} />
     </>
   );
 };

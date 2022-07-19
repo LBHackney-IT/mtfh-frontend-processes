@@ -131,6 +131,7 @@ export const ProcessLayout = (): JSX.Element => {
           setSubmitted,
           closeCase,
           setCloseCase,
+          isCancel,
           setCancel,
           setCloseProcessDialogOpen,
           closeProcessReason,
