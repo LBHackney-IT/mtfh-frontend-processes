@@ -344,6 +344,7 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
         [
           processClosed.state,
           processCancelled.state,
+          automatedChecksFailed.state,
           breachChecksFailed.state,
           manualChecksFailed.state,
         ].includes(process.currentState.state)) && (

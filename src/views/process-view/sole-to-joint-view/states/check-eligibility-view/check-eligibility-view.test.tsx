@@ -16,6 +16,7 @@ import {
   mockProcessAutomatedChecksFailed,
   mockProcessAutomatedChecksPassed,
 } from "../../../../../test-utils";
+import { SoleToJointView } from "../../sole-to-joint-view";
 import { CheckEligibilityView } from "./check-eligibility-view";
 
 import * as processV1 from "@mtfh/common/lib/api/process/v1/service";
@@ -35,7 +36,7 @@ const options = {
   path,
 };
 
-test("it renders CheckEligibility passed checks view correctly", async () => {
+test("it renders CheckEligibility passed checks view correctly state=AutomatedChecksPassed", async () => {
   server.use(getReferenceDataV1({}, 200));
   const { container } = render(
     <CheckEligibilityView
@@ -92,7 +93,7 @@ test("it displays error when submit fails", async () => {
   expect(next).toBeEnabled();
   await userEvent.click(next);
   await expect(
-    screen.findByText(commonLocale.components.statusErrorSummary.statusTitle(-1)),
+    screen.findByText(commonLocale.components.statusErrorSummary.statusTitle(500)),
   ).resolves.toBeInTheDocument();
 });
 
@@ -133,7 +134,7 @@ test("it renders CheckEligibility correctly if there is an incoming tenant", asy
 
 test("it renders CheckEligibility failed checks view correctly", async () => {
   render(
-    <CheckEligibilityView
+    <SoleToJointView
       processConfig={processes.soletojoint}
       process={mockProcessAutomatedChecksFailed}
       mutate={() => {}}
@@ -147,11 +148,14 @@ test("it renders CheckEligibility failed checks view correctly", async () => {
   await expect(
     screen.findByText(locale.views.checkEligibility.failedChecks),
   ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.closeProcess.outcomeLetterSent),
+  ).resolves.toBeInTheDocument();
 });
 
 test("it renders CheckEligibility failed checks view correctly for process closed state", async () => {
   render(
-    <CheckEligibilityView
+    <SoleToJointView
       processConfig={processes.soletojoint}
       process={{
         ...mockProcessV1,

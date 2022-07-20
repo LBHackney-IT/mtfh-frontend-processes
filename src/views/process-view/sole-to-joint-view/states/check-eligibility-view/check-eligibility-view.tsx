@@ -1,6 +1,5 @@
 import { useState } from "react";
 
-import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 import { AutomatedChecksPassedBox } from "../shared";
@@ -94,11 +93,6 @@ export const CheckEligibilityView = ({
               </List>
             </div>
           </Box>
-          <CloseProcessView
-            process={process}
-            processConfig={processConfig}
-            mutate={mutate}
-          />
         </>
       )}
     </div>
