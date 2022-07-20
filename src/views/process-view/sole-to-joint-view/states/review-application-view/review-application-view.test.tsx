@@ -17,6 +17,11 @@ let closeCase = false;
 const setSubmitted = () => {};
 const setCloseCase = () => {};
 
+const options = {
+  url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+  path: "/processes/:processName/:processId",
+};
+
 describe("tenure-investigation-view", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -36,10 +41,7 @@ describe("tenure-investigation-view", () => {
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(
@@ -62,10 +64,7 @@ describe("tenure-investigation-view", () => {
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText("Tenant not found.", {
@@ -86,10 +85,7 @@ describe("tenure-investigation-view", () => {
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText(locale.errors.unableToFetchRecordDescription, {
@@ -108,37 +104,31 @@ describe("tenure-investigation-view", () => {
           ...mockProcessV1,
           currentState: {
             ...mockProcessV1.currentState,
+            state: "TenureAppointmentRescheduled",
             processData: {
               formData: {
                 appointmentDateTime: "2010-10-17T08:59:00.000Z",
               },
               documents: [],
             },
-            state: "TenureAppointmentRescheduled",
           },
           previousStates: [
             {
+              ...mockProcessV1.currentState,
               state: "TenureAppointmentScheduled",
-              permittedTriggers: [],
-              assignment: "",
               processData: {
                 formData: {
                   appointmentDateTime: "2010-10-12T08:59:00.000Z",
                 },
                 documents: [],
               },
-              createdAt: "",
-              updatedAt: "",
             },
           ],
         }}
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText(locale.views.closeProcess.soleToJointClosed),
@@ -169,10 +159,7 @@ describe("tenure-investigation-view", () => {
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText(locale.views.tenureInvestigation.tenancySigned),
