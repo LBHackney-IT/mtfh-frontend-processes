@@ -2,6 +2,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { CloseProcessView, EntitySummary } from "../../../components";
+import { CloseCaseButton } from "../../../components/close-case-button/close-case-button";
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
 import { isSameState } from "../../../utils/processUtil";
@@ -10,7 +11,7 @@ import { TenantNewNameView } from "./states";
 import { RequestDocumentsView } from "./states/request-documents-view";
 import { ReviewDocumentsView } from "./states/review-documents-view";
 import { TenureInvestigationView } from "./states/tenure-investigation-view";
-import { cancelButtonStates } from "./view-utils";
+import { cancelButtonStates, reviewDocumentsStates } from "./view-utils";
 
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -35,20 +36,15 @@ const { states } = processConfig;
 const {
   enterNewName,
   nameSubmitted,
-  documentsRequestedDes,
-  documentsRequestedAppointment,
-  documentsAppointmentRescheduled,
   documentChecksPassed,
   applicationSubmitted,
   processClosed,
 } = states;
 
-const reviewDocumentsViewByStates = {
-  [documentsRequestedDes.state]: ReviewDocumentsView,
-  [documentsRequestedAppointment.state]: ReviewDocumentsView,
-  [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
-};
-const reviewDocumentsPageStates = Object.keys(reviewDocumentsViewByStates);
+const reviewDocumentsViewByStates = {};
+reviewDocumentsStates.forEach((state) => {
+  reviewDocumentsViewByStates[state] = ReviewDocumentsView;
+});
 
 const components = {
   [enterNewName.state]: TenantNewNameView,
@@ -65,7 +61,7 @@ const getActiveStep = (currentState, submitted: boolean) => {
   if (currentState === nameSubmitted.state) {
     return 1;
   }
-  if ([...reviewDocumentsPageStates, processClosed.state].includes(currentState)) {
+  if ([...reviewDocumentsStates, processClosed.state].includes(currentState)) {
     return 2;
   }
   if (currentState === documentChecksPassed.state) {
@@ -171,7 +167,6 @@ export const ChangeOfNameView = ({
     setSubmitted,
     closeCase,
     setCloseCase,
-    setCancel,
     setCloseProcessDialogOpen,
   } = optional;
   const { error, data: person } = usePerson(process.targetId);
@@ -247,21 +242,10 @@ export const ChangeOfNameView = ({
           />
         </>
       )}
+
       {!closeProcessReason &&
-        reviewDocumentsPageStates.includes(process.currentState.state) && (
-          <>
-            <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setCancel(false);
-                setCloseProcessDialogOpen(true);
-              }}
-              style={{ width: 222 }}
-            >
-              {locale.closeCase}
-            </Button>
-          </>
+        reviewDocumentsStates.includes(process.currentState.state) && (
+          <CloseCaseButton setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
         )}
     </>
   );

@@ -2,6 +2,7 @@ import React from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { CloseProcessView, SoleToJointHeader } from "../../../components";
+import { CloseCaseButton } from "../../../components/close-case-button/close-case-button";
 import { locale, processes } from "../../../services";
 import { ProcessComponentProps, ProcessSideBarProps } from "../../../types";
 import { getPreviousState, isSameState } from "../../../utils/processUtil";
@@ -16,22 +17,15 @@ import {
 } from "./states";
 import { ManualChecksFailedView } from "./states/manual-checks-view";
 import { ReviewApplicationView } from "./states/review-application-view/review-application-view";
+import { reviewDocumentsStates } from "./view-utils";
 
-import {
-  Box,
-  Button,
-  ErrorSummary,
-  StatusHeading,
-  Step,
-  Stepper,
-  Text,
-} from "@mtfh/common/lib/components";
+import { Button, ErrorSummary, Step, Stepper } from "@mtfh/common/lib/components";
 import { useFeatureToggle } from "@mtfh/common/lib/hooks";
 
 import "./styles.scss";
 
 const { views } = locale;
-const { soleToJoint, reviewDocuments } = views;
+const { soleToJoint } = views;
 const processConfig = processes.soletojoint;
 
 const { states } = processConfig;
@@ -43,9 +37,6 @@ const {
   manualChecksPassed,
   breachChecksPassed,
   breachChecksFailed,
-  documentsRequestedDes,
-  documentsRequestedAppointment,
-  documentsAppointmentRescheduled,
   documentChecksPassed,
   applicationSubmitted,
   tenureInvestigationFailed,
@@ -62,11 +53,10 @@ const {
   processClosed,
 } = states;
 
-const reviewDocumentsViewByStates = {
-  [documentsRequestedDes.state]: ReviewDocumentsView,
-  [documentsRequestedAppointment.state]: ReviewDocumentsView,
-  [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
-};
+const reviewDocumentsViewByStates = {};
+reviewDocumentsStates.forEach((state) => {
+  reviewDocumentsViewByStates[state] = ReviewDocumentsView;
+});
 
 const reviewDocumentsPageStates = Object.keys(reviewDocumentsViewByStates);
 
@@ -98,14 +88,13 @@ const components = {
 const getActiveStep = (process: any, states, submitted: boolean, closeCase: boolean) => {
   const {
     currentState: { state },
-    currentState,
   } = process;
 
   if (state === states.selectTenants.state) {
     return 0;
   }
 
-  if (isSameState(currentState, states.processClosed)) {
+  if ([processCancelled.state, processClosed.state].includes(state)) {
     const previousState = getPreviousState(process);
     if (
       isSameState(previousState, states.manualChecksFailed) ||
@@ -116,7 +105,16 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
     if (isSameState(previousState, states.breachChecksFailed)) {
       return 2;
     }
-    if (isSameState(previousState, states.hoApprovalFailed)) {
+    if (
+      [
+        hoApprovalFailed.state,
+        interviewScheduled.state,
+        interviewRescheduled.state,
+        hoApprovalPassed.state,
+        tenureAppointmentScheduled.state,
+        tenureAppointmentRescheduled.state,
+      ].includes(previousState.state)
+    ) {
       return 7;
     }
   }
@@ -269,7 +267,7 @@ const getComponent = (process) => {
     currentState: { state },
   } = process;
 
-  if (state === processConfig.states.processClosed.state) {
+  if ([processCancelled.state, processClosed.state].includes(state)) {
     const previousState = getPreviousState(process);
     if (isSameState(previousState, manualChecksFailed)) {
       return ManualChecksFailedView;
@@ -280,14 +278,19 @@ const getComponent = (process) => {
     if (isSameState(previousState, breachChecksFailed)) {
       return BreachChecksFailedView;
     }
-    if (
-      isSameState(previousState, documentsRequestedDes) ||
-      isSameState(previousState, documentsRequestedAppointment) ||
-      isSameState(previousState, documentsAppointmentRescheduled)
-    ) {
+    if (reviewDocumentsPageStates.includes(previousState.state)) {
       return ReviewDocumentsView;
     }
-    if (isSameState(previousState, hoApprovalFailed)) {
+    if (
+      [
+        hoApprovalFailed.state,
+        interviewScheduled.state,
+        interviewRescheduled.state,
+        hoApprovalPassed.state,
+        tenureAppointmentScheduled.state,
+        tenureAppointmentRescheduled.state,
+      ].includes(previousState.state)
+    ) {
       return ReviewApplicationView;
     }
   }
@@ -301,8 +304,8 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
     setSubmitted,
     closeCase,
     setCloseCase,
-    setCancel,
     setCloseProcessDialogOpen,
+    isCancel,
   } = optional;
 
   const Component = getComponent(process);
@@ -334,45 +337,27 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
         }}
       />
 
-      {closeProcessReason && (
-        <>
-          <Box variant="warning">
-            <StatusHeading
-              variant="warning"
-              title={
-                isSameState(process.currentState, processClosed)
-                  ? reviewDocuments.soleToJointClosed
-                  : reviewDocuments.soleToJointWillBeClosed
-              }
-            />
-            <Text style={{ marginLeft: 60 }}>
-              <strong>Reason of close case:</strong> <br />
-              {closeProcessReason}
-            </Text>
-          </Box>
-          <CloseProcessView
-            closeProcessReason={closeProcessReason}
-            process={process}
-            processConfig={processConfig}
-            mutate={mutate}
-          />
-        </>
+      {(closeProcessReason ||
+        [
+          processClosed.state,
+          processCancelled.state,
+          automatedChecksFailed.state,
+          breachChecksFailed.state,
+          manualChecksFailed.state,
+          hoApprovalFailed.state,
+        ].includes(process.currentState.state)) && (
+        <CloseProcessView
+          closeProcessReason={closeProcessReason}
+          process={process}
+          processConfig={processConfig}
+          mutate={mutate}
+          isCancel={isCancel}
+        />
       )}
+
       {!closeProcessReason &&
-        reviewDocumentsPageStates.includes(process.currentState.state) && (
-          <>
-            <Text size="md">{reviewDocuments.documentsNotSuitableCloseCase}</Text>
-            <Button
-              variant="secondary"
-              onClick={() => {
-                setCancel(false);
-                setCloseProcessDialogOpen(true);
-              }}
-              style={{ width: 222 }}
-            >
-              {locale.closeCase}
-            </Button>
-          </>
+        reviewDocumentsStates.includes(process.currentState.state) && (
+          <CloseCaseButton setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
         )}
     </>
   );

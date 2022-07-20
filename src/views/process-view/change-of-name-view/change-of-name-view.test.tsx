@@ -14,7 +14,7 @@ import userEvent from "@testing-library/user-event";
 import { locale } from "../../../services";
 import { ProcessLayout } from "../process-layout";
 import { ChangeOfNameSideBar, ChangeOfNameView } from "./change-of-name-view";
-import { cancelButtonStates } from "./view-utils";
+import { cancelButtonStates, reviewDocumentsStates } from "./view-utils";
 
 import { $configuration } from "@mtfh/common";
 
@@ -122,33 +122,43 @@ describe("changeofname/change-of-name-view", () => {
     ).resolves.toBeInTheDocument();
   });
 
-  test("it checks close case button", async () => {
-    const setCancel = jest.fn();
-    const setCloseProcessDialogOpen = jest.fn();
-    server.use(getPersonV1());
-    render(
-      <ChangeOfNameView
-        process={{
-          ...mockProcessV1,
-          currentState: { ...mockProcessV1.currentState, state: "DocumentsRequestedDes" },
-        }}
-        mutate={() => {}}
-        optional={{
-          closeProcessReason: "",
-          submitted: false,
-          setSubmitted: () => {},
-          closeCase: false,
-          setCloseCase: () => {},
-          setCancel,
-          setCloseProcessDialogOpen,
-        }}
-      />,
-      options,
-    );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
-    await userEvent.click(screen.getByText(locale.closeCase));
-    expect(setCancel.mock.calls[0][0]).toBe(false);
-    expect(setCloseProcessDialogOpen.mock.calls[0][0]).toBe(true);
+  reviewDocumentsStates.forEach((state) => {
+    test("it checks close case button", async () => {
+      const setCancel = jest.fn();
+      const setCloseProcessDialogOpen = jest.fn();
+      server.use(getPersonV1());
+      render(
+        <ChangeOfNameView
+          process={{
+            ...mockProcessV1,
+            currentState: {
+              ...mockProcessV1.currentState,
+              state,
+              processData: {
+                formData: {
+                  appointmentDateTime: "2099-10-12T08:59:00.000Z",
+                },
+                documents: [],
+              },
+            },
+          }}
+          mutate={() => {}}
+          optional={{
+            closeProcessReason: "",
+            submitted: false,
+            setSubmitted: () => {},
+            closeCase: false,
+            setCloseCase: () => {},
+            setCancel,
+            setCloseProcessDialogOpen,
+          }}
+        />,
+        options,
+      );
+      await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+      await userEvent.click(screen.getByText(locale.closeCase));
+      expect(setCloseProcessDialogOpen.mock.calls[0][0]).toBe(true);
+    });
   });
 
   test("it renders ChangeOfName correctly for DocumentChecksPassed state", async () => {

@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
-import { isCurrentState } from "../../../../../utils/processUtil";
+import { getPreviousState, isCurrentState } from "../../../../../utils/processUtil";
 import { DesBox } from "../../../shared/process-components";
 import { SubmitCaseView } from "../../../shared/submit-case-view";
 import { HoReviewFailedView } from "../ho-review-view/ho-review-failed-view";
@@ -43,7 +43,8 @@ export const ReviewApplicationView = ({
 }: ReviewApplicationViewProps): JSX.Element => {
   const [globalError, setGlobalError] = useState<number>();
   const [documentsSigned, setDocumentsSigned] = useState<boolean>(false);
-  const { submitted, closeCase, setCloseCase } = optional;
+  const { submitted, closeCase } = optional;
+  const { currentState } = process;
   const { data: tenure, error } = useTenure(process.targetId);
   const {
     applicationSubmitted,
@@ -58,7 +59,14 @@ export const ReviewApplicationView = ({
     interviewRescheduled,
     tenureUpdated,
     processClosed,
+    processCancelled,
   } = processConfig.states;
+
+  const processState = [processClosed.state, processCancelled.state].includes(
+    currentState.state,
+  )
+    ? getPreviousState(process)
+    : currentState;
 
   if (error) {
     return (
@@ -80,7 +88,7 @@ export const ReviewApplicationView = ({
 
   const tenant = tenure?.householdMembers.find((m) => m.isResponsible);
 
-  if (applicationSubmitted.state === process.currentState.state && submitted) {
+  if (applicationSubmitted.state === currentState.state && submitted) {
     return (
       <SubmitCaseView
         processConfig={processConfig}
@@ -109,7 +117,7 @@ export const ReviewApplicationView = ({
         />
       )}
 
-      {applicationSubmitted.state === process.currentState.state && (
+      {applicationSubmitted.state === currentState.state && (
         <TenureInvestigationView
           processConfig={processConfig}
           process={process}
@@ -125,23 +133,19 @@ export const ReviewApplicationView = ({
         tenureInvestigationPassedWithInt.state,
         interviewScheduled.state,
         interviewRescheduled.state,
-      ].includes(process.currentState.state) && (
+      ].includes(processState.state) && (
         <HoReviewView
           processConfig={processConfig}
           process={process}
           mutate={mutate}
           setGlobalError={setGlobalError}
-          optional={{ tenant }}
+          optional={{ ...optional, tenant }}
         />
       )}
 
       {(isCurrentState(hoApprovalFailed.state, process) ||
         isCurrentState(processClosed.state, process)) && (
-        <HoReviewFailedView
-          processConfig={processConfig}
-          process={process}
-          mutate={mutate}
-        />
+        <HoReviewFailedView processConfig={processConfig} process={process} />
       )}
 
       {[
@@ -149,15 +153,14 @@ export const ReviewApplicationView = ({
         tenureAppointmentScheduled.state,
         tenureAppointmentRescheduled.state,
         tenureUpdated.state,
-      ].includes(process.currentState.state) && (
+      ].includes(processState.state) && (
         <NewTenancyView
           processConfig={processConfig}
           process={process}
           mutate={mutate}
           setGlobalError={setGlobalError}
           optional={{
-            closeCase,
-            setCloseCase,
+            ...optional,
             documentsSigned,
             setDocumentsSigned,
             tenant,

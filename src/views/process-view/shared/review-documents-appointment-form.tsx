@@ -26,17 +26,23 @@ export const ReviewDocumentsAppointmentForm = ({
   const { states } = processConfig;
   return (
     <>
-      <AppointmentDetails
-        process={process}
-        needAppointment={needAppointment}
-        setNeedAppointment={setNeedAppointment}
-        options={{
-          requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
-          rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
-          appointmentRequestedState: states.documentsRequestedAppointment.state,
-          appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
-        }}
-      />
+      {[
+        states.documentsRequestedAppointment.state,
+        states.documentsAppointmentRescheduled.state,
+      ].includes(process.currentState.state) && (
+        <AppointmentDetails
+          currentState={process.currentState}
+          previousStates={process.previousStates}
+          needAppointment={needAppointment}
+          setNeedAppointment={setNeedAppointment}
+          options={{
+            requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
+            rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
+            appointmentRequestedState: states.documentsRequestedAppointment.state,
+            appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
+          }}
+        />
+      )}
 
       {(states.documentsRequestedDes.state === process.currentState.state ||
         needAppointment) && (

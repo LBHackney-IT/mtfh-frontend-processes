@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { Form, Formik } from "formik";
 
-import { CloseProcessView } from "../../../../../components";
 import { BreachChecksFormData, breachChecksFormSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
 
@@ -260,11 +259,7 @@ export const BreachChecksView = ({
   );
 };
 
-export const BreachChecksFailedView = ({
-  process,
-  processConfig,
-  mutate,
-}): JSX.Element => {
+export const BreachChecksFailedView = (): JSX.Element => {
   return (
     <div data-testid="soletojoint-BreachChecksFailed">
       <Text>{checkEligibility.autoCheckIntro}</Text>
@@ -293,7 +288,6 @@ export const BreachChecksFailedView = ({
           </List>
         </div>
       </Box>
-      <CloseProcessView process={process} processConfig={processConfig} mutate={mutate} />
     </div>
   );
 };

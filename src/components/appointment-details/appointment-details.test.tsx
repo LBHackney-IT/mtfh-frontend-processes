@@ -1,6 +1,6 @@
 import React from "react";
 
-import { render } from "@hackney/mtfh-test-utils";
+import { mockProcessV1, render } from "@hackney/mtfh-test-utils";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
@@ -20,11 +20,13 @@ describe("appointment-details-component", () => {
 
   test("it renders scheduled appointment details correctly", () => {
     const { states } = processes.soletojoint;
+    const process = mockDocumentsRequestedAppointment({
+      appointmentDateTime: "2099-10-12T08:59:00.000Z",
+    });
     const { container } = render(
       <AppointmentDetails
-        process={mockDocumentsRequestedAppointment({
-          appointmentDateTime: "2099-10-12T08:59:00.000Z",
-        })}
+        currentState={process.currentState}
+        previousStates={process.previousStates}
         needAppointment
         setNeedAppointment={setNeedAppointment}
         options={{
@@ -41,11 +43,13 @@ describe("appointment-details-component", () => {
 
   test("it renders scheduled but missed appointment details correctly", () => {
     const { states } = processes.soletojoint;
+    const process = mockDocumentsRequestedAppointment({
+      appointmentDateTime: "2010-10-12T08:59:00.000Z",
+    });
     render(
       <AppointmentDetails
-        process={mockDocumentsRequestedAppointment({
-          appointmentDateTime: "2010-10-12T08:59:00.000Z",
-        })}
+        currentState={process.currentState}
+        previousStates={process.previousStates}
         needAppointment
         setNeedAppointment={setNeedAppointment}
         options={{
@@ -61,39 +65,31 @@ describe("appointment-details-component", () => {
 
   test("it renders rescheduled appointment details correctly", () => {
     const { states } = processes.soletojoint;
+    const process = {
+      ...mockDocumentsAppointmentRescheduled({
+        appointmentDateTime: "2099-10-12T08:59:00.000Z",
+      }),
+      previousStates: [
+        {
+          ...mockProcessV1.currentState,
+          state: "DocumentsRequestedAppointment",
+          processData: {
+            formData: {
+              appointmentDateTime: "2010-10-12T08:59:00.000Z",
+            },
+            documents: [],
+          },
+        },
+        {
+          ...mockProcessV1.currentState,
+          state: "BreachChecksPassed",
+        },
+      ],
+    };
     const { container } = render(
       <AppointmentDetails
-        process={{
-          ...mockDocumentsAppointmentRescheduled({
-            appointmentDateTime: "2099-10-12T08:59:00.000Z",
-          }),
-          previousStates: [
-            {
-              state: "DocumentsRequestedAppointment",
-              permittedTriggers: [],
-              assignment: "",
-              processData: {
-                formData: {
-                  appointmentDateTime: "2010-10-12T08:59:00.000Z",
-                },
-                documents: [],
-              },
-              createdAt: "",
-              updatedAt: "",
-            },
-            {
-              state: "BreachChecksPassed",
-              permittedTriggers: [],
-              assignment: "",
-              processData: {
-                formData: {},
-                documents: [],
-              },
-              createdAt: "",
-              updatedAt: "",
-            },
-          ],
-        }}
+        currentState={process.currentState}
+        previousStates={process.previousStates}
         needAppointment
         setNeedAppointment={setNeedAppointment}
         options={{
@@ -111,39 +107,31 @@ describe("appointment-details-component", () => {
   test("it renders rescheduled appointment details with cancel process correctly", async () => {
     const setCloseCase = jest.fn();
     const { states } = processes.soletojoint;
+    const process = {
+      ...mockDocumentsAppointmentRescheduled({
+        appointmentDateTime: "2010-10-17T08:59:00.000Z",
+      }),
+      previousStates: [
+        {
+          ...mockProcessV1.currentState,
+          state: "DocumentsRequestedAppointment",
+          processData: {
+            formData: {
+              appointmentDateTime: "2010-10-12T08:59:00.000Z",
+            },
+            documents: [],
+          },
+        },
+        {
+          ...mockProcessV1.currentState,
+          state: "BreachChecksPassed",
+        },
+      ],
+    };
     render(
       <AppointmentDetails
-        process={{
-          ...mockDocumentsAppointmentRescheduled({
-            appointmentDateTime: "2010-10-17T08:59:00.000Z",
-          }),
-          previousStates: [
-            {
-              state: "DocumentsRequestedAppointment",
-              permittedTriggers: [],
-              assignment: "",
-              processData: {
-                formData: {
-                  appointmentDateTime: "2010-10-12T08:59:00.000Z",
-                },
-                documents: [],
-              },
-              createdAt: "",
-              updatedAt: "",
-            },
-            {
-              state: "BreachChecksPassed",
-              permittedTriggers: [],
-              assignment: "",
-              processData: {
-                formData: {},
-                documents: [],
-              },
-              createdAt: "",
-              updatedAt: "",
-            },
-          ],
-        }}
+        currentState={process.currentState}
+        previousStates={process.previousStates}
         needAppointment
         setNeedAppointment={setNeedAppointment}
         closeCase={false}

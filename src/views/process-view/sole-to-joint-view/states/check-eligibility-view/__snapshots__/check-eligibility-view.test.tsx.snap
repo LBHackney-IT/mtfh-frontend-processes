@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`it renders CheckEligibility passed checks view correctly 1`] = `
+exports[`it renders CheckEligibility passed checks view correctly state=AutomatedChecksPassed 1`] = `
 <div>
   <div
     data-testid="soletojoint-CheckEligibility"

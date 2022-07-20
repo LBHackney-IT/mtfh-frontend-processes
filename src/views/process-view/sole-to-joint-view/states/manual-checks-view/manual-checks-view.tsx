@@ -1,4 +1,3 @@
-import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { AutomatedChecksPassedBox } from "../shared";
 
@@ -7,11 +6,7 @@ import { Box, Heading, List, StatusHeading, Text } from "@mtfh/common/lib/compon
 const { views } = locale;
 const { checkEligibility } = views;
 
-export const ManualChecksFailedView = ({
-  process,
-  processConfig,
-  mutate,
-}): JSX.Element => {
+export const ManualChecksFailedView = ({ process }): JSX.Element => {
   return (
     <div data-testid={`soletojoint-${process.currentState.state}`}>
       <Text>{checkEligibility.autoCheckIntro}</Text>
@@ -51,7 +46,6 @@ export const ManualChecksFailedView = ({
           </List>
         </div>
       </Box>
-      <CloseProcessView process={process} processConfig={processConfig} mutate={mutate} />
     </div>
   );
 };

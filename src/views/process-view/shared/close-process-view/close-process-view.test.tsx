@@ -2,8 +2,11 @@ import React from "react";
 
 import { render } from "@hackney/mtfh-test-utils";
 
-import { processes } from "../../services";
-import { mockBreachChecksFailedState, mockProcessClosedState } from "../../test-utils";
+import { processes } from "../../../../services";
+import {
+  mockBreachChecksFailedState,
+  mockProcessClosedState,
+} from "../../../../test-utils";
 import { CloseProcessView } from "./close-process-view";
 
 describe("close-process-view", () => {
@@ -32,6 +35,7 @@ describe("close-process-view", () => {
         processConfig={processes.soletojoint}
         process={mockBreachChecksFailedState}
         mutate={() => {}}
+        statusBox={false}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",

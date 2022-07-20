@@ -18,6 +18,27 @@ let closeCase = false;
 const setSubmitted = () => {};
 const setCloseCase = () => {};
 
+const options = {
+  url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+  path: "/processes/:processName/:processId",
+};
+
+const mockTenureAppointmentSchedule = (appointmentDateTime) => {
+  return {
+    ...mockProcessV1,
+    currentState: {
+      ...mockProcessV1.currentState,
+      processData: {
+        formData: {
+          appointmentDateTime,
+        },
+        documents: [],
+      },
+      state: "TenureAppointmentScheduled",
+    },
+  };
+};
+
 describe("tenure-investigation-view", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -31,26 +52,11 @@ describe("tenure-investigation-view", () => {
     const { container } = render(
       <ReviewApplicationView
         processConfig={processes.soletojoint}
-        process={{
-          ...mockProcessV1,
-          currentState: {
-            ...mockProcessV1.currentState,
-            processData: {
-              formData: {
-                appointmentDateTime: "2099-10-12T08:59:00.000Z",
-              },
-              documents: [],
-            },
-            state: "TenureAppointmentScheduled",
-          },
-        }}
+        process={mockTenureAppointmentSchedule("2099-10-12T08:59:00.000Z")}
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(
@@ -61,32 +67,17 @@ describe("tenure-investigation-view", () => {
     expect(container).toMatchSnapshot();
   });
 
-  test("it renders TenureInvestigation view correctly for TenureAppointmentScheduled state, date has passed", async () => {
+  test("it renders TenureInvestigation view correctly for TenureAppointmentScheduled state, date has passed, submit fails", async () => {
     server.use(getContactDetailsV2(mockContactDetailsV2));
-    server.use(patchProcessV1(null, 500));
+    server.use(patchProcessV1({}, 500));
     render(
       <ReviewApplicationView
         processConfig={processes.soletojoint}
-        process={{
-          ...mockProcessV1,
-          currentState: {
-            ...mockProcessV1.currentState,
-            processData: {
-              formData: {
-                appointmentDateTime: "2010-10-12T08:59:00.000Z",
-              },
-              documents: [],
-            },
-            state: "TenureAppointmentScheduled",
-          },
-        }}
+        process={mockTenureAppointmentSchedule("2010-10-12T08:59:00.000Z")}
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     const documentsSigned = screen.getByText(
@@ -113,50 +104,41 @@ describe("tenure-investigation-view", () => {
           ...mockProcessV1,
           currentState: {
             ...mockProcessV1.currentState,
+            state: "TenureAppointmentRescheduled",
             processData: {
               formData: {
                 appointmentDateTime: "2099-10-12T08:59:00.000Z",
               },
               documents: [],
             },
-            state: "TenureAppointmentRescheduled",
           },
           previousStates: [
             {
+              ...mockProcessV1.currentState,
               state: "TenureAppointmentScheduled",
-              permittedTriggers: [],
-              assignment: "",
               processData: {
                 formData: {
                   appointmentDateTime: "2010-10-12T08:59:00.000Z",
                 },
                 documents: [],
               },
-              createdAt: "",
-              updatedAt: "",
             },
             {
+              ...mockProcessV1.currentState,
               state: "HOApprovalPassed",
-              permittedTriggers: [],
-              assignment: "",
               processData: {
                 formData: {
                   reason: "Test",
                 },
                 documents: [],
               },
-              createdAt: "",
-              updatedAt: "",
             },
           ],
         }}
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(

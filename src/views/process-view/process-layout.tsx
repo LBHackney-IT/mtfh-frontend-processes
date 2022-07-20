@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 import {
@@ -39,10 +39,10 @@ export const ProcessLayout = (): JSX.Element => {
   const { processId, processName } =
     useParams<{ processId: string; processName: string }>();
 
-  const [isCloseProcessDialogOpen, setCloseProcessDialogOpen] = useState<boolean>(false);
-  const [isCancel, setCancel] = useState<boolean>(false);
-  const [submitted, setSubmitted] = useState<boolean>(false);
-  const [closeCase, setCloseCase] = useState<boolean>(false);
+  const [isCloseProcessDialogOpen, setCloseProcessDialogOpen] = useState<boolean>(false); // used by Close Case button
+  const [isCancel, setCancel] = useState<boolean>(false); // used by Cancel Process button
+  const [submitted, setSubmitted] = useState<boolean>(false); // used at Finish pages
+  const [closeCase, setCloseCase] = useState<boolean>(false); // used to show Close Process view
   const processConfig = processName && processes[processName];
   const { states } = processConfig || {};
   const { processClosed } = states || {};
@@ -56,11 +56,17 @@ export const ProcessLayout = (): JSX.Element => {
     processName,
   });
 
-  const [closeProcessReason, setCloseProcessReason] = useState<string | undefined>(
-    process && processClosed && isSameState(process.currentState, processClosed)
-      ? process?.currentState.processData.formData.Reason
-      : process?.currentState.processData.formData.comment,
-  );
+  const [closeProcessReason, setCloseProcessReason] = useState<string>();
+
+  useEffect(() => {
+    if (!closeProcessReason) {
+      setCloseProcessReason(
+        process && processClosed && isSameState(process.currentState, processClosed)
+          ? process?.currentState.processData.formData?.Reason
+          : process?.currentState.processData.formData?.comment,
+      );
+    }
+  }, [process, closeProcessReason, processClosed]);
 
   if (error) {
     return (
@@ -125,6 +131,7 @@ export const ProcessLayout = (): JSX.Element => {
           setSubmitted,
           closeCase,
           setCloseCase,
+          isCancel,
           setCancel,
           setCloseProcessDialogOpen,
           closeProcessReason,

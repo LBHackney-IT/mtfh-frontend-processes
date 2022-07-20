@@ -2,11 +2,12 @@ import { format, isPast } from "date-fns";
 
 import { locale } from "../../services";
 
-import { Process } from "@mtfh/common/lib/api/process/v1";
+import { ProcessState } from "@mtfh/common/lib/api/process/v1/types";
 import { Box, LinkButton, StatusHeading, Text } from "@mtfh/common/lib/components";
 
 interface AppointmentDetailsProps {
-  process: Process;
+  currentState: ProcessState;
+  previousStates: ProcessState[];
   needAppointment: boolean;
   setNeedAppointment: any;
   closeCase?: boolean;
@@ -21,88 +22,76 @@ interface AppointmentDetailsProps {
 }
 
 export const AppointmentDetails = ({
-  process,
+  currentState,
+  previousStates,
   needAppointment,
   setNeedAppointment,
   closeCase = false,
   setCloseCase,
   options,
 }: AppointmentDetailsProps): JSX.Element => {
-  const { currentState } = process;
-  const formData = process.currentState.processData.formData as {
+  const formData = currentState.processData.formData as {
     appointmentDateTime: string;
   };
 
   return (
     <>
-      {[options.appointmentRequestedState, options.appointmentRescheduledState].includes(
-        currentState.state,
-      ) && (
-        <>
-          {options.appointmentRescheduledState === process.currentState.state &&
-            process.previousStates.map((process) => {
-              if (process.state === options.appointmentRequestedState) {
-                return (
-                  <Box key={process.state}>
-                    <StatusHeading
-                      variant="base"
-                      title={locale.components.appointment.missed}
-                    />
-                    <Text style={{ marginLeft: 60 }}>
-                      Date:{" "}
-                      {format(
-                        new Date(process.processData.formData.appointmentDateTime),
-                        "eeee do MMMM yyyy",
-                      )}
-                      <br />
-                      Time:{" "}
-                      {format(
-                        new Date(process.processData.formData.appointmentDateTime),
-                        "hh:mm aaa",
-                      )}
-                    </Text>
-                  </Box>
-                );
-              }
-              return null;
-            })}
-
-          <Box>
-            <StatusHeading
-              variant="base"
-              title={locale.components.appointment.scheduled}
-            />
-            <Text style={{ marginLeft: 60 }}>
-              Date: {format(new Date(formData.appointmentDateTime), "eeee do MMMM yyyy")}
-              <br />
-              Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}
-            </Text>
-
-            {!closeCase && (
-              <>
-                <LinkButton
-                  style={{ marginLeft: 60 }}
-                  onClick={() => setNeedAppointment(!needAppointment)}
-                >
-                  {isPast(new Date(formData.appointmentDateTime))
-                    ? locale.reschedule
-                    : locale.change}
-                </LinkButton>
-                {options.closeCaseButton &&
-                  options.appointmentRescheduledState === process.currentState.state &&
-                  isPast(new Date(formData.appointmentDateTime)) && (
-                    <LinkButton
-                      style={{ marginLeft: 60 }}
-                      onClick={() => setCloseCase(true)}
-                    >
-                      {locale.components.appointment.closeCase}
-                    </LinkButton>
+      {options.appointmentRescheduledState === currentState.state &&
+        previousStates.map((process) => {
+          if (process.state === options.appointmentRequestedState) {
+            return (
+              <Box key={process.state}>
+                <StatusHeading
+                  variant="base"
+                  title={locale.components.appointment.missed}
+                />
+                <Text style={{ marginLeft: 60 }}>
+                  Date:{" "}
+                  {format(
+                    new Date(process.processData.formData.appointmentDateTime),
+                    "eeee do MMMM yyyy",
                   )}
-              </>
-            )}
-          </Box>
-        </>
-      )}
+                  <br />
+                  Time:{" "}
+                  {format(
+                    new Date(process.processData.formData.appointmentDateTime),
+                    "hh:mm aaa",
+                  )}
+                </Text>
+              </Box>
+            );
+          }
+          return null;
+        })}
+
+      <Box>
+        <StatusHeading variant="base" title={locale.components.appointment.scheduled} />
+        <Text style={{ marginLeft: 60 }}>
+          Date: {format(new Date(formData.appointmentDateTime), "eeee do MMMM yyyy")}
+          <br />
+          Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}
+        </Text>
+
+        {!closeCase && (
+          <>
+            <LinkButton
+              style={{ marginLeft: 60 }}
+              onClick={() => setNeedAppointment(!needAppointment)}
+            >
+              {isPast(new Date(formData.appointmentDateTime))
+                ? locale.reschedule
+                : locale.change}
+            </LinkButton>
+            {options.closeCaseButton &&
+              options.appointmentRescheduledState === currentState.state &&
+              isPast(new Date(formData.appointmentDateTime)) && (
+                <LinkButton style={{ marginLeft: 60 }} onClick={() => setCloseCase(true)}>
+                  {locale.components.appointment.closeCase}
+                </LinkButton>
+              )}
+          </>
+        )}
+      </Box>
     </>
   );
 };
