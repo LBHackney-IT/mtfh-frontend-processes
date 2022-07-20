@@ -23,7 +23,8 @@ import {
   mockProcessSelectTenants,
 } from "../../../test-utils";
 import { ProcessLayout } from "../process-layout";
-import { SoleToJointSideBar } from "./sole-to-joint-view";
+import { SoleToJointSideBar, SoleToJointView } from "./sole-to-joint-view";
+import { reviewDocumentsStates } from "./view-utils";
 
 import * as tenureV1 from "@mtfh/common/lib/api/tenure/v1/service";
 import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
@@ -290,4 +291,33 @@ test("it renders soletojoint for state=DocumentsRequestedDes", async () => {
       exact: true,
     }),
   ).resolves.toBeInTheDocument();
+});
+
+reviewDocumentsStates.forEach((state) => {
+  test(`it renders Close Case button for state=${state}`, async () => {
+    server.use(getProcessV1(mockDocumentsRequestedDes));
+    // @ts-ignore
+    useStateMock.mockImplementation(() => [false, jest.fn()]);
+    render(
+      <SoleToJointView
+        process={{
+          ...mockProcessV1,
+          currentState: {
+            ...mockProcessV1.currentState,
+            state,
+            processData: {
+              formData: {
+                appointmentDateTime: "2099-10-12T08:59:00.000Z",
+              },
+              documents: [],
+            },
+          },
+        }}
+        mutate={() => {}}
+        optional={{}}
+      />,
+      options,
+    );
+    await expect(screen.findByTestId("close-case-button")).resolves.toBeInTheDocument();
+  });
 });

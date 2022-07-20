@@ -17,6 +17,7 @@ import {
 } from "./states";
 import { ManualChecksFailedView } from "./states/manual-checks-view";
 import { ReviewApplicationView } from "./states/review-application-view/review-application-view";
+import { reviewDocumentsStates } from "./view-utils";
 
 import { Button, ErrorSummary, Step, Stepper } from "@mtfh/common/lib/components";
 import { useFeatureToggle } from "@mtfh/common/lib/hooks";
@@ -36,9 +37,6 @@ const {
   manualChecksPassed,
   breachChecksPassed,
   breachChecksFailed,
-  documentsRequestedDes,
-  documentsRequestedAppointment,
-  documentsAppointmentRescheduled,
   documentChecksPassed,
   applicationSubmitted,
   tenureInvestigationFailed,
@@ -55,11 +53,10 @@ const {
   processClosed,
 } = states;
 
-const reviewDocumentsViewByStates = {
-  [documentsRequestedDes.state]: ReviewDocumentsView,
-  [documentsRequestedAppointment.state]: ReviewDocumentsView,
-  [documentsAppointmentRescheduled.state]: ReviewDocumentsView,
-};
+const reviewDocumentsViewByStates = {};
+reviewDocumentsStates.forEach((state) => {
+  reviewDocumentsViewByStates[state] = ReviewDocumentsView;
+});
 
 const reviewDocumentsPageStates = Object.keys(reviewDocumentsViewByStates);
 
@@ -359,7 +356,7 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
       )}
 
       {!closeProcessReason &&
-        reviewDocumentsPageStates.includes(process.currentState.state) && (
+        reviewDocumentsStates.includes(process.currentState.state) && (
           <CloseCaseButton setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
         )}
     </>

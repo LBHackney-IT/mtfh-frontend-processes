@@ -20,6 +20,11 @@ import { ReviewDocumentsView } from "./review-documents-view";
 
 import * as errorMessages from "@mtfh/common/lib/hooks/use-error-codes";
 
+const options = {
+  url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+  path: "/processes/:processName/:processId",
+};
+
 describe("review-documents-view", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -33,10 +38,7 @@ describe("review-documents-view", () => {
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText(locale.views.reviewDocuments.passedChecks),
@@ -122,10 +124,7 @@ describe("review-documents-view", () => {
         process={mockDocumentsRequestedDesAppointment}
         mutate={() => {}}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText(locale.views.reviewDocuments.passedChecks),
@@ -216,10 +215,7 @@ describe("review-documents-view", () => {
         })}
         mutate={() => {}}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText(locale.views.reviewDocuments.passedChecks),

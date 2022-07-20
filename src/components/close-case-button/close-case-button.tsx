@@ -4,7 +4,7 @@ import { Button, Text } from "@mtfh/common/lib/components";
 
 export const CloseCaseButton = ({ setCloseProcessDialogOpen }): JSX.Element => {
   return (
-    <>
+    <div data-testid="close-case-button">
       <Text size="md">{locale.views.reviewDocuments.documentsNotSuitableCloseCase}</Text>
       <Button
         variant="secondary"
@@ -15,6 +15,6 @@ export const CloseCaseButton = ({ setCloseProcessDialogOpen }): JSX.Element => {
       >
         {locale.closeCase}
       </Button>
-    </>
+    </div>
   );
 };
