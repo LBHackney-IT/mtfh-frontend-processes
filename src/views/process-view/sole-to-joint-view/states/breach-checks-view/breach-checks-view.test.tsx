@@ -92,7 +92,7 @@ test("it submits form correctly", async () => {
     }),
   );
   await expect(
-    screen.findByText(commonLocale.components.statusErrorSummary.statusTitle(-1)),
+    screen.findByText(commonLocale.components.statusErrorSummary.statusTitle(500)),
   ).resolves.toBeInTheDocument();
 });
 

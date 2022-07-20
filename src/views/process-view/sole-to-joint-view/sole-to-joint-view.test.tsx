@@ -15,6 +15,7 @@ import {
   mockBreachChecksFailedState,
   mockBreachChecksPassedState,
   mockDocumentsRequestedDes,
+  mockManualChecksFailedState,
   mockManualChecksPassedState,
   mockProcessAutomatedChecksFailed,
   mockProcessAutomatedChecksPassed,
@@ -193,6 +194,22 @@ test("it renders soletojoint view for state=ManualChecksPassed, furtherEligibili
   const steps = within(stepper).getAllByRole("listitem", { hidden: true });
   expect(steps[2].className).toContain("active");
   expect(steps[2].textContent).toContain("Finish");
+});
+
+test("it renders soletojoint view for state=ManualChecksFailed", async () => {
+  server.use(getProcessV1(mockManualChecksFailedState));
+  server.use(getContactDetailsV2(mockContactDetailsV2));
+  // @ts-ignore
+  useStateMock.mockImplementation(() => [false, jest.fn()]);
+  render(<ProcessLayout />, options);
+  await expect(
+    screen.findByTestId("soletojoint-ManualChecksFailed"),
+  ).resolves.toBeInTheDocument();
+
+  const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
+  const steps = within(stepper).getAllByRole("listitem");
+  expect(steps[0].className).not.toContain("active");
+  expect(steps[1].className).toContain("active");
 });
 
 test("it renders soletojoint view for state=BreachChecksPassed", async () => {
