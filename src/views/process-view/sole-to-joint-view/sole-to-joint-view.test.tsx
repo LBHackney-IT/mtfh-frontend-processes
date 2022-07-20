@@ -245,17 +245,10 @@ test("it renders soletojoint for state=BreachChecksFailed", async () => {
   useStateMock.mockImplementation(() => [false, jest.fn()]);
   render(<ProcessLayout />, options);
 
-  await expect(
-    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
-      exact: false,
-    }),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText("Failed breach of tenure check:"),
-  ).resolves.toBeInTheDocument();
+  const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
+  const steps = within(stepper).getAllByRole("listitem");
+  expect(steps[0].className).toContain("active");
+  expect(steps[1].className).not.toContain("active");
 });
 
 test("it renders an error if an invalid state is returned", async () => {

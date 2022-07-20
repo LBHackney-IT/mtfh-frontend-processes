@@ -1,11 +1,21 @@
 import React from "react";
 
-import { patchProcessV1, render, server } from "@hackney/mtfh-test-utils";
+import {
+  getProcessV1,
+  mockProcessV1,
+  patchProcessV1,
+  render,
+  server,
+} from "@hackney/mtfh-test-utils";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { processes } from "../../../../../services";
-import { mockManualChecksPassedState } from "../../../../../test-utils";
+import { locale, processes } from "../../../../../services";
+import {
+  mockBreachChecksFailedState,
+  mockManualChecksPassedState,
+} from "../../../../../test-utils";
+import { SoleToJointView } from "../../sole-to-joint-view";
 import { BreachCheckForm, BreachChecksView } from "./breach-checks-view";
 
 import * as processV1 from "@mtfh/common/lib/api/process/v1/service";
@@ -123,4 +133,70 @@ test("it renders CheckEligibility for state=ManualChecksPassed, submitted=true",
   await expect(screen.findByText("Next Steps:")).resolves.toBeInTheDocument();
   await userEvent.click(screen.getByText("Continue"));
   expect(setSubmitted.mock.calls[0][0]).toBe(false);
+});
+
+test("it renders BreachChecksFailedView for state=BreachChecksFailed", async () => {
+  server.use(getProcessV1(mockBreachChecksFailedState));
+  render(
+    <SoleToJointView
+      process={mockBreachChecksFailedState}
+      mutate={() => {}}
+      optional={{}}
+    />,
+    options,
+  );
+
+  await expect(
+    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
+      exact: false,
+    }),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText("Failed breach of tenure check:"),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.closeProcess.outcomeLetterSent),
+  ).resolves.toBeInTheDocument();
+});
+
+test("it renders BreachChecksFailedView for state=ProcessClosed, previousState=BreachChecksFailed", async () => {
+  server.use(getProcessV1());
+  render(
+    <SoleToJointView
+      process={{
+        ...mockProcessV1,
+        currentState: {
+          ...mockProcessV1.currentState,
+          state: "ProcessClosed",
+        },
+        previousStates: [
+          {
+            ...mockProcessV1.currentState,
+            state: "BreachChecksFailed",
+          },
+        ],
+      }}
+      mutate={() => {}}
+      optional={{}}
+    />,
+    options,
+  );
+
+  await expect(
+    screen.findByText(locale.components.entitySummary.tenurePaymentRef, {
+      exact: false,
+    }),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.checkEligibility.failedChecks),
+  ).resolves.toBeInTheDocument();
+  await expect(
+    screen.findByText(locale.views.closeProcess.thankYouForConfirmation),
+  ).resolves.toBeInTheDocument();
 });
