@@ -7,7 +7,6 @@ import * as Yup from "yup";
 import { locale } from "../../../../services";
 import { Trigger } from "../../../../services/processes/types";
 import { IProcess, ProcessComponentProps } from "../../../../types";
-import { isSameState } from "../../../../utils/processUtil";
 
 import { editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -56,7 +55,7 @@ export const CloseProcessView = ({
         <StatusBox
           variant="warning"
           title={
-            isSameState(process.currentState, processClosed)
+            [processClosed.state, processCancelled.state].includes(state)
               ? locale.views.reviewDocuments.soleToJointClosed
               : locale.views.reviewDocuments.soleToJointWillBeClosed
           }
@@ -104,7 +103,7 @@ export const CloseProcessView = ({
                 await editProcess({
                   id: process.id,
                   processTrigger:
-                    trigger || isCancel ? Trigger.CancelProcess : Trigger.CloseProcess,
+                    trigger || (isCancel ? Trigger.CancelProcess : Trigger.CloseProcess),
                   processName: process?.processName,
                   etag: process.etag || "",
                   formData,

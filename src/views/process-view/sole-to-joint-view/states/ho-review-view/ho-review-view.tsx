@@ -13,7 +13,10 @@ import { HoReviewFormData, hoReviewSchema } from "../../../../../schemas";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 import { IProcess, Recommendation } from "../../../../../types";
-import { getAppointmentDateTime } from "../../../../../utils/processUtil";
+import {
+  getAppointmentDateTime,
+  getPreviousState,
+} from "../../../../../utils/processUtil";
 import { TenureInvestigationRecommendationBox, getRecommendation } from "../shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
@@ -62,7 +65,8 @@ export const HoReviewView = ({
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { tenant, closeProcessReason } = optional;
   const { currentState } = process;
-  const { interviewScheduled, interviewRescheduled } = processConfig.states;
+  const { interviewScheduled, interviewRescheduled, processClosed, processCancelled } =
+    processConfig.states;
   const formData = process.currentState.processData.formData as {
     appointmentDateTime: string;
   };
@@ -82,13 +86,20 @@ export const HoReviewView = ({
     );
   }
 
+  const processState = [processClosed.state, processCancelled.state].includes(
+    currentState.state,
+  )
+    ? getPreviousState(process)
+    : currentState;
+
   return (
     <>
       {[interviewScheduled.state, interviewRescheduled.state].includes(
-        process.currentState.state,
+        processState.state,
       ) && (
         <AppointmentDetails
-          process={process}
+          currentState={processState}
+          previousStates={process.previousStates}
           needAppointment={needAppointment}
           setNeedAppointment={setNeedAppointment}
           options={{

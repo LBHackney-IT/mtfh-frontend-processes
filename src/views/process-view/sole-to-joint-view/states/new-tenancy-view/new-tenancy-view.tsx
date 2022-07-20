@@ -12,6 +12,7 @@ import {
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 import { IProcess } from "../../../../../types";
+import { getPreviousState } from "../../../../../utils/processUtil";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -44,14 +45,29 @@ export const NewTenancyView = ({
     tenureAppointmentScheduled,
     tenureAppointmentRescheduled,
     tenureUpdated,
+    processClosed,
+    processCancelled,
   } = processConfig.states;
   const { currentState } = process;
   const [needAppointment, setNeedAppointment] = useState<boolean>(
     hoApprovalPassed.state === process.currentState.state,
   );
-  const { closeCase, setCloseCase, tenant } = optional;
-  const { documentsSigned, setDocumentsSigned } = optional;
-  const formData = process.currentState.processData.formData as {
+  const {
+    closeCase,
+    setCloseCase,
+    tenant,
+    closeProcessReason,
+    documentsSigned,
+    setDocumentsSigned,
+  } = optional;
+
+  const processState = [processClosed.state, processCancelled.state].includes(
+    currentState.state,
+  )
+    ? getPreviousState(process)
+    : currentState;
+
+  const formData = processState.processData.formData as {
     appointmentDateTime: string;
   };
 
@@ -94,30 +110,36 @@ export const NewTenancyView = ({
           </div>
         </Box>
       ) : (
-        <>
-          {!documentsSigned && (
-            <Heading variant="h2">
-              {views.tenureInvestigation.hoApprovedNextSteps}
-            </Heading>
-          )}
-          {![
-            tenureAppointmentScheduled.state,
-            tenureAppointmentRescheduled.state,
-          ].includes(process.currentState.state) && (
-            <Text>{views.tenureInvestigation.mustMakeAppointment}</Text>
-          )}
-        </>
+        !closeProcessReason && (
+          <>
+            {!documentsSigned && (
+              <Heading variant="h2">
+                {views.tenureInvestigation.hoApprovedNextSteps}
+              </Heading>
+            )}
+            {![
+              tenureAppointmentScheduled.state,
+              tenureAppointmentRescheduled.state,
+            ].includes(process.currentState.state) && (
+              <Text>{views.tenureInvestigation.mustMakeAppointment}</Text>
+            )}
+          </>
+        )
       )}
 
       {!documentsSigned &&
         [tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
-          process.currentState.state,
+          processState.state,
         ) && (
           <AppointmentDetails
-            process={process}
+            currentState={processState}
+            previousStates={process.previousStates}
             needAppointment={needAppointment}
             setNeedAppointment={setNeedAppointment}
-            closeCase={closeCase}
+            closeCase={
+              closeCase ||
+              [processCancelled.state, processClosed.state].includes(currentState.state)
+            }
             setCloseCase={setCloseCase}
             options={{
               requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
@@ -129,24 +151,27 @@ export const NewTenancyView = ({
           />
         )}
 
-      {!documentsSigned && currentState.state !== tenureUpdated.state && tenant && (
-        <ContactDetails fullName={tenant.fullName} personId={tenant.id} />
-      )}
+      {!documentsSigned &&
+        !closeProcessReason &&
+        currentState.state !== tenureUpdated.state &&
+        tenant && <ContactDetails fullName={tenant.fullName} personId={tenant.id} />}
 
-      <AppointmentForm
-        process={process}
-        mutate={mutate}
-        needAppointment={needAppointment}
-        setGlobalError={setGlobalError}
-        setNeedAppointment={setNeedAppointment}
-        options={{
-          buttonText: "Continue",
-          requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
-          rescheduleAppointmentTrigger: Trigger.RescheduleTenureAppointment,
-          appointmentRequestedState: tenureAppointmentScheduled.state,
-          appointmentRescheduledState: tenureAppointmentRescheduled.state,
-        }}
-      />
+      {!closeProcessReason && (
+        <AppointmentForm
+          process={process}
+          mutate={mutate}
+          needAppointment={needAppointment}
+          setGlobalError={setGlobalError}
+          setNeedAppointment={setNeedAppointment}
+          options={{
+            buttonText: "Continue",
+            requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
+            rescheduleAppointmentTrigger: Trigger.RescheduleTenureAppointment,
+            appointmentRequestedState: tenureAppointmentScheduled.state,
+            appointmentRescheduledState: tenureAppointmentRescheduled.state,
+          }}
+        />
+      )}
 
       {!documentsSigned &&
         !closeCase &&

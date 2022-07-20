@@ -39,10 +39,10 @@ export const ProcessLayout = (): JSX.Element => {
   const { processId, processName } =
     useParams<{ processId: string; processName: string }>();
 
-  const [isCloseProcessDialogOpen, setCloseProcessDialogOpen] = useState<boolean>(false);
-  const [isCancel, setCancel] = useState<boolean>(false);
-  const [submitted, setSubmitted] = useState<boolean>(false);
-  const [closeCase, setCloseCase] = useState<boolean>(false);
+  const [isCloseProcessDialogOpen, setCloseProcessDialogOpen] = useState<boolean>(false); // used by Close Case button
+  const [isCancel, setCancel] = useState<boolean>(false); // used by Cancel Process button
+  const [submitted, setSubmitted] = useState<boolean>(false); // used at Finish pages
+  const [closeCase, setCloseCase] = useState<boolean>(false); // used to show Close Process view
   const processConfig = processName && processes[processName];
   const { states } = processConfig || {};
   const { processClosed } = states || {};

@@ -43,7 +43,7 @@ export const ReviewApplicationView = ({
 }: ReviewApplicationViewProps): JSX.Element => {
   const [globalError, setGlobalError] = useState<number>();
   const [documentsSigned, setDocumentsSigned] = useState<boolean>(false);
-  const { submitted, closeCase, setCloseCase } = optional;
+  const { submitted, closeCase } = optional;
   const { currentState } = process;
   const { data: tenure, error } = useTenure(process.targetId);
   const {
@@ -153,15 +153,14 @@ export const ReviewApplicationView = ({
         tenureAppointmentScheduled.state,
         tenureAppointmentRescheduled.state,
         tenureUpdated.state,
-      ].includes(currentState.state) && (
+      ].includes(processState.state) && (
         <NewTenancyView
           processConfig={processConfig}
           process={process}
           mutate={mutate}
           setGlobalError={setGlobalError}
           optional={{
-            closeCase,
-            setCloseCase,
+            ...optional,
             documentsSigned,
             setDocumentsSigned,
             tenant,

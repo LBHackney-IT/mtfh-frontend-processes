@@ -113,6 +113,9 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
         hoApprovalFailed.state,
         interviewScheduled.state,
         interviewRescheduled.state,
+        hoApprovalPassed.state,
+        tenureAppointmentScheduled.state,
+        tenureAppointmentRescheduled.state,
       ].includes(previousState.state)
     ) {
       return 7;
@@ -286,6 +289,9 @@ const getComponent = (process) => {
         hoApprovalFailed.state,
         interviewScheduled.state,
         interviewRescheduled.state,
+        hoApprovalPassed.state,
+        tenureAppointmentScheduled.state,
+        tenureAppointmentRescheduled.state,
       ].includes(previousState.state)
     ) {
       return ReviewApplicationView;
