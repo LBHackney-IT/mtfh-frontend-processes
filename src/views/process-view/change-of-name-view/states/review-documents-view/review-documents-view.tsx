@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import { Form, Formik } from "formik";
 
 import {
@@ -8,7 +6,6 @@ import {
 } from "../../../../../schemas/change-of-name/review-documents";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
-import { DesBox } from "../../../shared/process-components";
 import { ReviewDocumentsAppointmentForm } from "../../../shared/review-documents-appointment-form";
 import { changeOfNameDocuments } from "../../view-utils";
 
@@ -22,7 +19,6 @@ import {
   Heading,
   InlineField,
   Spinner,
-  StatusErrorSummary,
 } from "@mtfh/common/lib/components";
 import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
@@ -33,6 +29,7 @@ interface ReviewDocumentsViewProps {
   process: Process;
   mutate: () => void;
   optional?: any;
+  setGlobalError: any;
 }
 
 export const ReviewDocumentsView = ({
@@ -40,6 +37,7 @@ export const ReviewDocumentsView = ({
   process,
   mutate,
   optional,
+  setGlobalError,
 }: ReviewDocumentsViewProps) => {
   const { states } = processConfig;
   const stateConfigs = {
@@ -51,7 +49,6 @@ export const ReviewDocumentsView = ({
     [states.processClosed.state]: processConfig.states.processClosed,
   };
   const stateConfig = stateConfigs[process.currentState.state];
-  const [globalError, setGlobalError] = useState<number>();
   const errorMessages = useErrorCodes();
 
   if (!errorMessages) {
@@ -64,16 +61,8 @@ export const ReviewDocumentsView = ({
 
   return (
     <div data-testid="changeofname-ReviewDocuments">
-      {globalError && (
-        <StatusErrorSummary id="review-documents-global-error" code={globalError} />
-      )}
       {!optional?.closeProcessReason && (
         <>
-          {(states.documentsRequestedDes.state === process.currentState.state ||
-            process.previousStates.find(
-              (previous) => previous.state === states.documentsRequestedDes.state,
-            )) && <DesBox title={reviewDocuments.documentsRequested} />}
-
           <ReviewDocumentsAppointmentForm
             processConfig={processConfig}
             process={process}

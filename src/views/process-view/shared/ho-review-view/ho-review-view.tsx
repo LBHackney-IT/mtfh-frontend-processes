@@ -226,12 +226,7 @@ export const HoReviewView = ({
                         use the following details:
                       </Text>
                       {tenant ? (
-                        <>
-                          <ContactDetails
-                            fullName={tenant.fullName}
-                            personId={tenant.id}
-                          />
-                        </>
+                        <ContactDetails fullName={tenant.fullName} personId={tenant.id} />
                       ) : (
                         <Text>Tenant not found.</Text>
                       )}

@@ -55,10 +55,12 @@ export const SubmitCaseView = ({
           {process.previousStates.find(
             (previous) => previous.state === "ManualChecksPassed",
           ) && <EligibilityChecksPassedBox />}
-          <DesBox
-            title={views.submitCase.supportingDocumentsApproved}
-            description={views.submitCase.viewDocumentsOnDes}
-          />
+          {process.processName === "soletojoint" && (
+            <DesBox
+              title={views.submitCase.supportingDocumentsApproved}
+              description={views.submitCase.viewDocumentsOnDes}
+            />
+          )}
 
           <Heading variant="h2">{submitCase.tenureInvestigation}</Heading>
           <Text>{submitCase.disclaimer}</Text>

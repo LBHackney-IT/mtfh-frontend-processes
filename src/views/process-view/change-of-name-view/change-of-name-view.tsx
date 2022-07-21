@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { CloseProcessView, EntitySummary } from "../../../components";
 import { CloseCaseButton } from "../../../components/close-case-button/close-case-button";
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
-import { isSameState } from "../../../utils/processUtil";
+import { isPreviousState, isSameState } from "../../../utils/processUtil";
+import { HoReviewView } from "../shared/ho-review-view/ho-review-view";
+import { DesBox } from "../shared/process-components";
 import { SubmitCaseView } from "../shared/submit-case-view";
+import { TenureInvestigationRecommendationBox } from "../sole-to-joint-view/states/shared";
 import { TenantNewNameView } from "./states";
 import { RequestDocumentsView } from "./states/request-documents-view";
 import { ReviewDocumentsView } from "./states/review-documents-view";
-import { TenureInvestigationResultView } from "./states/tenure-investigation-result-view";
 import { TenureInvestigationView } from "./states/tenure-investigation-view";
-import { cancelButtonStates, reviewDocumentsStates } from "./view-utils";
+import {
+  cancelButtonStates,
+  reviewDocumentsStates,
+  tenureInvestigationResultStates,
+} from "./view-utils";
 
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -22,6 +28,7 @@ import {
   Center,
   ErrorSummary,
   Spinner,
+  StatusErrorSummary,
   StatusHeading,
   Step,
   Stepper,
@@ -54,11 +61,11 @@ reviewDocumentsStates.forEach((state) => {
 
 const tenureInvestigationViewByStates = {
   [applicationSubmitted.state]: TenureInvestigationView,
-  [tenureInvestigationPassed.state]: TenureInvestigationResultView,
-  [tenureInvestigationFailed.state]: TenureInvestigationResultView,
-  [tenureInvestigationPassedWithInt.state]: TenureInvestigationResultView,
-  [interviewScheduled.state]: TenureInvestigationResultView,
-  [interviewRescheduled.state]: TenureInvestigationResultView,
+  [tenureInvestigationPassed.state]: HoReviewView,
+  [tenureInvestigationFailed.state]: HoReviewView,
+  [tenureInvestigationPassedWithInt.state]: HoReviewView,
+  [interviewScheduled.state]: HoReviewView,
+  [interviewRescheduled.state]: HoReviewView,
 };
 const tenureInvestigationStates = Object.keys(tenureInvestigationViewByStates);
 
@@ -186,6 +193,7 @@ export const ChangeOfNameView = ({
     setCloseProcessDialogOpen,
   } = optional;
   const { error, data: person } = usePerson(process.targetId);
+  const [globalError, setGlobalError] = useState<number>();
 
   if (error) {
     return (
@@ -221,19 +229,48 @@ export const ChangeOfNameView = ({
   return (
     <>
       <EntitySummary id={process.targetId} type={processConfig.targetType} />
+
+      {globalError && (
+        <StatusErrorSummary id="tenure-investigation-global-error" code={globalError} />
+      )}
+
+      {states.documentChecksPassed.state === process.currentState.state ||
+      isPreviousState(states.documentChecksPassed.state, process) ? (
+        <DesBox
+          title={views.submitCase.supportingDocumentsApproved}
+          description={views.submitCase.viewDocumentsOnDes}
+        />
+      ) : (
+        (states.documentsRequestedDes.state === process.currentState.state ||
+          isPreviousState(states.documentsRequestedDes.state, process)) && (
+          <DesBox title={reviewDocuments.documentsRequested} />
+        )
+      )}
+
+      {(tenureInvestigationResultStates.includes(process.currentState.state) ||
+        tenureInvestigationStates.find((state) => isPreviousState(state, process))) && (
+        <TenureInvestigationRecommendationBox
+          processConfig={processConfig}
+          process={process}
+        />
+      )}
+
       <Component
         processConfig={processConfig}
         process={process}
         mutate={mutate}
         optional={{
           person,
+          tenant: person,
           submitted,
           setSubmitted,
           closeCase,
           setCloseCase,
           closeProcessReason,
         }}
+        setGlobalError={setGlobalError}
       />
+
       {closeProcessReason && (
         <>
           <Box variant="warning">
