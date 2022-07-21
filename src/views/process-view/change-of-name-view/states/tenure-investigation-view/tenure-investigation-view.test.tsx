@@ -41,7 +41,7 @@ describe("tenure-investigation-view", () => {
     server.use(getContactDetailsV2(mockContactDetailsV2));
     const { container } = render(
       <TenureInvestigationView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={{
           ...mockProcessV1,
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
@@ -75,7 +75,7 @@ describe("tenure-investigation-view", () => {
     server.use(getContactDetailsV2(mockContactDetailsV2));
     const { container } = render(
       <TenureInvestigationView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={{
           ...mockProcessV1,
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
@@ -95,7 +95,7 @@ describe("tenure-investigation-view", () => {
     server.use(patchProcessV1(null, 500));
     render(
       <TenureInvestigationView
-        processConfig={processes.soletojoint}
+        processConfig={processes.changeofname}
         process={{
           ...mockProcessV1,
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },

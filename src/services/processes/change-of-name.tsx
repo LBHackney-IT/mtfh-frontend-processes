@@ -135,8 +135,8 @@ export const changeofname: IProcess = {
       state: "ProcessClosed",
       triggers: {},
     },
-    cancelledProcess: {
-      state: "CancelledProcess",
+    processCancelled: {
+      state: "ProcessCancelled",
       triggers: {},
     },
   },

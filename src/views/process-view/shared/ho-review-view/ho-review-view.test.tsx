@@ -11,9 +11,9 @@ import {
 import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import { locale, processes } from "../../../../../services";
-import { typeDateTime } from "../../../../../test-utils";
-import { ReviewApplicationView } from "../review-application-view/review-application-view";
+import { locale, processes } from "../../../../services";
+import { typeDateTime } from "../../../../test-utils";
+import { ReviewApplicationView } from "../../sole-to-joint-view/states/review-application-view/review-application-view";
 import { HoReviewView } from "./ho-review-view";
 
 import * as processV1 from "@mtfh/common/lib/api/process/v1/service";

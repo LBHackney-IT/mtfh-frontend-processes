@@ -1,5 +1,5 @@
-import { locale } from "../../../../../services";
-import { IProcess } from "../../../../../types";
+import { locale } from "../../../../services";
+import { IProcess } from "../../../../types";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import { StatusBox, Text } from "@mtfh/common/lib/components";

@@ -9,8 +9,8 @@ import {
 } from "@hackney/mtfh-test-utils";
 import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 
-import { locale, processes } from "../../../../../services";
-import { ReviewApplicationView } from "../review-application-view/review-application-view";
+import { locale, processes } from "../../../../services";
+import { ReviewApplicationView } from "../../sole-to-joint-view/states/review-application-view/review-application-view";
 
 let closeCase = false;
 const setCloseCase = () => {};

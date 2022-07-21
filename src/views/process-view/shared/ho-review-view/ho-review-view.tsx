@@ -8,16 +8,16 @@ import {
   ContactDetails,
   DateTimeFields,
   validate,
-} from "../../../../../components";
-import { HoReviewFormData, hoReviewSchema } from "../../../../../schemas";
-import { locale } from "../../../../../services";
-import { Trigger } from "../../../../../services/processes/types";
-import { IProcess, Recommendation } from "../../../../../types";
+} from "../../../../components";
+import { HoReviewFormData, hoReviewSchema } from "../../../../schemas";
+import { locale } from "../../../../services";
+import { Trigger } from "../../../../services/processes/types";
+import { IProcess, Recommendation } from "../../../../types";
+import { getAppointmentDateTime, getPreviousState } from "../../../../utils/processUtil";
 import {
-  getAppointmentDateTime,
-  getPreviousState,
-} from "../../../../../utils/processUtil";
-import { TenureInvestigationRecommendationBox, getRecommendation } from "../shared";
+  TenureInvestigationRecommendationBox,
+  getRecommendation,
+} from "../../sole-to-joint-view/states/shared";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
