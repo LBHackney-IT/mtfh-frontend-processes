@@ -5,20 +5,15 @@ import { CloseProcessView, EntitySummary } from "../../../components";
 import { CloseCaseButton } from "../../../components/close-case-button/close-case-button";
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
-import { isPreviousState, isSameState } from "../../../utils/processUtil";
+import { isSameState } from "../../../utils/processUtil";
 import { HoReviewView } from "../shared/ho-review-view/ho-review-view";
-import { DesBox } from "../shared/process-components";
 import { SubmitCaseView } from "../shared/submit-case-view";
-import { TenureInvestigationRecommendationBox } from "../sole-to-joint-view/states/shared";
 import { TenantNewNameView } from "./states";
 import { RequestDocumentsView } from "./states/request-documents-view";
 import { ReviewDocumentsView } from "./states/review-documents-view";
 import { TenureInvestigationView } from "./states/tenure-investigation-view";
-import {
-  cancelButtonStates,
-  reviewDocumentsStates,
-  tenureInvestigationResultStates,
-} from "./view-utils";
+import { StatusBoxes } from "./status-boxes";
+import { cancelButtonStates, reviewDocumentsStates } from "./view-utils";
 
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { Process } from "@mtfh/common/lib/api/process/v1";
@@ -234,26 +229,7 @@ export const ChangeOfNameView = ({
         <StatusErrorSummary id="tenure-investigation-global-error" code={globalError} />
       )}
 
-      {states.documentChecksPassed.state === process.currentState.state ||
-      isPreviousState(states.documentChecksPassed.state, process) ? (
-        <DesBox
-          title={views.submitCase.supportingDocumentsApproved}
-          description={views.submitCase.viewDocumentsOnDes}
-        />
-      ) : (
-        (states.documentsRequestedDes.state === process.currentState.state ||
-          isPreviousState(states.documentsRequestedDes.state, process)) && (
-          <DesBox title={reviewDocuments.documentsRequested} />
-        )
-      )}
-
-      {(tenureInvestigationResultStates.includes(process.currentState.state) ||
-        tenureInvestigationStates.find((state) => isPreviousState(state, process))) && (
-        <TenureInvestigationRecommendationBox
-          processConfig={processConfig}
-          process={process}
-        />
-      )}
+      <StatusBoxes process={process} processConfig={processConfig} />
 
       <Component
         processConfig={processConfig}
