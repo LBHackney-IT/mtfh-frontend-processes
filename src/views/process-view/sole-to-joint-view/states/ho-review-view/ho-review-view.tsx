@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { isPast } from "date-fns";
 import { Form, Formik, useFormikContext } from "formik";
@@ -60,7 +60,6 @@ export const HoReviewView = ({
   setGlobalError,
   optional,
 }: HoReviewViewProps): JSX.Element => {
-  const [choice, setChoice] = useState<Choice | undefined>();
   const [needAppointment, setNeedAppointment] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const { tenant, closeProcessReason } = optional;
@@ -70,12 +69,6 @@ export const HoReviewView = ({
   const formData = process.currentState.processData.formData as {
     appointmentDateTime: string;
   };
-
-  useEffect(() => {
-    if (needAppointment) {
-      setChoice(Choice.Appointment);
-    }
-  }, [needAppointment]);
 
   const errorMessages = useErrorCodes();
   if (!errorMessages) {
@@ -93,127 +86,123 @@ export const HoReviewView = ({
     : currentState;
 
   return (
-    <>
-      {[interviewScheduled.state, interviewRescheduled.state].includes(
-        processState.state,
-      ) && (
-        <AppointmentDetails
-          currentState={processState}
-          previousStates={process.previousStates}
-          needAppointment={needAppointment}
-          setNeedAppointment={setNeedAppointment}
-          options={{
-            requestAppointmentTrigger: Trigger.ScheduleInterview,
-            rescheduleAppointmentTrigger: Trigger.RescheduleInterview,
-            appointmentRequestedState: interviewScheduled.state,
-            appointmentRescheduledState: interviewRescheduled.state,
-          }}
-        />
-      )}
-
-      {!closeProcessReason && (
-        <Formik<HoReviewFormData>
-          initialValues={{
-            hoRecommendation: "",
-            confirm: false,
-            housingAreaManagerName: "",
-            choice: "",
-            day: "",
-            month: "",
-            year: "",
-            hour: "",
-            minute: "",
-            amPm: "",
-            reason: "",
-          }}
-          validateOnBlur={false}
-          validateOnChange={false}
-          validationSchema={hoReviewSchema(errorMessages)}
-          validate={(values) => {
-            return validate(errorMessages, values);
-          }}
-          onSubmit={async (values) => {
-            if (choice === Choice.Appointment) {
-              const appointmentDateTime = getAppointmentDateTime(values);
-              let processTrigger: Trigger | string = Trigger.ScheduleInterview;
-              if (
-                [interviewScheduled.state, interviewRescheduled.state].includes(
-                  currentState.state,
-                )
-              ) {
-                if (isPast(new Date(formData.appointmentDateTime))) {
-                  processTrigger = Trigger.RescheduleInterview;
-                } else {
-                  processTrigger = "";
-                }
-              }
-              try {
-                await editProcess({
-                  id: process.id,
-                  processTrigger,
-                  processName: process?.processName,
-                  etag: process.etag || "",
-                  formData: {
-                    appointmentDateTime,
-                  },
-                  documents: [],
-                  processData: {
-                    formData: {
-                      appointmentDateTime,
-                    },
-                    documents: [],
-                  },
-                });
-                setNeedAppointment(false);
-                setChoice(undefined);
-                mutate();
-              } catch (e: any) {
-                setGlobalError(e.response?.status || 500);
-              }
-              return;
+    <Formik<HoReviewFormData>
+      initialValues={{
+        hoRecommendation: "",
+        confirm: false,
+        housingAreaManagerName: "",
+        choice: "",
+        day: "",
+        month: "",
+        year: "",
+        hour: "",
+        minute: "",
+        amPm: "",
+        reason: "",
+      }}
+      validateOnBlur={false}
+      validateOnChange={false}
+      validationSchema={hoReviewSchema(errorMessages)}
+      validate={(values) => {
+        return validate(errorMessages, values);
+      }}
+      onSubmit={async (values, { setFieldValue }) => {
+        if (values.choice === Choice.Appointment) {
+          const appointmentDateTime = getAppointmentDateTime(values);
+          let processTrigger: Trigger | string = Trigger.ScheduleInterview;
+          if (
+            [interviewScheduled.state, interviewRescheduled.state].includes(
+              currentState.state,
+            )
+          ) {
+            if (isPast(new Date(formData.appointmentDateTime))) {
+              processTrigger = Trigger.RescheduleInterview;
+            } else {
+              processTrigger = "";
             }
-
-            if (!modalOpen) {
-              setModalOpen(true);
-              return;
-            }
-
-            setModalOpen(false);
-            try {
-              await editProcess({
-                id: process.id,
-                processTrigger: Trigger.HOApproval,
-                processName: process?.processName,
-                etag: process.etag || "",
+          }
+          try {
+            await editProcess({
+              id: process.id,
+              processTrigger,
+              processName: process?.processName,
+              etag: process.etag || "",
+              formData: {
+                appointmentDateTime,
+              },
+              documents: [],
+              processData: {
                 formData: {
-                  hoRecommendation: values.hoRecommendation?.toLowerCase(),
-                  housingAreaManagerName: values.housingAreaManagerName,
-                  reason: values.reason,
+                  appointmentDateTime,
                 },
                 documents: [],
-              });
-              mutate();
-            } catch (e: any) {
-              setGlobalError(e.response?.status || 500);
-            }
-          }}
-        >
-          {({ values, errors, setFieldValue }) => (
-            <>
-              <Form noValidate>
-                <Field id="choice" name="choice" label="" type="radio">
-                  <RadioGroup>
-                    <Heading variant="h4" style={{ marginBottom: 26 }}>
-                      Next steps
-                    </Heading>
+              },
+            });
+            setFieldValue("choice", "");
+            mutate();
+          } catch (e: any) {
+            setGlobalError(e.response?.status || 500);
+          }
+          return;
+        }
+
+        if (!modalOpen) {
+          setModalOpen(true);
+          return;
+        }
+
+        setModalOpen(false);
+        try {
+          await editProcess({
+            id: process.id,
+            processTrigger: Trigger.HOApproval,
+            processName: process?.processName,
+            etag: process.etag || "",
+            formData: {
+              hoRecommendation: values.hoRecommendation?.toLowerCase(),
+              housingAreaManagerName: values.housingAreaManagerName,
+              reason: values.reason,
+            },
+            documents: [],
+          });
+          mutate();
+        } catch (e: any) {
+          setGlobalError(e.response?.status || 500);
+        }
+      }}
+    >
+      {({ values, errors, setFieldValue }) => (
+        <>
+          {[interviewScheduled.state, interviewRescheduled.state].includes(
+            processState.state,
+          ) && (
+            <AppointmentDetails
+              currentState={processState}
+              previousStates={process.previousStates}
+              needAppointment={needAppointment}
+              setNeedAppointment={(value) =>
+                setFieldValue("choice", value ? Choice.Appointment : Choice.Review)
+              }
+              options={{
+                requestAppointmentTrigger: Trigger.ScheduleInterview,
+                rescheduleAppointmentTrigger: Trigger.RescheduleInterview,
+                appointmentRequestedState: interviewScheduled.state,
+                appointmentRescheduledState: interviewRescheduled.state,
+              }}
+            />
+          )}
+
+          {!closeProcessReason && (
+            <Form noValidate>
+              <Field id="choice" name="choice" label="" type="radio">
+                <RadioGroup>
+                  <Heading variant="h4" style={{ marginBottom: 26 }}>
+                    Next steps
+                  </Heading>
+                  <InlineField name="choice" type="radio">
                     <Radio
                       id="ho-appointment"
                       value={Choice.Appointment}
-                      onChange={() => {
-                        setNeedAppointment(true);
-                        setChoice(Choice.Appointment);
-                      }}
-                      checked={choice === Choice.Appointment && needAppointment}
                       onClick={() => {
                         if (values.choice !== Choice.Appointment) {
                           setFieldValue("day", "");
@@ -228,41 +217,40 @@ export const HoReviewView = ({
                     >
                       {views.hoReviewView.makeAppointment}
                     </Radio>
+                  </InlineField>
 
-                    {choice === Choice.Appointment && needAppointment && (
-                      <div style={{ marginLeft: 50, marginBottom: 20 }}>
-                        <Text>
-                          To make an appointment with the applicant for an interview,
-                          please use the following details:
-                        </Text>
-                        {tenant ? (
-                          <>
-                            <ContactDetails
-                              fullName={tenant.fullName}
-                              personId={tenant.id}
-                            />
-                          </>
-                        ) : (
-                          <Text>Tenant not found.</Text>
-                        )}
-                        <DateTimeFields
-                          dateLabel="Interview Date"
-                          timeLabel="Interview Time"
-                          errors={errors}
-                        />
-                      </div>
-                    )}
-
+                  {values.choice === Choice.Appointment && (
+                    <div style={{ marginLeft: 50, marginBottom: 20 }}>
+                      <Text>
+                        To make an appointment with the applicant for an interview, please
+                        use the following details:
+                      </Text>
+                      {tenant ? (
+                        <>
+                          <ContactDetails
+                            fullName={tenant.fullName}
+                            personId={tenant.id}
+                          />
+                        </>
+                      ) : (
+                        <Text>Tenant not found.</Text>
+                      )}
+                      <DateTimeFields
+                        dateLabel="Interview Date"
+                        timeLabel="Interview Time"
+                        errors={errors}
+                      />
+                    </div>
+                  )}
+                  <InlineField name="choice" type="radio">
                     <Radio
                       id="ho-review"
                       value={Choice.Review}
                       onChange={() => {
                         setNeedAppointment(false);
-                        setChoice(Choice.Review);
                       }}
-                      checked={choice === Choice.Review}
                       onClick={() => {
-                        if (choice !== Choice.Review) {
+                        if (values.choice !== Choice.Review) {
                           setFieldValue("day", "01");
                           setFieldValue("month", "01");
                           setFieldValue("year", "3000");
@@ -274,81 +262,81 @@ export const HoReviewView = ({
                     >
                       {views.hoReviewView.passedForReview}
                     </Radio>
+                  </InlineField>
 
-                    {choice === Choice.Review && !needAppointment && (
-                      <div style={{ marginLeft: 50 }}>
-                        <Text>{views.hoReviewView.receivedDecision}</Text>
-                        <Field
-                          id="hoRecommendation"
-                          name="hoRecommendation"
-                          label="The decision is"
-                          type="radio"
-                        >
-                          <RadioGroup>
-                            <Radio
-                              id="ho-review-approve"
-                              name="hoRecommendation"
-                              value={Recommendation.Approve}
-                            >
-                              {locale.views.tenureInvestigation.approve}
-                            </Radio>
-                            <Radio
-                              id="ho-review-decline"
-                              name="hoRecommendation"
-                              value={Recommendation.Decline}
-                            >
-                              {locale.views.tenureInvestigation.decline}
-                            </Radio>
-                          </RadioGroup>
-                        </Field>
-                        <FormGroup id="confirm-form-group" error={errors.confirm}>
-                          <InlineField name="confirm">
-                            <Checkbox id="confirm" name="confirm">
-                              {views.hoReviewView.confirmInstructionReceived}
-                            </Checkbox>
-                          </InlineField>
-                        </FormGroup>
-                        <FormGroup
-                          id="area-housing-manager-name-form-group"
-                          error={errors.housingAreaManagerName}
-                        >
-                          <InlineField name="housingAreaManagerName">
-                            <Input
-                              id="managerName"
-                              style={{ marginLeft: 53, marginTop: 22, maxWidth: 300 }}
-                              placeholder={views.hoReviewView.managersName}
-                            />
-                          </InlineField>
-                        </FormGroup>
-                      </div>
-                    )}
-                  </RadioGroup>
-                </Field>
+                  {values.choice === Choice.Review && !needAppointment && (
+                    <div style={{ marginLeft: 50 }}>
+                      <Text>{views.hoReviewView.receivedDecision}</Text>
+                      <Field
+                        id="hoRecommendation"
+                        name="hoRecommendation"
+                        label="The decision is"
+                        type="radio"
+                      >
+                        <RadioGroup>
+                          <Radio
+                            id="ho-review-approve"
+                            name="hoRecommendation"
+                            value={Recommendation.Approve}
+                          >
+                            {locale.views.tenureInvestigation.approve}
+                          </Radio>
+                          <Radio
+                            id="ho-review-decline"
+                            name="hoRecommendation"
+                            value={Recommendation.Decline}
+                          >
+                            {locale.views.tenureInvestigation.decline}
+                          </Radio>
+                        </RadioGroup>
+                      </Field>
+                      <FormGroup id="confirm-form-group" error={errors.confirm}>
+                        <InlineField name="confirm">
+                          <Checkbox id="confirm" name="confirm">
+                            {views.hoReviewView.confirmInstructionReceived}
+                          </Checkbox>
+                        </InlineField>
+                      </FormGroup>
+                      <FormGroup
+                        id="area-housing-manager-name-form-group"
+                        error={errors.housingAreaManagerName}
+                      >
+                        <InlineField name="housingAreaManagerName">
+                          <Input
+                            id="managerName"
+                            style={{ marginLeft: 53, marginTop: 22, maxWidth: 300 }}
+                            placeholder={views.hoReviewView.managersName}
+                          />
+                        </InlineField>
+                      </FormGroup>
+                    </div>
+                  )}
+                </RadioGroup>
+              </Field>
 
-                <Button
-                  type="submit"
-                  disabled={
-                    !Object.values(values).some((value) => {
-                      return value;
-                    })
-                  }
-                  style={{ width: 222 }}
-                >
-                  {locale.confirm}
-                </Button>
+              <Button
+                type="submit"
+                disabled={
+                  !Object.values(values).some((value) => {
+                    return value;
+                  })
+                }
+                style={{ width: 222 }}
+              >
+                {locale.confirm}
+              </Button>
 
-                <HoDecisionModal
-                  process={process}
-                  processConfig={processConfig}
-                  modalOpen={modalOpen}
-                  setModalOpen={setModalOpen}
-                />
-              </Form>
-            </>
+              <HoDecisionModal
+                process={process}
+                processConfig={processConfig}
+                modalOpen={modalOpen}
+                setModalOpen={setModalOpen}
+              />
+            </Form>
           )}
-        </Formik>
+        </>
       )}
-    </>
+    </Formik>
   );
 };
 
