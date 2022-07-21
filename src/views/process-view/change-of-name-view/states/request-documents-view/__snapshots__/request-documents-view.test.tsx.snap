@@ -183,3 +183,5 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
   </div>
 </div>
 `;
+
+exports[`changeofname/request-documents-view it renders RequestDocuments correctly on state=ProcessCancelled and previousState=NameSubmitted 1`] = `<div />`;

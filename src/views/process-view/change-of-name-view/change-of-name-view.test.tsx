@@ -104,6 +104,60 @@ describe("changeofname/change-of-name-view", () => {
     ).resolves.toBeInTheDocument();
   });
 
+  test("it renders close process view if close process reason provided", async () => {
+    server.use(getPersonV1());
+    render(
+      <ChangeOfNameView
+        process={{
+          ...mockProcessV1,
+          currentState: { ...mockProcessV1.currentState, state: "NameSubmitted" },
+        }}
+        mutate={() => {}}
+        optional={{
+          closeProcessReason: "Test",
+          submitted: false,
+          setSubmitted: () => {},
+          closeCase: false,
+          setCloseCase: () => {},
+        }}
+      />,
+      options,
+    );
+    await expect(
+      screen.findByText(locale.views.closeProcess.outcomeLetterSent),
+    ).resolves.toBeInTheDocument();
+  });
+
+  ["ProcessClosed", "ProcessCancelled"].forEach((state) => {
+    test(`it renders close process view if state=${state}`, async () => {
+      server.use(getPersonV1());
+      render(
+        <ChangeOfNameView
+          process={{
+            ...mockProcessV1,
+            currentState: { ...mockProcessV1.currentState, state },
+            previousStates: [{ ...mockProcessV1.currentState, state: "NameSubmitted" }],
+          }}
+          mutate={() => {}}
+          optional={{
+            closeProcessReason: "Test",
+            submitted: false,
+            setSubmitted: () => {},
+            closeCase: false,
+            setCloseCase: () => {},
+          }}
+        />,
+        options,
+      );
+      await expect(
+        screen.findByText(locale.views.closeProcess.thankYouForConfirmation),
+      ).resolves.toBeInTheDocument();
+      await expect(
+        screen.findByText(locale.views.closeProcess.confirmationText),
+      ).resolves.toBeInTheDocument();
+    });
+  });
+
   test("it renders ChangeOfName correctly for DocumentsRequestedDes state", async () => {
     server.use(
       getProcessV1({
@@ -193,6 +247,37 @@ describe("changeofname/change-of-name-view", () => {
     ).resolves.toBeInTheDocument();
   });
 
+  ["InterviewScheduled", "InterviewRescheduled"].forEach((state) => {
+    test(`it renders ChangeOfName correctly for ${state} state`, async () => {
+      server.use(
+        getProcessV1({
+          ...mockProcessV1,
+          processName: "changeofname",
+          currentState: {
+            ...mockProcessV1.currentState,
+            state,
+            processData: {
+              formData: {
+                appointmentDateTime: "2099-10-12T08:59:00.000Z",
+              },
+              documents: [],
+            },
+          },
+        }),
+      );
+      render(<ProcessLayout />, options);
+
+      await expect(
+        screen.findByText("Office appointment scheduled"),
+      ).resolves.toBeInTheDocument();
+
+      const stepper = await screen.findByTestId("mtfh-stepper-change-of-name");
+      const steps = within(stepper).getAllByRole("listitem");
+      expect(steps[1].className).not.toContain("active");
+      expect(steps[0].className).toContain("active");
+    });
+  });
+
   [
     "HOApprovalPassed",
     "TenureAppointmentScheduled",
@@ -224,6 +309,37 @@ describe("changeofname/change-of-name-view", () => {
       expect(steps[1].className).not.toContain("active");
       expect(steps[0].className).toContain("active");
     });
+  });
+
+  test("it renders ChangeOfName correctly for HOApprovalFailed state", async () => {
+    server.use(
+      getProcessV1({
+        ...mockProcessV1,
+        processName: "changeofname",
+        currentState: {
+          ...mockProcessV1.currentState,
+          state: "HOApprovalFailed",
+        },
+      }),
+    );
+    render(<ProcessLayout />, options);
+
+    await expect(
+      screen.findByText(locale.views.closeProcess.outcomeLetterSent),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(
+        locale.views.hoReviewView.hoOutcome(
+          locale.views.hoReviewModal["changeofname"],
+          "declined",
+        ),
+      ),
+    ).resolves.toBeInTheDocument();
+
+    const stepper = await screen.findByTestId("mtfh-stepper-change-of-name");
+    const steps = within(stepper).getAllByRole("listitem");
+    expect(steps[0].className).not.toContain("active");
+    expect(steps[1].className).toContain("active");
   });
 
   describe("ChangeOfNameSideBar", () => {

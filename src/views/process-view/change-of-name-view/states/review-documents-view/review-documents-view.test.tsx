@@ -2,6 +2,8 @@ import React from "react";
 
 import {
   getReferenceDataV1,
+  mockPersonV1,
+  mockProcessV1,
   patchProcessV1,
   render,
   server,
@@ -21,6 +23,11 @@ import { ReviewDocumentsView } from "./review-documents-view";
 
 import * as errorMessages from "@mtfh/common/lib/hooks/use-error-codes";
 
+const options = {
+  url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+  path: "/processes/:processName/:processId",
+};
+
 describe("review-documents-view", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -34,10 +41,7 @@ describe("review-documents-view", () => {
         mutate={() => {}}
         optional={{}}
       />,
-      {
-        url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/changeofname/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText(locale.views.reviewDocuments.viewInDes),
@@ -125,10 +129,7 @@ describe("review-documents-view", () => {
         mutate={() => {}}
         optional={{}}
       />,
-      {
-        url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/changeofname/:processId",
-      },
+      options,
     );
     await expect(
       screen.findByText(locale.views.reviewDocuments.viewInDes),
@@ -221,10 +222,7 @@ describe("review-documents-view", () => {
         mutate={() => {}}
         setGlobalError={() => {}}
       />,
-      {
-        url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/changeofname/:processId",
-      },
+      options,
     );
     await expect(screen.queryByText(locale.views.reviewDocuments.viewInDes)).toBeNull();
     await expect(
@@ -235,6 +233,65 @@ describe("review-documents-view", () => {
       screen.findByText(/Monday 12th October 2099/),
     ).resolves.toBeInTheDocument();
     await expect(screen.getByText(locale.next)).toBeDisabled();
+    expect(container).toMatchSnapshot();
+  });
+
+  test("it renders ReviewDocuments correctly on state=ProcessClosed and previousState=DocumentsRequestedDes", async () => {
+    jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
+    const { container } = render(
+      <ChangeOfNameView
+        process={{
+          ...mockProcessV1,
+          currentState: { ...mockProcessV1.currentState, state: "ProcessCancelled" },
+          previousStates: [
+            { ...mockProcessV1.currentState, state: "DocumentsRequestedDes" },
+          ],
+        }}
+        mutate={() => {}}
+        optional={{
+          person: mockPersonV1,
+          closeProcessReason: "Test",
+        }}
+      />,
+      options,
+    );
+    await expect(
+      screen.findByText(locale.views.reviewDocuments.viewInDes),
+    ).resolves.toBeInTheDocument();
+    expect(container).toMatchSnapshot();
+  });
+
+  test("it renders ReviewDocuments correctly on state=ProcessClosed and previousState=DocumentsRequestedAppointment", async () => {
+    jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
+    const { container } = render(
+      <ChangeOfNameView
+        process={{
+          ...mockProcessV1,
+          currentState: { ...mockProcessV1.currentState, state: "ProcessCancelled" },
+          previousStates: [
+            {
+              ...mockProcessV1.currentState,
+              state: "DocumentsRequestedAppointment",
+              processData: {
+                formData: {
+                  appointmentDateTime: "2099-10-12T08:59:00.000Z",
+                },
+                documents: [],
+              },
+            },
+          ],
+        }}
+        mutate={() => {}}
+        optional={{
+          person: mockPersonV1,
+          closeProcessReason: "Test",
+        }}
+      />,
+      options,
+    );
+    await expect(
+      screen.findByText(locale.components.appointment.scheduled),
+    ).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 });

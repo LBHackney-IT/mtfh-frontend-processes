@@ -5,7 +5,7 @@ import { CloseProcessView, EntitySummary } from "../../../components";
 import { CloseCaseButton } from "../../../components/close-case-button/close-case-button";
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
-import { isSameState } from "../../../utils/processUtil";
+import { getPreviousState } from "../../../utils/processUtil";
 import { HoReviewView } from "../shared/ho-review-view/ho-review-view";
 import { SubmitCaseView } from "../shared/submit-case-view";
 import { TenantNewNameView } from "./states";
@@ -19,16 +19,13 @@ import { cancelButtonStates, reviewDocumentsStates } from "./view-utils";
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
-  Box,
   Button,
   Center,
   ErrorSummary,
   Spinner,
   StatusErrorSummary,
-  StatusHeading,
   Step,
   Stepper,
-  Text,
 } from "@mtfh/common/lib/components";
 import { useFeatureToggle } from "@mtfh/common/lib/hooks";
 
@@ -42,15 +39,17 @@ const {
   nameSubmitted,
   documentChecksPassed,
   applicationSubmitted,
-  processClosed,
   tenureInvestigationPassed,
   tenureInvestigationFailed,
   tenureInvestigationPassedWithInt,
   interviewScheduled,
   interviewRescheduled,
   hoApprovalPassed,
+  hoApprovalFailed,
   tenureAppointmentScheduled,
   tenureAppointmentRescheduled,
+  processClosed,
+  processCancelled,
 } = states;
 
 const reviewDocumentsViewByStates = {};
@@ -75,35 +74,48 @@ const components = {
   [documentChecksPassed.state]: SubmitCaseView,
   ...tenureInvestigationViewByStates,
   [hoApprovalPassed.state]: NewTenancyView,
+  [hoApprovalFailed.state]: () => <></>,
   [tenureAppointmentScheduled.state]: NewTenancyView,
   [tenureAppointmentRescheduled.state]: NewTenancyView,
 };
 
 const { views } = locale;
-const { changeofname, reviewDocuments } = views;
+const { changeofname } = views;
 
-const getActiveStep = (currentState, submitted: boolean) => {
-  if (currentState === nameSubmitted.state) {
+const getActiveStep = (process: Process, submitted: boolean) => {
+  const { currentState } = process;
+
+  const processState = [processCancelled.state, processClosed.state].includes(
+    currentState.state,
+  )
+    ? getPreviousState(process)
+    : currentState;
+
+  if (processState.state === nameSubmitted.state) {
     return 1;
   }
-  if ([...reviewDocumentsStates, processClosed.state].includes(currentState)) {
+  if ([...reviewDocumentsStates, processClosed.state].includes(processState.state)) {
     return 2;
   }
-  if (currentState === documentChecksPassed.state) {
+  if (processState.state === documentChecksPassed.state) {
     return 3;
   }
-  if (currentState === applicationSubmitted.state && submitted) {
+  if (processState.state === applicationSubmitted.state && submitted) {
     return 4;
   }
   if (
     [
       ...tenureInvestigationStates,
+      applicationSubmitted.state,
       hoApprovalPassed.state,
       tenureAppointmentScheduled.state,
       tenureAppointmentRescheduled.state,
-    ].includes(currentState)
+    ].includes(processState.state)
   ) {
     return 5;
+  }
+  if ([hoApprovalFailed.state].includes(processState.state)) {
+    return 6;
   }
 
   return 0;
@@ -113,6 +125,7 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
   const hasReassignCase = useFeatureToggle("MMH.ReassignCase");
 
   const {
+    process,
     process: {
       id: processId,
       processName,
@@ -123,7 +136,7 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
     submitted = false,
   } = props;
 
-  let activeStep = getActiveStep(state, submitted);
+  let activeStep = getActiveStep(process, submitted);
   let startIndex = 0;
 
   let steps: JSX.Element[];
@@ -179,11 +192,15 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
 };
 
 const getComponent = (process) => {
-  const {
-    currentState: { state },
-  } = process;
+  const { currentState } = process;
 
-  return components[state];
+  const processState = [processCancelled.state, processClosed.state].includes(
+    currentState.state,
+  )
+    ? getPreviousState(process)
+    : currentState;
+
+  return components[processState.state];
 };
 
 export const ChangeOfNameView = ({
@@ -202,6 +219,7 @@ export const ChangeOfNameView = ({
     closeCase,
     setCloseCase,
     setCloseProcessDialogOpen,
+    isCancel,
   } = optional;
   const { error, data: person } = usePerson(process.targetId);
   const [globalError, setGlobalError] = useState<number>();
@@ -263,29 +281,17 @@ export const ChangeOfNameView = ({
         setGlobalError={setGlobalError}
       />
 
-      {closeProcessReason && (
-        <>
-          <Box variant="warning">
-            <StatusHeading
-              variant="warning"
-              title={
-                isSameState(process.currentState, processClosed)
-                  ? reviewDocuments.soleToJointClosed
-                  : reviewDocuments.soleToJointWillBeClosed
-              }
-            />
-            <Text style={{ marginLeft: 60 }}>
-              <strong>Reason of close case:</strong> <br />
-              {closeProcessReason}
-            </Text>
-          </Box>
-          <CloseProcessView
-            closeProcessReason={closeProcessReason}
-            process={process}
-            processConfig={processConfig}
-            mutate={mutate}
-          />
-        </>
+      {(closeProcessReason ||
+        [hoApprovalFailed.state, processClosed.state, processCancelled.state].includes(
+          process.currentState.state,
+        )) && (
+        <CloseProcessView
+          closeProcessReason={closeProcessReason}
+          process={process}
+          processConfig={processConfig}
+          mutate={mutate}
+          isCancel={isCancel}
+        />
       )}
 
       {!closeProcessReason &&

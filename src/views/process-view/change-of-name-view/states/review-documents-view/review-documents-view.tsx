@@ -5,6 +5,7 @@ import {
   reviewDocumentsSchema,
 } from "../../../../../schemas/change-of-name/review-documents";
 import { locale } from "../../../../../services";
+import { Trigger } from "../../../../../services/processes/types";
 import { IProcess } from "../../../../../types";
 import { ReviewDocumentsAppointmentForm } from "../../../shared/review-documents-appointment-form";
 import { changeOfNameDocuments } from "../../view-utils";
@@ -39,16 +40,6 @@ export const ReviewDocumentsView = ({
   optional,
   setGlobalError,
 }: ReviewDocumentsViewProps) => {
-  const { states } = processConfig;
-  const stateConfigs = {
-    [states.documentsRequestedDes.state]: processConfig.states.documentsRequestedDes,
-    [states.documentsRequestedAppointment.state]:
-      processConfig.states.documentsRequestedAppointment,
-    [states.documentsAppointmentRescheduled.state]:
-      processConfig.states.documentsAppointmentRescheduled,
-    [states.processClosed.state]: processConfig.states.processClosed,
-  };
-  const stateConfig = stateConfigs[process.currentState.state];
   const errorMessages = useErrorCodes();
 
   if (!errorMessages) {
@@ -61,15 +52,15 @@ export const ReviewDocumentsView = ({
 
   return (
     <div data-testid="changeofname-ReviewDocuments">
+      <ReviewDocumentsAppointmentForm
+        processConfig={processConfig}
+        process={process}
+        mutate={mutate}
+        setGlobalError={setGlobalError}
+      />
+
       {!optional?.closeProcessReason && (
         <>
-          <ReviewDocumentsAppointmentForm
-            processConfig={processConfig}
-            process={process}
-            mutate={mutate}
-            setGlobalError={setGlobalError}
-          />
-
           <div style={{ paddingBottom: 35 }} />
 
           <Formik<ReviewDocumentsFormData>
@@ -85,7 +76,7 @@ export const ReviewDocumentsView = ({
               try {
                 await editProcess({
                   id: process.id,
-                  processTrigger: stateConfig.triggers.reviewDocuments,
+                  processTrigger: Trigger.ReviewDocuments,
                   processName: process?.processName,
                   etag: process.etag || "",
                   formData: values,

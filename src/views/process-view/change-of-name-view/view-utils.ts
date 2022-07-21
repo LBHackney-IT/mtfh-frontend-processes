@@ -5,16 +5,16 @@ const { reviewDocuments } = locale.views;
 const { states } = processes.changeofname;
 
 const {
-  interviewScheduled,
-  interviewRescheduled,
-  hoApprovalFailed,
-  hoApprovalPassed,
   documentsRequestedDes,
   documentsRequestedAppointment,
   documentsAppointmentRescheduled,
   tenureInvestigationFailed,
   tenureInvestigationPassed,
   tenureInvestigationPassedWithInt,
+  interviewScheduled,
+  interviewRescheduled,
+  hoApprovalPassed,
+  nameSubmitted,
 } = states;
 
 export const changeOfNameDocuments = [
@@ -27,9 +27,9 @@ export const changeOfNameDocuments = [
 ];
 
 export const cancelButtonStates = [
+  nameSubmitted.state,
   interviewScheduled.state,
   interviewRescheduled.state,
-  hoApprovalFailed.state,
   hoApprovalPassed.state,
 ];
 

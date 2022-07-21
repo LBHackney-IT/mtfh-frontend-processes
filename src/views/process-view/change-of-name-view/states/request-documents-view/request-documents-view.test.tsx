@@ -47,4 +47,24 @@ describe("changeofname/request-documents-view", () => {
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     expect(container).toMatchSnapshot();
   });
+
+  test("it renders RequestDocuments correctly on state=ProcessCancelled and previousState=NameSubmitted", async () => {
+    const { container } = render(
+      <RequestDocumentsView
+        process={{
+          ...mockProcessV1,
+          currentState: { ...mockProcessV1.currentState, state: "ProcessCancelled" },
+          previousStates: [{ ...mockProcessV1.currentState, state: "NameSubmitted" }],
+        }}
+        mutate={() => {}}
+        optional={{
+          person: mockPersonV1,
+          closeProcessReason: "Test",
+        }}
+      />,
+      options,
+    );
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    expect(container).toMatchSnapshot();
+  });
 });

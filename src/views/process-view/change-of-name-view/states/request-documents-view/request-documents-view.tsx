@@ -22,7 +22,7 @@ export const RequestDocumentsView = ({
     );
   }
 
-  return (
+  return !optional.closeProcessReason ? (
     <div data-testid="changeofname-RequestDocuments">
       <Heading variant="h3">{locale.supportingDocuments}</Heading>
 
@@ -54,5 +54,7 @@ export const RequestDocumentsView = ({
 
       <CheckSupportingDocuments process={process} mutate={mutate} optional={optional} />
     </div>
+  ) : (
+    <></>
   );
 };

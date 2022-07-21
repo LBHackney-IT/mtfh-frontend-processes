@@ -124,6 +124,7 @@ export const NewTenancyView = ({
       )}
 
       {!documentsSigned &&
+        !closeProcessReason &&
         !closeCase &&
         [tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
           process.currentState.state,
