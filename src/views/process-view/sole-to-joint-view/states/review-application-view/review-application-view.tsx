@@ -4,10 +4,10 @@ import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 import { getPreviousState, isCurrentState } from "../../../../../utils/processUtil";
+import { HoReviewFailedView } from "../../../shared/ho-review-view/ho-review-failed-view";
+import { HoReviewView } from "../../../shared/ho-review-view/ho-review-view";
 import { DesBox } from "../../../shared/process-components";
 import { SubmitCaseView } from "../../../shared/submit-case-view";
-import { HoReviewFailedView } from "../ho-review-view/ho-review-failed-view";
-import { HoReviewView } from "../ho-review-view/ho-review-view";
 import { NewTenancyView } from "../new-tenancy-view/new-tenancy-view";
 import {
   EligibilityChecksPassedBox,

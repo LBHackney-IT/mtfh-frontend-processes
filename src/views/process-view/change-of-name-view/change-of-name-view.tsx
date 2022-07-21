@@ -10,6 +10,7 @@ import { SubmitCaseView } from "../shared/submit-case-view";
 import { TenantNewNameView } from "./states";
 import { RequestDocumentsView } from "./states/request-documents-view";
 import { ReviewDocumentsView } from "./states/review-documents-view";
+import { TenureInvestigationResultView } from "./states/tenure-investigation-result-view";
 import { TenureInvestigationView } from "./states/tenure-investigation-view";
 import { cancelButtonStates, reviewDocumentsStates } from "./view-utils";
 
@@ -39,6 +40,11 @@ const {
   documentChecksPassed,
   applicationSubmitted,
   processClosed,
+  tenureInvestigationPassed,
+  tenureInvestigationFailed,
+  tenureInvestigationPassedWithInt,
+  interviewScheduled,
+  interviewRescheduled,
 } = states;
 
 const reviewDocumentsViewByStates = {};
@@ -46,12 +52,22 @@ reviewDocumentsStates.forEach((state) => {
   reviewDocumentsViewByStates[state] = ReviewDocumentsView;
 });
 
+const tenureInvestigationViewByStates = {
+  [applicationSubmitted.state]: TenureInvestigationView,
+  [tenureInvestigationPassed.state]: TenureInvestigationResultView,
+  [tenureInvestigationFailed.state]: TenureInvestigationResultView,
+  [tenureInvestigationPassedWithInt.state]: TenureInvestigationResultView,
+  [interviewScheduled.state]: TenureInvestigationResultView,
+  [interviewRescheduled.state]: TenureInvestigationResultView,
+};
+const tenureInvestigationStates = Object.keys(tenureInvestigationViewByStates);
+
 const components = {
   [enterNewName.state]: TenantNewNameView,
   [nameSubmitted.state]: RequestDocumentsView,
   ...reviewDocumentsViewByStates,
   [documentChecksPassed.state]: SubmitCaseView,
-  [applicationSubmitted.state]: TenureInvestigationView,
+  ...tenureInvestigationViewByStates,
 };
 
 const { views } = locale;
@@ -70,7 +86,7 @@ const getActiveStep = (currentState, submitted: boolean) => {
   if (currentState === applicationSubmitted.state && submitted) {
     return 4;
   }
-  if (currentState === applicationSubmitted.state) {
+  if (tenureInvestigationStates.includes(currentState)) {
     return 5;
   }
 
