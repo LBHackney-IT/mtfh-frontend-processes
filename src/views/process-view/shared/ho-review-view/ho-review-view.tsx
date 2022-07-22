@@ -355,9 +355,9 @@ const HoDecisionModal = ({
     <Dialog
       isOpen={modalOpen}
       onDismiss={() => setModalOpen(false)}
-      title={`${hoRecommendation} ${
-        locale.views.hoReviewModal[process.processName]
-      } application?`}
+      title={`${hoRecommendation} ${locale.views.hoReviewModal[
+        process.processName.toLowerCase()
+      ].toLowerCase()} application?`}
     >
       {tiRecommendation !== hoRecommendation && (
         <TenureInvestigationRecommendationBox

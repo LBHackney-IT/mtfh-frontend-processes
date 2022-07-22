@@ -28,6 +28,7 @@ describe("ho-review-failed-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "HOApprovalFailed",
@@ -49,9 +50,12 @@ describe("ho-review-failed-view", () => {
     );
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(
-      screen.findByText(locale.views.hoReviewView.hoOutcome("declined"), {
-        exact: false,
-      }),
+      screen.findByText(
+        locale.views.hoReviewView.hoOutcome(
+          locale.views.hoReviewModal["soletojoint"],
+          "declined",
+        ),
+      ),
     ).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });

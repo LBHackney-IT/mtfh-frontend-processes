@@ -152,7 +152,8 @@ const locale = {
       approve: "Approve",
       decline: "Decline",
       documentsSigned: "Documents signed",
-      hoApprovedNextSteps: "Sole to Joint application approved, next steps:",
+      hoApprovedNextSteps: (processName) =>
+        `${processName} application approved, next steps:`,
       mustMakeAppointment:
         "You must make an office appointment with the applicant to sign a new tenancy agreement",
       recommendation: "Recommendation:",
@@ -179,11 +180,11 @@ const locale = {
       confirmInstructionReceived:
         "I confirm that this is an instruction received by the Area Housing Manager",
       managersName: "Enter manager's name",
-      hoOutcome: (decision) => `Sole to joint tenure application ${decision}`,
+      hoOutcome: (processName, decision) => `${processName} application ${decision}`,
     },
     hoReviewModal: {
-      [Process.SoleToJoint]: "sole to joint tenure",
-      [Process.ChangeOfName]: "change of name",
+      [Process.SoleToJoint]: "Sole to joint tenure",
+      [Process.ChangeOfName]: "Change of name",
     },
     closeProcess: {
       reasonForCancellation: "Reason for Cancellation",

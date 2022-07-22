@@ -52,7 +52,10 @@ describe("tenure-investigation-view", () => {
     const { container } = render(
       <ReviewApplicationView
         processConfig={processes.soletojoint}
-        process={mockTenureAppointmentSchedule("2099-10-12T08:59:00.000Z")}
+        process={{
+          ...mockTenureAppointmentSchedule("2099-10-12T08:59:00.000Z"),
+          processName: "soletojoint",
+        }}
         mutate={() => {}}
         optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
       />,
@@ -102,6 +105,7 @@ describe("tenure-investigation-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "TenureAppointmentRescheduled",

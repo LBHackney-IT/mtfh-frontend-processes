@@ -47,7 +47,8 @@ export const CloseProcessView = ({
   isCancel = false,
 }: CloseProcessViewProps): JSX.Element => {
   const { state } = process.currentState;
-  const { processCancelled, processClosed, tenureUpdated } = processConfig.states;
+  const { processCancelled, processClosed, tenureUpdated, nameUpdated } =
+    processConfig.states;
 
   return (
     <>
@@ -66,9 +67,12 @@ export const CloseProcessView = ({
         </StatusBox>
       )}
 
-      {[processClosed.state, processCancelled.state, tenureUpdated.state].includes(
-        state,
-      ) ? (
+      {[
+        processClosed?.state,
+        processCancelled?.state,
+        tenureUpdated?.state,
+        nameUpdated?.state,
+      ].includes(state) ? (
         <>
           <Heading variant="h3">
             {locale.views.closeProcess.thankYouForConfirmation}

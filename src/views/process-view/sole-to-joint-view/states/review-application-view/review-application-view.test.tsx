@@ -143,6 +143,7 @@ describe("tenure-investigation-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "TenureUpdated",

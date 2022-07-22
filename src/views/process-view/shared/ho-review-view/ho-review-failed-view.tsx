@@ -24,7 +24,13 @@ export const HoReviewFailedView = ({
 
   return (
     <>
-      <StatusBox variant="warning" title={views.hoReviewView.hoOutcome("declined")}>
+      <StatusBox
+        variant="warning"
+        title={views.hoReviewView.hoOutcome(
+          views.hoReviewModal[process.processName.toLowerCase()],
+          "declined",
+        )}
+      >
         {hoApprovalFailedState?.processData.formData.reason && (
           <Text>{hoApprovalFailedState.processData.formData.reason}</Text>
         )}

@@ -9,6 +9,7 @@ import { isSameState } from "../../../utils/processUtil";
 import { HoReviewView } from "../shared/ho-review-view/ho-review-view";
 import { SubmitCaseView } from "../shared/submit-case-view";
 import { TenantNewNameView } from "./states";
+import { NewTenancyView } from "./states/new-tenancy-view/new-tenancy-view";
 import { RequestDocumentsView } from "./states/request-documents-view";
 import { ReviewDocumentsView } from "./states/review-documents-view";
 import { TenureInvestigationView } from "./states/tenure-investigation-view";
@@ -47,6 +48,9 @@ const {
   tenureInvestigationPassedWithInt,
   interviewScheduled,
   interviewRescheduled,
+  hoApprovalPassed,
+  tenureAppointmentScheduled,
+  tenureAppointmentRescheduled,
 } = states;
 
 const reviewDocumentsViewByStates = {};
@@ -70,6 +74,9 @@ const components = {
   ...reviewDocumentsViewByStates,
   [documentChecksPassed.state]: SubmitCaseView,
   ...tenureInvestigationViewByStates,
+  [hoApprovalPassed.state]: NewTenancyView,
+  [tenureAppointmentScheduled.state]: NewTenancyView,
+  [tenureAppointmentRescheduled.state]: NewTenancyView,
 };
 
 const { views } = locale;
@@ -88,7 +95,14 @@ const getActiveStep = (currentState, submitted: boolean) => {
   if (currentState === applicationSubmitted.state && submitted) {
     return 4;
   }
-  if (tenureInvestigationStates.includes(currentState)) {
+  if (
+    [
+      ...tenureInvestigationStates,
+      hoApprovalPassed.state,
+      tenureAppointmentScheduled.state,
+      tenureAppointmentRescheduled.state,
+    ].includes(currentState)
+  ) {
     return 5;
   }
 
@@ -110,9 +124,12 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
   } = props;
 
   let activeStep = getActiveStep(state, submitted);
+  let startIndex = 0;
+
   let steps: JSX.Element[];
   if (activeStep > 4 || (!submitted && activeStep === 4)) {
     activeStep -= 5;
+    startIndex = 10;
     steps = [
       <Step key="step-review-application">{changeofname.steps.reviewApplication}</Step>,
       <Step key="step-end-case">{changeofname.steps.endCase}</Step>,
@@ -127,7 +144,6 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
     ];
   }
 
-  const startIndex = 0;
   return (
     <>
       <Stepper
