@@ -193,6 +193,39 @@ describe("changeofname/change-of-name-view", () => {
     ).resolves.toBeInTheDocument();
   });
 
+  [
+    "HOApprovalPassed",
+    "TenureAppointmentScheduled",
+    "TenureAppointmentRescheduled",
+  ].forEach((state) => {
+    test(`it renders ChangeOfName correctly for ${state} state`, async () => {
+      server.use(
+        getProcessV1({
+          ...mockProcessV1,
+          currentState: {
+            ...mockProcessV1.currentState,
+            state,
+            processData: {
+              formData: {
+                appointmentDateTime: "2099-10-12T08:59:00.000Z",
+              },
+              documents: [],
+            },
+          },
+        }),
+      );
+      render(<ProcessLayout />, options);
+      await expect(
+        screen.findByTestId("changeofname-new-tenancy-view"),
+      ).resolves.toBeInTheDocument();
+
+      const stepper = await screen.findByTestId("mtfh-stepper-change-of-name");
+      const steps = within(stepper).getAllByRole("listitem");
+      expect(steps[1].className).not.toContain("active");
+      expect(steps[0].className).toContain("active");
+    });
+  });
+
   describe("ChangeOfNameSideBar", () => {
     test("it renders ChangeOfNameSideBar correctly", async () => {
       $configuration.next({

@@ -53,7 +53,7 @@ export const NewTenancyView = ({
   };
 
   return (
-    <>
+    <div data-testid="changeofname-new-tenancy-view">
       {!closeProcessReason && (
         <>
           {!documentsSigned && (
@@ -147,6 +147,6 @@ export const NewTenancyView = ({
           trigger={Trigger.UpdateName}
         />
       )}
-    </>
+    </div>
   );
 };
