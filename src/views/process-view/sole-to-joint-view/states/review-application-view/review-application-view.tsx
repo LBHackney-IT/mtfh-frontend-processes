@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { CloseProcessView } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { IProcess } from "../../../../../types";
 import { getPreviousState, isCurrentState } from "../../../../../utils/processUtil";
@@ -18,12 +17,10 @@ import { TenureInvestigationView } from "../tenure-investigation-view";
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
-  Box,
   Center,
   ErrorSummary,
   Spinner,
   StatusErrorSummary,
-  StatusHeading,
 } from "@mtfh/common/lib/components";
 
 const { views } = locale;
@@ -43,7 +40,7 @@ export const ReviewApplicationView = ({
 }: ReviewApplicationViewProps): JSX.Element => {
   const [globalError, setGlobalError] = useState<number>();
   const [documentsSigned, setDocumentsSigned] = useState<boolean>(false);
-  const { submitted, closeCase } = optional;
+  const { submitted } = optional;
   const { currentState } = process;
   const { data: tenure, error } = useTenure(process.targetId);
   const {
@@ -144,9 +141,10 @@ export const ReviewApplicationView = ({
       )}
 
       {(isCurrentState(hoApprovalFailed.state, process) ||
-        isCurrentState(processClosed.state, process)) && (
-        <HoReviewFailedView processConfig={processConfig} process={process} />
-      )}
+        (isCurrentState(processClosed.state, process) &&
+          process.previousStates.find(
+            (previous) => previous.state === hoApprovalFailed.state,
+          ))) && <HoReviewFailedView processConfig={processConfig} process={process} />}
 
       {[
         hoApprovalPassed.state,
@@ -166,23 +164,6 @@ export const ReviewApplicationView = ({
             tenant,
           }}
         />
-      )}
-
-      {closeCase && (
-        <>
-          <Box variant="warning">
-            <StatusHeading
-              variant="warning"
-              title={views.closeProcess.soleToJointClosed}
-            />
-          </Box>
-          <CloseProcessView
-            process={process}
-            processConfig={processConfig}
-            mutate={mutate}
-            setGlobalError={setGlobalError}
-          />
-        </>
       )}
     </div>
   );
