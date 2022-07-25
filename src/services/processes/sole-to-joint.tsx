@@ -62,30 +62,37 @@ export const soletojoint: IProcess = {
   states: {
     selectTenants: {
       state: "SelectTenants",
+      status: "Awaiting proposed tenant selection",
       triggers: { checkAutomatedEligibility: Trigger.CheckAutomatedEligibility },
     },
     automatedChecksFailed: {
       state: "AutomatedChecksFailed",
+      status: "Process closed - notify resident",
       triggers: { closeProcess: Trigger.CloseProcess },
     },
     automatedChecksPassed: {
       state: "AutomatedChecksPassed",
+      status: "Awaiting further eligibility checks",
       triggers: { checkManualEligibility: Trigger.CheckManualEligibility },
     },
     manualChecksFailed: {
       state: "ManualChecksFailed",
+      status: "Process closed - notify resident",
       triggers: { checkManualEligibility: Trigger.CheckManualEligibility },
     },
     manualChecksPassed: {
       state: "ManualChecksPassed",
+      status: "Awaiting Housing Officer eligibility checks",
       triggers: { checkTenancyBreach: Trigger.CheckTenancyBreach },
     },
     breachChecksFailed: {
       state: "BreachChecksFailed",
+      status: "Process closed - notify resident",
       triggers: { cancelProcess: Trigger.CancelProcess },
     },
     breachChecksPassed: {
       state: "BreachChecksPassed",
+      status: "Request supporting documents",
       triggers: {
         requestDocumentsDes: Trigger.RequestDocumentsDes,
         requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
@@ -93,6 +100,7 @@ export const soletojoint: IProcess = {
     },
     documentsRequestedDes: {
       state: "DocumentsRequestedDes",
+      status: "Awaiting supporting documents through DES",
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
@@ -101,6 +109,7 @@ export const soletojoint: IProcess = {
     },
     documentsRequestedAppointment: {
       state: "DocumentsRequestedAppointment",
+      status: "Awaiting supporting documents appointment",
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
@@ -109,6 +118,7 @@ export const soletojoint: IProcess = {
     },
     documentsAppointmentRescheduled: {
       state: "DocumentsAppointmentRescheduled",
+      status: "Awaiting supporting documents appointment",
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
@@ -117,18 +127,21 @@ export const soletojoint: IProcess = {
     },
     documentChecksPassed: {
       state: "DocumentChecksPassed",
+      status: "Submit for Tenure investigation",
       triggers: {
         submitApplication: Trigger.SubmitApplication,
       },
     },
     applicationSubmitted: {
       state: "ApplicationSubmitted",
+      status: "Awaiting Tenure investigation",
       triggers: {
         tenureInvestigation: Trigger.TenureInvestigation,
       },
     },
     tenureInvestigationFailed: {
       state: "TenureInvestigationFailed",
+      status: "Awaiting Housing Officer review",
       triggers: {
         hoApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
@@ -136,6 +149,7 @@ export const soletojoint: IProcess = {
     },
     tenureInvestigationPassed: {
       state: "TenureInvestigationPassed",
+      status: "Awaiting Housing Officer review",
       triggers: {
         hoApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
@@ -143,6 +157,7 @@ export const soletojoint: IProcess = {
     },
     tenureInvestigationPassedWithInt: {
       state: "TenureInvestigationPassedWithInt",
+      status: "Awaiting Housing Officer review",
       triggers: {
         hoApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
@@ -150,6 +165,7 @@ export const soletojoint: IProcess = {
     },
     interviewScheduled: {
       state: "InterviewScheduled",
+      status: "Awaiting Tenure Investigation Interview",
       triggers: {
         hoApproval: Trigger.HOApproval,
         rescheduleInterview: Trigger.RescheduleInterview,
@@ -158,6 +174,7 @@ export const soletojoint: IProcess = {
     },
     interviewRescheduled: {
       state: "InterviewRescheduled",
+      status: "Awaiting Tenure Investigation Interview",
       triggers: {
         hoApproval: Trigger.HOApproval,
         cancelProcess: Trigger.CancelProcess,
@@ -165,12 +182,14 @@ export const soletojoint: IProcess = {
     },
     hoApprovalFailed: {
       state: "HOApprovalFailed",
+      status: "Process Closed",
       triggers: {
         cancelProcess: Trigger.CancelProcess,
       },
     },
     hoApprovalPassed: {
       state: "HOApprovalPassed",
+      status: "Schedule new tenancy signing appointment",
       triggers: {
         scheduleTenureAppointment: Trigger.ScheduleTenureAppointment,
         cancelProcess: Trigger.CancelProcess,
@@ -178,6 +197,7 @@ export const soletojoint: IProcess = {
     },
     tenureAppointmentScheduled: {
       state: "TenureAppointmentScheduled",
+      status: "Awaiting new tenancy signing appointment",
       triggers: {
         rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
         updateTenure: Trigger.UpdateTenure,
@@ -186,6 +206,7 @@ export const soletojoint: IProcess = {
     },
     tenureAppointmentRescheduled: {
       state: "TenureAppointmentRescheduled",
+      status: "Awaiting new tenancy signing appointment",
       triggers: {
         rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
         updateTenure: Trigger.UpdateTenure,
@@ -194,14 +215,17 @@ export const soletojoint: IProcess = {
     },
     tenureUpdated: {
       state: "TenureUpdated",
+      status: "Process completed - notify resident",
       triggers: {},
     },
     processClosed: {
       state: "ProcessClosed",
+      status: "Process Closed",
       triggers: {},
     },
     processCancelled: {
       state: "ProcessCancelled",
+      status: "Process Cancelled",
       triggers: {},
     },
   },

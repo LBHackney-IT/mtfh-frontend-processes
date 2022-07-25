@@ -39,6 +39,7 @@ export interface IProcess {
   states: {
     [state: string]: {
       state: string;
+      status: string;
       triggers: Record<string, string>;
     };
   };
