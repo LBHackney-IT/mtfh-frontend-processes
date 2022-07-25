@@ -12,14 +12,22 @@ import {
 } from "../../test-utils";
 import { AppointmentDetails } from "./appointment-details";
 
+const { states } = processes.soletojoint;
+
+const options = {
+  requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
+  rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
+  appointmentRequestedState: states.documentsRequestedAppointment.state,
+  appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
+};
+
 const setNeedAppointment = jest.fn();
 describe("appointment-details-component", () => {
   beforeEach(() => {
     jest.resetModules();
   });
 
-  test("it renders scheduled appointment details correctly", () => {
-    const { states } = processes.soletojoint;
+  test("it renders scheduled appointment details correctly", async () => {
     const process = mockDocumentsRequestedAppointment({
       appointmentDateTime: "2099-10-12T08:59:00.000Z",
     });
@@ -29,20 +37,14 @@ describe("appointment-details-component", () => {
         previousStates={process.previousStates}
         needAppointment
         setNeedAppointment={setNeedAppointment}
-        options={{
-          requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
-          rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
-          appointmentRequestedState: states.documentsRequestedAppointment.state,
-          appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
-        }}
+        options={options}
       />,
     );
-    expect(screen.findByLabelText(locale.change)).resolves.toBeInTheDocument();
+    await expect(screen.findByText(locale.change)).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
-  test("it renders scheduled but missed appointment details correctly", () => {
-    const { states } = processes.soletojoint;
+  test("it renders scheduled but missed appointment details correctly", async () => {
     const process = mockDocumentsRequestedAppointment({
       appointmentDateTime: "2010-10-12T08:59:00.000Z",
     });
@@ -52,19 +54,13 @@ describe("appointment-details-component", () => {
         previousStates={process.previousStates}
         needAppointment
         setNeedAppointment={setNeedAppointment}
-        options={{
-          requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
-          rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
-          appointmentRequestedState: states.documentsRequestedAppointment.state,
-          appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
-        }}
+        options={options}
       />,
     );
-    expect(screen.findByLabelText(locale.reschedule)).resolves.toBeInTheDocument();
+    await expect(screen.findByText(locale.reschedule)).resolves.toBeInTheDocument();
   });
 
-  test("it renders rescheduled appointment details correctly", () => {
-    const { states } = processes.soletojoint;
+  test("it renders rescheduled appointment details correctly", async () => {
     const process = {
       ...mockDocumentsAppointmentRescheduled({
         appointmentDateTime: "2099-10-12T08:59:00.000Z",
@@ -92,21 +88,15 @@ describe("appointment-details-component", () => {
         previousStates={process.previousStates}
         needAppointment
         setNeedAppointment={setNeedAppointment}
-        options={{
-          requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
-          rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
-          appointmentRequestedState: states.documentsRequestedAppointment.state,
-          appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
-        }}
+        options={options}
       />,
     );
-    expect(screen.findByLabelText(locale.change)).resolves.toBeInTheDocument();
+    await expect(screen.findByText(locale.change)).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
   test("it renders rescheduled appointment details with cancel process correctly", async () => {
     const setCloseCase = jest.fn();
-    const { states } = processes.soletojoint;
     const process = {
       ...mockDocumentsAppointmentRescheduled({
         appointmentDateTime: "2010-10-17T08:59:00.000Z",
@@ -137,10 +127,7 @@ describe("appointment-details-component", () => {
         closeCase={false}
         setCloseCase={setCloseCase}
         options={{
-          requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
-          rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
-          appointmentRequestedState: states.documentsRequestedAppointment.state,
-          appointmentRescheduledState: states.documentsAppointmentRescheduled.state,
+          ...options,
           closeCaseButton: true,
         }}
       />,
