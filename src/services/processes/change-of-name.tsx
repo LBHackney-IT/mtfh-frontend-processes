@@ -37,10 +37,12 @@ export const changeofname: IProcess = {
   states: {
     enterNewName: {
       state: "EnterNewName",
+      status: "Awaiting tenant's new name",
       triggers: { enterNewName: "EnterNewName" },
     },
     nameSubmitted: {
       state: "NameSubmitted",
+      status: "Awaiting supporting documents through DES",
       triggers: {
         requestDocumentsDES: Trigger.RequestDocumentsDES,
         requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
@@ -49,6 +51,7 @@ export const changeofname: IProcess = {
     },
     documentsRequestedDes: {
       state: "DocumentsRequestedDes",
+      status: "Awaiting supporting documents through DES",
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
@@ -57,6 +60,7 @@ export const changeofname: IProcess = {
     },
     documentsRequestedAppointment: {
       state: "DocumentsRequestedAppointment",
+      status: "Awaiting supporting documents appointment",
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
@@ -65,6 +69,7 @@ export const changeofname: IProcess = {
     },
     documentsAppointmentRescheduled: {
       state: "DocumentsAppointmentRescheduled",
+      status: "Awaiting supporting documents appointment",
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
@@ -73,6 +78,7 @@ export const changeofname: IProcess = {
     },
     documentChecksPassed: {
       state: "DocumentChecksPassed",
+      status: "Submit for Tenure investigation",
       triggers: {
         submitApplication: Trigger.SubmitApplication,
         hOApproval: Trigger.HOApproval,
@@ -80,10 +86,12 @@ export const changeofname: IProcess = {
     },
     applicationSubmitted: {
       state: "ApplicationSubmitted",
+      status: "Awaiting Tenure investigation",
       triggers: { tenureInvestigation: Trigger.TenureInvestigation },
     },
     tenureInvestigationFailed: {
       state: "TenureInvestigationFailed",
+      status: "Awaiting Housing Officer review",
       triggers: {
         hOApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
@@ -91,6 +99,7 @@ export const changeofname: IProcess = {
     },
     tenureInvestigationPassed: {
       state: "TenureInvestigationPassed",
+      status: "Awaiting Housing Officer review",
       triggers: {
         hOApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
@@ -98,6 +107,7 @@ export const changeofname: IProcess = {
     },
     tenureInvestigationPassedWithInt: {
       state: "TenureInvestigationPassedWithInt",
+      status: "Awaiting Housing Officer review",
       triggers: {
         hOApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
@@ -105,6 +115,7 @@ export const changeofname: IProcess = {
     },
     interviewScheduled: {
       state: "InterviewScheduled",
+      status: "Awaiting Tenure Investigation Interview",
       triggers: {
         hOApproval: Trigger.HOApproval,
         rescheduleInterview: Trigger.RescheduleInterview,
@@ -113,14 +124,17 @@ export const changeofname: IProcess = {
     },
     interviewRescheduled: {
       state: "InterviewRescheduled",
+      status: "Awaiting Tenure Investigation Interview",
       triggers: { hOApproval: Trigger.HOApproval, cancelProcess: Trigger.CancelProcess },
     },
     hoApprovalFailed: {
       state: "HOApprovalFailed",
+      status: "Process Closed",
       triggers: { cancelProcess: Trigger.CancelProcess },
     },
     hoApprovalPassed: {
       state: "HOApprovalPassed",
+      status: "Schedule new tenancy signing appointment",
       triggers: {
         scheduleTenureAppointment: Trigger.ScheduleTenureAppointment,
         updateName: Trigger.UpdateName,
@@ -129,14 +143,17 @@ export const changeofname: IProcess = {
     },
     nameUpdated: {
       state: "NameUpdated",
+      status: "Process completed",
       triggers: {},
     },
     processClosed: {
       state: "ProcessClosed",
+      status: "Process Closed",
       triggers: {},
     },
     processCancelled: {
       state: "ProcessCancelled",
+      status: "Process Cancelled",
       triggers: {},
     },
   },
