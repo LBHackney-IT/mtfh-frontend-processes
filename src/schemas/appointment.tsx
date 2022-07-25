@@ -22,7 +22,7 @@ export const dateTimeIsValid = (
     }
     return true;
   }
-  return false;
+  return errorMessages.W9;
 };
 
 export const appointmentSchema = (errorMessages: Record<string, string>) =>
