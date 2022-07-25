@@ -10,6 +10,7 @@ import {
 import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 
 import { locale, processes } from "../../../../../services";
+import { SoleToJointView } from "../../sole-to-joint-view";
 import { ReviewApplicationView } from "./review-application-view";
 
 let submitted = false;
@@ -98,7 +99,7 @@ describe("tenure-investigation-view", () => {
     closeCase = true;
     server.use(getContactDetailsV2(mockContactDetailsV2));
     render(
-      <ReviewApplicationView
+      <SoleToJointView
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
@@ -131,7 +132,7 @@ describe("tenure-investigation-view", () => {
       options,
     );
     await expect(
-      screen.findByText(locale.views.closeProcess.soleToJointClosed),
+      screen.findByText(locale.views.reviewDocuments.soleToJointWillBeClosed),
     ).resolves.toBeInTheDocument();
   });
 

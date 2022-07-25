@@ -337,7 +337,8 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
         }}
       />
 
-      {(closeProcessReason ||
+      {(closeCase ||
+        closeProcessReason ||
         [
           processClosed.state,
           processCancelled.state,

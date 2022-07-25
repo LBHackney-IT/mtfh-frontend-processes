@@ -110,7 +110,9 @@ export const NewTenancyView = ({
           </div>
         </Box>
       ) : (
-        !closeProcessReason && (
+        !closeProcessReason &&
+        !closeCase &&
+        ![processClosed.state, processCancelled.state].includes(currentState.state) && (
           <>
             {!documentsSigned && (
               <Heading variant="h2">
@@ -152,8 +154,11 @@ export const NewTenancyView = ({
         )}
 
       {!documentsSigned &&
+        !closeCase &&
         !closeProcessReason &&
-        currentState.state !== tenureUpdated.state &&
+        ![processClosed.state, processCancelled.state, tenureUpdated.state].includes(
+          currentState.state,
+        ) &&
         tenant && <ContactDetails fullName={tenant.fullName} personId={tenant.id} />}
 
       {!closeProcessReason && (
