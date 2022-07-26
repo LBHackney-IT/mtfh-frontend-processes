@@ -143,6 +143,7 @@ export const changeofname: IProcess = {
     },
     tenureAppointmentScheduled: {
       state: "TenureAppointmentScheduled",
+      status: "Awaiting new tenancy signing appointment",
       triggers: {
         rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
         updateTenure: Trigger.UpdateName,
@@ -151,6 +152,7 @@ export const changeofname: IProcess = {
     },
     tenureAppointmentRescheduled: {
       state: "TenureAppointmentRescheduled",
+      status: "Awaiting new tenancy signing appointment",
       triggers: {
         rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
         updateTenure: Trigger.UpdateName,
