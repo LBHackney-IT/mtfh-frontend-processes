@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { CloseProcessView, EntitySummary } from "../../../components";
@@ -6,12 +6,14 @@ import { CloseCaseButton } from "../../../components/close-case-button/close-cas
 import { locale, processes } from "../../../services";
 import { ProcessSideBarProps } from "../../../types";
 import { isSameState } from "../../../utils/processUtil";
+import { HoReviewView } from "../shared/ho-review-view/ho-review-view";
 import { SubmitCaseView } from "../shared/submit-case-view";
 import { TenantNewNameView } from "./states";
+import { NewTenancyView } from "./states/new-tenancy-view/new-tenancy-view";
 import { RequestDocumentsView } from "./states/request-documents-view";
 import { ReviewDocumentsView } from "./states/review-documents-view";
-import { TenureInvestigationResultView } from "./states/tenure-investigation-result-view";
 import { TenureInvestigationView } from "./states/tenure-investigation-view";
+import { StatusBoxes } from "./status-boxes";
 import { cancelButtonStates, reviewDocumentsStates } from "./view-utils";
 
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
@@ -22,6 +24,7 @@ import {
   Center,
   ErrorSummary,
   Spinner,
+  StatusErrorSummary,
   StatusHeading,
   Step,
   Stepper,
@@ -45,6 +48,9 @@ const {
   tenureInvestigationPassedWithInt,
   interviewScheduled,
   interviewRescheduled,
+  hoApprovalPassed,
+  tenureAppointmentScheduled,
+  tenureAppointmentRescheduled,
 } = states;
 
 const reviewDocumentsViewByStates = {};
@@ -54,11 +60,11 @@ reviewDocumentsStates.forEach((state) => {
 
 const tenureInvestigationViewByStates = {
   [applicationSubmitted.state]: TenureInvestigationView,
-  [tenureInvestigationPassed.state]: TenureInvestigationResultView,
-  [tenureInvestigationFailed.state]: TenureInvestigationResultView,
-  [tenureInvestigationPassedWithInt.state]: TenureInvestigationResultView,
-  [interviewScheduled.state]: TenureInvestigationResultView,
-  [interviewRescheduled.state]: TenureInvestigationResultView,
+  [tenureInvestigationPassed.state]: HoReviewView,
+  [tenureInvestigationFailed.state]: HoReviewView,
+  [tenureInvestigationPassedWithInt.state]: HoReviewView,
+  [interviewScheduled.state]: HoReviewView,
+  [interviewRescheduled.state]: HoReviewView,
 };
 const tenureInvestigationStates = Object.keys(tenureInvestigationViewByStates);
 
@@ -68,6 +74,9 @@ const components = {
   ...reviewDocumentsViewByStates,
   [documentChecksPassed.state]: SubmitCaseView,
   ...tenureInvestigationViewByStates,
+  [hoApprovalPassed.state]: NewTenancyView,
+  [tenureAppointmentScheduled.state]: NewTenancyView,
+  [tenureAppointmentRescheduled.state]: NewTenancyView,
 };
 
 const { views } = locale;
@@ -86,7 +95,14 @@ const getActiveStep = (currentState, submitted: boolean) => {
   if (currentState === applicationSubmitted.state && submitted) {
     return 4;
   }
-  if (tenureInvestigationStates.includes(currentState)) {
+  if (
+    [
+      ...tenureInvestigationStates,
+      hoApprovalPassed.state,
+      tenureAppointmentScheduled.state,
+      tenureAppointmentRescheduled.state,
+    ].includes(currentState)
+  ) {
     return 5;
   }
 
@@ -108,9 +124,12 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
   } = props;
 
   let activeStep = getActiveStep(state, submitted);
+  let startIndex = 0;
+
   let steps: JSX.Element[];
   if (activeStep > 4 || (!submitted && activeStep === 4)) {
     activeStep -= 5;
+    startIndex = 10;
     steps = [
       <Step key="step-review-application">{changeofname.steps.reviewApplication}</Step>,
       <Step key="step-end-case">{changeofname.steps.endCase}</Step>,
@@ -125,7 +144,6 @@ export const ChangeOfNameSideBar = (props: ProcessSideBarProps) => {
     ];
   }
 
-  const startIndex = 0;
   return (
     <>
       <Stepper
@@ -186,6 +204,7 @@ export const ChangeOfNameView = ({
     setCloseProcessDialogOpen,
   } = optional;
   const { error, data: person } = usePerson(process.targetId);
+  const [globalError, setGlobalError] = useState<number>();
 
   if (error) {
     return (
@@ -221,19 +240,29 @@ export const ChangeOfNameView = ({
   return (
     <>
       <EntitySummary id={process.targetId} type={processConfig.targetType} />
+
+      {globalError && (
+        <StatusErrorSummary id="tenure-investigation-global-error" code={globalError} />
+      )}
+
+      <StatusBoxes process={process} processConfig={processConfig} />
+
       <Component
         processConfig={processConfig}
         process={process}
         mutate={mutate}
         optional={{
           person,
+          tenant: person,
           submitted,
           setSubmitted,
           closeCase,
           setCloseCase,
           closeProcessReason,
         }}
+        setGlobalError={setGlobalError}
       />
+
       {closeProcessReason && (
         <>
           <Box variant="warning">

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 
 import { isPast } from "date-fns";
 
@@ -11,27 +10,15 @@ import {
 } from "../../../../../components";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
-import { IProcess } from "../../../../../types";
+import { IProcess, ProcessComponentProps } from "../../../../../types";
 import { getPreviousState } from "../../../../../utils/processUtil";
 
-import { Process } from "@mtfh/common/lib/api/process/v1";
-import {
-  Box,
-  Button,
-  Heading,
-  Link,
-  StatusBox,
-  StatusHeading,
-  Text,
-} from "@mtfh/common/lib/components";
+import { Button, Heading, Text } from "@mtfh/common/lib/components";
 
-interface NewTenancyViewProps {
+interface NewTenancyViewProps extends ProcessComponentProps {
   processConfig: IProcess;
-  process: Process;
-  mutate: () => void;
-  setGlobalError: any;
-  optional?: any;
 }
+
 const { views } = locale;
 export const NewTenancyView = ({
   processConfig,
@@ -44,22 +31,16 @@ export const NewTenancyView = ({
     hoApprovalPassed,
     tenureAppointmentScheduled,
     tenureAppointmentRescheduled,
-    tenureUpdated,
+    nameUpdated,
     processClosed,
     processCancelled,
   } = processConfig.states;
-  const { currentState, processName } = process;
+  const { currentState } = process;
   const [needAppointment, setNeedAppointment] = useState<boolean>(
     hoApprovalPassed.state === process.currentState.state,
   );
-  const {
-    closeCase,
-    setCloseCase,
-    tenant,
-    closeProcessReason,
-    documentsSigned,
-    setDocumentsSigned,
-  } = optional;
+  const [documentsSigned, setDocumentsSigned] = useState<boolean>();
+  const { closeCase, setCloseCase, person, closeProcessReason } = optional;
 
   const processState = [processClosed.state, processCancelled.state].includes(
     currentState.state,
@@ -71,70 +52,24 @@ export const NewTenancyView = ({
     appointmentDateTime: string;
   };
 
-  const hoApprovalPassedState =
-    currentState.state === hoApprovalPassed.state
-      ? currentState
-      : process.previousStates.find(
-          (previous) => previous.state === hoApprovalPassed.state,
-        );
   return (
-    <>
-      <StatusBox
-        variant="success"
-        title={views.hoReviewView.hoOutcome(
-          views.hoReviewModal[processName.toLowerCase()],
-          "approved",
-        )}
-      >
-        {hoApprovalPassedState?.processData.formData.reason && (
-          <Text>{hoApprovalPassedState.processData.formData.reason}</Text>
-        )}
-      </StatusBox>
-
-      {currentState.state === tenureUpdated.state ? (
-        <Box variant="success">
-          <StatusHeading
-            variant="success"
-            title={views.tenureInvestigation.tenancySigned}
-          />
-          <div
-            style={{ marginLeft: 60, marginTop: 17.5 }}
-            className="govuk-link lbh-link lbh-link--no-visited-state"
-          >
-            <Link
-              as={RouterLink}
-              to={`/tenure/${
-                (process.relatedEntities as any[])?.find(
-                  (entity) =>
-                    entity.targetType === "tenure" && entity.subType === "newTenure",
-                )?.id
-              }`}
-              variant="link"
-            >
-              {views.tenureInvestigation.viewNewTenure}
-            </Link>
-          </div>
-        </Box>
-      ) : (
-        !closeProcessReason &&
-        !closeCase &&
-        ![processClosed.state, processCancelled.state].includes(currentState.state) && (
-          <>
-            {!documentsSigned && (
-              <Heading variant="h2">
-                {views.tenureInvestigation.hoApprovedNextSteps(
-                  locale.views.hoReviewModal[process.processName.toLowerCase()],
-                )}
-              </Heading>
-            )}
-            {![
-              tenureAppointmentScheduled.state,
-              tenureAppointmentRescheduled.state,
-            ].includes(process.currentState.state) && (
-              <Text>{views.tenureInvestigation.mustMakeAppointment}</Text>
-            )}
-          </>
-        )
+    <div data-testid="changeofname-new-tenancy-view">
+      {!closeProcessReason && (
+        <>
+          {!documentsSigned && (
+            <Heading variant="h2">
+              {views.tenureInvestigation.hoApprovedNextSteps(
+                locale.views.hoReviewModal[process.processName.toLowerCase()],
+              )}
+            </Heading>
+          )}
+          {![
+            tenureAppointmentScheduled.state,
+            tenureAppointmentRescheduled.state,
+          ].includes(process.currentState.state) && (
+            <Text>{views.tenureInvestigation.mustMakeAppointment}</Text>
+          )}
+        </>
       )}
 
       {!documentsSigned &&
@@ -162,12 +97,14 @@ export const NewTenancyView = ({
         )}
 
       {!documentsSigned &&
-        !closeCase &&
         !closeProcessReason &&
-        ![processClosed.state, processCancelled.state, tenureUpdated.state].includes(
-          currentState.state,
-        ) &&
-        tenant && <ContactDetails fullName={tenant.fullName} personId={tenant.id} />}
+        currentState.state !== nameUpdated.state &&
+        person && (
+          <ContactDetails
+            fullName={`${person.firstName} ${person.surname}`}
+            personId={person.id}
+          />
+        )}
 
       {!closeProcessReason && (
         <AppointmentForm
@@ -200,16 +137,16 @@ export const NewTenancyView = ({
           </Button>
         )}
 
-      {(documentsSigned || currentState.state === tenureUpdated.state) && (
+      {(documentsSigned || currentState.state === nameUpdated.state) && (
         <CloseProcessView
           processConfig={processConfig}
           process={process}
           mutate={mutate}
           setGlobalError={setGlobalError}
           statusBox={false}
-          trigger={Trigger.UpdateTenure}
+          trigger={Trigger.UpdateName}
         />
       )}
-    </>
+    </div>
   );
 };

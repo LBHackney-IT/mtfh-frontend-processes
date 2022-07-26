@@ -13,6 +13,7 @@ import userEvent from "@testing-library/user-event";
 import { locale, processes } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 import { Recommendation } from "../../../../../types";
+import { ChangeOfNameView } from "../../change-of-name-view";
 import { TenureInvestigationView } from "./tenure-investigation-view";
 
 import * as processV1 from "@mtfh/common/lib/api/process/v1/service";
@@ -94,8 +95,7 @@ describe("tenure-investigation-view", () => {
   test("it renders error if submit fails", async () => {
     server.use(patchProcessV1(null, 500));
     render(
-      <TenureInvestigationView
-        processConfig={processes.changeofname}
+      <ChangeOfNameView
         process={{
           ...mockProcessV1,
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
@@ -105,7 +105,9 @@ describe("tenure-investigation-view", () => {
       />,
       options,
     );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    await expect(
+      screen.findByText(Recommendation.Appointment),
+    ).resolves.toBeInTheDocument();
     await userEvent.click(screen.getByLabelText(Recommendation.Appointment));
     await userEvent.click(
       screen.getByLabelText(

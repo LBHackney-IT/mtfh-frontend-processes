@@ -190,56 +190,71 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
 
 exports[`review-documents-view it renders ReviewDocuments correctly on state DocumentsRequestedDes 1`] = `
 <div>
+  <h2
+    class="lbh-heading-h2"
+  >
+    <div>
+      <a
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        href="/person/6fbe024f-2316-4265-a6e8-d65a837e308a"
+        target="_blank"
+      >
+        Haylee
+         
+        Macejkovic
+      </a>
+    </div>
+  </h2>
+  <div
+    class="mtfh-box mtfh-box--success"
+  >
+    <div
+      class="mtfh-status-heading"
+    >
+      <svg
+        fill="none"
+        height="45"
+        viewBox="0 0 45 45"
+        width="45"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <circle
+          cx="22.5"
+          cy="22.5"
+          fill="white"
+          r="21.75"
+          stroke="#00664F"
+          stroke-width="1.5"
+        />
+        <path
+          clip-rule="evenodd"
+          d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+          fill="#00664F"
+          fill-rule="evenodd"
+        />
+      </svg>
+      <h4
+        class="lbh-heading-h4 mtfh-status-heading__title"
+      >
+        Documents requested
+      </h4>
+    </div>
+    <div
+      class="govuk-link lbh-link lbh-link--no-visited-state"
+      style="margin-left: 60px; margin-top: 17.5px;"
+    >
+      <a
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        href="http://des/teams/1/dashboard/requests"
+        target="_blank"
+      >
+        View request in Document Evidence Store
+      </a>
+    </div>
+  </div>
   <div
     data-testid="changeofname-ReviewDocuments"
   >
-    <div
-      class="mtfh-box mtfh-box--success"
-    >
-      <div
-        class="mtfh-status-heading"
-      >
-        <svg
-          fill="none"
-          height="45"
-          viewBox="0 0 45 45"
-          width="45"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle
-            cx="22.5"
-            cy="22.5"
-            fill="white"
-            r="21.75"
-            stroke="#00664F"
-            stroke-width="1.5"
-          />
-          <path
-            clip-rule="evenodd"
-            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
-            fill="#00664F"
-            fill-rule="evenodd"
-          />
-        </svg>
-        <h4
-          class="lbh-heading-h4 mtfh-status-heading__title"
-        >
-          Documents requested
-        </h4>
-      </div>
-      <div
-        class="govuk-link lbh-link lbh-link--no-visited-state"
-        style="margin-left: 60px; margin-top: 17.5px;"
-      >
-        <a
-          class="govuk-link lbh-link lbh-link--no-visited-state"
-          href="http://des/teams/1/dashboard/requests"
-          target="_blank"
-        >
-          View request in Document Evidence Store
-        </a>
-      </div>
-    </div>
     <div
       class="govuk-checkboxes__item"
     >
@@ -384,6 +399,22 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
         Next
       </button>
     </form>
+  </div>
+  <div
+    data-testid="close-case-button"
+  >
+    <p
+      class="lbh-body-m"
+    >
+      If the documents are not suitable and all avenues to obtain the right documents have been exhausted, then close the case.
+    </p>
+    <button
+      class="govuk-button lbh-button govuk-button--secondary lbh-button--secondary"
+      style="width: 222px;"
+      type="button"
+    >
+      Close Case
+    </button>
   </div>
 </div>
 `;

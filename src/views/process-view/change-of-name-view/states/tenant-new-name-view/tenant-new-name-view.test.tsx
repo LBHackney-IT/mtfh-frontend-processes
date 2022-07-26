@@ -42,6 +42,7 @@ describe("changeofname/tenant-new-name-view", () => {
           },
         }}
         mutate={() => {}}
+        setGlobalError={() => {}}
       />,
       options,
     );
@@ -62,6 +63,7 @@ describe("changeofname/tenant-new-name-view", () => {
           },
         }}
         mutate={() => {}}
+        setGlobalError={() => {}}
       />,
       options,
     );
@@ -99,6 +101,7 @@ describe("changeofname/tenant-new-name-view", () => {
           },
         }}
         mutate={() => {}}
+        setGlobalError={() => {}}
       />,
       options,
     );
@@ -140,6 +143,7 @@ describe("changeofname/tenant-new-name-view", () => {
           },
         }}
         mutate={() => {}}
+        setGlobalError={() => {}}
       />,
       options,
     );

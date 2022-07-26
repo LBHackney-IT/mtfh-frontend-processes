@@ -181,7 +181,7 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
     <h2
       class="lbh-heading-h2"
     >
-      Sole to Joint application approved, next steps:
+      Sole to joint tenure application approved, next steps:
     </h2>
     <div
       class="mtfh-box"
@@ -456,7 +456,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
     <h2
       class="lbh-heading-h2"
     >
-      Sole to Joint application approved, next steps:
+      Sole to joint tenure application approved, next steps:
     </h2>
     <div
       class="mtfh-box"

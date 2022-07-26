@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-
 import { Form, Formik } from "formik";
 
 import {
@@ -9,7 +7,6 @@ import {
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 import { ProcessComponentProps, Recommendation } from "../../../../../types";
-import { DesBox } from "../../../shared/process-components";
 import { SubmitCaseView } from "../../../shared/submit-case-view";
 
 import { editProcess } from "@mtfh/common/lib/api/process/v1";
@@ -23,7 +20,6 @@ import {
   Radio,
   RadioGroup,
   Spinner,
-  StatusErrorSummary,
 } from "@mtfh/common/lib/components";
 import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
@@ -34,8 +30,8 @@ export const TenureInvestigationView = ({
   process,
   mutate,
   optional,
+  setGlobalError,
 }: ProcessComponentProps): JSX.Element => {
-  const [globalError, setGlobalError] = useState<number>();
   const { submitted } = optional;
   const errorMessages = useErrorCodes();
 
@@ -63,13 +59,6 @@ export const TenureInvestigationView = ({
 
   return (
     <div data-testid="changeofname-tenure-investigation">
-      {globalError && (
-        <StatusErrorSummary id="tenure-investigation-global-error" code={globalError} />
-      )}
-      <DesBox
-        title={views.submitCase.supportingDocumentsApproved}
-        description={views.submitCase.viewDocumentsOnDes}
-      />
       <Formik<TenureInvestigationFormData>
         initialValues={{
           tenureInvestigationRecommendation: "",

@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 
@@ -15,7 +13,6 @@ import {
   Heading,
   Input,
   Select,
-  StatusErrorSummary,
 } from "@mtfh/common/lib/components";
 
 import "./styles.scss";
@@ -23,8 +20,7 @@ import "./styles.scss";
 interface TenantNewNameViewProps {
   process: Process;
   mutate: () => void;
-  // eslint-disable-next-line react/no-unused-prop-types
-  optional?: any;
+  setGlobalError: any;
 }
 
 export const schema = Yup.object({
@@ -36,14 +32,13 @@ export const schema = Yup.object({
 
 export type FormData = Yup.Asserts<typeof schema>;
 
-export const TenantNewNameView = ({ process, mutate }: TenantNewNameViewProps) => {
-  const [globalError, setGlobalError] = useState<number>();
-
+export const TenantNewNameView = ({
+  process,
+  mutate,
+  setGlobalError,
+}: TenantNewNameViewProps) => {
   return (
     <div data-testid="changeofname-EnterNewName">
-      {globalError && (
-        <StatusErrorSummary id="enter-new-name-global-error" code={globalError} />
-      )}
       <Heading variant="h3">Enter tenant's new name</Heading>
       <Formik<FormData>
         initialValues={{ title: "", firstName: "", middleName: "", surname: "" }}

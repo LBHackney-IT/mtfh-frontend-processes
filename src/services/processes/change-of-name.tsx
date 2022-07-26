@@ -141,6 +141,22 @@ export const changeofname: IProcess = {
         cancelProcess: Trigger.CancelProcess,
       },
     },
+    tenureAppointmentScheduled: {
+      state: "TenureAppointmentScheduled",
+      triggers: {
+        rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
+        updateTenure: Trigger.UpdateName,
+        cancelProcess: Trigger.CancelProcess,
+      },
+    },
+    tenureAppointmentRescheduled: {
+      state: "TenureAppointmentRescheduled",
+      triggers: {
+        rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
+        updateTenure: Trigger.UpdateName,
+        cancelProcess: Trigger.CancelProcess,
+      },
+    },
     nameUpdated: {
       state: "NameUpdated",
       status: "Process completed",

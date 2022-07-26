@@ -16,6 +16,7 @@ import {
   mockDocumentsRequestedDesAppointment,
   typeDateTime,
 } from "../../../../../test-utils";
+import { ChangeOfNameView } from "../../change-of-name-view";
 import { ReviewDocumentsView } from "./review-documents-view";
 
 import * as errorMessages from "@mtfh/common/lib/hooks/use-error-codes";
@@ -28,10 +29,10 @@ describe("review-documents-view", () => {
   test("it renders ReviewDocuments correctly on state DocumentsRequestedDes", async () => {
     jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
     const { container } = render(
-      <ReviewDocumentsView
-        processConfig={processes.changeofname}
+      <ChangeOfNameView
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        optional={{}}
       />,
       {
         url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -55,6 +56,7 @@ describe("review-documents-view", () => {
         processConfig={processes.changeofname}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        setGlobalError={() => {}}
       />,
     );
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
@@ -74,6 +76,7 @@ describe("review-documents-view", () => {
         processConfig={processes.changeofname}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        setGlobalError={() => {}}
       />,
     );
     const checkbox = screen.getByLabelText(
@@ -90,12 +93,15 @@ describe("review-documents-view", () => {
     server.use(patchProcessV1("error", 500));
     server.use(getReferenceDataV1({}, 200));
     render(
-      <ReviewDocumentsView
-        processConfig={processes.changeofname}
+      <ChangeOfNameView
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        optional={{}}
       />,
     );
+    await expect(
+      screen.findByText(locale.views.reviewDocuments.checkSupportingDocumentsAppointment),
+    ).resolves.toBeInTheDocument();
     await userEvent.click(
       screen.getByLabelText(
         locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
@@ -114,10 +120,10 @@ describe("review-documents-view", () => {
 
   test("it renders requested via des and book appointment", async () => {
     render(
-      <ReviewDocumentsView
-        processConfig={processes.changeofname}
+      <ChangeOfNameView
         process={mockDocumentsRequestedDesAppointment}
         mutate={() => {}}
+        optional={{}}
       />,
       {
         url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -140,6 +146,7 @@ describe("review-documents-view", () => {
           appointmentDateTime: "2099-10-12T08:59:00.000Z",
         })}
         mutate={() => {}}
+        setGlobalError={() => {}}
       />,
     );
 
@@ -158,6 +165,7 @@ describe("review-documents-view", () => {
           appointmentDateTime: "2010-10-12T08:59:00.000Z",
         })}
         mutate={() => {}}
+        setGlobalError={() => {}}
       />,
     );
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
@@ -173,6 +181,7 @@ describe("review-documents-view", () => {
         processConfig={processes.changeofname}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        setGlobalError={() => {}}
       />,
     );
 
@@ -185,12 +194,13 @@ describe("review-documents-view", () => {
   test("it displays an error if there's an issue with confirm", async () => {
     server.use(patchProcessV1("error", 500));
     render(
-      <ReviewDocumentsView
-        processConfig={processes.changeofname}
+      <ChangeOfNameView
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        optional={{}}
       />,
     );
+    await expect(screen.findByText(locale.next)).resolves.toBeInTheDocument();
     const nextButton = screen.getByText(locale.next);
     await selectAllCheckBoxes();
     expect(nextButton).toBeEnabled();
@@ -209,6 +219,7 @@ describe("review-documents-view", () => {
           appointmentDateTime: "2099-10-12T08:59:00.000Z",
         })}
         mutate={() => {}}
+        setGlobalError={() => {}}
       />,
       {
         url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",

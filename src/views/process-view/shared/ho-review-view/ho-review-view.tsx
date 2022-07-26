@@ -226,12 +226,7 @@ export const HoReviewView = ({
                         use the following details:
                       </Text>
                       {tenant ? (
-                        <>
-                          <ContactDetails
-                            fullName={tenant.fullName}
-                            personId={tenant.id}
-                          />
-                        </>
+                        <ContactDetails fullName={tenant.fullName} personId={tenant.id} />
                       ) : (
                         <Text>Tenant not found.</Text>
                       )}
@@ -360,9 +355,9 @@ const HoDecisionModal = ({
     <Dialog
       isOpen={modalOpen}
       onDismiss={() => setModalOpen(false)}
-      title={`${hoRecommendation} ${
-        locale.views.hoReviewModal[process.processName]
-      } application?`}
+      title={`${hoRecommendation} ${locale.views.hoReviewModal[
+        process.processName.toLowerCase()
+      ].toLowerCase()} application?`}
     >
       {tiRecommendation !== hoRecommendation && (
         <TenureInvestigationRecommendationBox

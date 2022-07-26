@@ -23,7 +23,7 @@ describe("submit-case-view", () => {
     render(
       <SubmitCaseView
         processConfig={processes.soletojoint}
-        process={mockDocumentChecksPassedProcess}
+        process={{ ...mockDocumentChecksPassedProcess, processName: "soletojoint" }}
         mutate={() => {}}
         optional={{ submitted, setSubmitted }}
       />,
@@ -44,6 +44,7 @@ describe("submit-case-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockDocumentChecksPassedProcess,
+          processName: "soletojoint",
           previousStates: [
             {
               ...mockProcessV1.currentState,

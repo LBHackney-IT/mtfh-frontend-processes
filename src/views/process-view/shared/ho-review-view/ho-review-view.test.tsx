@@ -21,7 +21,7 @@ import * as errorMessages from "@mtfh/common/lib/hooks/use-error-codes";
 
 const options = {
   url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-  path: "/processes/soletojoint/:processId",
+  path: "/processes/:processName/:processId",
 };
 
 let submitted = false;
@@ -45,6 +45,7 @@ describe("ho-review-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "HOApprovalPassed",
@@ -79,6 +80,7 @@ describe("ho-review-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "TenureInvestigationPassed",
@@ -101,6 +103,7 @@ describe("ho-review-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "TenureInvestigationFailed",
@@ -123,6 +126,7 @@ describe("ho-review-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "tenureInvestigationPassedWithInt",
@@ -145,6 +149,7 @@ describe("ho-review-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "TenureInvestigationFailed",
@@ -208,7 +213,7 @@ describe("ho-review-view", () => {
     await fillInHoReview();
     await expect(
       screen.findByText(
-        `Approve ${locale.views.hoReviewModal["soletojoint"]} application?`,
+        `Approve ${locale.views.hoReviewModal["soletojoint"].toLowerCase()} application?`,
         { exact: false },
       ),
     ).resolves.toBeInTheDocument();
@@ -237,6 +242,7 @@ describe("ho-review-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "TenureInvestigationFailed",
@@ -271,6 +277,7 @@ describe("ho-review-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "InterviewScheduled",
@@ -311,6 +318,7 @@ describe("ho-review-view", () => {
         processConfig={processes.soletojoint}
         process={{
           ...mockProcessV1,
+          processName: "soletojoint",
           currentState: {
             ...mockProcessV1.currentState,
             state: "InterviewScheduled",

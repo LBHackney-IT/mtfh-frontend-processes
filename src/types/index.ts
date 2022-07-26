@@ -22,6 +22,7 @@ export interface ProcessComponentProps {
   process: Process;
   mutate: any;
   optional?: any;
+  setGlobalError?: any;
 }
 
 export interface IStartProcess {
