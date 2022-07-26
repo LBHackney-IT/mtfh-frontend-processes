@@ -56,7 +56,7 @@ export const CloseProcessView = ({
         <StatusBox
           variant="warning"
           title={
-            [processClosed.state, processCancelled.state].includes(state)
+            [processClosed?.state, processCancelled?.state].includes(state)
               ? locale.views.reviewDocuments.soleToJointClosed
               : locale.views.reviewDocuments.soleToJointWillBeClosed
           }

@@ -77,6 +77,35 @@ describe("tenure-investigation-view", () => {
     expect(container).toMatchSnapshot();
   });
 
+  test("it renders NewTenancy view correctly for state=HOApprovalPassed and closeProcessReason provided", async () => {
+    server.use(getReferenceDataV1({}, 200));
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    const { container } = render(
+      <NewTenancyView
+        processConfig={processes.changeofname}
+        process={{
+          ...mockProcessV1,
+          processName: "changeofname",
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: "HOApprovalPassed",
+          },
+        }}
+        mutate={() => {}}
+        optional={{
+          submitted,
+          setSubmitted,
+          closeCase,
+          setCloseCase,
+          person: mockPersonV1,
+          closeProcessReason: "Test",
+        }}
+      />,
+      options,
+    );
+    expect(container).toMatchSnapshot();
+  });
+
   test("it renders NewTenancy view correctly for state=TenureAppointmentScheduled", async () => {
     server.use(getReferenceDataV1({}, 200));
     server.use(getContactDetailsV2(mockContactDetailsV2));
@@ -98,6 +127,30 @@ describe("tenure-investigation-view", () => {
         exact: false,
       }),
     ).resolves.toBeDisabled();
+    expect(container).toMatchSnapshot();
+  });
+
+  test("it renders NewTenancy view correctly for state=TenureAppointmentScheduled and closeProcessReason provided", async () => {
+    server.use(getReferenceDataV1({}, 200));
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    const { container } = render(
+      <NewTenancyView
+        processConfig={processes.changeofname}
+        process={{
+          ...mockTenureAppointmentSchedule("2099-10-12T08:59:00.000Z"),
+          processName: "changeofname",
+        }}
+        mutate={() => {}}
+        optional={{
+          submitted,
+          setSubmitted,
+          closeCase,
+          setCloseCase,
+          closeProcessReason: "Test",
+        }}
+      />,
+      options,
+    );
     expect(container).toMatchSnapshot();
   });
 
