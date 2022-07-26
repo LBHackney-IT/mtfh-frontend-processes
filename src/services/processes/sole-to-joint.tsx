@@ -56,6 +56,7 @@ const startProcess: IStartProcess = {
 
 export const soletojoint: IProcess = {
   processName: Process.SoleToJoint,
+  name: locale.processes.soletojoint.name,
   targetType: "tenure",
   title: locale.views.soleToJoint.title,
   startProcess,

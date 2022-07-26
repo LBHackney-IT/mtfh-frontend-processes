@@ -31,6 +31,7 @@ const startProcess: IStartProcess = {
 
 export const changeofname: IProcess = {
   processName: Process.ChangeOfName,
+  name: locale.processes.changeofname.name,
   targetType: "person",
   title: locale.views.changeofname.title,
   startProcess,
