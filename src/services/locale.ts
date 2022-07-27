@@ -21,6 +21,14 @@ const locale = {
   returnHomePage: "Return to home page",
   submitCase: "Submit case",
   supportingDocuments,
+  processes: {
+    soletojoint: {
+      name: "Sole to Joint",
+    },
+    changeofname: {
+      name: "Change of Name",
+    },
+  },
   views: {
     person: {
       title: "Title",

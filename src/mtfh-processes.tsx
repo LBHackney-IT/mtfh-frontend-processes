@@ -8,7 +8,7 @@ import Root from "./root";
 import { ErrorSummary } from "@mtfh/common/lib/components";
 
 export { locale, processes } from "./services";
-export * as types from "./types";
+export * from "./types";
 
 const lifecycles = singleSpaReact({
   React,

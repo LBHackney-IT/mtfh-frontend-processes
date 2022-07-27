@@ -32,16 +32,19 @@ export interface IStartProcess {
   subComponent?: React.FC;
 }
 
+export interface ProcessStateInfo {
+  state: string;
+  status: string;
+  triggers: Record<string, string>;
+}
+
 export interface IProcess {
   processName: string;
+  name: string;
   title: string;
   targetType: TargetType;
   startProcess: IStartProcess;
   states: {
-    [state: string]: {
-      state: string;
-      status: string;
-      triggers: Record<string, string>;
-    };
+    [state: string]: ProcessStateInfo;
   };
 }
