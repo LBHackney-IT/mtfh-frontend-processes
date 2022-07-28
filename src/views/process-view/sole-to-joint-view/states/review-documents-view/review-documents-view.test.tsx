@@ -123,6 +123,7 @@ describe("review-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockDocumentsRequestedDesAppointment}
         mutate={() => {}}
+        optional={{}}
       />,
       options,
     );
@@ -145,6 +146,7 @@ describe("review-documents-view", () => {
           appointmentDateTime: "2099-10-12T08:59:00.000Z",
         })}
         mutate={() => {}}
+        optional={{}}
       />,
     );
 
@@ -163,6 +165,7 @@ describe("review-documents-view", () => {
           appointmentDateTime: "2010-10-12T08:59:00.000Z",
         })}
         mutate={() => {}}
+        optional={{}}
       />,
     );
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
@@ -214,6 +217,7 @@ describe("review-documents-view", () => {
           appointmentDateTime: "2099-10-12T08:59:00.000Z",
         })}
         mutate={() => {}}
+        optional={{}}
       />,
       options,
     );

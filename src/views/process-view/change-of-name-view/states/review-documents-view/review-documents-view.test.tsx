@@ -148,6 +148,7 @@ describe("review-documents-view", () => {
         })}
         mutate={() => {}}
         setGlobalError={() => {}}
+        optional={{}}
       />,
     );
 
@@ -167,6 +168,7 @@ describe("review-documents-view", () => {
         })}
         mutate={() => {}}
         setGlobalError={() => {}}
+        optional={{}}
       />,
     );
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
@@ -221,6 +223,7 @@ describe("review-documents-view", () => {
         })}
         mutate={() => {}}
         setGlobalError={() => {}}
+        optional={{}}
       />,
       options,
     );
@@ -290,7 +293,7 @@ describe("review-documents-view", () => {
       options,
     );
     await expect(
-      screen.findByText(locale.components.appointment.scheduled),
+      screen.findByText(locale.components.appointment.missed),
     ).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });

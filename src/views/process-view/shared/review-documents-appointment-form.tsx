@@ -25,6 +25,7 @@ export const ReviewDocumentsAppointmentForm = ({
   optional,
 }: ReviewDocumentsAppointmentFormProps): JSX.Element => {
   const [needAppointment, setNeedAppointment] = useState<boolean>(false);
+  const [appointmentTrigger, setAppointmentTrigger] = useState<string>("");
 
   const { states } = processConfig;
   const processState = [
@@ -40,10 +41,13 @@ export const ReviewDocumentsAppointmentForm = ({
         states.documentsAppointmentRescheduled.state,
       ].includes(processState.state) && (
         <AppointmentDetails
-          currentState={processState}
-          previousStates={process.previousStates}
+          processConfig={processConfig}
+          process={process}
           needAppointment={needAppointment}
           setNeedAppointment={setNeedAppointment}
+          setAppointmentTrigger={setAppointmentTrigger}
+          closeCase={optional.closeCase || optional.closeProcessReason}
+          setCloseCase={optional.setCloseCase}
           options={{
             requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
             rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,
@@ -72,6 +76,7 @@ export const ReviewDocumentsAppointmentForm = ({
           setGlobalError={setGlobalError}
           needAppointment={needAppointment}
           setNeedAppointment={setNeedAppointment}
+          appointmentTrigger={appointmentTrigger}
           options={{
             buttonText: locale.bookAppointment,
             requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,

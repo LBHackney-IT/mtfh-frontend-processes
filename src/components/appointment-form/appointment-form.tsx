@@ -1,6 +1,5 @@
 import React from "react";
 
-import { isPast } from "date-fns";
 import { Form, Formik } from "formik";
 
 import {
@@ -9,6 +8,7 @@ import {
   dateTimeIsValid,
 } from "../../schemas/appointment";
 import { locale } from "../../services";
+import { Trigger } from "../../services/processes/types";
 import { getAppointmentDateTime } from "../../utils/processUtil";
 
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
@@ -30,6 +30,7 @@ interface BookAppointmentFormProps {
   needAppointment: boolean;
   setGlobalError: any;
   setNeedAppointment?: any;
+  appointmentTrigger: Trigger | string;
   options: {
     buttonText?: string;
     requestAppointmentTrigger: string;
@@ -45,12 +46,10 @@ export const AppointmentForm = ({
   setGlobalError,
   needAppointment,
   setNeedAppointment,
+  appointmentTrigger,
   options,
 }: BookAppointmentFormProps): JSX.Element => {
   const { currentState } = process;
-  const formData = process.currentState.processData.formData as {
-    appointmentDateTime: string;
-  };
   const errorMessages = useErrorCodes();
 
   if (!errorMessages) {
@@ -79,11 +78,7 @@ export const AppointmentForm = ({
               options.appointmentRescheduledState,
             ].includes(currentState.state)
           ) {
-            if (isPast(new Date(formData.appointmentDateTime))) {
-              processTrigger = options.rescheduleAppointmentTrigger;
-            } else {
-              processTrigger = "";
-            }
+            processTrigger = appointmentTrigger;
           }
           try {
             await editProcess({

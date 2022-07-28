@@ -121,7 +121,6 @@ describe("tenure-investigation-view", () => {
       />,
       options,
     );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(
       screen.findByText(locale.views.tenureInvestigation.documentsSigned, {
         exact: false,
@@ -220,7 +219,6 @@ describe("tenure-investigation-view", () => {
       />,
       options,
     );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(
       screen.findByText(locale.views.tenureInvestigation.documentsSigned),
     ).resolves.toBeDisabled();

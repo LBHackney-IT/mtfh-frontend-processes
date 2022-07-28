@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import { isPast } from "date-fns";
 import { Form, Formik, useFormikContext } from "formik";
 
 import {
@@ -62,13 +61,11 @@ export const HoReviewView = ({
 }: HoReviewViewProps): JSX.Element => {
   const [needAppointment, setNeedAppointment] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const { tenant, closeProcessReason } = optional;
+  const { tenant, closeProcessReason, closeCase, setCloseCase } = optional;
   const { currentState } = process;
   const { interviewScheduled, interviewRescheduled, processClosed, processCancelled } =
     processConfig.states;
-  const formData = process.currentState.processData.formData as {
-    appointmentDateTime: string;
-  };
+  const [appointmentTrigger, setAppointmentTrigger] = useState<string>("");
 
   const errorMessages = useErrorCodes();
   if (!errorMessages) {
@@ -115,12 +112,9 @@ export const HoReviewView = ({
               currentState.state,
             )
           ) {
-            if (isPast(new Date(formData.appointmentDateTime))) {
-              processTrigger = Trigger.RescheduleInterview;
-            } else {
-              processTrigger = "";
-            }
+            processTrigger = appointmentTrigger;
           }
+
           try {
             await editProcess({
               id: process.id,
@@ -139,6 +133,7 @@ export const HoReviewView = ({
               },
             });
             setFieldValue("choice", "");
+            setNeedAppointment(false);
             mutate();
           } catch (e: any) {
             setGlobalError(e.response?.status || 500);
@@ -177,12 +172,23 @@ export const HoReviewView = ({
             processState.state,
           ) && (
             <AppointmentDetails
-              currentState={processState}
-              previousStates={process.previousStates}
+              processConfig={processConfig}
+              process={process}
               needAppointment={needAppointment}
-              setNeedAppointment={(value) =>
-                setFieldValue("choice", value ? Choice.Appointment : Choice.Review)
-              }
+              setNeedAppointment={(value) => {
+                setFieldValue("choice", value ? Choice.Appointment : Choice.Review);
+                setFieldValue("day", "");
+                setFieldValue("month", "");
+                setFieldValue("year", "");
+                setFieldValue("hour", "");
+                setFieldValue("minute", "");
+                setFieldValue("amPm", "");
+                setFieldValue("hoRecommendation", "");
+                setNeedAppointment(value);
+              }}
+              setAppointmentTrigger={setAppointmentTrigger}
+              closeCase={closeCase || closeProcessReason}
+              setCloseCase={setCloseCase}
               options={{
                 requestAppointmentTrigger: Trigger.ScheduleInterview,
                 rescheduleAppointmentTrigger: Trigger.RescheduleInterview,
@@ -192,32 +198,37 @@ export const HoReviewView = ({
             />
           )}
 
-          {!closeProcessReason && (
+          {!closeProcessReason && !closeCase && (
             <Form noValidate>
               <Field id="choice" name="choice" label="" type="radio">
                 <RadioGroup>
                   <Heading variant="h4" style={{ marginBottom: 26 }}>
                     Next steps
                   </Heading>
-                  <InlineField name="choice" type="radio">
-                    <Radio
-                      id="ho-appointment"
-                      value={Choice.Appointment}
-                      onClick={() => {
-                        if (values.choice !== Choice.Appointment) {
-                          setFieldValue("day", "");
-                          setFieldValue("month", "");
-                          setFieldValue("year", "");
-                          setFieldValue("hour", "");
-                          setFieldValue("minute", "");
-                          setFieldValue("amPm", "");
-                          setFieldValue("hoRecommendation", "");
-                        }
-                      }}
-                    >
-                      {views.hoReviewView.makeAppointment}
-                    </Radio>
-                  </InlineField>
+                  {(needAppointment ||
+                    ![interviewScheduled.state, interviewRescheduled.state].includes(
+                      currentState.state,
+                    )) && (
+                    <InlineField name="choice" type="radio">
+                      <Radio
+                        id="ho-appointment"
+                        value={Choice.Appointment}
+                        onClick={() => {
+                          if (values.choice !== Choice.Appointment) {
+                            setFieldValue("day", "");
+                            setFieldValue("month", "");
+                            setFieldValue("year", "");
+                            setFieldValue("hour", "");
+                            setFieldValue("minute", "");
+                            setFieldValue("amPm", "");
+                            setFieldValue("hoRecommendation", "");
+                          }
+                        }}
+                      >
+                        {views.hoReviewView.makeAppointment}
+                      </Radio>
+                    </InlineField>
+                  )}
 
                   {values.choice === Choice.Appointment && (
                     <div style={{ marginLeft: 50, marginBottom: 20 }}>
@@ -241,11 +252,9 @@ export const HoReviewView = ({
                     <Radio
                       id="ho-review"
                       value={Choice.Review}
-                      onChange={() => {
-                        setNeedAppointment(false);
-                      }}
                       onClick={() => {
                         if (values.choice !== Choice.Review) {
+                          setNeedAppointment(false);
                           setFieldValue("day", "01");
                           setFieldValue("month", "01");
                           setFieldValue("year", "3000");

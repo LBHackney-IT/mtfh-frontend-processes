@@ -13,7 +13,7 @@ import { Trigger } from "../../../../../services/processes/types";
 import { IProcess, ProcessComponentProps } from "../../../../../types";
 import { getPreviousState } from "../../../../../utils/processUtil";
 
-import { Button, Heading, Text } from "@mtfh/common/lib/components";
+import { Button, Checkbox, Heading, Text } from "@mtfh/common/lib/components";
 
 interface NewTenancyViewProps extends ProcessComponentProps {
   processConfig: IProcess;
@@ -39,14 +39,15 @@ export const NewTenancyView = ({
   const [needAppointment, setNeedAppointment] = useState<boolean>(
     hoApprovalPassed.state === process.currentState.state,
   );
+  const [appointmentTrigger, setAppointmentTrigger] = useState<string>("");
   const [documentsSigned, setDocumentsSigned] = useState<boolean>();
   const { closeCase, setCloseCase, person, closeProcessReason } = optional;
 
-  const processState = [processClosed.state, processCancelled.state].includes(
+  const isProcessClosed = [processClosed.state, processCancelled.state].includes(
     currentState.state,
-  )
-    ? getPreviousState(process)
-    : currentState;
+  );
+
+  const processState = isProcessClosed ? getPreviousState(process) : currentState;
 
   const formData = processState.processData.formData as {
     appointmentDateTime: string;
@@ -54,7 +55,7 @@ export const NewTenancyView = ({
 
   return (
     <div data-testid="changeofname-new-tenancy-view">
-      {!closeProcessReason && (
+      {!closeProcessReason && !closeCase && !isProcessClosed && (
         <>
           {!documentsSigned && (
             <Heading variant="h2">
@@ -77,13 +78,17 @@ export const NewTenancyView = ({
           processState.state,
         ) && (
           <AppointmentDetails
-            currentState={processState}
-            previousStates={process.previousStates}
+            processConfig={processConfig}
+            process={process}
             needAppointment={needAppointment}
             setNeedAppointment={setNeedAppointment}
+            setAppointmentTrigger={setAppointmentTrigger}
             closeCase={
               closeCase ||
-              [processCancelled.state, processClosed.state].includes(currentState.state)
+              [processCancelled.state, processClosed.state].includes(
+                currentState.state,
+              ) ||
+              closeProcessReason
             }
             setCloseCase={setCloseCase}
             options={{
@@ -97,7 +102,9 @@ export const NewTenancyView = ({
         )}
 
       {!documentsSigned &&
+        !closeCase &&
         !closeProcessReason &&
+        !isProcessClosed &&
         currentState.state !== nameUpdated.state &&
         person && (
           <ContactDetails
@@ -106,13 +113,30 @@ export const NewTenancyView = ({
           />
         )}
 
-      {!closeProcessReason && (
+      {(![tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
+        currentState.state,
+      ) ||
+        needAppointment) &&
+        !closeProcessReason &&
+        !closeCase &&
+        !isProcessClosed && (
+          <Checkbox
+            id="condition"
+            checked={needAppointment}
+            onChange={() => setNeedAppointment(!needAppointment)}
+          >
+            {locale.views.reviewDocuments.checkSupportingDocumentsAppointment}
+          </Checkbox>
+        )}
+
+      {!closeProcessReason && needAppointment && (
         <AppointmentForm
           process={process}
           mutate={mutate}
           needAppointment={needAppointment}
           setGlobalError={setGlobalError}
           setNeedAppointment={setNeedAppointment}
+          appointmentTrigger={appointmentTrigger}
           options={{
             buttonText: "Continue",
             requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
