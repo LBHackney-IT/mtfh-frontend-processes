@@ -62,13 +62,12 @@ export const StatusBoxes = ({ process, processConfig }) => {
         isPreviousState(hoApprovalPassed.state, process)) && (
         <StatusBox
           variant="success"
-          title={locale.views.hoReviewView.hoOutcome(
-            locale.views.hoReviewModal[process.processName],
-            "approved",
-          )}
+          title={locale.views.hoReviewView.hoOutcome("Approve")}
         >
           {hoApprovalPassedState?.processData.formData.reason && (
-            <Text>{hoApprovalPassedState.processData.formData.reason}</Text>
+            <Text style={{ marginTop: 15 }}>
+              {hoApprovalPassedState.processData.formData.reason}
+            </Text>
           )}
         </StatusBox>
       )}
@@ -77,13 +76,12 @@ export const StatusBoxes = ({ process, processConfig }) => {
         isPreviousState(hoApprovalFailed.state, process)) && (
         <StatusBox
           variant="warning"
-          title={locale.views.hoReviewView.hoOutcome(
-            locale.views.hoReviewModal[process.processName],
-            "declined",
-          )}
+          title={locale.views.hoReviewView.hoOutcome("Decline")}
         >
           {hoApprovalFailedState?.processData.formData.reason && (
-            <Text>{hoApprovalFailedState.processData.formData.reason}</Text>
+            <Text style={{ marginTop: 15 }}>
+              {hoApprovalFailedState.processData.formData.reason}
+            </Text>
           )}
         </StatusBox>
       )}
