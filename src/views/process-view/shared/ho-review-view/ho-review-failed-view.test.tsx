@@ -50,12 +50,7 @@ describe("ho-review-failed-view", () => {
     );
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await expect(
-      screen.findByText(
-        locale.views.hoReviewView.hoOutcome(
-          locale.views.hoReviewModal["soletojoint"],
-          "declined",
-        ),
-      ),
+      screen.findByText(locale.views.hoReviewView.hoOutcome("Decline")),
     ).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });

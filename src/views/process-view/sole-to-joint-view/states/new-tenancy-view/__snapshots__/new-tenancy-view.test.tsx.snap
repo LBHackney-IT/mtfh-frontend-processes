@@ -172,7 +172,7 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
             <h4
               class="lbh-heading-h4"
             >
-              Sole to joint tenure application approved
+              Housing Officer reviewed and Area Housing Manager: Approve application
             </h4>
           </div>
         </div>
@@ -451,7 +451,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
             <h4
               class="lbh-heading-h4"
             >
-              Sole to joint tenure application approved
+              Housing Officer reviewed and Area Housing Manager: Approve application
             </h4>
           </div>
           <p

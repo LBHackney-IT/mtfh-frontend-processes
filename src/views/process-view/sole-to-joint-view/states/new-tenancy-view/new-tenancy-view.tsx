@@ -49,7 +49,7 @@ export const NewTenancyView = ({
     processClosed,
     processCancelled,
   } = processConfig.states;
-  const { currentState, processName } = process;
+  const { currentState } = process;
   const [needAppointment, setNeedAppointment] = useState<boolean>(
     hoApprovalPassed.state === process.currentState.state,
   );
@@ -82,13 +82,7 @@ export const NewTenancyView = ({
         );
   return (
     <>
-      <StatusBox
-        variant="success"
-        title={views.hoReviewView.hoOutcome(
-          views.hoReviewModal[processName.toLowerCase()],
-          "approved",
-        )}
-      >
+      <StatusBox variant="success" title={views.hoReviewView.hoOutcome("Approve")}>
         {hoApprovalPassedState?.processData.formData.reason && (
           <Text>{hoApprovalPassedState.processData.formData.reason}</Text>
         )}

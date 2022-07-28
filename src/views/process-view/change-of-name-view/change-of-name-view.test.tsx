@@ -328,12 +328,7 @@ describe("changeofname/change-of-name-view", () => {
       screen.findByText(locale.views.closeProcess.outcomeLetterSent),
     ).resolves.toBeInTheDocument();
     await expect(
-      screen.findByText(
-        locale.views.hoReviewView.hoOutcome(
-          locale.views.hoReviewModal["changeofname"],
-          "declined",
-        ),
-      ),
+      screen.findByText(locale.views.hoReviewView.hoOutcome("Decline")),
     ).resolves.toBeInTheDocument();
 
     const stepper = await screen.findByTestId("mtfh-stepper-change-of-name");

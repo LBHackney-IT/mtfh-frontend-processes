@@ -188,7 +188,8 @@ const locale = {
       confirmInstructionReceived:
         "I confirm that this is an instruction received by the Area Housing Manager",
       managersName: "Enter manager's name",
-      hoOutcome: (processName, decision) => `${processName} application ${decision}`,
+      hoOutcome: (decision) =>
+        `Housing Officer reviewed and Area Housing Manager: ${decision} application`,
     },
     hoReviewModal: {
       [Process.SoleToJoint]: "Sole to joint tenure",
