@@ -66,6 +66,7 @@ export const HoReviewView = ({
   const { interviewScheduled, interviewRescheduled, processClosed, processCancelled } =
     processConfig.states;
   const [appointmentTrigger, setAppointmentTrigger] = useState<string>("");
+  const { recommendation: tiRecommendation } = getRecommendation(processConfig, process);
 
   const errorMessages = useErrorCodes();
   if (!errorMessages) {
@@ -141,28 +142,27 @@ export const HoReviewView = ({
           return;
         }
 
-        if (!modalOpen) {
+        if (!modalOpen && values.hoRecommendation !== tiRecommendation) {
           setModalOpen(true);
-          return;
-        }
-
-        setModalOpen(false);
-        try {
-          await editProcess({
-            id: process.id,
-            processTrigger: Trigger.HOApproval,
-            processName: process?.processName,
-            etag: process.etag || "",
-            formData: {
-              hoRecommendation: values.hoRecommendation?.toLowerCase(),
-              housingAreaManagerName: values.housingAreaManagerName,
-              reason: values.reason,
-            },
-            documents: [],
-          });
-          mutate();
-        } catch (e: any) {
-          setGlobalError(e.response?.status || 500);
+        } else {
+          setModalOpen(false);
+          try {
+            await editProcess({
+              id: process.id,
+              processTrigger: Trigger.HOApproval,
+              processName: process?.processName,
+              etag: process.etag || "",
+              formData: {
+                hoRecommendation: values.hoRecommendation?.toLowerCase(),
+                housingAreaManagerName: values.housingAreaManagerName,
+                reason: values.reason,
+              },
+              documents: [],
+            });
+            mutate();
+          } catch (e: any) {
+            setGlobalError(e.response?.status || 500);
+          }
         }
       }}
     >
