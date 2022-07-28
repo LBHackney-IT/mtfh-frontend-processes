@@ -187,6 +187,7 @@ export const HoReviewView = ({
                 setNeedAppointment(value);
               }}
               setAppointmentTrigger={setAppointmentTrigger}
+              closeCase={closeCase || closeProcessReason}
               setCloseCase={setCloseCase}
               options={{
                 requestAppointmentTrigger: Trigger.ScheduleInterview,

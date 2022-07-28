@@ -296,6 +296,7 @@ export const ChangeOfNameView = ({
       )}
 
       {!closeProcessReason &&
+        !closeCase &&
         reviewDocumentsStates.includes(process.currentState.state) && (
           <CloseCaseButton setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
         )}
