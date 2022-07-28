@@ -61,7 +61,7 @@ export const HoReviewView = ({
 }: HoReviewViewProps): JSX.Element => {
   const [needAppointment, setNeedAppointment] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const { tenant, closeProcessReason, setCloseCase } = optional;
+  const { tenant, closeProcessReason, closeCase, setCloseCase } = optional;
   const { currentState } = process;
   const { interviewScheduled, interviewRescheduled, processClosed, processCancelled } =
     processConfig.states;
@@ -197,7 +197,7 @@ export const HoReviewView = ({
             />
           )}
 
-          {!closeProcessReason && (
+          {!closeProcessReason && !closeCase && (
             <Form noValidate>
               <Field id="choice" name="choice" label="" type="radio">
                 <RadioGroup>

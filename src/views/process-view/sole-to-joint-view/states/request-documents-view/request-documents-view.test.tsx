@@ -25,6 +25,11 @@ import {
 import * as processV1 from "@mtfh/common/lib/api/process/v1/service";
 import { AxiosSWRResponse } from "@mtfh/common/lib/http";
 
+const options = {
+  url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
+  path: "/processes/:processName/:processId",
+};
+
 describe("request-documents-view", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -58,10 +63,7 @@ describe("request-documents-view", () => {
         process={mockBreachChecksPassedState}
         mutate={() => {}}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
     expect(container).toMatchSnapshot();
   });
@@ -79,10 +81,7 @@ describe("request-documents-view", () => {
         process={mockBreachChecksPassedState}
         mutate={() => {}}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
 
     const radioButton = await screen.findByText(
@@ -105,10 +104,7 @@ describe("request-documents-view", () => {
         process={mockBreachChecksPassedState}
         mutate={() => {}}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
 
     const radioButton = await screen.findByText(
@@ -134,10 +130,7 @@ describe("request-documents-view", () => {
         process={mockBreachChecksPassedState}
         mutate={() => {}}
       />,
-      {
-        url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
-        path: "/processes/soletojoint/:processId",
-      },
+      options,
     );
 
     await expect(
