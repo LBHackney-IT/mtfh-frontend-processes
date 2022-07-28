@@ -25,6 +25,7 @@ describe("appointment-form-component", () => {
         needAppointment
         setGlobalError={() => {}}
         setNeedAppointment={setNeedAppointment}
+        appointmentTrigger=""
         options={{
           buttonText: "Continue",
           requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
@@ -51,6 +52,7 @@ describe("appointment-form-component", () => {
         needAppointment={false}
         setGlobalError={() => {}}
         setNeedAppointment={setNeedAppointment}
+        appointmentTrigger=""
         options={{
           buttonText: "Continue",
           requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,

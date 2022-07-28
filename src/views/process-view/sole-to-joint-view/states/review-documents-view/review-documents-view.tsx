@@ -70,15 +70,16 @@ export const ReviewDocumentsView = ({
           (previous) => previous.state === states.documentsRequestedDes.state,
         )) && <DesBox title={reviewDocuments.documentsRequested} />}
 
-      {!optional?.closeProcessReason && (
-        <>
-          <ReviewDocumentsAppointmentForm
-            processConfig={processConfig}
-            process={process}
-            mutate={mutate}
-            setGlobalError={setGlobalError}
-          />
+      <ReviewDocumentsAppointmentForm
+        processConfig={processConfig}
+        process={process}
+        mutate={mutate}
+        setGlobalError={setGlobalError}
+        optional={optional}
+      />
 
+      {!optional?.closeProcessReason && !optional?.closeCase && (
+        <>
           <div style={{ paddingBottom: 35 }} />
 
           <Formik<ReviewDocumentsFormData>

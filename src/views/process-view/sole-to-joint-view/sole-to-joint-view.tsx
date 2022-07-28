@@ -357,6 +357,7 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
       )}
 
       {!closeProcessReason &&
+        !closeCase &&
         reviewDocumentsStates.includes(process.currentState.state) && (
           <CloseCaseButton setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
         )}

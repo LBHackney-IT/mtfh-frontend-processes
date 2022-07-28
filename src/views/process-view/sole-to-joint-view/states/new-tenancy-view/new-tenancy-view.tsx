@@ -18,6 +18,7 @@ import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
   Box,
   Button,
+  Checkbox,
   Heading,
   Link,
   StatusBox,
@@ -52,6 +53,8 @@ export const NewTenancyView = ({
   const [needAppointment, setNeedAppointment] = useState<boolean>(
     hoApprovalPassed.state === process.currentState.state,
   );
+  const [appointmentTrigger, setAppointmentTrigger] = useState<string>("");
+
   const {
     closeCase,
     setCloseCase,
@@ -142,10 +145,11 @@ export const NewTenancyView = ({
           processState.state,
         ) && (
           <AppointmentDetails
-            currentState={processState}
-            previousStates={process.previousStates}
+            processConfig={processConfig}
+            process={process}
             needAppointment={needAppointment}
             setNeedAppointment={setNeedAppointment}
+            setAppointmentTrigger={setAppointmentTrigger}
             closeCase={
               closeCase ||
               [processCancelled.state, processClosed.state].includes(currentState.state)
@@ -169,6 +173,24 @@ export const NewTenancyView = ({
         ) &&
         tenant && <ContactDetails fullName={tenant.fullName} personId={tenant.id} />}
 
+      {(![
+        tenureAppointmentScheduled.state,
+        tenureAppointmentRescheduled.state,
+        processClosed.state,
+        processCancelled.state,
+        tenureUpdated.state,
+      ].includes(currentState.state) ||
+        needAppointment) &&
+        !closeCase && (
+          <Checkbox
+            id="condition"
+            checked={needAppointment}
+            onChange={() => setNeedAppointment(!needAppointment)}
+          >
+            {locale.views.reviewDocuments.checkSupportingDocumentsAppointment}
+          </Checkbox>
+        )}
+
       {!closeProcessReason && (
         <AppointmentForm
           process={process}
@@ -176,6 +198,7 @@ export const NewTenancyView = ({
           needAppointment={needAppointment}
           setGlobalError={setGlobalError}
           setNeedAppointment={setNeedAppointment}
+          appointmentTrigger={appointmentTrigger}
           options={{
             buttonText: "Continue",
             requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,

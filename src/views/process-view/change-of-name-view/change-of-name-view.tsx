@@ -281,7 +281,8 @@ export const ChangeOfNameView = ({
         setGlobalError={setGlobalError}
       />
 
-      {(closeProcessReason ||
+      {(closeCase ||
+        closeProcessReason ||
         [hoApprovalFailed.state, processClosed.state, processCancelled.state].includes(
           process.currentState.state,
         )) && (

@@ -295,11 +295,7 @@ describe("ho-review-view", () => {
       />,
       options,
     );
-    await userEvent.click(
-      screen.getByLabelText(locale.views.hoReviewView.makeAppointment, {
-        exact: false,
-      }),
-    );
+    await userEvent.click(screen.getByText("Office appointment missed - reschedule"));
     await typeDateTime(screen, userEvent, "2099");
     await userEvent.click(screen.getByText(locale.confirm));
     expect(editProcessSpy).toHaveBeenCalledWith(
@@ -336,11 +332,7 @@ describe("ho-review-view", () => {
       />,
       options,
     );
-    await userEvent.click(
-      screen.getByLabelText(locale.views.hoReviewView.makeAppointment, {
-        exact: false,
-      }),
-    );
+    await userEvent.click(screen.getByText(locale.change));
     await typeDateTime(screen, userEvent, "2099");
     await userEvent.click(screen.getByText(locale.confirm));
     expect(editProcessSpy).toHaveBeenCalledWith(

@@ -33,10 +33,11 @@ describe("appointment-details-component", () => {
     });
     const { container } = render(
       <AppointmentDetails
-        currentState={process.currentState}
-        previousStates={process.previousStates}
-        needAppointment
+        processConfig={processes.soletojoint}
+        process={process}
+        needAppointment={false}
         setNeedAppointment={setNeedAppointment}
+        setAppointmentTrigger={() => {}}
         options={options}
       />,
     );
@@ -50,10 +51,11 @@ describe("appointment-details-component", () => {
     });
     render(
       <AppointmentDetails
-        currentState={process.currentState}
-        previousStates={process.previousStates}
-        needAppointment
+        processConfig={processes.soletojoint}
+        process={process}
+        needAppointment={false}
         setNeedAppointment={setNeedAppointment}
+        setAppointmentTrigger={() => {}}
         options={options}
       />,
     );
@@ -84,10 +86,11 @@ describe("appointment-details-component", () => {
     };
     const { container } = render(
       <AppointmentDetails
-        currentState={process.currentState}
-        previousStates={process.previousStates}
-        needAppointment
+        processConfig={processes.soletojoint}
+        process={process}
+        needAppointment={false}
         setNeedAppointment={setNeedAppointment}
+        setAppointmentTrigger={() => {}}
         options={options}
       />,
     );
@@ -120,10 +123,11 @@ describe("appointment-details-component", () => {
     };
     render(
       <AppointmentDetails
-        currentState={process.currentState}
-        previousStates={process.previousStates}
-        needAppointment
+        processConfig={processes.soletojoint}
+        process={process}
+        needAppointment={false}
         setNeedAppointment={setNeedAppointment}
+        setAppointmentTrigger={() => {}}
         closeCase={false}
         setCloseCase={setCloseCase}
         options={{
@@ -132,7 +136,9 @@ describe("appointment-details-component", () => {
         }}
       />,
     );
-    await userEvent.click(screen.getByText(locale.components.appointment.closeCase));
+    await userEvent.click(
+      screen.getByText(locale.components.appointment.missedCloseCase),
+    );
     expect(setCloseCase.mock.calls.length).toBe(1);
   });
 });

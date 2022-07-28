@@ -6,7 +6,7 @@ exports[`appointment-details-component it renders rescheduled appointment detail
     class="mtfh-box"
   >
     <div
-      class="mtfh-status-heading"
+      class="mtfh-status-box"
     >
       <svg
         fill="none"
@@ -28,30 +28,34 @@ exports[`appointment-details-component it renders rescheduled appointment detail
           fill="#0B0C0C"
         />
       </svg>
-      <h4
-        class="lbh-heading-h4 mtfh-status-heading__title"
-      >
-        Office appointment missed
-      </h4>
+      <div>
+        <div
+          class="mtfh-status-heading__title"
+        >
+          <h4
+            class="lbh-heading-h4"
+          >
+            Office appointment missed
+          </h4>
+        </div>
+        <p
+          class="lbh-body-m"
+          style="margin-top: 15px;"
+        >
+          Date: 
+          Tuesday 12th October 2010
+          <br />
+          Time: 
+          08:59 am
+        </p>
+      </div>
     </div>
-    <p
-      class="lbh-body-m"
-      style="margin-left: 60px;"
-    >
-      Date:
-       
-      Tuesday 12th October 2010
-      <br />
-      Time:
-       
-      08:59 am
-    </p>
   </div>
   <div
     class="mtfh-box"
   >
     <div
-      class="mtfh-status-heading"
+      class="mtfh-status-box"
     >
       <svg
         fill="none"
@@ -73,29 +77,38 @@ exports[`appointment-details-component it renders rescheduled appointment detail
           fill="#0B0C0C"
         />
       </svg>
-      <h4
-        class="lbh-heading-h4 mtfh-status-heading__title"
-      >
-        Office appointment scheduled
-      </h4>
+      <div>
+        <div
+          class="mtfh-status-heading__title"
+        >
+          <h4
+            class="lbh-heading-h4"
+          >
+            Office appointment scheduled
+          </h4>
+        </div>
+        <p
+          class="lbh-body-m"
+          style="margin-top: 15px;"
+        >
+          Date: 
+          Monday 12th October 2099
+          <br />
+          Time: 
+          08:59 am
+        </p>
+        <div
+          style="display: flex; flex-direction: column; align-items: flex-start; margin-top: 15px;"
+        >
+          <button
+            class="govuk-link lbh-link"
+            type="button"
+          >
+            Change
+          </button>
+        </div>
+      </div>
     </div>
-    <p
-      class="lbh-body-m"
-      style="margin-left: 60px;"
-    >
-      Date: 
-      Monday 12th October 2099
-      <br />
-      Time: 
-      08:59 am
-    </p>
-    <button
-      class="govuk-link lbh-link"
-      style="margin-left: 60px;"
-      type="button"
-    >
-      Change
-    </button>
   </div>
 </div>
 `;
@@ -106,7 +119,7 @@ exports[`appointment-details-component it renders scheduled appointment details 
     class="mtfh-box"
   >
     <div
-      class="mtfh-status-heading"
+      class="mtfh-status-box"
     >
       <svg
         fill="none"
@@ -128,29 +141,38 @@ exports[`appointment-details-component it renders scheduled appointment details 
           fill="#0B0C0C"
         />
       </svg>
-      <h4
-        class="lbh-heading-h4 mtfh-status-heading__title"
-      >
-        Office appointment scheduled
-      </h4>
+      <div>
+        <div
+          class="mtfh-status-heading__title"
+        >
+          <h4
+            class="lbh-heading-h4"
+          >
+            Office appointment scheduled
+          </h4>
+        </div>
+        <p
+          class="lbh-body-m"
+          style="margin-top: 15px;"
+        >
+          Date: 
+          Monday 12th October 2099
+          <br />
+          Time: 
+          08:59 am
+        </p>
+        <div
+          style="display: flex; flex-direction: column; align-items: flex-start; margin-top: 15px;"
+        >
+          <button
+            class="govuk-link lbh-link"
+            type="button"
+          >
+            Change
+          </button>
+        </div>
+      </div>
     </div>
-    <p
-      class="lbh-body-m"
-      style="margin-left: 60px;"
-    >
-      Date: 
-      Monday 12th October 2099
-      <br />
-      Time: 
-      08:59 am
-    </p>
-    <button
-      class="govuk-link lbh-link"
-      style="margin-left: 60px;"
-      type="button"
-    >
-      Change
-    </button>
   </div>
 </div>
 `;

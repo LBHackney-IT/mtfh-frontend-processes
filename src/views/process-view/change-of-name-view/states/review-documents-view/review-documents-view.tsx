@@ -57,6 +57,7 @@ export const ReviewDocumentsView = ({
         process={process}
         mutate={mutate}
         setGlobalError={setGlobalError}
+        optional={optional}
       />
 
       {!optional?.closeProcessReason && (
