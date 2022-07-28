@@ -240,7 +240,9 @@ const locale = {
     appointment: {
       scheduled: "Office appointment scheduled",
       missed: "Office appointment missed",
-      closeCase: "Office appointment missed - close case",
+      notHappened: "Office appointment did not happen",
+      missedReschedule: "Office appointment missed - reschedule",
+      missedCloseCase: "Office appointment missed - close case",
     },
   },
 };

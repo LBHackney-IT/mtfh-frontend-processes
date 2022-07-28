@@ -221,7 +221,6 @@ export const HoReviewView = ({
                             setFieldValue("minute", "");
                             setFieldValue("amPm", "");
                             setFieldValue("hoRecommendation", "");
-                            setNeedAppointment(false);
                           }
                         }}
                       >

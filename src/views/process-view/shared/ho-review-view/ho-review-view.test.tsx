@@ -295,7 +295,9 @@ describe("ho-review-view", () => {
       />,
       options,
     );
-    await userEvent.click(screen.getByText("Office appointment missed - reschedule"));
+    await userEvent.click(
+      screen.getByText(locale.components.appointment.missedReschedule),
+    );
     await typeDateTime(screen, userEvent, "2099");
     await userEvent.click(screen.getByText(locale.confirm));
     expect(editProcessSpy).toHaveBeenCalledWith(
