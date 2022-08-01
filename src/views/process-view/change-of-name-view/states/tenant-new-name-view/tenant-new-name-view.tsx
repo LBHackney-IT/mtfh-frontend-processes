@@ -1,6 +1,9 @@
 import { Form, Formik } from "formik";
-import * as Yup from "yup";
 
+import {
+  TenantNewNameFormData,
+  tenantNewNameSchema,
+} from "../../../../../schemas/change-of-name/tenant-new-name";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 
@@ -8,12 +11,15 @@ import { PersonTitle } from "@mtfh/common/lib/api/person/v1";
 import { Process, editProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Button,
+  Center,
   Field,
   FormGroup,
   Heading,
   Input,
   Select,
+  Spinner,
 } from "@mtfh/common/lib/components";
+import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
 import "./styles.scss";
 
@@ -23,29 +29,29 @@ interface TenantNewNameViewProps {
   setGlobalError: any;
 }
 
-export const schema = Yup.object({
-  title: Yup.string().required(),
-  firstName: Yup.string().required(),
-  middleName: Yup.string().optional(),
-  surname: Yup.string().required(),
-});
-
-export type FormData = Yup.Asserts<typeof schema>;
-
 export const TenantNewNameView = ({
   process,
   mutate,
   setGlobalError,
 }: TenantNewNameViewProps) => {
+  const errorMessages = useErrorCodes();
+
+  if (!errorMessages) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
   return (
     <div data-testid="changeofname-EnterNewName">
       <Heading variant="h3">Enter tenant's new name</Heading>
-      <Formik<FormData>
+      <Formik<TenantNewNameFormData>
         initialValues={{ title: "", firstName: "", middleName: "", surname: "" }}
         validateOnChange={false}
         validateOnBlur={false}
-        validationSchema={schema}
-        isInitialValid={false}
+        validationSchema={tenantNewNameSchema(errorMessages)}
         onSubmit={async (data) => {
           try {
             await editProcess({
@@ -69,7 +75,7 @@ export const TenantNewNameView = ({
       >
         {({ dirty, isSubmitting, validateForm }) => {
           return (
-            <Form id="person-form" className="mtfh-person-form">
+            <Form id="person-form" className="mtfh-person-form" noValidate>
               <FormGroup id="person-form-new-tenant-name" name="new-tenant-name">
                 <>
                   <Field

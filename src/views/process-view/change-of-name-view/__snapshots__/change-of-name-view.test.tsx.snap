@@ -253,6 +253,7 @@ exports[`changeofname/change-of-name-view it renders ChangeOfNameView correctly 
       action="#"
       class="mtfh-person-form"
       id="person-form"
+      novalidate=""
     >
       <div
         class="govuk-form-group lbh-form-group"
@@ -377,7 +378,7 @@ exports[`changeofname/change-of-name-view it renders ChangeOfNameView correctly 
             class="govuk-input lbh-input"
             id="person-form-middleName-field"
             name="middleName"
-            placeholder="Enter Middle name"
+            placeholder="Enter middle name"
             value=""
           />
         </div>

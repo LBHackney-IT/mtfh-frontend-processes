@@ -36,7 +36,7 @@ const locale = {
       firstName: "First name",
       firstNamePlaceholder: "Enter first name",
       middleName: "Middle name",
-      middleNamePlaceholder: "Enter Middle name",
+      middleNamePlaceholder: "Enter middle name",
       surname: "Last name",
       surnamePlaceholder: "Enter last name",
     },

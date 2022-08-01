@@ -53,6 +53,9 @@ describe("changeofname/change-of-name-view", () => {
     await expect(
       screen.findByText(`${mockPersonV1.firstName} ${mockPersonV1.surname}`),
     ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByTestId("changeofname-EnterNewName"),
+    ).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
