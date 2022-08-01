@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
   }
-  &__start-button {
+  &__actions > &__start-button {
     margin-right: 2rem;
     margin-top: 0;
   }
