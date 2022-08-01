@@ -46,6 +46,9 @@ describe("changeofname/tenant-new-name-view", () => {
       />,
       options,
     );
+    await expect(
+      screen.findByTestId("changeofname-EnterNewName"),
+    ).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 
@@ -72,17 +75,21 @@ describe("changeofname/tenant-new-name-view", () => {
     expect(nextButton).toBeDisabled();
 
     await user.type(screen.getByPlaceholderText("Enter first name"), "t");
+    await user.type(screen.getByPlaceholderText("Enter middle name"), "t$");
     expect(nextButton).not.toBeDisabled();
 
     await user.click(nextButton);
     await expect(
-      screen.findByText("title is a required field"),
+      screen.findByText(commonLocale.hooks.defaultErrorMessages.W5),
     ).resolves.toBeInTheDocument();
     await expect(
-      screen.queryByText("firstName is a required field"),
+      screen.queryByText(commonLocale.hooks.defaultErrorMessages.W15),
     ).not.toBeInTheDocument();
     await expect(
-      screen.findByText("surname is a required field"),
+      screen.queryByText(commonLocale.hooks.defaultErrorMessages.W8),
+    ).toBeInTheDocument();
+    await expect(
+      screen.findByText(commonLocale.hooks.defaultErrorMessages.W16),
     ).resolves.toBeInTheDocument();
   });
 

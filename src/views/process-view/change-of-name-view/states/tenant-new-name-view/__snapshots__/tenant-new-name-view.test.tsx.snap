@@ -14,6 +14,7 @@ exports[`changeofname/tenant-new-name-view it renders TenantNewNameView correctl
       action="#"
       class="mtfh-person-form"
       id="person-form"
+      novalidate=""
     >
       <div
         class="govuk-form-group lbh-form-group"
@@ -50,7 +51,7 @@ exports[`changeofname/tenant-new-name-view it renders TenantNewNameView correctl
             <option
               value=""
             >
-              Select Title
+              Select a title
             </option>
             <option
               value="Mr"
@@ -138,7 +139,7 @@ exports[`changeofname/tenant-new-name-view it renders TenantNewNameView correctl
             class="govuk-input lbh-input"
             id="person-form-middleName-field"
             name="middleName"
-            placeholder="Enter Middle name"
+            placeholder="Enter middle name"
             value=""
           />
         </div>
