@@ -32,7 +32,7 @@ const locale = {
   views: {
     person: {
       title: "Title",
-      titlePlaceholder: "Select Title",
+      titlePlaceholder: "Select a title",
       firstName: "First name",
       firstNamePlaceholder: "Enter first name",
       middleName: "Middle name",

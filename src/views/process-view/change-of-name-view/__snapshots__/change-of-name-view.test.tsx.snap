@@ -290,7 +290,7 @@ exports[`changeofname/change-of-name-view it renders ChangeOfNameView correctly 
             <option
               value=""
             >
-              Select Title
+              Select a title
             </option>
             <option
               value="Mr"

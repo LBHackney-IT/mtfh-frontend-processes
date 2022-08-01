@@ -51,7 +51,7 @@ exports[`changeofname/tenant-new-name-view it renders TenantNewNameView correctl
             <option
               value=""
             >
-              Select Title
+              Select a title
             </option>
             <option
               value="Mr"
