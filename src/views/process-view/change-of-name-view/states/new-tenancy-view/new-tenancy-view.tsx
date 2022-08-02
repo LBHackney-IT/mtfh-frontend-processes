@@ -41,7 +41,7 @@ export const NewTenancyView = ({
   );
   const [appointmentTrigger, setAppointmentTrigger] = useState<string>("");
   const [documentsSigned, setDocumentsSigned] = useState<boolean>();
-  const { closeCase, setCloseCase, person, closeProcessReason } = optional;
+  const { setCloseProcessDialogOpen, person, closeProcessReason } = optional;
 
   const isProcessClosed = [processClosed.state, processCancelled.state].includes(
     currentState.state,
@@ -55,7 +55,7 @@ export const NewTenancyView = ({
 
   return (
     <div data-testid="changeofname-new-tenancy-view">
-      {!closeProcessReason && !closeCase && !isProcessClosed && (
+      {!closeProcessReason && !isProcessClosed && (
         <>
           {!documentsSigned && (
             <Heading variant="h2">
@@ -83,14 +83,11 @@ export const NewTenancyView = ({
             needAppointment={needAppointment}
             setNeedAppointment={setNeedAppointment}
             setAppointmentTrigger={setAppointmentTrigger}
-            closeCase={
-              closeCase ||
-              [processCancelled.state, processClosed.state].includes(
-                currentState.state,
-              ) ||
-              closeProcessReason
+            closeProcessReason={
+              closeProcessReason ||
+              [processCancelled.state, processClosed.state].includes(currentState.state)
             }
-            setCloseCase={setCloseCase}
+            setCloseProcessDialogOpen={setCloseProcessDialogOpen}
             options={{
               requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
               rescheduleAppointmentTrigger: Trigger.RescheduleTenureAppointment,
@@ -102,7 +99,6 @@ export const NewTenancyView = ({
         )}
 
       {!documentsSigned &&
-        !closeCase &&
         !closeProcessReason &&
         !isProcessClosed &&
         currentState.state !== nameUpdated.state &&
@@ -118,7 +114,6 @@ export const NewTenancyView = ({
       ) ||
         needAppointment) &&
         !closeProcessReason &&
-        !closeCase &&
         !isProcessClosed && (
           <Checkbox
             id="condition"
@@ -149,7 +144,6 @@ export const NewTenancyView = ({
 
       {!documentsSigned &&
         !closeProcessReason &&
-        !closeCase &&
         [tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
           process.currentState.state,
         ) &&

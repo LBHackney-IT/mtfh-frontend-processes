@@ -26,6 +26,7 @@ export const ReviewDocumentsAppointmentForm = ({
 }: ReviewDocumentsAppointmentFormProps): JSX.Element => {
   const [needAppointment, setNeedAppointment] = useState<boolean>(false);
   const [appointmentTrigger, setAppointmentTrigger] = useState<string>("");
+  const { closeProcessReason, setCloseProcessDialogOpen } = optional;
 
   const { states } = processConfig;
   const processState = [
@@ -46,8 +47,8 @@ export const ReviewDocumentsAppointmentForm = ({
           needAppointment={needAppointment}
           setNeedAppointment={setNeedAppointment}
           setAppointmentTrigger={setAppointmentTrigger}
-          closeCase={optional.closeCase || optional.closeProcessReason}
-          setCloseCase={optional.setCloseCase}
+          closeProcessReason={closeProcessReason}
+          setCloseProcessDialogOpen={setCloseProcessDialogOpen}
           options={{
             requestAppointmentTrigger: Trigger.RequestDocumentsAppointment,
             rescheduleAppointmentTrigger: Trigger.RescheduleDocumentsAppointment,

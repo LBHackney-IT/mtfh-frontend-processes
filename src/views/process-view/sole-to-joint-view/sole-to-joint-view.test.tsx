@@ -80,7 +80,6 @@ test("it renders sidebar buttons correctly", async () => {
         currentState: { ...mockProcessV1.currentState, state: "UnknownState" },
       }}
       submitted={false}
-      closeCase={false}
       setCloseProcessDialogOpen={() => {}}
       setCancel={() => {}}
     />,

@@ -99,7 +99,7 @@ describe("appointment-details-component", () => {
   });
 
   test("it renders rescheduled appointment details with cancel process correctly", async () => {
-    const setCloseCase = jest.fn();
+    const setCloseProcessDialogOpen = jest.fn();
     const process = {
       ...mockDocumentsAppointmentRescheduled({
         appointmentDateTime: "2010-10-17T08:59:00.000Z",
@@ -128,8 +128,7 @@ describe("appointment-details-component", () => {
         needAppointment={false}
         setNeedAppointment={setNeedAppointment}
         setAppointmentTrigger={() => {}}
-        closeCase={false}
-        setCloseCase={setCloseCase}
+        setCloseProcessDialogOpen={setCloseProcessDialogOpen}
         options={{
           ...options,
           closeCaseButton: true,
@@ -139,6 +138,6 @@ describe("appointment-details-component", () => {
     await userEvent.click(
       screen.getByText(locale.components.appointment.missedCloseCase),
     );
-    expect(setCloseCase.mock.calls.length).toBe(1);
+    expect(setCloseProcessDialogOpen.mock.calls.length).toBe(1);
   });
 });

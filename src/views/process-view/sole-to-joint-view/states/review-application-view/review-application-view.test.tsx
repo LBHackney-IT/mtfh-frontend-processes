@@ -14,9 +14,7 @@ import { SoleToJointView } from "../../sole-to-joint-view";
 import { ReviewApplicationView } from "./review-application-view";
 
 let submitted = false;
-let closeCase = false;
 const setSubmitted = () => {};
-const setCloseCase = () => {};
 
 const options = {
   url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -27,7 +25,6 @@ describe("tenure-investigation-view", () => {
   beforeEach(() => {
     jest.resetModules();
     submitted = false;
-    closeCase = false;
   });
 
   test("it renders ReviewApplication view correctly for ApplicationSubmitted state", async () => {
@@ -40,7 +37,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -63,7 +60,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -84,7 +81,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -96,7 +93,6 @@ describe("tenure-investigation-view", () => {
   });
 
   test("it renders ReviewApplication view correctly for close case", async () => {
-    closeCase = true;
     server.use(getContactDetailsV2(mockContactDetailsV2));
     render(
       <SoleToJointView
@@ -127,7 +123,7 @@ describe("tenure-investigation-view", () => {
           ],
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted, closeProcessReason: "Test" }}
       />,
       options,
     );
@@ -159,7 +155,7 @@ describe("tenure-investigation-view", () => {
           ],
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );

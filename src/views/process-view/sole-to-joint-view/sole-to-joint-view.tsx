@@ -85,7 +85,12 @@ const components = {
   [processClosed.state]: CheckEligibilityView,
 };
 
-const getActiveStep = (process: any, states, submitted: boolean, closeCase: boolean) => {
+const getActiveStep = (
+  process: any,
+  states,
+  submitted: boolean,
+  closeProcessReason?: string,
+) => {
   const {
     currentState: { state },
   } = process;
@@ -168,7 +173,7 @@ const getActiveStep = (process: any, states, submitted: boolean, closeCase: bool
     ].includes(state) ||
     (states.applicationSubmitted.state === state && submitted)
   ) {
-    if (closeCase) {
+    if (closeProcessReason) {
       return 7;
     }
     return 6;
@@ -189,12 +194,12 @@ export const SoleToJointSideBar = (props: ProcessSideBarProps) => {
       currentState: { state },
     },
     submitted = false,
-    closeCase = false,
+    closeProcessReason,
     setCloseProcessDialogOpen,
     setCancel,
   } = props;
 
-  let activeStep = getActiveStep(process, states, submitted, closeCase);
+  let activeStep = getActiveStep(process, states, submitted, closeProcessReason);
   let steps: JSX.Element[];
   let startIndex = 0;
   if (activeStep > 6 || (!submitted && activeStep === 6)) {
@@ -240,7 +245,7 @@ export const SoleToJointSideBar = (props: ProcessSideBarProps) => {
         states.hoApprovalPassed.state,
         states.tenureAppointmentScheduled.state,
       ].includes(state) ||
-        (states.tenureAppointmentRescheduled.state === state && !closeCase)) && (
+        (states.tenureAppointmentRescheduled.state === state && !closeProcessReason)) && (
         <Button
           variant="secondary"
           onClick={() => {
@@ -302,8 +307,6 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
     closeProcessReason,
     submitted,
     setSubmitted,
-    closeCase,
-    setCloseCase,
     setCloseProcessDialogOpen,
     isCancel,
   } = optional;
@@ -331,14 +334,12 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
         optional={{
           submitted,
           setSubmitted,
-          closeCase,
-          setCloseCase,
           closeProcessReason,
+          setCloseProcessDialogOpen,
         }}
       />
 
-      {(closeCase ||
-        closeProcessReason ||
+      {(closeProcessReason ||
         [
           processClosed.state,
           processCancelled.state,
@@ -357,7 +358,6 @@ export const SoleToJointView = ({ process, mutate, optional }: ProcessComponentP
       )}
 
       {!closeProcessReason &&
-        !closeCase &&
         reviewDocumentsStates.includes(process.currentState.state) && (
           <CloseCaseButton setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
         )}

@@ -42,7 +42,6 @@ export const ProcessLayout = (): JSX.Element => {
   const [isCloseProcessDialogOpen, setCloseProcessDialogOpen] = useState<boolean>(false); // used by Close Case button
   const [isCancel, setCancel] = useState<boolean>(false); // used by Cancel Process button
   const [submitted, setSubmitted] = useState<boolean>(false); // used at Finish pages
-  const [closeCase, setCloseCase] = useState<boolean>(false); // used to show Close Process view
   const processConfig = processName && processes[processName];
   const { states } = processConfig || {};
   const { processClosed } = states || {};
@@ -116,7 +115,7 @@ export const ProcessLayout = (): JSX.Element => {
         <Sidebar
           process={process}
           submitted={submitted}
-          closeCase={closeCase}
+          closeProcessReason={closeProcessReason}
           setCloseProcessDialogOpen={setCloseProcessDialogOpen}
           setCancel={setCancel}
         />
@@ -129,8 +128,6 @@ export const ProcessLayout = (): JSX.Element => {
         optional={{
           submitted,
           setSubmitted,
-          closeCase,
-          setCloseCase,
           isCancel,
           setCancel,
           setCloseProcessDialogOpen,

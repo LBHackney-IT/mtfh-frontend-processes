@@ -13,15 +13,12 @@ import { locale, processes } from "../../../../../services";
 import { ReviewApplicationView } from "../review-application-view/review-application-view";
 
 let submitted = false;
-let closeCase = false;
 const setSubmitted = () => {};
-const setCloseCase = () => {};
 
 describe("tenure-investigation-view", () => {
   beforeEach(() => {
     jest.resetModules();
     submitted = false;
-    closeCase = false;
   });
 
   test("it renders ReviewApplication view correctly for ApplicationSubmitted state", async () => {
@@ -34,7 +31,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -59,7 +56,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -95,7 +92,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",

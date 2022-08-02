@@ -16,9 +16,7 @@ import { ChangeOfNameView } from "../../change-of-name-view";
 import { NewTenancyView } from "./new-tenancy-view";
 
 let submitted = false;
-let closeCase = false;
 const setSubmitted = () => {};
-const setCloseCase = () => {};
 
 const options = {
   url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -45,7 +43,6 @@ describe("tenure-investigation-view", () => {
   beforeEach(() => {
     jest.resetModules();
     submitted = false;
-    closeCase = false;
   });
 
   test("it renders NewTenancy view correctly for state=HOApprovalPassed", async () => {
@@ -66,8 +63,6 @@ describe("tenure-investigation-view", () => {
         optional={{
           submitted,
           setSubmitted,
-          closeCase,
-          setCloseCase,
           person: mockPersonV1,
         }}
       />,
@@ -95,8 +90,6 @@ describe("tenure-investigation-view", () => {
         optional={{
           submitted,
           setSubmitted,
-          closeCase,
-          setCloseCase,
           person: mockPersonV1,
           closeProcessReason: "Test",
         }}
@@ -117,7 +110,7 @@ describe("tenure-investigation-view", () => {
           processName: "changeofname",
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -143,8 +136,6 @@ describe("tenure-investigation-view", () => {
         optional={{
           submitted,
           setSubmitted,
-          closeCase,
-          setCloseCase,
           closeProcessReason: "Test",
         }}
       />,
@@ -163,7 +154,7 @@ describe("tenure-investigation-view", () => {
           processName: "changeofname",
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -215,7 +206,7 @@ describe("tenure-investigation-view", () => {
           ],
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
