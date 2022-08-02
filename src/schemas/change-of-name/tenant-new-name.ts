@@ -5,13 +5,13 @@ export const tenantNewNameSchema = (errorMessages: Record<string, string>) =>
     title: Yup.string().required(errorMessages.W5),
     firstName: Yup.string()
       .matches(/^[a-zA-Z\s]*$/, errorMessages.W8)
-      .required(errorMessages.W15),
+      .required(errorMessages.W56),
     middleName: Yup.string()
       .matches(/^[a-zA-Z\s]*$/, errorMessages.W8)
       .optional(),
     surname: Yup.string()
       .matches(/^[a-zA-Z\s]*$/, errorMessages.W8)
-      .required(errorMessages.W16),
+      .required(errorMessages.W57),
   });
 
 export type TenantNewNameFormData = Yup.Asserts<ReturnType<typeof tenantNewNameSchema>>;
