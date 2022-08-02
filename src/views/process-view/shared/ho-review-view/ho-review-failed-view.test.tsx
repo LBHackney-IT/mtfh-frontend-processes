@@ -12,13 +12,9 @@ import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 import { locale, processes } from "../../../../services";
 import { ReviewApplicationView } from "../../sole-to-joint-view/states/review-application-view/review-application-view";
 
-let closeCase = false;
-const setCloseCase = () => {};
-
 describe("ho-review-failed-view", () => {
   beforeEach(() => {
     jest.resetModules();
-    closeCase = false;
   });
 
   test("it renders ReviewApplication view correctly for HOApprovalFailed state", async () => {
@@ -41,7 +37,7 @@ describe("ho-review-failed-view", () => {
           },
         }}
         mutate={() => {}}
-        optional={{ closeCase, setCloseCase }}
+        optional={{}}
       />,
       {
         url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",

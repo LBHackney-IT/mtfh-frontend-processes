@@ -61,7 +61,7 @@ export const HoReviewView = ({
 }: HoReviewViewProps): JSX.Element => {
   const [needAppointment, setNeedAppointment] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  const { tenant, closeProcessReason, closeCase, setCloseCase } = optional;
+  const { tenant, closeProcessReason, setCloseProcessDialogOpen } = optional;
   const { currentState } = process;
   const { interviewScheduled, interviewRescheduled, processClosed, processCancelled } =
     processConfig.states;
@@ -187,8 +187,8 @@ export const HoReviewView = ({
                 setNeedAppointment(value);
               }}
               setAppointmentTrigger={setAppointmentTrigger}
-              closeCase={closeCase || closeProcessReason}
-              setCloseCase={setCloseCase}
+              closeProcessReason={closeProcessReason}
+              setCloseProcessDialogOpen={setCloseProcessDialogOpen}
               options={{
                 requestAppointmentTrigger: Trigger.ScheduleInterview,
                 rescheduleAppointmentTrigger: Trigger.RescheduleInterview,
@@ -198,7 +198,7 @@ export const HoReviewView = ({
             />
           )}
 
-          {!closeProcessReason && !closeCase && (
+          {!closeProcessReason && (
             <Form noValidate>
               <Field id="choice" name="choice" label="" type="radio">
                 <RadioGroup>

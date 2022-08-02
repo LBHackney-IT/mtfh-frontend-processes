@@ -15,8 +15,8 @@ interface AppointmentDetailsProps {
   needAppointment: boolean;
   setNeedAppointment: any;
   setAppointmentTrigger: any;
-  closeCase?: boolean;
-  setCloseCase?: any;
+  closeProcessReason?: boolean;
+  setCloseProcessDialogOpen?: any;
   options: {
     requestAppointmentTrigger: string;
     rescheduleAppointmentTrigger: string;
@@ -32,8 +32,8 @@ export const AppointmentDetails = ({
   needAppointment,
   setNeedAppointment,
   setAppointmentTrigger,
-  closeCase = false,
-  setCloseCase,
+  closeProcessReason,
+  setCloseProcessDialogOpen,
   options,
 }: AppointmentDetailsProps): JSX.Element => {
   const { processClosed, processCancelled } = processConfig.states;
@@ -46,14 +46,14 @@ export const AppointmentDetails = ({
   useMemo(() => {
     if (isReschedule && needAppointment) {
       setStatusTitle(locale.components.appointment.notHappened);
-    } else if ((isMissed && needAppointment) || closeCase) {
+    } else if ((isMissed && needAppointment) || closeProcessReason) {
       setStatusTitle(locale.components.appointment.missed);
     } else {
       setReschedule(false);
       setMissed(false);
       setStatusTitle(locale.components.appointment.scheduled);
     }
-  }, [isReschedule, isMissed, needAppointment, closeCase]);
+  }, [isReschedule, isMissed, needAppointment, closeProcessReason]);
 
   const isAppointmentState = (state) =>
     [options.appointmentRequestedState, options.appointmentRescheduledState].includes(
@@ -108,7 +108,7 @@ export const AppointmentDetails = ({
             }
           />
 
-          {!closeCase && !isReschedule && !isMissed && !needAppointment && (
+          {!closeProcessReason && !isReschedule && !isMissed && !needAppointment && (
             <div
               style={{
                 display: "flex",
@@ -161,7 +161,7 @@ export const AppointmentDetails = ({
                   <LinkButton
                     style={{ marginTop: 15, textAlign: "start" }}
                     onClick={() => {
-                      setCloseCase(true);
+                      setCloseProcessDialogOpen(true);
                       setMissed(true);
                     }}
                   >

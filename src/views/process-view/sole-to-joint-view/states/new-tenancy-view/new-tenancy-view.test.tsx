@@ -14,9 +14,7 @@ import { locale, processes } from "../../../../../services";
 import { ReviewApplicationView } from "../review-application-view/review-application-view";
 
 let submitted = false;
-let closeCase = false;
 const setSubmitted = () => {};
-const setCloseCase = () => {};
 
 const options = {
   url: "/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -43,7 +41,6 @@ describe("tenure-investigation-view", () => {
   beforeEach(() => {
     jest.resetModules();
     submitted = false;
-    closeCase = false;
   });
 
   test("it renders NewTenancy view correctly for TenureAppointmentScheduled state", async () => {
@@ -57,7 +54,7 @@ describe("tenure-investigation-view", () => {
           processName: "soletojoint",
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -78,7 +75,7 @@ describe("tenure-investigation-view", () => {
         processConfig={processes.soletojoint}
         process={mockTenureAppointmentSchedule("2010-10-12T08:59:00.000Z")}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -140,7 +137,7 @@ describe("tenure-investigation-view", () => {
           ],
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );

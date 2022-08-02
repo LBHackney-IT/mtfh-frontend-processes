@@ -216,8 +216,6 @@ export const ChangeOfNameView = ({
     closeProcessReason,
     submitted,
     setSubmitted,
-    closeCase,
-    setCloseCase,
     setCloseProcessDialogOpen,
     isCancel,
   } = optional;
@@ -274,15 +272,12 @@ export const ChangeOfNameView = ({
           tenant: person,
           submitted,
           setSubmitted,
-          closeCase,
-          setCloseCase,
           closeProcessReason,
         }}
         setGlobalError={setGlobalError}
       />
 
-      {(closeCase ||
-        closeProcessReason ||
+      {(closeProcessReason ||
         [hoApprovalFailed.state, processClosed.state, processCancelled.state].includes(
           process.currentState.state,
         )) && (
@@ -296,7 +291,6 @@ export const ChangeOfNameView = ({
       )}
 
       {!closeProcessReason &&
-        !closeCase &&
         reviewDocumentsStates.includes(process.currentState.state) && (
           <CloseCaseButton setCloseProcessDialogOpen={setCloseProcessDialogOpen} />
         )}

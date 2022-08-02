@@ -44,8 +44,6 @@ describe("changeofname/change-of-name-view", () => {
           closeProcessReason: "",
           submitted: false,
           setSubmitted: () => {},
-          closeCase: false,
-          setCloseCase: () => {},
         }}
       />,
       options,
@@ -72,8 +70,6 @@ describe("changeofname/change-of-name-view", () => {
           closeProcessReason: "",
           submitted: false,
           setSubmitted: () => {},
-          closeCase: false,
-          setCloseCase: () => {},
         }}
       />,
       options,
@@ -96,8 +92,6 @@ describe("changeofname/change-of-name-view", () => {
           closeProcessReason: "",
           submitted: false,
           setSubmitted: () => {},
-          closeCase: false,
-          setCloseCase: () => {},
         }}
       />,
       options,
@@ -120,8 +114,6 @@ describe("changeofname/change-of-name-view", () => {
           closeProcessReason: "Test",
           submitted: false,
           setSubmitted: () => {},
-          closeCase: false,
-          setCloseCase: () => {},
         }}
       />,
       options,
@@ -146,8 +138,6 @@ describe("changeofname/change-of-name-view", () => {
             closeProcessReason: "Test",
             submitted: false,
             setSubmitted: () => {},
-            closeCase: false,
-            setCloseCase: () => {},
           }}
         />,
         options,
@@ -204,8 +194,6 @@ describe("changeofname/change-of-name-view", () => {
             closeProcessReason: "",
             submitted: false,
             setSubmitted: () => {},
-            closeCase: false,
-            setCloseCase: () => {},
             setCancel,
             setCloseProcessDialogOpen,
           }}
@@ -357,7 +345,7 @@ describe("changeofname/change-of-name-view", () => {
             currentState: { ...mockProcessV1.currentState, state: "UnknownState" },
           }}
           submitted={false}
-          closeCase={false}
+          closeProcessReason=""
           setCloseProcessDialogOpen={setCloseProcessDialogOpen}
           setCancel={setCancel}
         />,
@@ -374,7 +362,7 @@ describe("changeofname/change-of-name-view", () => {
             currentState: { ...mockProcessV1.currentState, state: "NameSubmitted" },
           }}
           submitted={false}
-          closeCase={false}
+          closeProcessReason=""
           setCloseProcessDialogOpen={setCloseProcessDialogOpen}
           setCancel={setCancel}
         />,
@@ -398,7 +386,7 @@ describe("changeofname/change-of-name-view", () => {
             },
           }}
           submitted
-          closeCase={false}
+          closeProcessReason=""
           setCloseProcessDialogOpen={setCloseProcessDialogOpen}
           setCancel={setCancel}
         />,
@@ -422,7 +410,7 @@ describe("changeofname/change-of-name-view", () => {
             },
           }}
           submitted={false}
-          closeCase={false}
+          closeProcessReason=""
           setCloseProcessDialogOpen={setCloseProcessDialogOpen}
           setCancel={setCancel}
         />,
@@ -444,7 +432,7 @@ describe("changeofname/change-of-name-view", () => {
               currentState: { ...mockProcessV1.currentState, state },
             }}
             submitted={false}
-            closeCase={false}
+            closeProcessReason=""
             setCloseProcessDialogOpen={setCloseProcessDialogOpen}
             setCancel={setCancel}
           />,

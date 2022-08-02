@@ -56,8 +56,7 @@ export const NewTenancyView = ({
   const [appointmentTrigger, setAppointmentTrigger] = useState<string>("");
 
   const {
-    closeCase,
-    setCloseCase,
+    setCloseProcessDialogOpen,
     tenant,
     closeProcessReason,
     documentsSigned,
@@ -114,7 +113,6 @@ export const NewTenancyView = ({
         </Box>
       ) : (
         !closeProcessReason &&
-        !closeCase &&
         ![processClosed.state, processCancelled.state].includes(currentState.state) && (
           <>
             {!documentsSigned && (
@@ -144,11 +142,11 @@ export const NewTenancyView = ({
             needAppointment={needAppointment}
             setNeedAppointment={setNeedAppointment}
             setAppointmentTrigger={setAppointmentTrigger}
-            closeCase={
-              closeCase ||
+            closeProcessReason={
+              closeProcessReason ||
               [processCancelled.state, processClosed.state].includes(currentState.state)
             }
-            setCloseCase={setCloseCase}
+            setCloseProcessDialogOpen={setCloseProcessDialogOpen}
             options={{
               requestAppointmentTrigger: Trigger.ScheduleTenureAppointment,
               rescheduleAppointmentTrigger: Trigger.RescheduleTenureAppointment,
@@ -160,7 +158,6 @@ export const NewTenancyView = ({
         )}
 
       {!documentsSigned &&
-        !closeCase &&
         !closeProcessReason &&
         ![processClosed.state, processCancelled.state, tenureUpdated.state].includes(
           currentState.state,
@@ -174,16 +171,15 @@ export const NewTenancyView = ({
         processCancelled.state,
         tenureUpdated.state,
       ].includes(currentState.state) ||
-        needAppointment) &&
-        !closeCase && (
-          <Checkbox
-            id="condition"
-            checked={needAppointment}
-            onChange={() => setNeedAppointment(!needAppointment)}
-          >
-            {locale.views.reviewDocuments.checkSupportingDocumentsAppointment}
-          </Checkbox>
-        )}
+        needAppointment) && (
+        <Checkbox
+          id="condition"
+          checked={needAppointment}
+          onChange={() => setNeedAppointment(!needAppointment)}
+        >
+          {locale.views.reviewDocuments.checkSupportingDocumentsAppointment}
+        </Checkbox>
+      )}
 
       {!closeProcessReason && (
         <AppointmentForm
@@ -204,7 +200,7 @@ export const NewTenancyView = ({
       )}
 
       {!documentsSigned &&
-        !closeCase &&
+        !closeProcessReason &&
         [tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
           process.currentState.state,
         ) &&

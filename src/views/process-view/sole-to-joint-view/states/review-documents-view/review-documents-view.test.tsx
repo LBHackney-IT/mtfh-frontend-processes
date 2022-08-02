@@ -37,6 +37,7 @@ describe("review-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        optional={{}}
       />,
       options,
     );
@@ -60,6 +61,7 @@ describe("review-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        optional={{}}
       />,
     );
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
@@ -79,6 +81,7 @@ describe("review-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        optional={{}}
       />,
     );
     const checkbox = screen.getByLabelText(
@@ -99,6 +102,7 @@ describe("review-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        optional={{}}
       />,
     );
     await userEvent.click(
@@ -181,6 +185,7 @@ describe("review-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        optional={{}}
       />,
     );
 
@@ -197,6 +202,7 @@ describe("review-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
+        optional={{}}
       />,
     );
     const nextButton = screen.getByText(locale.next);

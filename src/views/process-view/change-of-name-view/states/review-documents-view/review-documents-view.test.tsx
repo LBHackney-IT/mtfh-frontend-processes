@@ -61,6 +61,7 @@ describe("review-documents-view", () => {
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
         setGlobalError={() => {}}
+        optional={{}}
       />,
     );
     await expect(screen.queryByText(locale.bookAppointment)).toBeNull();
@@ -81,6 +82,7 @@ describe("review-documents-view", () => {
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
         setGlobalError={() => {}}
+        optional={{}}
       />,
     );
     const checkbox = screen.getByLabelText(
@@ -185,6 +187,7 @@ describe("review-documents-view", () => {
         process={mockDocumentsRequestedDes}
         mutate={() => {}}
         setGlobalError={() => {}}
+        optional={{}}
       />,
     );
 

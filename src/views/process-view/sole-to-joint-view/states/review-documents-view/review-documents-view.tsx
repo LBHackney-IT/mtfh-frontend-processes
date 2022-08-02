@@ -78,7 +78,7 @@ export const ReviewDocumentsView = ({
         optional={optional}
       />
 
-      {!optional?.closeProcessReason && !optional?.closeCase && (
+      {!optional?.closeProcessReason && (
         <>
           <div style={{ paddingBottom: 35 }} />
 

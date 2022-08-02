@@ -20,9 +20,7 @@ import * as processV1 from "@mtfh/common/lib/api/process/v1/service";
 import commonLocale from "@mtfh/common/lib/locale";
 
 let submitted = false;
-let closeCase = false;
 const setSubmitted = jest.fn();
-const setCloseCase = () => {};
 
 const options = {
   url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -33,7 +31,6 @@ describe("tenure-investigation-view", () => {
   beforeEach(() => {
     jest.resetModules();
     submitted = false;
-    closeCase = false;
   });
 
   test("it renders TenureInvestigation view correctly for ApplicationSubmitted state, submitted=false", async () => {
@@ -48,7 +45,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -82,7 +79,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted: true, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted: true, setSubmitted }}
       />,
       options,
     );
@@ -101,7 +98,7 @@ describe("tenure-investigation-view", () => {
           currentState: { ...mockProcessV1.currentState, state: "ApplicationSubmitted" },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );

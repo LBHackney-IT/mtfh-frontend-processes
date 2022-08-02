@@ -25,16 +25,13 @@ const options = {
 };
 
 let submitted = false;
-let closeCase = false;
 const setSubmitted = () => {};
-const setCloseCase = () => {};
 const setGlobalError = jest.fn();
 
 describe("ho-review-view", () => {
   beforeEach(() => {
     jest.resetModules();
     submitted = false;
-    closeCase = false;
     jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
   });
 
@@ -58,7 +55,7 @@ describe("ho-review-view", () => {
           },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -87,7 +84,7 @@ describe("ho-review-view", () => {
           },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -110,7 +107,7 @@ describe("ho-review-view", () => {
           },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -133,7 +130,7 @@ describe("ho-review-view", () => {
           },
         }}
         mutate={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -157,7 +154,7 @@ describe("ho-review-view", () => {
         }}
         mutate={() => {}}
         setGlobalError={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -206,7 +203,7 @@ describe("ho-review-view", () => {
         }}
         mutate={() => {}}
         setGlobalError={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -250,7 +247,7 @@ describe("ho-review-view", () => {
         }}
         mutate={() => {}}
         setGlobalError={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -291,7 +288,7 @@ describe("ho-review-view", () => {
         }}
         mutate={() => {}}
         setGlobalError={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -330,7 +327,7 @@ describe("ho-review-view", () => {
         }}
         mutate={() => {}}
         setGlobalError={() => {}}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
@@ -360,7 +357,7 @@ describe("ho-review-view", () => {
         }}
         mutate={() => {}}
         setGlobalError={setGlobalError}
-        optional={{ submitted, setSubmitted, closeCase, setCloseCase }}
+        optional={{ submitted, setSubmitted }}
       />,
       options,
     );
