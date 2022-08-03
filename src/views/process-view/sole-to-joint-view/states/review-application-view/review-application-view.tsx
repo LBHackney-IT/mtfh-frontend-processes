@@ -116,7 +116,6 @@ export const ReviewApplicationView = ({
 
       {applicationSubmitted.state === currentState.state && (
         <TenureInvestigationView
-          processConfig={processConfig}
           process={process}
           mutate={mutate}
           setGlobalError={setGlobalError}

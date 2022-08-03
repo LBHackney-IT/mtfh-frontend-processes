@@ -10,6 +10,7 @@ import { screen, waitForElementToBeRemoved } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { locale, processes } from "../../../../../services";
+import { Recommendation } from "../../../../../types";
 import { ReviewApplicationView } from "../review-application-view/review-application-view";
 
 let submitted = false;
@@ -47,7 +48,7 @@ describe("tenure-investigation-view", () => {
     expect(container).toMatchSnapshot();
   });
 
-  test("it enables buttons when checkbox is checked", async () => {
+  test("it enables Confirm button when checkbox is checked", async () => {
     render(
       <ReviewApplicationView
         processConfig={processes.soletojoint}
@@ -66,20 +67,14 @@ describe("tenure-investigation-view", () => {
 
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
 
-    const approve = screen.getByText(locale.views.tenureInvestigation.approve);
-    const appointment = screen.getByText(locale.views.tenureInvestigation.appointment);
-    const decline = screen.getByText(locale.views.tenureInvestigation.decline);
+    const confirm = await screen.findByText(locale.confirm);
     await userEvent.click(
       screen.getByLabelText(
         locale.views.tenureInvestigation.tenureInvestigationCompleted,
       ),
     );
-    expect(approve).toBeEnabled();
-    expect(appointment).toBeEnabled();
-    expect(decline).toBeEnabled();
-    await userEvent.click(approve);
-    await userEvent.click(appointment);
-    await userEvent.click(decline);
+    expect(confirm).toBeEnabled();
+    await userEvent.click(confirm);
   });
 
   test("it renders error if submit fails", async () => {
@@ -100,12 +95,16 @@ describe("tenure-investigation-view", () => {
       },
     );
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    await expect(
+      screen.findByText(Recommendation.Appointment),
+    ).resolves.toBeInTheDocument();
+    await userEvent.click(screen.getByLabelText(Recommendation.Appointment));
     await userEvent.click(
       screen.getByLabelText(
         locale.views.tenureInvestigation.tenureInvestigationCompleted,
       ),
     );
-    await userEvent.click(screen.getByText(locale.views.tenureInvestigation.approve));
+    await userEvent.click(screen.getByText(locale.confirm));
     await expect(
       screen.findByText("There was a problem with completing the action", {
         exact: false,

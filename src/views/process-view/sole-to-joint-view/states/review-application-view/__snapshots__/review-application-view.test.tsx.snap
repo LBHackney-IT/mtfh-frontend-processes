@@ -98,76 +98,153 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
         </a>
       </div>
     </div>
-    <p
-      class="lbh-body-s"
-    >
-      Global Web Consultant Alverta Denesik
-       contact details:
-    </p>
-    <p
-      class="lbh-body-s"
-    >
-      Phone:
-      <span
-        style="margin-left: 1em;"
-      >
-        075949281
-      </span>
-    </p>
-    <p
-      class="lbh-body-s"
-    >
-      Email:
-      <span
-        style="margin-left: 1em;"
-      >
-        Gay.Jacobi@hotmail.com
-      </span>
-    </p>
     <div
-      class="govuk-checkboxes__item"
+      data-testid="soletojoint-tenure-investigation"
     >
-      <input
-        class="govuk-checkboxes__input"
-        id="tenure-investigation-completed"
-        type="checkbox"
-      />
-      <label
-        class="govuk-label govuk-checkboxes__label"
-        for="tenure-investigation-completed"
+      <p
+        class="lbh-body-s"
       >
-        I confirm that the tenure investigation has been completed
-      </label>
+        Global Web Consultant Alverta Denesik
+         contact details:
+      </p>
+      <p
+        class="lbh-body-s"
+      >
+        Phone:
+        <span
+          style="margin-left: 1em;"
+        >
+          075949281
+        </span>
+      </p>
+      <p
+        class="lbh-body-s"
+      >
+        Email:
+        <span
+          style="margin-left: 1em;"
+        >
+          Gay.Jacobi@hotmail.com
+        </span>
+      </p>
+      <form
+        action="#"
+        novalidate=""
+        style="margin-top: 65px;"
+      >
+        <fieldset
+          class="govuk-form-group lbh-form-group"
+          id="tenure-investigation-recommendation"
+        >
+          <legend
+            class="govuk-label lbh-label"
+            for="tenure-investigation-recommendation-field"
+          >
+            What is the recommended outcome?
+            <sup
+              aria-hidden="true"
+            >
+              *
+            </sup>
+          </legend>
+          <div
+            class="govuk-radios lbh-radios"
+            id="tenure-investigation-recommendation-field"
+          >
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="tenure-investigation-recommendation-approve"
+                name="tenureInvestigationRecommendation"
+                required=""
+                type="radio"
+                value="Approve"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="tenure-investigation-recommendation-approve"
+              >
+                Approve
+              </label>
+            </div>
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="tenure-investigation-recommendation-appointment"
+                name="tenureInvestigationRecommendation"
+                required=""
+                type="radio"
+                value="Appointment"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="tenure-investigation-recommendation-appointment"
+              >
+                Appointment
+              </label>
+            </div>
+            <div
+              class="govuk-radios__item"
+            >
+              <input
+                class="govuk-radios__input"
+                id="tenure-investigation-recommendation-decline"
+                name="tenureInvestigationRecommendation"
+                required=""
+                type="radio"
+                value="Decline"
+              />
+              <label
+                class="govuk-label govuk-radios__label"
+                for="tenure-investigation-recommendation-decline"
+              >
+                Decline
+              </label>
+            </div>
+          </div>
+        </fieldset>
+        <div
+          class="govuk-form-group lbh-form-group"
+          id="tenure-investigation-completed"
+        >
+          <label
+            class="govuk-label lbh-label"
+            for="tenure-investigation-completed-field"
+          >
+            
+          </label>
+          <div
+            class="govuk-checkboxes__item"
+          >
+            <input
+              class="govuk-checkboxes__input"
+              id="tenure-investigation-completed-field"
+              name="completed"
+              type="checkbox"
+              value="false"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="tenure-investigation-completed-field"
+            >
+              I confirm that the tenure investigation has been completed
+            </label>
+          </div>
+        </div>
+        <button
+          class="govuk-button lbh-button"
+          disabled=""
+          style="margin-top: 65px; width: 222px;"
+          type="submit"
+        >
+          Confirm
+        </button>
+      </form>
     </div>
-    <p
-      class="lbh-body-m"
-    >
-      Recommendation:
-    </p>
-    <button
-      class="govuk-button lbh-button"
-      disabled=""
-      style="width: 222px; margin-right: 100%;"
-      type="submit"
-    >
-      Approve
-    </button>
-    <button
-      class="govuk-button lbh-button"
-      disabled=""
-      style="width: 222px; margin-right: 100%;"
-      type="submit"
-    >
-      Appointment
-    </button>
-    <button
-      class="govuk-button lbh-button"
-      disabled=""
-      style="width: 222px; margin-right: 100%;"
-      type="submit"
-    >
-      Decline
-    </button>
   </div>
 </div>
 `;
