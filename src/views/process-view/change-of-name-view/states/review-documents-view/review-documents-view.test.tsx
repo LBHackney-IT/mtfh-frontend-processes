@@ -248,7 +248,7 @@ describe("review-documents-view", () => {
       <ChangeOfNameView
         process={{
           ...mockProcessV1,
-          currentState: { ...mockProcessV1.currentState, state: "ProcessCancelled" },
+          currentState: { ...mockProcessV1.currentState, state: "ProcessClosed" },
           previousStates: [
             { ...mockProcessV1.currentState, state: "DocumentsRequestedDes" },
           ],
@@ -273,7 +273,7 @@ describe("review-documents-view", () => {
       <ChangeOfNameView
         process={{
           ...mockProcessV1,
-          currentState: { ...mockProcessV1.currentState, state: "ProcessCancelled" },
+          currentState: { ...mockProcessV1.currentState, state: "ProcessClosed" },
           previousStates: [
             {
               ...mockProcessV1.currentState,
