@@ -19,7 +19,12 @@ export interface RequestDocumentsViewProps extends ProcessComponentProps {
   processConfig: IProcess;
 }
 
-export const RequestDocumentsView = ({ process, mutate }: RequestDocumentsViewProps) => {
+export const RequestDocumentsView = ({
+  process,
+  mutate,
+  optional,
+}: RequestDocumentsViewProps) => {
+  const { closeProcessReason } = optional;
   const errorMessages = useErrorCodes();
   const { data: tenure, error } = useTenure(process.targetId);
 
@@ -46,38 +51,42 @@ export const RequestDocumentsView = ({ process, mutate }: RequestDocumentsViewPr
   return (
     <div data-testid="soletojoint-RequestDocuments">
       <EligibilityChecksPassedBox />
-      <Heading variant="h3">{locale.supportingDocuments}</Heading>
-      <Text size="sm">
-        The following documentation is required from the secure tenant and/or proposed
-        tenant, as proof to support their application:
-      </Text>
-      <List variant="bullets">
-        <BulletWithExplanation
-          text="Secure and Proposed tenant: Two forms of proof of identity for both the
+      {!closeProcessReason && (
+        <>
+          <Heading variant="h3">{locale.supportingDocuments}</Heading>
+          <Text size="sm">
+            The following documentation is required from the secure tenant and/or proposed
+            tenant, as proof to support their application:
+          </Text>
+          <List variant="bullets">
+            <BulletWithExplanation
+              text="Secure and Proposed tenant: Two forms of proof of identity for both the
               secure and proposed tenant. At least one each must be photographic ID"
-          explanation="for example: valid passport, driving licence, bank statement, utility bill"
-        />
-        <BulletWithExplanation
-          text="Proposed tenant: Proof of immigration status"
-          explanation="for example: passport, home office letter, embassy letter, immigration status document"
-        />
-        <BulletWithExplanation
-          text="Proposed tenant: Proof of relationship to the existing tenant"
-          explanation="for example: marriage or civil partner certificate"
-        />
-        <BulletWithExplanation
-          text="Proposed tenant: Proof of co-habitation: three documents proving 12 months
+              explanation="for example: valid passport, driving licence, bank statement, utility bill"
+            />
+            <BulletWithExplanation
+              text="Proposed tenant: Proof of immigration status"
+              explanation="for example: passport, home office letter, embassy letter, immigration status document"
+            />
+            <BulletWithExplanation
+              text="Proposed tenant: Proof of relationship to the existing tenant"
+              explanation="for example: marriage or civil partner certificate"
+            />
+            <BulletWithExplanation
+              text="Proposed tenant: Proof of co-habitation: three documents proving 12 months
                 residency at the property. If marriage certificate provided, any Proof of
                 Address can be accepted."
-          explanation="for example: letter, utility bill, council tax bill"
-        />
-      </List>
+              explanation="for example: letter, utility bill, council tax bill"
+            />
+          </List>
 
-      <CheckSupportingDocuments
-        process={process}
-        mutate={mutate}
-        optional={{ tenant, declaration: true }}
-      />
+          <CheckSupportingDocuments
+            process={process}
+            mutate={mutate}
+            optional={{ tenant, declaration: true }}
+          />
+        </>
+      )}
     </div>
   );
 };

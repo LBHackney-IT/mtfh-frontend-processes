@@ -531,7 +531,7 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state=Pro
           <h4
             class="lbh-heading-h4"
           >
-            Sole to joint application closed
+            Change of name application cancelled 
           </h4>
         </div>
         <p
@@ -673,7 +673,7 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state=Pro
           <h4
             class="lbh-heading-h4"
           >
-            Sole to joint application closed
+            Change of name application cancelled 
           </h4>
         </div>
         <p

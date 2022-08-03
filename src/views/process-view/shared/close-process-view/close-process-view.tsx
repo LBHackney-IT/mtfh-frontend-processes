@@ -50,17 +50,16 @@ export const CloseProcessView = ({
   const { processCancelled, processClosed, tenureUpdated, nameUpdated } =
     processConfig.states;
 
+  const statusTitle = locale.views.closeProcess.statusTitle(
+    processConfig,
+    state,
+    isCancel,
+  );
+
   return (
     <>
       {statusBox && (
-        <StatusBox
-          variant="warning"
-          title={
-            [processClosed?.state, processCancelled?.state].includes(state)
-              ? locale.views.reviewDocuments.soleToJointClosed
-              : locale.views.reviewDocuments.soleToJointWillBeClosed
-          }
-        >
+        <StatusBox variant="warning" title={statusTitle}>
           {closeProcessReason && (
             <Text style={{ marginTop: 15 }}>{closeProcessReason}</Text>
           )}

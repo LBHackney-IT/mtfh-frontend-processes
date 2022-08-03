@@ -66,7 +66,11 @@ export const CloseProcessDialog = ({
             <Button type="submit" data-testid="close-process-modal-submit">
               {isCancel ? "Cancel Process" : "Close case"}
             </Button>
-            <Button variant="secondary" onClick={() => setCloseProcessDialogOpen(false)}>
+            <Button
+              data-testid="close-process-modal-back"
+              variant="secondary"
+              onClick={() => setCloseProcessDialogOpen(false)}
+            >
               Back
             </Button>
           </DialogActions>

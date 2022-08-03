@@ -58,8 +58,6 @@ reviewDocumentsStates.forEach((state) => {
   reviewDocumentsViewByStates[state] = ReviewDocumentsView;
 });
 
-const reviewDocumentsPageStates = Object.keys(reviewDocumentsViewByStates);
-
 const components = {
   [selectTenants.state]: SelectTenantsView,
   [automatedChecksFailed.state]: CheckEligibilityView,
@@ -102,12 +100,21 @@ const getActiveStep = (
   if ([processCancelled.state, processClosed.state].includes(state)) {
     const previousState = getPreviousState(process);
     if (
-      isSameState(previousState, states.manualChecksFailed) ||
-      isSameState(previousState, states.automatedChecksFailed)
+      [
+        manualChecksFailed.state,
+        automatedChecksPassed.state,
+        automatedChecksFailed.state,
+      ].includes(previousState.state)
     ) {
       return 1;
     }
-    if (isSameState(previousState, states.breachChecksFailed)) {
+    if (
+      [
+        manualChecksPassed.state,
+        breachChecksFailed.state,
+        breachChecksPassed.state,
+      ].includes(previousState.state)
+    ) {
       return 2;
     }
     if (
@@ -116,6 +123,7 @@ const getActiveStep = (
         interviewScheduled.state,
         interviewRescheduled.state,
         hoApprovalPassed.state,
+        tenureInvestigationPassed.state,
         tenureAppointmentScheduled.state,
         tenureAppointmentRescheduled.state,
       ].includes(previousState.state)
@@ -209,7 +217,10 @@ export const SoleToJointSideBar = (props: ProcessSideBarProps) => {
     ];
     activeStep = activeStep - 6;
     startIndex = 10;
-  } else if (activeStep > 2 || (!submitted && activeStep === 2)) {
+  } else if (
+    activeStep > 2 ||
+    (!submitted && processCancelled.state !== state && activeStep === 2)
+  ) {
     steps = [
       <Step key="step-breach-of-tenancy">{soleToJoint.steps.breachOfTenancy}</Step>,
       <Step key="step-request-documents">{soleToJoint.steps.requestDocuments}</Step>,
@@ -238,24 +249,28 @@ export const SoleToJointSideBar = (props: ProcessSideBarProps) => {
       {hasReassignCase && (
         <Button variant="secondary">{soleToJoint.actions.reassignCase}</Button>
       )}
-      {([
-        states.interviewScheduled.state,
-        states.interviewRescheduled.state,
-        states.hoApprovalFailed.state,
-        states.hoApprovalPassed.state,
-        states.tenureAppointmentScheduled.state,
-      ].includes(state) ||
-        (states.tenureAppointmentRescheduled.state === state && !closeProcessReason)) && (
-        <Button
-          variant="secondary"
-          onClick={() => {
-            setCancel(true);
-            setCloseProcessDialogOpen(true);
-          }}
-        >
-          {soleToJoint.actions.cancelProcess}
-        </Button>
-      )}
+      {[
+        automatedChecksPassed.state,
+        manualChecksPassed.state,
+        breachChecksPassed.state,
+        tenureInvestigationPassed.state,
+        interviewScheduled.state,
+        interviewRescheduled.state,
+        hoApprovalPassed.state,
+        tenureAppointmentScheduled.state,
+        tenureAppointmentRescheduled.state,
+      ].includes(state) &&
+        !closeProcessReason && (
+          <Button
+            variant="secondary"
+            onClick={() => {
+              setCancel(true);
+              setCloseProcessDialogOpen(true);
+            }}
+          >
+            {soleToJoint.actions.cancelProcess}
+          </Button>
+        )}
       <Button
         variant="secondary"
         as={RouterLink}
@@ -277,27 +292,10 @@ const getComponent = (process) => {
     if (isSameState(previousState, manualChecksFailed)) {
       return ManualChecksFailedView;
     }
-    if (isSameState(previousState, automatedChecksFailed)) {
-      return CheckEligibilityView;
-    }
     if (isSameState(previousState, breachChecksFailed)) {
       return BreachChecksFailedView;
     }
-    if (reviewDocumentsPageStates.includes(previousState.state)) {
-      return ReviewDocumentsView;
-    }
-    if (
-      [
-        hoApprovalFailed.state,
-        interviewScheduled.state,
-        interviewRescheduled.state,
-        hoApprovalPassed.state,
-        tenureAppointmentScheduled.state,
-        tenureAppointmentRescheduled.state,
-      ].includes(previousState.state)
-    ) {
-      return ReviewApplicationView;
-    }
+    return components[previousState.state];
   }
   return components[state];
 };
