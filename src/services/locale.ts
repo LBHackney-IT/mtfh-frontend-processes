@@ -196,6 +196,17 @@ const locale = {
       [Process.ChangeOfName]: "Change of name",
     },
     closeProcess: {
+      statusTitle: (processConfig, state, isCancel) => {
+        const { processCancelled, processClosed } = processConfig.states;
+        const processName =
+          processConfig.name[0] + processConfig.name.slice(1).toLowerCase();
+        if ([processClosed?.state, processCancelled?.state].includes(state)) {
+          return `${processName} application ${
+            processCancelled.state === state ? "cancelled" : "closed"
+          } `;
+        }
+        return `${processName} application will be ${isCancel ? "cancelled" : "closed"}`;
+      },
       reasonForCancellation: "Reason for Cancellation",
       reasonForCloseCase: "Reason for close case",
       outcomeLetterSent: "I confirm that an outcome letter has been sent to the resident",

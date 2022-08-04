@@ -34,7 +34,7 @@ export const CheckEligibilityView = ({
   const [globalError, setGlobalError] = useState<number>();
   const { automatedChecksFailed, automatedChecksPassed, processClosed } =
     processConfig.states;
-  const { setSubmitted } = optional;
+  const { setSubmitted, closeProcessReason } = optional;
   const {
     currentState: { state },
   } = process;
@@ -44,20 +44,25 @@ export const CheckEligibilityView = ({
       {globalError && (
         <StatusErrorSummary id="check-eligibility-global-error" code={globalError} />
       )}
-      <Text>{checkEligibility.autoCheckIntro}</Text>
-      {state === automatedChecksPassed.state && (
+      {!closeProcessReason && (
         <>
-          <Heading variant="h5">{checkEligibility.autoCheckInfo}</Heading>
-          <AutomatedChecksPassedBox />
-          <FurtherEligibilityForm
-            processConfig={processConfig}
-            process={process}
-            mutate={mutate}
-            optional={{ setSubmitted }}
-            setGlobalError={setGlobalError}
-          />
+          <Text>{checkEligibility.autoCheckIntro}</Text>
+          {state === automatedChecksPassed.state && (
+            <>
+              <Heading variant="h5">{checkEligibility.autoCheckInfo}</Heading>
+              <AutomatedChecksPassedBox />
+              <FurtherEligibilityForm
+                processConfig={processConfig}
+                process={process}
+                mutate={mutate}
+                optional={{ setSubmitted }}
+                setGlobalError={setGlobalError}
+              />
+            </>
+          )}
         </>
       )}
+
       {(state === automatedChecksFailed.state || state === processClosed.state) && (
         <>
           <Heading variant="h5">{checkEligibility.autoCheckInfo}</Heading>

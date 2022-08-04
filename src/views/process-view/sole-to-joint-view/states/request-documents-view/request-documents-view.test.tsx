@@ -62,6 +62,7 @@ describe("request-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockBreachChecksPassedState}
         mutate={() => {}}
+        optional={{}}
       />,
       options,
     );
@@ -80,6 +81,7 @@ describe("request-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockBreachChecksPassedState}
         mutate={() => {}}
+        optional={{}}
       />,
       options,
     );
@@ -103,6 +105,7 @@ describe("request-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockBreachChecksPassedState}
         mutate={() => {}}
+        optional={{}}
       />,
       options,
     );
@@ -129,6 +132,7 @@ describe("request-documents-view", () => {
         processConfig={processes.soletojoint}
         process={mockBreachChecksPassedState}
         mutate={() => {}}
+        optional={{}}
       />,
       options,
     );

@@ -76,7 +76,7 @@ exports[`close-process-view it renders CloseProcessView correctly for state=Proc
           <h4
             class="lbh-heading-h4"
           >
-            Sole to joint application closed
+            Sole to joint application closed 
           </h4>
         </div>
       </div>

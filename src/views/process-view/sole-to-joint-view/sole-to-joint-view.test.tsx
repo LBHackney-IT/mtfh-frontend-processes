@@ -320,3 +320,68 @@ reviewDocumentsStates.forEach((state) => {
     await expect(screen.findByTestId("close-case-button")).resolves.toBeInTheDocument();
   });
 });
+
+[
+  {
+    stepActive: 1,
+    previousStates: [{ ...mockProcessV1.currentState, state: "AutomatedChecksPassed" }],
+  },
+  {
+    stepActive: 1,
+    previousStates: [{ ...mockProcessV1.currentState, state: "AutomatedChecksFailed" }],
+  },
+  {
+    stepActive: 2,
+    previousStates: [{ ...mockProcessV1.currentState, state: "ManualChecksPassed" }],
+  },
+  {
+    stepActive: 2,
+    previousStates: [{ ...mockProcessV1.currentState, state: "BreachChecksPassed" }],
+  },
+  {
+    stepActive: 1,
+    previousStates: [
+      { ...mockProcessV1.currentState, state: "TenureInvestigationPassed" },
+    ],
+  },
+  {
+    stepActive: 1,
+    previousStates: [{ ...mockProcessV1.currentState, state: "InterviewScheduled" }],
+  },
+  {
+    stepActive: 1,
+    previousStates: [{ ...mockProcessV1.currentState, state: "InterviewRescheduled" }],
+  },
+  {
+    stepActive: 1,
+    previousStates: [{ ...mockProcessV1.currentState, state: "HOApprovalPassed" }],
+  },
+].forEach(({ stepActive, previousStates }) => {
+  test("it renders sidebar correctly for ProcessCancelled state", async () => {
+    // @ts-ignore
+    useStateMock.mockImplementation(() => [true, jest.fn()]);
+    render(
+      <SoleToJointSideBar
+        process={{
+          ...mockProcessV1,
+          currentState: { ...mockProcessV1.currentState, state: "ProcessCancelled" },
+          previousStates,
+        }}
+        submitted={false}
+        setCloseProcessDialogOpen={() => {}}
+        setCancel={() => {}}
+      />,
+      options,
+    );
+
+    const stepper = await screen.findByTestId("mtfh-stepper-sole-to-joint");
+    const steps = within(stepper).getAllByRole("listitem");
+    expect(steps[stepActive].className).toContain("active");
+    if (steps[stepActive - 1]) {
+      expect(steps[stepActive - 1].className).not.toContain("active");
+    }
+    if (steps[stepActive + 1]) {
+      expect(steps[stepActive + 1].className).not.toContain("active");
+    }
+  });
+});
