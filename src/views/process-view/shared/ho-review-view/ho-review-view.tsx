@@ -245,6 +245,7 @@ export const HoReviewView = ({
                         dateLabel="Interview Date"
                         timeLabel="Interview Time"
                         errors={errors}
+                        values={values}
                       />
                     </div>
                   )}

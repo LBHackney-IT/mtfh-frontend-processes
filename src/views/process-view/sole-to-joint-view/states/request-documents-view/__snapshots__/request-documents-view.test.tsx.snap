@@ -218,7 +218,7 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
         </div>
       </div>
       <div
-        class="govuk-form-group lbh-form-group"
+        class="govuk-form-group govuk-form-group--error lbh-form-group"
         id="appointment-form-date-time-form-group"
       >
         <label
@@ -227,8 +227,21 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
         >
           
         </label>
+        <span
+          class="govuk-error-message lbh-error-message"
+          id="appointment-form-date-time-form-group-error"
+        >
+          <span
+            class="govuk-visually-hidden"
+          >
+            Error:
+          </span>
+           
+          Please check the appointment time as it is out of normal office hours.
+        </span>
         <div
-          class="govuk-form-group lbh-form-group"
+          aria-describedby="appointment-form-date-time-form-group-error"
+          class="govuk-form-group govuk-form-group--error lbh-form-group"
           id="appointment-form-date-time-field-form-group"
           style="display: flex; flex-wrap: wrap; align-items: flex-end; margin-top: 0px;"
         >
@@ -238,6 +251,17 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
           >
             
           </label>
+          <span
+            class="govuk-error-message lbh-error-message"
+            id="appointment-form-date-time-field-form-group-error"
+          >
+            <span
+              class="govuk-visually-hidden"
+            >
+              Error:
+            </span>
+             
+          </span>
           <fieldset
             class="govuk-form-group lbh-form-group mtfh-appointment-form__date"
             id="appointment-form-date"

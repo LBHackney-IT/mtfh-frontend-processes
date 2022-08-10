@@ -112,15 +112,7 @@ export const AppointmentForm = ({
                 id="request-appointment-form"
                 className="request-appointment-form"
               >
-                <DateTimeFields
-                  errors={errors}
-                  isOutOfHours={
-                    !!values.amPm &&
-                    (values.amPm === "am"
-                      ? parseInt(values.hour, 10) < 8
-                      : parseInt(values.hour, 10) > 7)
-                  }
-                />
+                <DateTimeFields errors={errors} values={values} />
                 <Button
                   type="submit"
                   disabled={
@@ -158,23 +150,28 @@ export const validate = (errorMessages, values) => {
   }
 };
 
+export const isOutOfHours = (amPm, hour) => {
+  return !!amPm && (amPm === "am" ? parseInt(hour, 10) < 8 : parseInt(hour, 10) > 7);
+};
+
 export const DateTimeFields = ({
   dateLabel = "Date",
   timeLabel = "Time",
   errors,
-  isOutOfHours = false,
+  values,
 }: {
   dateLabel?: string;
   timeLabel?: string;
   errors?: any;
-  isOutOfHours?: boolean;
+  values?: Record<string, any>;
 }): JSX.Element => {
   return (
     <FormGroup
       id="appointment-form-date-time-form-group"
       error={
         errors?.global ||
-        (isOutOfHours &&
+        (values &&
+          isOutOfHours(values.amPm, values.hour) &&
           "Please check the appointment time as it is out of normal office hours.")
       }
     >
