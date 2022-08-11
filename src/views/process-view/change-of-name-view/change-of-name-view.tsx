@@ -212,13 +212,7 @@ export const ChangeOfNameView = ({
   mutate: any;
   optional: any;
 }): JSX.Element => {
-  const {
-    closeProcessReason,
-    submitted,
-    setSubmitted,
-    setCloseProcessDialogOpen,
-    isCancel,
-  } = optional;
+  const { closeProcessReason, setCloseProcessDialogOpen, isCancel } = optional;
   const { error, data: person } = usePerson(process.targetId);
   const [globalError, setGlobalError] = useState<number>();
 
@@ -268,10 +262,9 @@ export const ChangeOfNameView = ({
         process={process}
         mutate={mutate}
         optional={{
+          ...optional,
           person,
           tenant: person,
-          submitted,
-          setSubmitted,
           closeProcessReason,
         }}
         setGlobalError={setGlobalError}
