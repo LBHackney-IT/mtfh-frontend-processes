@@ -107,6 +107,7 @@ export const CheckSupportingDocuments = ({
         {(props) => {
           const {
             errors,
+            values,
             values: { requestType },
             setFieldValue,
             dirty,
@@ -158,7 +159,9 @@ export const CheckSupportingDocuments = ({
                 </RadioGroup>
               </FormGroup>
 
-              {requestType === "manual" && <DateTimeFields errors={errors} />}
+              {requestType === "manual" && (
+                <DateTimeFields errors={errors} values={values} />
+              )}
 
               <Heading variant="h3">Tenant declaration</Heading>
               <Text size="sm">
