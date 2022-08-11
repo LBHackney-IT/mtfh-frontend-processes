@@ -100,7 +100,7 @@ export const CloseProcessView = ({
                   }
                 : {
                     hasNotifiedResident,
-                    Reason: closeProcessReason,
+                    reason: closeProcessReason,
                   };
               try {
                 await editProcess({
