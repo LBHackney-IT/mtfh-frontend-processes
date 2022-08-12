@@ -40,8 +40,13 @@ export const NewTenancyView = ({
     hoApprovalPassed.state === process.currentState.state,
   );
   const [appointmentTrigger, setAppointmentTrigger] = useState<string>("");
-  const [documentsSigned, setDocumentsSigned] = useState<boolean>();
-  const { setCloseProcessDialogOpen, person, closeProcessReason } = optional;
+  const {
+    setCloseProcessDialogOpen,
+    person,
+    closeProcessReason,
+    submitted,
+    setSubmitted,
+  } = optional;
 
   const isProcessClosed = [processClosed.state, processCancelled.state].includes(
     currentState.state,
@@ -55,25 +60,26 @@ export const NewTenancyView = ({
 
   return (
     <div data-testid="changeofname-new-tenancy-view">
-      {!closeProcessReason && !isProcessClosed && (
-        <>
-          {!documentsSigned && (
+      {!closeProcessReason &&
+        !isProcessClosed &&
+        !submitted &&
+        currentState.state !== nameUpdated.state && (
+          <>
             <Heading variant="h2">
               {views.tenureInvestigation.hoApprovedNextSteps(
                 locale.views.hoReviewModal[process.processName.toLowerCase()],
               )}
             </Heading>
-          )}
-          {![
-            tenureAppointmentScheduled.state,
-            tenureAppointmentRescheduled.state,
-          ].includes(process.currentState.state) && (
-            <Text>{views.tenureInvestigation.mustMakeAppointment}</Text>
-          )}
-        </>
-      )}
+            {![
+              tenureAppointmentScheduled.state,
+              tenureAppointmentRescheduled.state,
+            ].includes(process.currentState.state) && (
+              <Text>{views.tenureInvestigation.mustMakeAppointment}</Text>
+            )}
+          </>
+        )}
 
-      {!documentsSigned &&
+      {!submitted &&
         [tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
           processState.state,
         ) && (
@@ -98,7 +104,7 @@ export const NewTenancyView = ({
           />
         )}
 
-      {!documentsSigned &&
+      {!submitted &&
         !closeProcessReason &&
         !isProcessClosed &&
         currentState.state !== nameUpdated.state &&
@@ -109,12 +115,15 @@ export const NewTenancyView = ({
           />
         )}
 
-      {(![tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
-        currentState.state,
-      ) ||
+      {(![
+        tenureAppointmentScheduled.state,
+        tenureAppointmentRescheduled.state,
+        nameUpdated.state,
+      ].includes(currentState.state) ||
         needAppointment) &&
         !closeProcessReason &&
-        !isProcessClosed && (
+        !isProcessClosed &&
+        !submitted && (
           <Checkbox
             id="condition"
             checked={needAppointment}
@@ -142,7 +151,7 @@ export const NewTenancyView = ({
         />
       )}
 
-      {!documentsSigned &&
+      {!submitted &&
         !closeProcessReason &&
         [tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
           process.currentState.state,
@@ -150,13 +159,13 @@ export const NewTenancyView = ({
         !needAppointment && (
           <Button
             disabled={!isPast(new Date(formData.appointmentDateTime))}
-            onClick={() => setDocumentsSigned(true)}
+            onClick={() => setSubmitted(true)}
           >
             {views.tenureInvestigation.documentsSigned}
           </Button>
         )}
 
-      {(documentsSigned || currentState.state === nameUpdated.state) && (
+      {(submitted || currentState.state === nameUpdated.state) && (
         <CloseProcessView
           processConfig={processConfig}
           process={process}
