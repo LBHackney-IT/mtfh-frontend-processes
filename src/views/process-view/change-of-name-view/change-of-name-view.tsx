@@ -48,6 +48,7 @@ const {
   hoApprovalFailed,
   tenureAppointmentScheduled,
   tenureAppointmentRescheduled,
+  nameUpdated,
   processClosed,
   processCancelled,
 } = states;
@@ -77,6 +78,7 @@ const components = {
   [hoApprovalFailed.state]: () => <></>,
   [tenureAppointmentScheduled.state]: NewTenancyView,
   [tenureAppointmentRescheduled.state]: NewTenancyView,
+  [nameUpdated.state]: NewTenancyView,
 };
 
 const { views } = locale;
@@ -114,7 +116,7 @@ const getActiveStep = (process: Process, submitted: boolean) => {
   ) {
     return 5;
   }
-  if ([hoApprovalFailed.state].includes(processState.state)) {
+  if ([hoApprovalFailed.state, nameUpdated.state].includes(processState.state)) {
     return 6;
   }
 

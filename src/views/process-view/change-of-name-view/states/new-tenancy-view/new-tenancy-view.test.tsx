@@ -16,7 +16,7 @@ import { ChangeOfNameView } from "../../change-of-name-view";
 import { NewTenancyView } from "./new-tenancy-view";
 
 let submitted = false;
-const setSubmitted = () => {};
+const setSubmitted = jest.fn();
 
 const options = {
   url: "/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735",
@@ -70,6 +70,11 @@ describe("tenure-investigation-view", () => {
     );
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     expect(container).toMatchSnapshot();
+    const appointmentCheckbox = screen.getByText(
+      locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
+    );
+    await userEvent.click(appointmentCheckbox);
+    expect(screen.queryByText("Continue")).not.toBeInTheDocument();
   });
 
   test("it renders NewTenancy view correctly for state=HOApprovalPassed and closeProcessReason provided", async () => {
@@ -144,9 +149,8 @@ describe("tenure-investigation-view", () => {
     expect(container).toMatchSnapshot();
   });
 
-  test("it renders TenureInvestigation view correctly for state=TenureAppointmentScheduled, date has passed, submit fails", async () => {
+  test("it renders TenureInvestigation view correctly for state=TenureAppointmentScheduled, date has passed", async () => {
     server.use(getContactDetailsV2(mockContactDetailsV2));
-    server.use(patchProcessV1({}, 500));
     render(
       <ChangeOfNameView
         process={{
@@ -164,6 +168,24 @@ describe("tenure-investigation-view", () => {
     );
     expect(documentsSigned).toBeEnabled();
     await userEvent.click(documentsSigned);
+    expect(setSubmitted.mock.calls[0][0]).toBe(true);
+  });
+
+  test("it renders TenureInvestigation view correctly for state=TenureAppointmentScheduled, date has passed, submit fails", async () => {
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    server.use(patchProcessV1({}, 500));
+    render(
+      <ChangeOfNameView
+        process={{
+          ...mockTenureAppointmentSchedule("2010-10-12T08:59:00.000Z"),
+          processName: "changeofname",
+        }}
+        mutate={() => {}}
+        optional={{ submitted: true, setSubmitted }}
+      />,
+      options,
+    );
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await userEvent.click(screen.getByText(locale.views.closeProcess.outcomeLetterSent));
     await userEvent.click(screen.getByText(locale.confirm));
     await expect(
@@ -213,6 +235,67 @@ describe("tenure-investigation-view", () => {
     await expect(
       screen.findByText(locale.views.tenureInvestigation.documentsSigned),
     ).resolves.toBeDisabled();
+    expect(container).toMatchSnapshot();
+  });
+
+  test("it renders TenureInvestigation view correctly for state=NameUpdated", async () => {
+    server.use(getReferenceDataV1({}, 200));
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    const { container } = render(
+      <NewTenancyView
+        processConfig={processes.changeofname}
+        process={{
+          ...mockProcessV1,
+          processName: "changeofname",
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: "NameUpdated",
+          },
+        }}
+        mutate={() => {}}
+        optional={{ submitted, setSubmitted }}
+      />,
+      options,
+    );
+    await expect(
+      screen.findByText(locale.views.closeProcess.thankYouForConfirmation),
+    ).resolves.toBeInTheDocument();
+    expect(container).toMatchSnapshot();
+  });
+
+  test("it renders TenureInvestigation view correctly for state=ProcessClosed", async () => {
+    server.use(getReferenceDataV1({}, 200));
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    const { container } = render(
+      <ChangeOfNameView
+        process={{
+          ...mockProcessV1,
+          processName: "changeofname",
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: "ProcessClosed",
+          },
+          previousStates: [
+            {
+              ...mockProcessV1.currentState,
+              state: "TenureAppointmentScheduled",
+              processData: {
+                formData: {
+                  appointmentDateTime: "2010-10-12T08:59:00.000Z",
+                },
+                documents: [],
+              },
+            },
+          ],
+        }}
+        mutate={() => {}}
+        optional={{ submitted, setSubmitted }}
+      />,
+      options,
+    );
+    await expect(
+      screen.findByText(locale.views.closeProcess.thankYouForConfirmation),
+    ).resolves.toBeInTheDocument();
     expect(container).toMatchSnapshot();
   });
 });
