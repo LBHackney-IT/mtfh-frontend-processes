@@ -195,6 +195,9 @@ const locale = {
       [Process.SoleToJoint]: "Sole to joint tenure",
       [Process.ChangeOfName]: "Change of name",
     },
+    newTenancy: {
+      appointmentSignCN7Form: "I have made an appointment to sign the CN7 form",
+    },
     closeProcess: {
       statusTitle: (processConfig, state, isCancel) => {
         const { processCancelled, processClosed } = processConfig.states;
