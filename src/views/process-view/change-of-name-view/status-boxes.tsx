@@ -9,7 +9,7 @@ import { tenureInvestigationResultStates } from "./view-utils";
 
 import { Link, StatusBox, Text } from "@mtfh/common/lib/components";
 
-export const StatusBoxes = ({ process, processConfig }) => {
+export const StatusBoxes = ({ process, processConfig, person }) => {
   const { states } = processConfig;
   const {
     documentsRequestedDes,
@@ -88,10 +88,7 @@ export const StatusBoxes = ({ process, processConfig }) => {
 
       {(nameUpdated.state === process.currentState.state ||
         isPreviousState(nameUpdated.state, process)) && (
-        <StatusBox
-          variant="success"
-          title={locale.views.tenureInvestigation.tenancySigned}
-        >
+        <StatusBox variant="success" title={locale.views.newTenancy.tenancyUpdated}>
           <div
             style={{ marginTop: 15 }}
             className="govuk-link lbh-link lbh-link--no-visited-state"
@@ -99,14 +96,13 @@ export const StatusBoxes = ({ process, processConfig }) => {
             <Link
               as={RouterLink}
               to={`/tenure/${
-                (process.relatedEntities as any[])?.find(
-                  (entity) =>
-                    entity.targetType === "tenure" && entity.subType === "newTenure",
+                person.tenures.find(
+                  (tenure) => tenure.isActive && tenure.type === "Secure",
                 )?.id
               }`}
               variant="link"
             >
-              {locale.views.tenureInvestigation.viewNewTenure}
+              {locale.views.newTenancy.viewTenure}
             </Link>
           </div>
         </StatusBox>

@@ -197,6 +197,8 @@ const locale = {
     },
     newTenancy: {
       appointmentSignCN7Form: "I have made an appointment to sign the CN7 form",
+      tenancyUpdated: "Tenancy updated",
+      viewTenure: "View tenure",
     },
     closeProcess: {
       statusTitle: (processConfig, state, isCancel) => {

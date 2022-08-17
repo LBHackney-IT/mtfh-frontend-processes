@@ -257,7 +257,7 @@ export const ChangeOfNameView = ({
         <StatusErrorSummary id="tenure-investigation-global-error" code={globalError} />
       )}
 
-      <StatusBoxes process={process} processConfig={processConfig} />
+      <StatusBoxes process={process} processConfig={processConfig} person={person} />
 
       <Component
         processConfig={processConfig}
