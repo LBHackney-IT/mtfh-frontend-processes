@@ -71,7 +71,7 @@ describe("tenure-investigation-view", () => {
     await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     expect(container).toMatchSnapshot();
     const appointmentCheckbox = screen.getByText(
-      locale.views.reviewDocuments.checkSupportingDocumentsAppointment,
+      locale.views.newTenancy.appointmentSignCN7Form,
     );
     await userEvent.click(appointmentCheckbox);
     expect(screen.queryByText("Continue")).not.toBeInTheDocument();

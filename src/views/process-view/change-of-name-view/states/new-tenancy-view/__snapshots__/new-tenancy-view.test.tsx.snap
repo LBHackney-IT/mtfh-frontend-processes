@@ -54,7 +54,7 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for stat
         class="govuk-label govuk-checkboxes__label"
         for="condition"
       >
-        I need to make an appointment to check supporting documents
+        I have made an appointment to sign the CN7 form
       </label>
     </div>
     <form

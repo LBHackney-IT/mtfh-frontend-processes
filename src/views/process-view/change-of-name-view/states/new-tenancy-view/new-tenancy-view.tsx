@@ -129,7 +129,7 @@ export const NewTenancyView = ({
             checked={needAppointment}
             onChange={() => setNeedAppointment(!needAppointment)}
           >
-            {locale.views.reviewDocuments.checkSupportingDocumentsAppointment}
+            {locale.views.newTenancy.appointmentSignCN7Form}
           </Checkbox>
         )}
 
