@@ -232,7 +232,7 @@ exports[`ho-review-view it renders ReviewApplication view correctly for HOApprov
         class="govuk-label govuk-checkboxes__label"
         for="condition"
       >
-        I need to make an appointment to check supporting documents
+        I have made an appointment to check supporting documents
       </label>
     </div>
     <form
@@ -432,7 +432,7 @@ exports[`ho-review-view it renders ReviewApplication view correctly for HOApprov
       <button
         class="govuk-button lbh-button"
         disabled=""
-        style="width: 222px;"
+        style="width: 245px;"
         type="submit"
       >
         Continue

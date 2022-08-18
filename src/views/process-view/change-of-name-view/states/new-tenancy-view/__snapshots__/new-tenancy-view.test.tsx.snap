@@ -254,7 +254,7 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for stat
       <button
         class="govuk-button lbh-button"
         disabled=""
-        style="width: 222px;"
+        style="width: 245px;"
         type="submit"
       >
         Continue

@@ -9,7 +9,7 @@ const supportingDocuments = "Supporting documents";
 
 const locale = {
   backButton: "Back",
-  bookAppointment: "Book Appointment",
+  bookAppointment: "Confirm Appointment",
   next: "Next",
   cancel: "Cancel",
   cancelProcess: "Cancel process",
@@ -112,7 +112,7 @@ const locale = {
       viewInDes: "View request in Document Evidence Store",
       useFormBelow: "Use the form below to record the documents you have checked:",
       checkSupportingDocumentsAppointment:
-        "I need to make an appointment to check supporting documents",
+        "I have made an appointment to check supporting documents",
       seenPhotographicId: "I confirm I have seen a government issue photographic ID",
       seenPhotographicIdHint: "(for example: valid passport, driving licence)",
       seenSecondId:

@@ -201,7 +201,7 @@ exports[`appointment-form-component it renders appointment form correctly 1`] = 
     <button
       class="govuk-button lbh-button"
       disabled=""
-      style="width: 222px;"
+      style="width: 245px;"
       type="submit"
     >
       Continue
