@@ -106,7 +106,7 @@ exports[`feature toggle on prepopulate query Other tenancy changes has the corre
         rel="noopener noreferrer"
         target="_blank"
       >
-        Person
+        Resident contact log
       </a>
     </li>
     <li>
@@ -249,7 +249,7 @@ exports[`feature toggle on prepopulate query Request a Legal referral has the co
         rel="noopener noreferrer"
         target="_blank"
       >
-        Person
+        Resident contact log
       </a>
     </li>
     <li>
@@ -368,7 +368,7 @@ exports[`it renders legacy process list 1`] = `
         rel="noopener noreferrer"
         target="_blank"
       >
-        Person
+        Resident contact log
       </a>
     </li>
     <li>

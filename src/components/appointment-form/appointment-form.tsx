@@ -120,7 +120,7 @@ export const AppointmentForm = ({
                       return value !== "";
                     })
                   }
-                  style={{ width: 222 }}
+                  style={{ width: 245 }}
                 >
                   {options.buttonText || locale.confirm}
                 </Button>

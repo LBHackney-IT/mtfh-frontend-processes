@@ -143,7 +143,7 @@ exports[`feature toggle on it renders processes menu view correctly 1`] = `
               rel="noopener noreferrer"
               target="_blank"
             >
-              Person
+              Resident contact log
             </a>
           </li>
           <li>
@@ -302,7 +302,7 @@ exports[`it renders processes menu view correctly 1`] = `
               rel="noopener noreferrer"
               target="_blank"
             >
-              Person
+              Resident contact log
             </a>
           </li>
           <li>
