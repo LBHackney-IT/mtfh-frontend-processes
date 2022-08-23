@@ -150,8 +150,9 @@ export const validate = (errorMessages, values) => {
   }
 };
 
-export const isOutOfHours = (amPm, hour) => {
-  return !!amPm && (amPm === "am" ? parseInt(hour, 10) < 8 : parseInt(hour, 10) > 7);
+export const isOutOfHours = (amPm, hourString) => {
+  const hour = parseInt(hourString, 10);
+  return !!amPm && (amPm === "am" ? hour < 8 || hour === 12 : hour > 7 && hour !== 12);
 };
 
 export const DateTimeFields = ({
