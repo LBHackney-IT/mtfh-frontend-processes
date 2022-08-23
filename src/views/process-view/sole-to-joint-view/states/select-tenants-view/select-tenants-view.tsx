@@ -69,7 +69,7 @@ export const SelectTenantsView = ({
   }
 
   const filteredHouseholdmembers = tenure.householdMembers.filter(
-    (member) => !isUnderAge(member.dateOfBirth, 18),
+    (member) => !isUnderAge(member.dateOfBirth, 18) && !member.isResponsible,
   );
 
   const tenant = tenure?.householdMembers?.find((e) => e.isResponsible);

@@ -78,7 +78,7 @@ describe("select-tenants-view", () => {
 
     expect(nextButton).toBeDisabled();
 
-    const radio = screen.getByLabelText(mockActiveTenureV1.householdMembers[0].fullName);
+    const radio = screen.getByLabelText(mockActiveTenureV1.householdMembers[1].fullName);
 
     fireEvent.click(radio);
 
@@ -129,7 +129,7 @@ describe("select-tenants-view", () => {
 
     expect(nextButton).toBeDisabled();
 
-    const radio = screen.getByLabelText(mockActiveTenureV1.householdMembers[0].fullName);
+    const radio = screen.getByLabelText(mockActiveTenureV1.householdMembers[1].fullName);
 
     fireEvent.click(radio);
 
