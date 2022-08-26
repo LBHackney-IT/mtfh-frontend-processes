@@ -51,6 +51,7 @@ const {
   tenureUpdated,
   processCancelled,
   processClosed,
+  processCompleted,
 } = states;
 
 const reviewDocumentsViewByStates = {};
@@ -79,6 +80,7 @@ const components = {
   [tenureAppointmentScheduled.state]: ReviewApplicationView,
   [tenureAppointmentRescheduled.state]: ReviewApplicationView,
   [tenureUpdated.state]: ReviewApplicationView,
+  [processCompleted.state]: ReviewApplicationView,
   [processCancelled.state]: SubmitCaseView,
   [processClosed.state]: CheckEligibilityView,
 };

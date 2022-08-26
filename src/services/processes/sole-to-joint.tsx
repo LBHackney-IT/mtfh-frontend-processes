@@ -217,6 +217,11 @@ export const soletojoint: IProcess = {
     tenureUpdated: {
       state: "TenureUpdated",
       status: "Process completed - notify resident",
+      triggers: { completeProcess: Trigger.CompleteProcess },
+    },
+    processCompleted: {
+      state: "ProcessCompleted",
+      status: "Process completed",
       triggers: {},
     },
     processClosed: {

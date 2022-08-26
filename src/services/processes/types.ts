@@ -24,4 +24,5 @@ export enum Trigger {
   UpdateName = "UpdateName",
   UpdateTenure = "UpdateTenure",
   EnterNewName = "EnterNewName",
+  CompleteProcess = "CompleteProcess",
 }

@@ -37,6 +37,22 @@ const mockTenureAppointmentSchedule = (appointmentDateTime) => {
   };
 };
 
+const mockTenureUpdatedState = (tenureStartDate) => {
+  return {
+    ...mockProcessV1,
+    currentState: {
+      ...mockProcessV1.currentState,
+      processData: {
+        formData: {
+          tenureStartDate,
+        },
+        documents: [],
+      },
+      state: "TenureUpdated",
+    },
+  };
+};
+
 describe("tenure-investigation-view", () => {
   beforeEach(() => {
     jest.resetModules();
@@ -85,6 +101,26 @@ describe("tenure-investigation-view", () => {
     );
     expect(documentsSigned).toBeEnabled();
     await userEvent.click(documentsSigned);
+    await expect(
+      screen.findByText("Set the new tenure start date", {
+        exact: false,
+      }),
+    ).resolves.toBeInTheDocument();
+  });
+
+  test("it renders TenureInvestigation view correctly for TenureUpdated state, date has passed, submit fails", async () => {
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    server.use(patchProcessV1({}, 500));
+    render(
+      <ReviewApplicationView
+        processConfig={processes.soletojoint}
+        process={mockTenureUpdatedState("2010-10-12")}
+        mutate={() => {}}
+        optional={{ submitted, setSubmitted }}
+      />,
+      options,
+    );
+    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
     await userEvent.click(screen.getByText(locale.views.closeProcess.outcomeLetterSent));
     await userEvent.click(screen.getByText(locale.confirm));
     await expect(

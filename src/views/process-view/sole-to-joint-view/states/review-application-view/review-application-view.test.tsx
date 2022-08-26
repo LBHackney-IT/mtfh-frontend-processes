@@ -144,6 +144,12 @@ describe("tenure-investigation-view", () => {
           currentState: {
             ...mockProcessV1.currentState,
             state: "TenureUpdated",
+            processData: {
+              formData: {
+                tenureStartDate: "2022-08-01",
+              },
+              documents: [],
+            },
           },
           relatedEntities: [
             {
@@ -160,7 +166,56 @@ describe("tenure-investigation-view", () => {
       options,
     );
     await expect(
-      screen.findByText(locale.views.tenureInvestigation.tenancySigned),
+      screen.findByText(locale.views.tenureInvestigation.getTenancySigned("01/08/2022")),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(locale.views.tenureInvestigation.viewNewTenure),
+    ).resolves.toBeInTheDocument();
+    await expect(screen.findByText(`${locale.finalStep}:`)).resolves.toBeInTheDocument();
+    expect(container).toMatchSnapshot();
+  });
+
+  test("it renders ReviewApplication view correctly for ProcessCompleted state", async () => {
+    server.use(getContactDetailsV2(mockContactDetailsV2));
+    server.use(getReferenceDataV1());
+    const { container } = render(
+      <ReviewApplicationView
+        processConfig={processes.soletojoint}
+        process={{
+          ...mockProcessV1,
+          processName: "soletojoint",
+          currentState: {
+            ...mockProcessV1.currentState,
+            state: "ProcessCompleted",
+          },
+          previousStates: [
+            {
+              ...mockProcessV1.currentState,
+              state: "TenureUpdated",
+              processData: {
+                formData: {
+                  tenureStartDate: "2022-08-01",
+                },
+                documents: [],
+              },
+            },
+          ],
+          relatedEntities: [
+            {
+              id: "f8daaf21-edfc-4abc-9c39-403b84a142cb",
+              targetType: "tenure",
+              subType: "newTenure",
+              description: "New Tenure created for this process.",
+            },
+          ],
+        }}
+        mutate={() => {}}
+        optional={{ submitted, setSubmitted }}
+      />,
+      options,
+    );
+    await expect(
+      screen.findByText(locale.views.tenureInvestigation.getTenancySigned("01/08/2022")),
     ).resolves.toBeInTheDocument();
     await expect(
       screen.findByText(locale.views.tenureInvestigation.viewNewTenure),

@@ -9,10 +9,12 @@ import {
   CloseProcessView,
   ContactDetails,
 } from "../../../../../components";
+import { TenureUpdateForm } from "../../../../../components/tenure-update-form";
 import { locale } from "../../../../../services";
 import { Trigger } from "../../../../../services/processes/types";
 import { IProcess } from "../../../../../types";
-import { getPreviousState } from "../../../../../utils/processUtil";
+import { reformatDate } from "../../../../../utils/date";
+import { findStateInProcess, getPreviousState } from "../../../../../utils/processUtil";
 
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
@@ -48,6 +50,7 @@ export const NewTenancyView = ({
     tenureUpdated,
     processClosed,
     processCancelled,
+    processCompleted,
   } = processConfig.states;
   const { currentState } = process;
   const [needAppointment, setNeedAppointment] = useState<boolean>(
@@ -76,9 +79,17 @@ export const NewTenancyView = ({
   const hoApprovalPassedState =
     currentState.state === hoApprovalPassed.state
       ? currentState
-      : process.previousStates.find(
-          (previous) => previous.state === hoApprovalPassed.state,
-        );
+      : findStateInProcess(process, hoApprovalPassed.state);
+
+  const tenureUpdatedStateData = findStateInProcess(process, tenureUpdated.state);
+  const tenureStartDate = tenureUpdatedStateData
+    ? reformatDate(
+        tenureUpdatedStateData.processData.formData.tenureStartDate,
+        "yyyy-MM-dd",
+        "dd/MM/yyyy",
+      )
+    : undefined;
+
   return (
     <>
       <StatusBox variant="success" title={views.hoReviewView.hoOutcome("Approve")}>
@@ -86,12 +97,13 @@ export const NewTenancyView = ({
           <Text>{hoApprovalPassedState.processData.formData.reason}</Text>
         )}
       </StatusBox>
+      <StatusBox variant="success" title={views.hoReviewView.soleToJointApproved} />
 
-      {currentState.state === tenureUpdated.state ? (
+      {tenureStartDate ? (
         <Box variant="success">
           <StatusHeading
             variant="success"
-            title={views.tenureInvestigation.tenancySigned}
+            title={views.tenureInvestigation.getTenancySigned(tenureStartDate)}
           />
           <div
             style={{ marginLeft: 60, marginTop: 17.5 }}
@@ -159,9 +171,12 @@ export const NewTenancyView = ({
 
       {!documentsSigned &&
         !closeProcessReason &&
-        ![processClosed.state, processCancelled.state, tenureUpdated.state].includes(
-          currentState.state,
-        ) &&
+        ![
+          processClosed.state,
+          processCancelled.state,
+          tenureUpdated.state,
+          processCompleted.state,
+        ].includes(currentState.state) &&
         tenant && <ContactDetails fullName={tenant.fullName} personId={tenant.id} />}
 
       {(![
@@ -170,6 +185,7 @@ export const NewTenancyView = ({
         processClosed.state,
         processCancelled.state,
         tenureUpdated.state,
+        processCompleted.state,
       ].includes(currentState.state) ||
         needAppointment) && (
         <Checkbox
@@ -213,14 +229,23 @@ export const NewTenancyView = ({
           </Button>
         )}
 
-      {(documentsSigned || currentState.state === tenureUpdated.state) && (
+      {documentsSigned && currentState.state !== tenureUpdated.state && (
+        <TenureUpdateForm
+          process={process}
+          mutate={mutate}
+          setGlobalError={setGlobalError}
+        />
+      )}
+
+      {[tenureUpdated.state, processCompleted.state].includes(currentState.state) && (
         <CloseProcessView
           processConfig={processConfig}
           process={process}
           mutate={mutate}
           setGlobalError={setGlobalError}
           statusBox={false}
-          trigger={Trigger.UpdateTenure}
+          trigger={Trigger.CompleteProcess}
+          nextStepsLabel={locale.finalStep}
         />
       )}
     </>
