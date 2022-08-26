@@ -343,7 +343,8 @@ exports[`manual-checks-view it renders ManualChecksFailedView correctly, state=M
   <h3
     class="lbh-heading-h3"
   >
-    Next steps:
+    Next steps
+    :
   </h3>
   <form
     action="#"

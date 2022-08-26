@@ -183,6 +183,47 @@ exports[`ho-review-view it renders ReviewApplication view correctly for HOApprov
         </div>
       </div>
     </div>
+    <div
+      class="mtfh-box mtfh-box--success"
+    >
+      <div
+        class="mtfh-status-box"
+      >
+        <svg
+          fill="none"
+          height="45"
+          viewBox="0 0 45 45"
+          width="45"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle
+            cx="22.5"
+            cy="22.5"
+            fill="white"
+            r="21.75"
+            stroke="#00664F"
+            stroke-width="1.5"
+          />
+          <path
+            clip-rule="evenodd"
+            d="M35 15.5127L18.775 33L11 24.6201L14.2591 21.1074L18.775 25.9746L31.7409 12L35 15.5127Z"
+            fill="#00664F"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <div>
+          <div
+            class="mtfh-status-heading__title"
+          >
+            <h4
+              class="lbh-heading-h4"
+            >
+              Sole to joint tenure application approved
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
     <h2
       class="lbh-heading-h2"
     >

@@ -20,6 +20,7 @@ const locale = {
   reschedule: "Reschedule",
   returnHomePage: "Return to home page",
   submitCase: "Submit case",
+  finalStep: "Final step",
   supportingDocuments,
   processes: {
     soletojoint: {
@@ -166,7 +167,8 @@ const locale = {
         "You must make an office appointment with the applicant to sign a new tenancy agreement",
       recommendation: "Recommendation:",
       showReport: "Show investigator report",
-      tenancySigned: "Tenancy signed: Tenure created",
+      getTenancySigned: (dateStr: string) =>
+        `Tenancy signed: tenure created with ${dateStr} start date`,
       tenureInvestigationCompleted:
         "I confirm that the tenure investigation has been completed",
       tenureInvestigatorRecommendation: (recommendation) => {
@@ -190,6 +192,7 @@ const locale = {
       managersName: "Enter manager's name",
       hoOutcome: (decision) =>
         `Housing Officer reviewed and Area Housing Manager: ${decision} application`,
+      soleToJointApproved: "Sole to joint tenure application approved",
     },
     hoReviewModal: {
       [Process.SoleToJoint]: "Sole to joint tenure",
@@ -219,6 +222,19 @@ const locale = {
       confirmationText:
         "This case is now closed and we have recorded this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history.",
       thankYouForConfirmation: "Thank you for your confirmation",
+    },
+    tenureUpdateForm: {
+      checks: {
+        introduction: "As part of the tenure creation process",
+        items: [
+          "a Tenancy Termination is completed by the tenant",
+          "a new secure tenancy is signed by both joint tenants",
+          'both tenants understand and are provided with a copy "Your Tenancy Conditions"',
+          "a photograph is taken of the new tenant",
+        ],
+      },
+      setNewTenureStartDate: "Set the new tenure start date",
+      taskConformation: "I confirm I have completed the tasks above",
     },
   },
   errors: {

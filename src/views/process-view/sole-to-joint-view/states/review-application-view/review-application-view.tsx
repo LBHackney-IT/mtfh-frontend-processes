@@ -55,6 +55,7 @@ export const ReviewApplicationView = ({
     interviewScheduled,
     interviewRescheduled,
     tenureUpdated,
+    processCompleted,
     processClosed,
     processCancelled,
   } = processConfig.states;
@@ -150,6 +151,7 @@ export const ReviewApplicationView = ({
         tenureAppointmentScheduled.state,
         tenureAppointmentRescheduled.state,
         tenureUpdated.state,
+        processCompleted.state,
       ].includes(processState.state) && (
         <NewTenancyView
           processConfig={processConfig}

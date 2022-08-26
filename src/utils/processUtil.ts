@@ -13,6 +13,23 @@ export const getPreviousState = (process) => {
   return previousStates[previousStates.length - 1];
 };
 
+export const findStateInProcess = (process, stateKey) => {
+  const states = [process.currentState, ...process.previousStates];
+  return states.find((previous) => previous.state === stateKey);
+};
+
+export const getFormattedDateStr = ({
+  day,
+  month,
+  year,
+}: {
+  day: string;
+  month: string;
+  year: string;
+}) => {
+  return `${year}-${month}-${day}`;
+};
+
 export const getAppointmentDateTime = ({
   day,
   month,
@@ -29,7 +46,11 @@ export const getAppointmentDateTime = ({
   amPm: string;
 }) => {
   return parse(
-    `${year}-${month}-${day} ${hour}:${minute} ${amPm.toUpperCase()}`,
+    `${getFormattedDateStr({
+      day,
+      month,
+      year,
+    })} ${hour}:${minute} ${amPm.toUpperCase()}`,
     "yyyy-MM-dd hh:mm a",
     new Date(),
   );

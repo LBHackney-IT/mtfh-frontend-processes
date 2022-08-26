@@ -9,3 +9,12 @@ export const stringToDate = (dateStr: string, formatStr: string): Date => {
 export const dateToString = (date: Date, formatStr: string): string => {
   return format(date, formatStr);
 };
+
+export const reformatDate = (
+  dateStr: string,
+  fromFormat: string,
+  toFormat: string,
+): string => {
+  const date = stringToDate(dateStr, fromFormat);
+  return dateToString(date, toFormat);
+};

@@ -34,6 +34,7 @@ interface CloseProcessViewProps extends ProcessComponentProps {
   statusBox?: boolean;
   trigger?: string;
   isCancel?: boolean;
+  nextStepsLabel?: string;
 }
 
 export const CloseProcessView = ({
@@ -45,9 +46,10 @@ export const CloseProcessView = ({
   statusBox = true,
   trigger,
   isCancel = false,
+  nextStepsLabel = "Next steps",
 }: CloseProcessViewProps): JSX.Element => {
   const { state } = process.currentState;
-  const { processCancelled, processClosed, tenureUpdated, nameUpdated } =
+  const { processCancelled, processClosed, nameUpdated, processCompleted } =
     processConfig.states;
 
   const statusTitle = locale.views.closeProcess.statusTitle(
@@ -69,7 +71,7 @@ export const CloseProcessView = ({
       {[
         processClosed?.state,
         processCancelled?.state,
-        tenureUpdated?.state,
+        processCompleted?.state,
         nameUpdated?.state,
       ].includes(state) ? (
         <>
@@ -87,7 +89,7 @@ export const CloseProcessView = ({
         </>
       ) : (
         <>
-          <Heading variant="h3">Next steps:</Heading>
+          <Heading variant="h3">{nextStepsLabel}:</Heading>
           <Formik<CloseProcessFormData>
             initialValues={{
               hasNotifiedResident: false,
