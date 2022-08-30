@@ -1,12 +1,15 @@
-import { mockActiveTenureV1, render } from "@hackney/mtfh-test-utils";
+import { mockActiveTenureV1, mockPersonV1, render } from "@hackney/mtfh-test-utils";
 import { screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import { menu, processes } from "../../services";
+import { createMockPersonWithTenure } from "../../services/menu.test";
 import { ProcessMenu } from "./process-menu";
 
 import * as assetV1 from "@mtfh/common/lib/api/asset/v1/service";
 import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
+import * as personV1 from "@mtfh/common/lib/api/person/v1/service";
+import { Person } from "@mtfh/common/lib/api/person/v1/types";
 import * as tenureV1 from "@mtfh/common/lib/api/tenure/v1/service";
 import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
 import { $configuration } from "@mtfh/common/lib/configuration";
@@ -25,7 +28,7 @@ describe("feature toggle on", () => {
     $configuration.next({
       MMH: {
         ...features.MMH,
-        featureToggles: { EnhancedProcessMenu: true },
+        featureToggles: { EnhancedProcessMenu: true, EnableChangeOfName: true },
       },
     });
   });
@@ -128,6 +131,46 @@ describe("feature toggle on", () => {
 
       const { container } = render(
         <ProcessMenu id={mockActiveTenureV1.id} targetType="tenure" />,
+      );
+      expect(container).toMatchSnapshot();
+    });
+  });
+
+  describe("Change of name", () => {
+    test("renders only if person has only 1 tenure and it is Active & Secure", () => {
+      jest.spyOn(tenureV1, "useTenure").mockReturnValue({
+        data: undefined,
+      } as AxiosSWRResponse<Tenure>);
+
+      jest.spyOn(assetV1, "useAsset").mockReturnValue({
+        data: undefined,
+      } as AxiosSWRResponse<Asset>);
+
+      jest.spyOn(personV1, "usePerson").mockReturnValue({
+        data: createMockPersonWithTenure(true, "Secure"),
+      } as AxiosSWRResponse<Person>);
+
+      const { container } = render(
+        <ProcessMenu id={mockPersonV1.id} targetType="person" />,
+      );
+      expect(container).toMatchSnapshot();
+    });
+
+    test("it doesn't render Change of name if its tenure is not Active & Secure", () => {
+      jest.spyOn(tenureV1, "useTenure").mockReturnValue({
+        data: undefined,
+      } as AxiosSWRResponse<Tenure>);
+
+      jest.spyOn(assetV1, "useAsset").mockReturnValue({
+        data: undefined,
+      } as AxiosSWRResponse<Asset>);
+
+      jest.spyOn(personV1, "usePerson").mockReturnValue({
+        data: createMockPersonWithTenure(true, "TestSecure"),
+      } as AxiosSWRResponse<Person>);
+
+      const { container } = render(
+        <ProcessMenu id={mockPersonV1.id} targetType="person" />,
       );
       expect(container).toMatchSnapshot();
     });

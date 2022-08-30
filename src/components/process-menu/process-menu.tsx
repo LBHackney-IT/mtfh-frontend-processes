@@ -5,6 +5,7 @@ import { legacyMenuProps } from "../../services/menu";
 import { TargetType } from "../../types";
 
 import { useAsset } from "@mtfh/common/lib/api/asset/v1";
+import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import { Details, Link } from "@mtfh/common/lib/components";
 import { useFeatureToggle } from "@mtfh/common/lib/hooks";
@@ -69,6 +70,7 @@ export const ProcessMenu = ({ id, targetType }: ProcessMenuProps) => {
     changeofname: enableChangeOfName,
   };
 
+  const { data: person } = usePerson(id);
   const { data: tenure } = useTenure(id);
   const { data: asset } = useAsset(tenure?.tenuredAsset?.id || null);
   const queryData = {
@@ -89,10 +91,12 @@ export const ProcessMenu = ({ id, targetType }: ProcessMenuProps) => {
         ...item,
         link,
         ...(item.processes && {
-          processes: item.processes.filter(
-            (process) =>
-              process.targetType === targetType && processEnableStatus[process.name],
-          ),
+          processes: item.processes.filter((process) => {
+            const processEnabled =
+              process.targetType === targetType && processEnableStatus[process.name];
+            const showProcess = process.showProcess({ person });
+            return processEnabled && showProcess;
+          }),
         }),
       };
     })

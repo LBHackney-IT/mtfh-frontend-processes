@@ -1,5 +1,257 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`feature toggle on Change of name it doesn't render Change of name if its tenure is not Active & Secure 1`] = `
+<div>
+  <ul
+    class="mtfh-processes-menu__list"
+  >
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Other tenancy changes
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfyXscVvgCBhbBBe7ADpV6cUqJoKrrTbU0YYRB_uXS2J4AHMQ/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Record a tenancy / audit homecheck
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/spreadsheets/d/1fd6FwBXvBo2DmX8qZaXUr7hX9sE6Zr7HZsPlA_OO8Hs/edit#gid=1251146140"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Find legal referral response
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLScpHsoJQgq112HIMbW06YAFpggijwQuODJM483HGbX_PMfCMw/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Request a legal referral
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfRSMia4FeT6WPjrmRlsLpOXyJ4tFs3Sv_O0toxUbv_FmIjKw/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Record notice served
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLScPXSs4-xxTH2N5dUwtfmEl5mpu7kxZ6mHe86Qy_rlDNu-GbA/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Rehousing
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLScxrWFLF7M7A3B1yzY-LZFXkV0P0qv6igcQ4wEgWHQk8DaUCw/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Resident contact log
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSceU2H-VWi2ewaEiOAkOWULVFU2DoPSen8SRPyJrmQtRpEhfQ/viewform?gxids=7628"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Report Japanese knotweed
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfLmlLraDyOfqYhdjkOfkNWWlHUUep05G5n0GN-ewizN0Fbuw/viewform?gxids=7628"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Report overgrown tree
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSc3mOUUEQhdRiDsS0k9XDWlfGJG0CEFAC2rnC1sYmM-idt-Nw/viewform?gxids=7628"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Report overgrown garden
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`feature toggle on Change of name renders only if person has only 1 tenure and it is Active & Secure 1`] = `
+<div>
+  <ul
+    class="mtfh-processes-menu__list"
+  >
+    <li>
+      <details
+        class="govuk-details lbh-details"
+        data-module="govuk-details"
+        data-testid="mtfh-details"
+        id="mtfh-details"
+      >
+        <summary
+          class="govuk-details__summary"
+        >
+          <span
+            class="govuk-details__summary-text"
+          >
+            Change to a tenancy
+          </span>
+        </summary>
+        <div
+          class="govuk-details__text"
+        >
+          <ul
+            class="mtfh-processes-menu__process-list"
+          >
+            <li>
+              <a
+                class="govuk-link lbh-link lbh-link--no-visited-state"
+                href="/processes/changeofname/start/person/6fbe024f-2316-4265-a6e8-d65a837e308a"
+              >
+                Change of Name
+              </a>
+            </li>
+          </ul>
+        </div>
+      </details>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Other tenancy changes
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfyXscVvgCBhbBBe7ADpV6cUqJoKrrTbU0YYRB_uXS2J4AHMQ/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Record a tenancy / audit homecheck
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/spreadsheets/d/1fd6FwBXvBo2DmX8qZaXUr7hX9sE6Zr7HZsPlA_OO8Hs/edit#gid=1251146140"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Find legal referral response
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLScpHsoJQgq112HIMbW06YAFpggijwQuODJM483HGbX_PMfCMw/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Request a legal referral
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfRSMia4FeT6WPjrmRlsLpOXyJ4tFs3Sv_O0toxUbv_FmIjKw/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Record notice served
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLScPXSs4-xxTH2N5dUwtfmEl5mpu7kxZ6mHe86Qy_rlDNu-GbA/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Rehousing
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLScxrWFLF7M7A3B1yzY-LZFXkV0P0qv6igcQ4wEgWHQk8DaUCw/viewform"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Resident contact log
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSceU2H-VWi2ewaEiOAkOWULVFU2DoPSen8SRPyJrmQtRpEhfQ/viewform?gxids=7628"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Report Japanese knotweed
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSfLmlLraDyOfqYhdjkOfkNWWlHUUep05G5n0GN-ewizN0Fbuw/viewform?gxids=7628"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Report overgrown tree
+      </a>
+    </li>
+    <li>
+      <a
+        class="govuk-link lbh-link"
+        href="https://docs.google.com/forms/d/e/1FAIpQLSc3mOUUEQhdRiDsS0k9XDWlfGJG0CEFAC2rnC1sYmM-idt-Nw/viewform?gxids=7628"
+        rel="noopener noreferrer"
+        target="_blank"
+      >
+        Report overgrown garden
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
 exports[`feature toggle on prepopulate query Other tenancy changes has the correct query 1`] = `
 <div>
   <ul
