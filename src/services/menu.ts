@@ -6,17 +6,24 @@ import { Tenure } from "@mtfh/common/lib/api/tenure/v1/types";
 interface MenuProps {
   label: string;
   link: string;
-  processes?: { name: string; label: string; link: string; targetType: string }[];
+  processes?: {
+    name: string;
+    label: string;
+    link: string;
+    targetType: string;
+    showProcess: (params?: any) => boolean;
+  }[];
   getPplQuery?: (context: any) => string;
 }
 
-const getProcessLink = (processName: string) => {
+const getProcessLink = (processName: string, showProcess: (params?: any) => boolean) => {
   const process = processes[processName];
   return {
     name: processName,
     targetType: process.targetType,
     label: process.title,
     link: `/processes/${process.processName}/start`,
+    showProcess,
   };
 };
 
@@ -57,12 +64,18 @@ const getPplQueryTenancyChange = ({ tenure }): string => {
   return encodedQuery;
 };
 
+export const showChangeOfName = ({ person }) => {
+  const activeTenures = person?.tenures?.filter((tenure) => tenure.isActive);
+  const hasOneActiveTenure = activeTenures?.length === 1;
+  return hasOneActiveTenure && person.tenures[0].type === "Secure";
+};
+
 const changeToATenancy = {
   label: "Change to a tenancy",
   link: "https://docs.google.com/forms/d/e/1FAIpQLSdgJ9DSgGI0Aj7GO1bzLbbrArPabjS8DQwmvwb9ltB-qYYESA/viewform",
   processes: [
-    getProcessLink(processes.soletojoint.processName),
-    getProcessLink(processes.changeofname.processName),
+    getProcessLink(processes.soletojoint.processName, () => true),
+    getProcessLink(processes.changeofname.processName, showChangeOfName),
   ],
 };
 
