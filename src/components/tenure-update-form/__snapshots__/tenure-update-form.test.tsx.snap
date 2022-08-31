@@ -20,28 +20,28 @@ exports[`tenure-update-form-component it renders tenure update form correctly 1`
       <p
         class="lbh-body-m"
       >
-        a Tenancy Termination is completed by the tenant.
+        a Tenancy Termination is completed by the tenant
       </p>
     </li>
     <li>
       <p
         class="lbh-body-m"
       >
-        a new secure tenancy is signed by both joint tenants.
+        a new secure tenancy is signed by both joint tenants
       </p>
     </li>
     <li>
       <p
         class="lbh-body-m"
       >
-        both tenants understand and are provided with a copy "Your Tenancy Conditions".
+        both tenants understand and are provided with a copy of "Your Tenancy Conditions"
       </p>
     </li>
     <li>
       <p
         class="lbh-body-m"
       >
-        a photograph is taken of the new tenant.
+        a photograph is taken of the new tenant
       </p>
     </li>
   </ul>

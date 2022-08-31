@@ -229,7 +229,7 @@ const locale = {
         items: [
           "a Tenancy Termination is completed by the tenant",
           "a new secure tenancy is signed by both joint tenants",
-          'both tenants understand and are provided with a copy "Your Tenancy Conditions"',
+          'both tenants understand and are provided with a copy of "Your Tenancy Conditions"',
           "a photograph is taken of the new tenant",
         ],
       },
