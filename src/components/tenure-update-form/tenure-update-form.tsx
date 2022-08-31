@@ -55,7 +55,7 @@ export const TenureUpdateForm = ({
       <Text>{`${locale.views.tenureUpdateForm.checks.introduction},`}</Text>
       <List variant="bullets" style={{ marginLeft: "1em" }}>
         {locale.views.tenureUpdateForm.checks.items.map((item, index) => (
-          <Text key={`tenure-update-form-check-${index}`}>{`${item}.`}</Text>
+          <Text key={`tenure-update-form-check-${index}`}>{item}</Text>
         ))}
       </List>
       <Formik<TenureStartDateFormData>
