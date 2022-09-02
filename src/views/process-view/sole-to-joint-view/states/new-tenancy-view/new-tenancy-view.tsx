@@ -229,13 +229,16 @@ export const NewTenancyView = ({
           </Button>
         )}
 
-      {documentsSigned && currentState.state !== tenureUpdated.state && (
-        <TenureUpdateForm
-          process={process}
-          mutate={mutate}
-          setGlobalError={setGlobalError}
-        />
-      )}
+      {documentsSigned &&
+        [tenureAppointmentScheduled.state, tenureAppointmentRescheduled.state].includes(
+          currentState.state,
+        ) && (
+          <TenureUpdateForm
+            process={process}
+            mutate={mutate}
+            setGlobalError={setGlobalError}
+          />
+        )}
 
       {[tenureUpdated.state, processCompleted.state].includes(currentState.state) && (
         <CloseProcessView
