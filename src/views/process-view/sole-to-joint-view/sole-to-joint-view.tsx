@@ -188,7 +188,13 @@ const getActiveStep = (
     }
     return 6;
   }
-  if ([states.tenureUpdated.state, states.hoApprovalFailed.state].includes(state)) {
+  if (
+    [
+      states.tenureUpdated.state,
+      states.processCompleted.state,
+      states.hoApprovalFailed.state,
+    ].includes(state)
+  ) {
     return 7;
   }
   return 0;
