@@ -499,7 +499,7 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
         <h4
           class="lbh-heading-h4 mtfh-status-heading__title"
         >
-          Tenancy signed: tenure created with 01/08/2022 start date
+          Tenancy signed: Tenure created with 01/08/2022 start date
         </h4>
       </div>
       <div
@@ -795,7 +795,7 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
         <h4
           class="lbh-heading-h4 mtfh-status-heading__title"
         >
-          Tenancy signed: tenure created with 01/08/2022 start date
+          Tenancy signed: Tenure created with 01/08/2022 start date
         </h4>
       </div>
       <div

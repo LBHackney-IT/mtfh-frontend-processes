@@ -168,7 +168,7 @@ const locale = {
       recommendation: "Recommendation:",
       showReport: "Show investigator report",
       getTenancySigned: (dateStr: string) =>
-        `Tenancy signed: tenure created with ${dateStr} start date`,
+        `Tenancy signed: Tenure created with ${dateStr} start date`,
       tenureInvestigationCompleted:
         "I confirm that the tenure investigation has been completed",
       tenureInvestigatorRecommendation: (recommendation) => {
