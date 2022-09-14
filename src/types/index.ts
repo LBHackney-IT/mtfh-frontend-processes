@@ -36,6 +36,7 @@ export interface ProcessStateInfo {
   state: string;
   status: string;
   triggers: Record<string, string>;
+  timeConstraint?: number;
 }
 
 export interface IProcess {
