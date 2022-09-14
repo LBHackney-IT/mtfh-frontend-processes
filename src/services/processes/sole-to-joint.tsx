@@ -98,6 +98,7 @@ export const soletojoint: IProcess = {
         requestDocumentsDes: Trigger.RequestDocumentsDes,
         requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
       },
+      timeConstraint: 10,
     },
     documentsRequestedDes: {
       state: "DocumentsRequestedDes",
@@ -139,6 +140,7 @@ export const soletojoint: IProcess = {
       triggers: {
         tenureInvestigation: Trigger.TenureInvestigation,
       },
+      timeConstraint: 5,
     },
     tenureInvestigationFailed: {
       state: "TenureInvestigationFailed",
@@ -147,6 +149,7 @@ export const soletojoint: IProcess = {
         hoApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
       },
+      timeConstraint: 2,
     },
     tenureInvestigationPassed: {
       state: "TenureInvestigationPassed",
@@ -155,6 +158,7 @@ export const soletojoint: IProcess = {
         hoApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
       },
+      timeConstraint: 2,
     },
     tenureInvestigationPassedWithInt: {
       state: "TenureInvestigationPassedWithInt",
@@ -163,6 +167,7 @@ export const soletojoint: IProcess = {
         hoApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
       },
+      timeConstraint: 2,
     },
     interviewScheduled: {
       state: "InterviewScheduled",
@@ -195,6 +200,7 @@ export const soletojoint: IProcess = {
         scheduleTenureAppointment: Trigger.ScheduleTenureAppointment,
         cancelProcess: Trigger.CancelProcess,
       },
+      timeConstraint: 2,
     },
     tenureAppointmentScheduled: {
       state: "TenureAppointmentScheduled",
