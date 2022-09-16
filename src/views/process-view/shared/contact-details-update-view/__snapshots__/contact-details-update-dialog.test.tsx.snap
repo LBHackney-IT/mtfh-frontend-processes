@@ -1,0 +1,120 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`it ContactDetailsUpdateDialog as expected when it is open 1`] = `
+<body>
+  <div
+    aria-hidden="true"
+  />
+  <reach-portal>
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+    <div
+      data-focus-lock-disabled="false"
+    >
+      <div>
+        <div
+          data-reach-dialog-overlay=""
+        >
+          <div
+            aria-label="Update contact details"
+            aria-modal="true"
+            class="lbh-dialog lbh-dialog-contact-details"
+            data-reach-dialog-content=""
+            role="dialog"
+            tabindex="-1"
+          >
+            <h2
+              class="lbh-heading-h2 lbh-dialog__title"
+            >
+              Update contact details
+            </h2>
+            <button
+              class="lbh-dialog__close"
+              type="button"
+            >
+              <span
+                class="govuk-visually-hidden"
+              >
+                Close
+              </span>
+              <svg
+                fill="none"
+                height="18"
+                viewBox="0 0 13 13"
+                width="18"
+              >
+                <path
+                  d="M-0.0501709 1.36379L1.36404 -0.050415L12.6778 11.2633L11.2635 12.6775L-0.0501709 1.36379Z"
+                  fill="#0B0C0C"
+                />
+                <path
+                  d="M11.2635 -0.050293L12.6778 1.36392L1.36404 12.6776L-0.0501709 11.2634L11.2635 -0.050293Z"
+                  fill="#0B0C0C"
+                />
+              </svg>
+            </button>
+            <p
+              class="lbh-body-s"
+            >
+              The details will be instantly updated within MMH when you save the email address/phone number.
+            </p>
+            <p
+              class="lbh-body-s"
+            >
+              You can 'Return to your application' once you have completed the updates. The new contact details will be displayed.
+            </p>
+            <fieldset
+              class="govuk-fieldset lbh-fieldset"
+            >
+              <legend
+                class="govuk-fieldset__legend govuk-fieldset__legend--m"
+              >
+                
+              </legend>
+              <div
+                class="mtfh-fieldset__content"
+              >
+                <div
+                  class="mtfh-contact-details-form"
+                >
+                  <button
+                    class="govuk-button lbh-button"
+                    type="button"
+                  >
+                    Add an email address
+                  </button>
+                </div>
+                <div
+                  class="mtfh-contact-details-form"
+                >
+                  <button
+                    class="govuk-button lbh-button"
+                    type="button"
+                  >
+                    Add a phone number
+                  </button>
+                </div>
+              </div>
+            </fieldset>
+            <button
+              class="govuk-button lbh-button"
+              data-testid="close-update-contact-details-modal"
+              type="button"
+            >
+              Return to application
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      data-focus-guard="true"
+      style="width: 1px; height: 0px; padding: 0px; overflow: hidden; position: fixed; top: 1px; left: 1px;"
+      tabindex="0"
+    />
+  </reach-portal>
+</body>
+`;

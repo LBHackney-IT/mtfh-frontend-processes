@@ -116,6 +116,20 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
         Gay.Jacobi@hotmail.com
       </span>
     </p>
+    <p
+      class="lbh-body-s"
+    >
+      If the contact details are not up to date, please
+       
+      <a
+        class="govuk-link lbh-link lbh-link--no-visited-state"
+        href="/processes/changeofname/e63e68c7-84b0-3a48-b450-896e2c3d7735"
+      >
+        update the contact details,
+         
+      </a>
+      it will automatically update the tenant’s contact details as well.
+    </p>
     <form
       action="#"
       class="request-documents-form"

@@ -67,6 +67,12 @@ describe("ho-review-view", () => {
     ).resolves.toBeInTheDocument();
     await expect(screen.findByText("Date")).resolves.toBeInTheDocument();
     await expect(screen.findByText("Time")).resolves.toBeInTheDocument();
+
+    const updateContactDetailsLink = screen.getByText("update the contact details,");
+    await userEvent.click(updateContactDetailsLink);
+    await userEvent.click(await screen.findByText("Return to application"));
+    expect(screen.queryByText("Return to application")).not.toBeInTheDocument();
+
     expect(container).toMatchSnapshot();
   });
 
