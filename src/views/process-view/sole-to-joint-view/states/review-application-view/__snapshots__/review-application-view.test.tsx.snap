@@ -127,6 +127,20 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
           Gay.Jacobi@hotmail.com
         </span>
       </p>
+      <p
+        class="lbh-body-s"
+      >
+        If the contact details are not up to date, please
+         
+        <a
+          class="govuk-link lbh-link lbh-link--no-visited-state"
+          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
+        >
+          update the contact details,
+           
+        </a>
+        it will automatically update the tenant’s contact details as well.
+      </p>
       <form
         action="#"
         novalidate=""
