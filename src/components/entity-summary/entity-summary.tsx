@@ -1,9 +1,11 @@
+import { useEffect } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { locale } from "../../services";
 
 import { useAsset } from "@mtfh/common/lib/api/asset/v1";
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
+import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
   Center,
@@ -21,10 +23,50 @@ interface ComponentProps {
   id: string;
   // eslint-disable-next-line react/no-unused-prop-types
   config?: Record<string, any>;
+  // eslint-disable-next-line react/no-unused-prop-types
+  setRelatedEntities?: (relatedEntities: RelatedEntity[]) => void;
 }
 
-const TenureSummary = ({ id, config = {} }: ComponentProps) => {
+const TenureSummary = ({ id, config = {}, setRelatedEntities }: ComponentProps) => {
+  const { incomingTenant } = config;
   const { error, data: tenure } = useTenure(id);
+
+  const tenant = tenure?.householdMembers?.find((m) => m.isResponsible);
+
+  useEffect(() => {
+    if (setRelatedEntities) {
+      const relatedEntities: RelatedEntity[] = [];
+
+      if (tenant) {
+        relatedEntities.push({
+          id: tenant.id,
+          targetType: "person",
+          subType: "tenant",
+          description: tenant.fullName,
+        });
+      }
+
+      if (tenure) {
+        relatedEntities.push({
+          id: tenure.id,
+          targetType: "tenure",
+          description: tenure.paymentReference,
+        });
+        if (tenure.tenuredAsset) {
+          relatedEntities.push({
+            id: tenure.tenuredAsset.id,
+            targetType: "asset",
+            description: tenure.tenuredAsset.fullAddress,
+          });
+        }
+      }
+
+      if (relatedEntities.length > 0) {
+        setRelatedEntities(relatedEntities);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tenant]);
 
   if (error) {
     return (
@@ -43,9 +85,6 @@ const TenureSummary = ({ id, config = {} }: ComponentProps) => {
       </Center>
     );
   }
-
-  const tenant = tenure.householdMembers.find((m) => m.isResponsible);
-  const { incomingTenant } = config;
 
   return (
     <Heading className="entity-summary__tenure-heading" variant="h2">
@@ -98,8 +137,42 @@ const AssetsSummary = ({ id }: ComponentProps) => {
   );
 };
 
-const PersonSummary = ({ id }: ComponentProps) => {
+const PersonSummary = ({ id, setRelatedEntities }: ComponentProps) => {
   const { error, data: person } = usePerson(id);
+
+  const fullName = person ? `${person.firstName} ${person.surname}` : "";
+
+  useEffect(() => {
+    if (setRelatedEntities) {
+      const relatedEntities: RelatedEntity[] = [];
+
+      if (person) {
+        const activeTenure = person.tenures.find((tenure) => tenure.isActive);
+        if (activeTenure) {
+          relatedEntities.push({
+            id: person.id,
+            targetType: "person",
+            subType: "tenant",
+            description: fullName,
+          });
+          relatedEntities.push({
+            id: activeTenure.id,
+            targetType: "tenure",
+          });
+          relatedEntities.push({
+            id: activeTenure.assetId,
+            targetType: "asset",
+            description: activeTenure.assetFullAddress,
+          });
+        }
+      }
+
+      if (relatedEntities.length > 0) {
+        setRelatedEntities(relatedEntities);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [person]);
 
   if (error) {
     return (
@@ -123,7 +196,7 @@ const PersonSummary = ({ id }: ComponentProps) => {
     <h2 className="lbh-heading-h2">
       <div>
         <Link as={RouterLink} to={`/person/${person.id}`} variant="link" target="_blank">
-          {person?.firstName} {person?.surname}
+          {fullName}
         </Link>
       </div>
     </h2>
@@ -132,11 +205,18 @@ const PersonSummary = ({ id }: ComponentProps) => {
 
 interface EntitySummaryProps {
   id: string;
-  type: "tenure" | "property" | "person";
+  // eslint-disable-next-line react/no-unused-prop-types
   config?: Record<string, any>;
+  type: "tenure" | "property" | "person";
+  setRelatedEntities?: (relatedEntities: RelatedEntity[]) => void;
 }
 
-export const EntitySummary = ({ id, type, config }: EntitySummaryProps) => {
+export const EntitySummary = ({
+  id,
+  type,
+  config,
+  setRelatedEntities,
+}: EntitySummaryProps) => {
   const Components = {
     tenure: TenureSummary,
     property: AssetsSummary,
@@ -146,5 +226,5 @@ export const EntitySummary = ({ id, type, config }: EntitySummaryProps) => {
 
   if (!Component) return null;
 
-  return <Component id={id} config={config} />;
+  return <Component id={id} config={config} setRelatedEntities={setRelatedEntities} />;
 };

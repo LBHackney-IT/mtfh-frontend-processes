@@ -17,7 +17,11 @@ describe("EntitySummary", () => {
   describe("for tenure", () => {
     test("it renders tenure summary details", async () => {
       const { container } = render(
-        <EntitySummary id={mockActiveTenureV1.id} type="tenure" />,
+        <EntitySummary
+          id={mockActiveTenureV1.id}
+          type="tenure"
+          setRelatedEntities={jest.fn()}
+        />,
         {
           url: `/processes/soletojoint/start/tenure/${mockActiveTenureV1.id}`,
           path: "/processes/:processName/start/:targetType/:targetId",
@@ -52,6 +56,7 @@ describe("EntitySummary", () => {
           id={mockActiveTenureV1.id}
           type="tenure"
           config={{ incomingTenant }}
+          setRelatedEntities={jest.fn()}
         />,
         {
           url: `/processes/soletojoint/start/tenure/${mockActiveTenureV1.id}`,
@@ -82,10 +87,17 @@ describe("EntitySummary", () => {
 
     test("it renders an error if tenure details can't be fetched", async () => {
       server.use(getTenureV1("error", 500));
-      render(<EntitySummary id={mockActiveTenureV1.id} type="tenure" />, {
-        url: `/processes/soletojoint/start/tenure/${mockActiveTenureV1.id}`,
-        path: "/processes/:processName/start/:targetType/:targetId",
-      });
+      render(
+        <EntitySummary
+          id={mockActiveTenureV1.id}
+          type="tenure"
+          setRelatedEntities={jest.fn()}
+        />,
+        {
+          url: `/processes/soletojoint/start/tenure/${mockActiveTenureV1.id}`,
+          path: "/processes/:processName/start/:targetType/:targetId",
+        },
+      );
 
       await expect(
         screen.findByText(locale.errors.unableToFetchRecord),
@@ -98,10 +110,17 @@ describe("EntitySummary", () => {
 
   describe("for person", () => {
     test("it renders person summary details", async () => {
-      const { container } = render(<EntitySummary id={mockPersonV1.id} type="person" />, {
-        url: `/processes/soletojoint/start/person/${mockPersonV1.id}`,
-        path: "/processes/:processName/start/:targetType/:targetId",
-      });
+      const { container } = render(
+        <EntitySummary
+          id={mockPersonV1.id}
+          type="person"
+          setRelatedEntities={jest.fn()}
+        />,
+        {
+          url: `/processes/soletojoint/start/person/${mockPersonV1.id}`,
+          path: "/processes/:processName/start/:targetType/:targetId",
+        },
+      );
 
       await expect(
         screen.findByText(mockPersonV1?.firstName, { exact: false }),
@@ -116,10 +135,17 @@ describe("EntitySummary", () => {
 
     test("it renders an error if person details can't be fetched", async () => {
       server.use(getPersonV1("error", 500));
-      render(<EntitySummary id={mockPersonV1.id} type="person" />, {
-        url: `/processes/soletojoint/start/person/${mockPersonV1.id}`,
-        path: "/processes/:processName/start/:targetType/:targetId",
-      });
+      render(
+        <EntitySummary
+          id={mockPersonV1.id}
+          type="person"
+          setRelatedEntities={jest.fn()}
+        />,
+        {
+          url: `/processes/soletojoint/start/person/${mockPersonV1.id}`,
+          path: "/processes/:processName/start/:targetType/:targetId",
+        },
+      );
 
       await expect(
         screen.findByText(locale.errors.unableToFetchRecord),
@@ -133,7 +159,11 @@ describe("EntitySummary", () => {
   describe("for asset", () => {
     test("it renders property summary details", async () => {
       const { container } = render(
-        <EntitySummary id={mockAssetV1.id} type="property" />,
+        <EntitySummary
+          id={mockAssetV1.id}
+          type="property"
+          setRelatedEntities={jest.fn()}
+        />,
         {
           url: `/processes/soletojoint/start/property/${mockAssetV1.id}`,
           path: "/processes/:processName/start/:targetType/:targetId",
@@ -153,10 +183,17 @@ describe("EntitySummary", () => {
 
     test("it renders an error if property details can't be fetched", async () => {
       server.use(getAssetV1("error", 500));
-      render(<EntitySummary id={mockAssetV1.id} type="property" />, {
-        url: `/processes/soletojoint/start/property/${mockAssetV1.id}`,
-        path: "/processes/:processName/start/:targetType/:targetId",
-      });
+      render(
+        <EntitySummary
+          id={mockAssetV1.id}
+          type="property"
+          setRelatedEntities={jest.fn()}
+        />,
+        {
+          url: `/processes/soletojoint/start/property/${mockAssetV1.id}`,
+          path: "/processes/:processName/start/:targetType/:targetId",
+        },
+      );
 
       await expect(
         screen.findByText(locale.errors.unableToFetchRecord),
@@ -168,11 +205,18 @@ describe("EntitySummary", () => {
 
     test("it does not throw if incorrect type is passed", async () => {
       expect(() => {
-        // @ts-ignore
-        render(<EntitySummary id={mockAssetV1.id} type="other" />, {
-          url: `/processes/soletojoint/start/property/${mockAssetV1.id}`,
-          path: "/processes/:processName/start/:targetType/:targetId",
-        });
+        render(
+          <EntitySummary
+            id={mockAssetV1.id}
+            // @ts-ignore
+            type="other"
+            setRelatedEntities={jest.fn()}
+          />,
+          {
+            url: `/processes/soletojoint/start/property/${mockAssetV1.id}`,
+            path: "/processes/:processName/start/:targetType/:targetId",
+          },
+        );
       }).not.toThrow();
     });
   });
