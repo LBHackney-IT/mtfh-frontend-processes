@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Link as RouterLink, useParams } from "react-router-dom";
 
 import { EntitySummary, StartProcess } from "../../components";
 import { locale, processes } from "../../services";
 import { IProcess, TargetType } from "../../types";
 
+import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
 import { ErrorSummary, Layout, Link } from "@mtfh/common/lib/components";
 
 interface ParamProps {
@@ -14,6 +16,7 @@ interface ParamProps {
 
 export const StartProcessView = () => {
   const { targetId, targetType, processName } = useParams<ParamProps>();
+  const [relatedEntities, setRelatedEntities] = useState<RelatedEntity[]>([]);
 
   const SideBar = () => {
     return null;
@@ -50,13 +53,18 @@ export const StartProcessView = () => {
       side={<SideBar />}
     >
       <>
-        <EntitySummary type={targetType} id={targetId} />
+        <EntitySummary
+          type={targetType}
+          id={targetId}
+          setRelatedEntities={setRelatedEntities}
+        />
         <StartProcess
           targetId={targetId}
           processName={processName}
           process={startProcess}
           backLink={backLink}
           targetType={targetType}
+          relatedEntities={relatedEntities}
         />
       </>
     </Layout>

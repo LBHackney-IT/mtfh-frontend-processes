@@ -7,7 +7,7 @@ import * as Yup from "yup";
 import { locale } from "../../services";
 import { IStartProcess } from "../../types";
 
-import { addProcess } from "@mtfh/common/lib/api/process/v1";
+import { RelatedEntity, addProcess } from "@mtfh/common/lib/api/process/v1";
 import {
   Button,
   Checkbox,
@@ -26,6 +26,7 @@ interface StartProcessProps {
   processName: string;
   targetId: string;
   targetType: string;
+  relatedEntities?: RelatedEntity[];
 }
 
 export const schema = Yup.object({
@@ -40,6 +41,7 @@ export const StartProcess = ({
   backLink,
   targetId,
   targetType,
+  relatedEntities = [],
 }: StartProcessProps) => {
   const history = useHistory();
   const [globalError, setGlobalError] = useState<number>();
@@ -68,7 +70,7 @@ export const StartProcess = ({
         onSubmit={async () => {
           try {
             const response = await addProcess(
-              { targetID: targetId, targetType, relatedEntities: [] },
+              { targetID: targetId, targetType, relatedEntities },
               processName,
             );
             history.push(`/processes/${processName}/${response.id}`);
