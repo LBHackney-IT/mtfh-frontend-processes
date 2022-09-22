@@ -26,7 +26,7 @@ export const RequestDocumentsView = ({
     <div data-testid="changeofname-RequestDocuments">
       <Heading variant="h3">{locale.supportingDocuments}</Heading>
 
-      <Text size="sm">
+      <Text>
         The tenant needs to provide documents as proof to support their application:
       </Text>
       <List variant="bullets">
@@ -35,11 +35,11 @@ export const RequestDocumentsView = ({
           explanation="for example: valid passport, driving licence, bank statement, utility bill"
         />
         <div>
-          <Text size="sm" style={{ fontWeight: "bold" }}>
+          <Text style={{ fontWeight: "bold" }}>
             One of the following documents containing the tenant’s new name:
           </Text>
           <ol
-            className="lbh-body-s"
+            className="lbh-body-m"
             type="1"
             style={{ marginLeft: "2em", marginTop: 15, fontWeight: "bold" }}
           >

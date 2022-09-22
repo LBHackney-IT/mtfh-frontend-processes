@@ -42,7 +42,7 @@ export const CheckSupportingDocuments = ({
   return (
     <>
       <Heading variant="h3">Checking supporting documents</Heading>
-      <Text size="sm">
+      <Text>
         You can request supporting documents through the Document Evidence Store or you
         can make an appointment with the tenant to check supporting documents in-person.
       </Text>
@@ -164,12 +164,12 @@ export const CheckSupportingDocuments = ({
               )}
 
               <Heading variant="h3">Tenant declaration</Heading>
-              <Text size="sm">
+              <Text>
                 Please read this out to the applicant before you proceed to the next step.
                 Applicant has to accept the declaration before the application can be
                 proceeded:
               </Text>
-              <Text size="sm">
+              <Text>
                 “You are declaring that to the best of your knowledge and belief the
                 information given is correct in every detail. You understand it is an
                 offence to give false or misleading information or to hold back relevant
@@ -177,7 +177,7 @@ export const CheckSupportingDocuments = ({
                 if any information is found to be false, you may be prosecuted and we may
                 repossess your home.
               </Text>
-              <Text size="sm">
+              <Text>
                 If you are prosecuted and found guilty, you understand that you could be
                 ordered to pay a fine of up to £5000. It is your duty to make sure that
                 your application form is honest. You hereby give your consent for Housing

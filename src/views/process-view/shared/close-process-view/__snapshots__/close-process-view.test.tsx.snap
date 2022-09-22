@@ -94,7 +94,7 @@ exports[`close-process-view it renders CloseProcessView correctly for state=Proc
   >
     <li>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         This case is now closed and we have recorded this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history.
       </p>

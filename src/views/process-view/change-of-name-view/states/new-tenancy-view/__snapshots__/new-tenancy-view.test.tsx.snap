@@ -16,13 +16,13 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for stat
       You must make an office appointment with the applicant to sign a new tenancy agreement
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Haylee Macejkovic
        contact details:
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Phone:
       <span
@@ -32,7 +32,7 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for stat
       </span>
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Email:
       <span
@@ -42,7 +42,7 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for stat
       </span>
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       If the contact details are not up to date, please
        
@@ -440,7 +440,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
     >
       <li>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
         >
           This case is now closed and we have recorded this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history.
         </p>
@@ -578,7 +578,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
   >
     <li>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         This case is now closed and we have recorded this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history.
       </p>

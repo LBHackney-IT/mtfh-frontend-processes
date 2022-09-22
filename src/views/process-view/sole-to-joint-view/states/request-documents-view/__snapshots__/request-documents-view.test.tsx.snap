@@ -39,17 +39,12 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
           Eligibility checks passed
         </h4>
       </div>
-      <div
-        class="govuk-link lbh-link lbh-link--no-visited-state"
-        style="padding-left: 60px; margin-top: 17.5px;"
+      <button
+        class="govuk-link lbh-link"
+        style="margin-left: 60px; margin-top: 8px;"
       >
-        <a
-          class="govuk-link lbh-link lbh-link--no-visited-state"
-          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
-        >
-          Show all eligibility checks
-        </a>
-      </div>
+        Show all eligibility checks
+      </button>
     </div>
     <h3
       class="lbh-heading-h3"
@@ -57,7 +52,7 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
       Supporting documents
     </h3>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       The following documentation is required from the secure tenant and/or proposed tenant, as proof to support their application:
     </p>
@@ -66,13 +61,13 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
     >
       <li>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="font-weight: bold;"
         >
           Secure and Proposed tenant: Two forms of proof of identity for both the secure and proposed tenant. At least one each must be photographic ID
         </p>
         <span
-          class="lbh-body-s"
+          class="lbh-body-m"
         >
           (
           for example: valid passport, driving licence, bank statement, utility bill
@@ -81,13 +76,13 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
       </li>
       <li>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="font-weight: bold;"
         >
           Proposed tenant: Proof of immigration status
         </p>
         <span
-          class="lbh-body-s"
+          class="lbh-body-m"
         >
           (
           for example: passport, home office letter, embassy letter, immigration status document
@@ -96,13 +91,13 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
       </li>
       <li>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="font-weight: bold;"
         >
           Proposed tenant: Proof of relationship to the existing tenant
         </p>
         <span
-          class="lbh-body-s"
+          class="lbh-body-m"
         >
           (
           for example: marriage or civil partner certificate
@@ -111,13 +106,13 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
       </li>
       <li>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="font-weight: bold;"
         >
           Proposed tenant: Proof of co-habitation: three documents proving 12 months residency at the property. If marriage certificate provided, any Proof of Address can be accepted.
         </p>
         <span
-          class="lbh-body-s"
+          class="lbh-body-m"
         >
           (
           for example: letter, utility bill, council tax bill
@@ -131,18 +126,18 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
       Checking supporting documents
     </h3>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       You can request supporting documents through the Document Evidence Store or you can make an appointment with the tenant to check supporting documents in-person.
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Global Web Consultant Alverta Denesik
        contact details:
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Phone:
       <span
@@ -152,7 +147,7 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
       </span>
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Email:
       <span
@@ -162,7 +157,7 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
       </span>
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       If the contact details are not up to date, please
        
@@ -459,17 +454,17 @@ exports[`request-documents-view it enables date/time option and next button 1`] 
         Tenant declaration
       </h3>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         Please read this out to the applicant before you proceed to the next step. Applicant has to accept the declaration before the application can be proceeded:
       </p>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         “You are declaring that to the best of your knowledge and belief the information given is correct in every detail. You understand it is an offence to give false or misleading information or to hold back relevant information. You also understand that we will check this information and if any information is found to be false, you may be prosecuted and we may repossess your home.
       </p>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         If you are prosecuted and found guilty, you understand that you could be ordered to pay a fine of up to £5000. It is your duty to make sure that your application form is honest. You hereby give your consent for Housing Services to carry out a credit reference check and obtain relevant information from the Council and other external agencies.”
       </p>

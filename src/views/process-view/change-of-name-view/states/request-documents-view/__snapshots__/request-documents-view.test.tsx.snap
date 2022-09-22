@@ -11,7 +11,7 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
       Supporting documents
     </h3>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       The tenant needs to provide documents as proof to support their application:
     </p>
@@ -20,13 +20,13 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
     >
       <li>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="font-weight: bold;"
         >
           Two forms of proof of identity. At least one must be photographic ID. Both must contain the tenants new name
         </p>
         <span
-          class="lbh-body-s"
+          class="lbh-body-m"
         >
           (
           for example: valid passport, driving licence, bank statement, utility bill
@@ -36,13 +36,13 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
       <li>
         <div>
           <p
-            class="lbh-body-s"
+            class="lbh-body-m"
             style="font-weight: bold;"
           >
             One of the following documents containing the tenant’s new name:
           </p>
           <ol
-            class="lbh-body-s"
+            class="lbh-body-m"
             style="margin-left: 2em; margin-top: 15px; font-weight: bold;"
             type="1"
           >
@@ -86,18 +86,18 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
       Checking supporting documents
     </h3>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       You can request supporting documents through the Document Evidence Store or you can make an appointment with the tenant to check supporting documents in-person.
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Haylee Macejkovic
        contact details:
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Phone:
       <span
@@ -107,7 +107,7 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
       </span>
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Email:
       <span
@@ -117,7 +117,7 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
       </span>
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       If the contact details are not up to date, please
        
@@ -192,17 +192,17 @@ exports[`changeofname/request-documents-view it renders RequestDocuments correct
         Tenant declaration
       </h3>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         Please read this out to the applicant before you proceed to the next step. Applicant has to accept the declaration before the application can be proceeded:
       </p>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         “You are declaring that to the best of your knowledge and belief the information given is correct in every detail. You understand it is an offence to give false or misleading information or to hold back relevant information. You also understand that we will check this information and if any information is found to be false, you may be prosecuted and we may repossess your home.
       </p>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         If you are prosecuted and found guilty, you understand that you could be ordered to pay a fine of up to £5000. It is your duty to make sure that your application form is honest. You hereby give your consent for Housing Services to carry out a credit reference check and obtain relevant information from the Council and other external agencies.”
       </p>

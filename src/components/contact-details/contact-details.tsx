@@ -40,17 +40,17 @@ export const ContactDetails = ({
 
   return (
     <>
-      <Text size="sm">{fullName} contact details:</Text>
-      <Text size="sm">
+      <Text>{fullName} contact details:</Text>
+      <Text>
         Phone:
         <span style={{ marginLeft: "1em" }}>{phoneNumber}</span>
       </Text>
-      <Text size="sm">
+      <Text>
         Email:
         <span style={{ marginLeft: "1em" }}>{email}</span>
       </Text>
       {allContactDetailsAvailable ? (
-        <Text size="sm">
+        <Text>
           If the contact details are not up to date, please{" "}
           <Link
             as={RouterLink}
@@ -65,7 +65,7 @@ export const ContactDetails = ({
           it will automatically update the tenant’s contact details as well.
         </Text>
       ) : (
-        <Text size="sm">
+        <Text>
           Please{" "}
           <Link
             as={RouterLink}

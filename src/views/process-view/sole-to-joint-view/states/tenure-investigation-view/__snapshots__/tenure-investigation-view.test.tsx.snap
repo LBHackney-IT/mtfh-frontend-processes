@@ -39,17 +39,12 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
           Eligibility checks passed
         </h4>
       </div>
-      <div
-        class="govuk-link lbh-link lbh-link--no-visited-state"
-        style="padding-left: 60px; margin-top: 17.5px;"
+      <button
+        class="govuk-link lbh-link"
+        style="margin-left: 60px; margin-top: 8px;"
       >
-        <a
-          class="govuk-link lbh-link lbh-link--no-visited-state"
-          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
-        >
-          Show all eligibility checks
-        </a>
-      </div>
+        Show all eligibility checks
+      </button>
     </div>
     <div
       class="mtfh-box mtfh-box--success"
@@ -85,9 +80,9 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
           Supporting documents approved
         </h4>
       </div>
-      <div
-        class="govuk-link lbh-link lbh-link--no-visited-state"
-        style="margin-left: 60px; margin-top: 17.5px;"
+      <p
+        class="lbh-body-m govuk-link lbh-link lbh-link--no-visited-state"
+        style="margin-left: 60px; margin-top: 8px;"
       >
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
@@ -96,19 +91,19 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
         >
           View documents on the Document Evidence Store
         </a>
-      </div>
+      </p>
     </div>
     <div
       data-testid="soletojoint-tenure-investigation"
     >
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         Global Web Consultant Alverta Denesik
          contact details:
       </p>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         Phone:
         <span
@@ -118,7 +113,7 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
         </span>
       </p>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         Email:
         <span
@@ -128,7 +123,7 @@ exports[`tenure-investigation-view it renders ReviewApplication view correctly f
         </span>
       </p>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         If the contact details are not up to date, please
          

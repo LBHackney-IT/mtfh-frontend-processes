@@ -105,8 +105,8 @@ export const NewTenancyView = ({
             variant="success"
             title={views.tenureInvestigation.getTenancySigned(tenureStartDate)}
           />
-          <div
-            style={{ marginLeft: 60, marginTop: 17.5 }}
+          <Text
+            style={{ marginLeft: 60, marginTop: 8 }}
             className="govuk-link lbh-link lbh-link--no-visited-state"
           >
             <Link
@@ -121,7 +121,7 @@ export const NewTenancyView = ({
             >
               {views.tenureInvestigation.viewNewTenure}
             </Link>
-          </div>
+          </Text>
         </Box>
       ) : (
         !closeProcessReason &&

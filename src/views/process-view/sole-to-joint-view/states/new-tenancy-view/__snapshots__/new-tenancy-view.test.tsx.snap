@@ -39,17 +39,12 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
           Eligibility checks passed
         </h4>
       </div>
-      <div
-        class="govuk-link lbh-link lbh-link--no-visited-state"
-        style="padding-left: 60px; margin-top: 17.5px;"
+      <button
+        class="govuk-link lbh-link"
+        style="margin-left: 60px; margin-top: 8px;"
       >
-        <a
-          class="govuk-link lbh-link lbh-link--no-visited-state"
-          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
-        >
-          Show all eligibility checks
-        </a>
-      </div>
+        Show all eligibility checks
+      </button>
     </div>
     <div
       class="mtfh-box mtfh-box--success"
@@ -85,9 +80,9 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
           Supporting documents approved
         </h4>
       </div>
-      <div
-        class="govuk-link lbh-link lbh-link--no-visited-state"
-        style="margin-left: 60px; margin-top: 17.5px;"
+      <p
+        class="lbh-body-m govuk-link lbh-link lbh-link--no-visited-state"
+        style="margin-left: 60px; margin-top: 8px;"
       >
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
@@ -96,7 +91,7 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
         >
           View documents on the Document Evidence Store
         </a>
-      </div>
+      </p>
     </div>
     <div
       class="mtfh-box"
@@ -284,13 +279,13 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
       </div>
     </div>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Global Web Consultant Alverta Denesik
        contact details:
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Phone:
       <span
@@ -300,7 +295,7 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
       </span>
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Email:
       <span
@@ -310,7 +305,7 @@ exports[`tenure-investigation-view it renders NewTenancy view correctly for Tenu
       </span>
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       If the contact details are not up to date, please
        
@@ -373,17 +368,12 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
           Eligibility checks passed
         </h4>
       </div>
-      <div
-        class="govuk-link lbh-link lbh-link--no-visited-state"
-        style="padding-left: 60px; margin-top: 17.5px;"
+      <button
+        class="govuk-link lbh-link"
+        style="margin-left: 60px; margin-top: 8px;"
       >
-        <a
-          class="govuk-link lbh-link lbh-link--no-visited-state"
-          href="/processes/soletojoint/e63e68c7-84b0-3a48-b450-896e2c3d7735"
-        >
-          Show all eligibility checks
-        </a>
-      </div>
+        Show all eligibility checks
+      </button>
     </div>
     <div
       class="mtfh-box mtfh-box--success"
@@ -419,9 +409,9 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
           Supporting documents approved
         </h4>
       </div>
-      <div
-        class="govuk-link lbh-link lbh-link--no-visited-state"
-        style="margin-left: 60px; margin-top: 17.5px;"
+      <p
+        class="lbh-body-m govuk-link lbh-link lbh-link--no-visited-state"
+        style="margin-left: 60px; margin-top: 8px;"
       >
         <a
           class="govuk-link lbh-link lbh-link--no-visited-state"
@@ -430,7 +420,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
         >
           View documents on the Document Evidence Store
         </a>
-      </div>
+      </p>
     </div>
     <div
       class="mtfh-box"
@@ -672,13 +662,13 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
       </div>
     </div>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Global Web Consultant Alverta Denesik
        contact details:
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Phone:
       <span
@@ -688,7 +678,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
       </span>
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       Email:
       <span
@@ -698,7 +688,7 @@ exports[`tenure-investigation-view it renders TenureInvestigation view correctly
       </span>
     </p>
     <p
-      class="lbh-body-s"
+      class="lbh-body-m"
     >
       If the contact details are not up to date, please
        

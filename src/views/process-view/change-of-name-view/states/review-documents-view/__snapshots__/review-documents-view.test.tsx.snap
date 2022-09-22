@@ -246,9 +246,9 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
         Documents requested
       </h4>
     </div>
-    <div
-      class="govuk-link lbh-link lbh-link--no-visited-state"
-      style="margin-left: 60px; margin-top: 17.5px;"
+    <p
+      class="lbh-body-m govuk-link lbh-link lbh-link--no-visited-state"
+      style="margin-left: 60px; margin-top: 8px;"
     >
       <a
         class="govuk-link lbh-link lbh-link--no-visited-state"
@@ -257,7 +257,7 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state Doc
       >
         View request in Document Evidence Store
       </a>
-    </div>
+    </p>
   </div>
   <div
     data-testid="changeofname-ReviewDocuments"
@@ -532,7 +532,7 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state=Pro
         </div>
         <p
           class="lbh-body-m"
-          style="margin-top: 15px;"
+          style="margin-top: 8px;"
         >
           Test
         </p>
@@ -550,7 +550,7 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state=Pro
   >
     <li>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         This case is now closed and we have recorded this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history.
       </p>
@@ -618,9 +618,9 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state=Pro
         Documents requested
       </h4>
     </div>
-    <div
-      class="govuk-link lbh-link lbh-link--no-visited-state"
-      style="margin-left: 60px; margin-top: 17.5px;"
+    <p
+      class="lbh-body-m govuk-link lbh-link lbh-link--no-visited-state"
+      style="margin-left: 60px; margin-top: 8px;"
     >
       <a
         class="govuk-link lbh-link lbh-link--no-visited-state"
@@ -629,7 +629,7 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state=Pro
       >
         View request in Document Evidence Store
       </a>
-    </div>
+    </p>
   </div>
   <div
     data-testid="changeofname-ReviewDocuments"
@@ -672,7 +672,7 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state=Pro
         </div>
         <p
           class="lbh-body-m"
-          style="margin-top: 15px;"
+          style="margin-top: 8px;"
         >
           Test
         </p>
@@ -690,7 +690,7 @@ exports[`review-documents-view it renders ReviewDocuments correctly on state=Pro
   >
     <li>
       <p
-        class="lbh-body-s"
+        class="lbh-body-m"
       >
         This case is now closed and we have recorded this on the system - that you have sent an outcome letter to the resident. The outcome can be viewed in the activity history.
       </p>

@@ -29,9 +29,7 @@ export const TickBulletPoint = ({ text }) => {
   return (
     <div style={{ display: "flex", alignItems: "center", margin: "0 0 0 -7px" }}>
       <TickIcon />
-      <Text size="sm" style={{ margin: 0 }}>
-        {text}
-      </Text>
+      <Text style={{ margin: 0 }}>{text}</Text>
     </div>
   );
 };
@@ -39,10 +37,8 @@ export const TickBulletPoint = ({ text }) => {
 export const BulletWithExplanation = ({ text, explanation }) => {
   return (
     <>
-      <Text size="sm" style={{ fontWeight: "bold" }}>
-        {text}
-      </Text>
-      <span className="lbh-body-s">({explanation})</span>
+      <Text style={{ fontWeight: "bold" }}>{text}</Text>
+      <span className="lbh-body-m">({explanation})</span>
     </>
   );
 };
@@ -57,8 +53,8 @@ export const DesBox = ({
   return (
     <Box variant="success">
       <StatusHeading variant="success" title={title} />
-      <div
-        style={{ marginLeft: 60, marginTop: 17.5 }}
+      <Text
+        style={{ marginLeft: 60, marginTop: 8 }}
         className="govuk-link lbh-link lbh-link--no-visited-state"
       >
         <Link
@@ -71,7 +67,7 @@ export const DesBox = ({
         >
           {description || views.reviewDocuments.viewInDes}
         </Link>
-      </div>
+      </Text>
     </Box>
   );
 };

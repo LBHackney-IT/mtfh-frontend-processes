@@ -54,7 +54,7 @@ export const RequestDocumentsView = ({
       {!closeProcessReason && (
         <>
           <Heading variant="h3">{locale.supportingDocuments}</Heading>
-          <Text size="sm">
+          <Text>
             The following documentation is required from the secure tenant and/or proposed
             tenant, as proof to support their application:
           </Text>
