@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
 
 import { format } from "date-fns";
 
@@ -12,7 +11,6 @@ import { Process } from "@mtfh/common/lib/api/process/v1";
 import {
   Box,
   Heading,
-  Link,
   StatusBox,
   StatusHeading,
   Text,
@@ -30,14 +28,13 @@ export const EligibilityChecksPassedBox = () => {
       <StatusHeading variant="success" title={breachOfTenancy.passedChecks} />
 
       {!expanded && (
-        <div
-          style={{ paddingLeft: 60, marginTop: 17.5 }}
-          className="govuk-link lbh-link lbh-link--no-visited-state"
+        <button
+          className="govuk-link lbh-link"
+          onClick={() => setExpanded(true)}
+          style={{ marginLeft: 60, marginTop: 8 }}
         >
-          <Link as={RouterLink} to="#" variant="link" onClick={() => setExpanded(true)}>
-            Show all eligibility checks
-          </Link>
-        </div>
+          Show all eligibility checks
+        </button>
       )}
       {expanded && (
         <>
@@ -66,19 +63,13 @@ export const EligibilityChecksPassedBox = () => {
             <TickBulletPoint text="Tenant is a cautionary contact" />
             <TickBulletPoint text="The tenure has not previously been succeeded" />
           </div>
-          <div
-            style={{ paddingLeft: "25px" }}
-            className="govuk-link lbh-link lbh-link--no-visited-state"
+          <button
+            className="govuk-link lbh-link"
+            onClick={() => setExpanded(false)}
+            style={{ marginLeft: 25, marginTop: 8 }}
           >
-            <Link
-              as={RouterLink}
-              to="#"
-              variant="link"
-              onClick={() => setExpanded(false)}
-            >
-              Hide all eligibility checks
-            </Link>
-          </div>
+            Hide all eligibility checks
+          </button>
         </>
       )}
     </Box>
@@ -157,7 +148,7 @@ export const TenureInvestigationRecommendationBox = ({
       variant={recommendationBoxVariant}
     >
       {showInterviewDateTime && formData.appointmentDateTime && (
-        <Text style={{ width: "100%", marginTop: 15 }}>
+        <Text style={{ width: "100%", marginTop: 8 }}>
           Date: {format(new Date(formData.appointmentDateTime), "eeee do MMMM yyyy")}
           <br />
           Time: {format(new Date(formData.appointmentDateTime), "hh:mm aaa")}

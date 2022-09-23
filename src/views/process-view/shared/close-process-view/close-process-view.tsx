@@ -63,7 +63,7 @@ export const CloseProcessView = ({
       {statusBox && (
         <StatusBox variant="warning" title={statusTitle}>
           {closeProcessReason && (
-            <Text style={{ marginTop: 15 }}>{closeProcessReason}</Text>
+            <Text style={{ marginTop: 8 }}>{closeProcessReason}</Text>
           )}
         </StatusBox>
       )}
@@ -79,7 +79,7 @@ export const CloseProcessView = ({
             {locale.views.closeProcess.thankYouForConfirmation}
           </Heading>
           <List variant="bullets" style={{ marginLeft: "1em" }}>
-            <Text size="sm">{locale.views.closeProcess.confirmationText}</Text>
+            <Text>{locale.views.closeProcess.confirmationText}</Text>
           </List>
           <div style={{ marginTop: "1em" }}>
             <Link as={RouterLink} to="" variant="back-link">

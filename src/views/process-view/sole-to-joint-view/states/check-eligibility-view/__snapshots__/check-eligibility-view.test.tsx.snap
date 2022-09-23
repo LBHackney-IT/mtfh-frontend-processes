@@ -10,11 +10,11 @@ exports[`it renders CheckEligibility passed checks view correctly state=Automate
     >
       Manage My Home has used tenure, person and property information to automatically check eligibility for this application.
     </p>
-    <h5
-      class="lbh-heading-h5"
+    <h4
+      class="lbh-heading-h4"
     >
       This is an automated check based on the data the system has. At this stage, the system does not have all the data required to make a decision, so these results are for guidance only and do not reflect accurate information.
-    </h5>
+    </h4>
     <div
       class="mtfh-box mtfh-box--success"
     >
@@ -42,7 +42,7 @@ exports[`it renders CheckEligibility passed checks view correctly state=Automate
           />
         </svg>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="margin: 0px;"
         >
           Applicant is a named tenure holder on the tenure
@@ -66,7 +66,7 @@ exports[`it renders CheckEligibility passed checks view correctly state=Automate
           />
         </svg>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="margin: 0px;"
         >
           Applicant is currently a sole tenant
@@ -90,7 +90,7 @@ exports[`it renders CheckEligibility passed checks view correctly state=Automate
           />
         </svg>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="margin: 0px;"
         >
           Secure tenures can be changed from a sole to joint tenancy
@@ -114,7 +114,7 @@ exports[`it renders CheckEligibility passed checks view correctly state=Automate
           />
         </svg>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="margin: 0px;"
         >
           Tenant's tenure is active
@@ -138,7 +138,7 @@ exports[`it renders CheckEligibility passed checks view correctly state=Automate
           />
         </svg>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="margin: 0px;"
         >
           The proposed tenant is over 18 years of age
@@ -162,7 +162,7 @@ exports[`it renders CheckEligibility passed checks view correctly state=Automate
           />
         </svg>
         <p
-          class="lbh-body-s"
+          class="lbh-body-m"
           style="margin: 0px;"
         >
           Proposed tenant is not a tenure holder or household member within the London Borough of Hackney

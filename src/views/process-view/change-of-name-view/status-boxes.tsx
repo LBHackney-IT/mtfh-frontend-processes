@@ -65,7 +65,7 @@ export const StatusBoxes = ({ process, processConfig, person }) => {
           title={locale.views.hoReviewView.hoOutcome("Approve")}
         >
           {hoApprovalPassedState?.processData.formData.reason && (
-            <Text style={{ marginTop: 15 }}>
+            <Text style={{ marginTop: 8 }}>
               {hoApprovalPassedState.processData.formData.reason}
             </Text>
           )}
@@ -79,7 +79,7 @@ export const StatusBoxes = ({ process, processConfig, person }) => {
           title={locale.views.hoReviewView.hoOutcome("Decline")}
         >
           {hoApprovalFailedState?.processData.formData.reason && (
-            <Text style={{ marginTop: 15 }}>
+            <Text style={{ marginTop: 8 }}>
               {hoApprovalFailedState.processData.formData.reason}
             </Text>
           )}
@@ -89,8 +89,8 @@ export const StatusBoxes = ({ process, processConfig, person }) => {
       {(nameUpdated.state === process.currentState.state ||
         isPreviousState(nameUpdated.state, process)) && (
         <StatusBox variant="success" title={locale.views.newTenancy.tenancyUpdated}>
-          <div
-            style={{ marginTop: 15 }}
+          <Text
+            style={{ marginTop: 8 }}
             className="govuk-link lbh-link lbh-link--no-visited-state"
           >
             <Link
@@ -104,7 +104,7 @@ export const StatusBoxes = ({ process, processConfig, person }) => {
             >
               {locale.views.newTenancy.viewTenure}
             </Link>
-          </div>
+          </Text>
         </StatusBox>
       )}
     </>

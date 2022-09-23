@@ -229,18 +229,14 @@ export const BreachChecksView = ({
           {state === manualChecksPassed.state && submitted && (
             <>
               <Heading variant="h3">Next Steps:</Heading>
-              <Text size="sm">
+              <Text>
                 The current tenant and the applicant have passed the initial eligibility
                 requirements. The next steps are:
               </Text>
               <List variant="bullets">
-                <Text size="sm">
-                  Background checks carried out by the Housing Officer
-                </Text>
-                <Text size="sm">
-                  A check carried out by the Tenancy Investigation Team
-                </Text>
-                <Text size="sm">
+                <Text>Background checks carried out by the Housing Officer</Text>
+                <Text>A check carried out by the Tenancy Investigation Team</Text>
+                <Text>
                   If successful the tenant and proposed joint tenant will need to sign a
                   new tenancy agreement
                 </Text>
@@ -274,22 +270,20 @@ export const BreachChecksFailedView = (): JSX.Element => {
       <Box variant="warning">
         <StatusHeading variant="warning" title={checkEligibility.failedChecks} />{" "}
         <div style={{ marginLeft: "60px" }}>
-          <Text size="sm">
+          <Text>
             All criteria must be passed in order for the applicant to be eligible. <br />
             Applicant has failed one or more breach of tenure checks.
           </Text>
-          <Heading variant="h5">Failed breach of tenure check:</Heading>
+          <Heading variant="h3">Failed breach of tenure check:</Heading>
           <List variant="bullets">
-            <Text size="sm">
-              The tenant has a live notice or notices against their tenure
-            </Text>
-            <Text size="sm">Tenant is a cautionary contact</Text>
-            <Text size="sm">The tenant is a survivor of a joint tenancy</Text>
-            <Text size="sm">
+            <Text>The tenant has a live notice or notices against their tenure</Text>
+            <Text>Tenant is a cautionary contact</Text>
+            <Text>The tenant is a survivor of a joint tenancy</Text>
+            <Text>
               Tenures that have previously been succeeded cannot be changed from a sole to
               a joint tenancy
             </Text>
-            <Text size="sm">
+            <Text>
               The tenant has rent arrears with Hackney or another local authority or
               housing association
             </Text>
