@@ -71,8 +71,8 @@ export const CommentsView = ({ targetType, targetId, mutate }) => {
                     required
                   >
                     <TextArea
-                      rows={5}
-                      maxLength={500}
+                      rows={10}
+                      maxLength={1000}
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={description}

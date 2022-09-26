@@ -64,13 +64,13 @@ exports[`it opens a modal when user click "Cancel comment" link 1`] = `
           id="comment-description-field"
           name="description"
           required=""
-          rows="5"
+          rows="10"
         />
         <span
           aria-live="polite"
           class="govuk-hint govuk-character-count__message"
         >
-          You have 500 characters remaining
+          You have 1000 characters remaining
         </span>
       </div>
     </div>
@@ -254,13 +254,13 @@ exports[`it renders inputs to add comments when user clicks Add Comment 1`] = `
           id="comment-description-field"
           name="description"
           required=""
-          rows="5"
+          rows="10"
         />
         <span
           aria-live="polite"
           class="govuk-hint govuk-character-count__message"
         >
-          You have 500 characters remaining
+          You have 1000 characters remaining
         </span>
       </div>
     </div>
