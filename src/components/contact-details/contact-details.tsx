@@ -20,10 +20,11 @@ export const ContactDetails = ({
   const [isDialogOpen, setDialogOpen] = useState<boolean>(false);
 
   if (error) {
-    return <></>;
-  }
-
-  if (!contacts) {
+    const isANotFoundError = error.code === "404" || error.message.includes("404");
+    if (!isANotFoundError) {
+      return <></>;
+    }
+  } else if (!contacts) {
     return (
       <Center>
         <Spinner />
