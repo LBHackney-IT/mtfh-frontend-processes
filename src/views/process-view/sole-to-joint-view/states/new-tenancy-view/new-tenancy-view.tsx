@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 import { isPast } from "date-fns";
@@ -89,6 +89,17 @@ export const NewTenancyView = ({
         "dd/MM/yyyy",
       )
     : undefined;
+
+  const [isDocumentsSignedDisabled, setDocumentsSignedDisabled] = useState<boolean>(
+    !isPast(new Date(formData.appointmentDateTime)),
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDocumentsSignedDisabled(!isPast(new Date(formData.appointmentDateTime)));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isDocumentsSignedDisabled, formData.appointmentDateTime]);
 
   return (
     <>
@@ -222,8 +233,10 @@ export const NewTenancyView = ({
         ) &&
         !needAppointment && (
           <Button
-            disabled={!isPast(new Date(formData.appointmentDateTime))}
-            onClick={() => setDocumentsSigned(true)}
+            disabled={isDocumentsSignedDisabled}
+            onClick={() =>
+              setDocumentsSigned(isPast(new Date(formData.appointmentDateTime)) && true)
+            }
           >
             {views.tenureInvestigation.documentsSigned}
           </Button>

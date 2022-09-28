@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { isPast } from "date-fns";
 
@@ -57,6 +57,17 @@ export const NewTenancyView = ({
   const formData = processState.processData.formData as {
     appointmentDateTime: string;
   };
+
+  const [isDocumentsSignedDisabled, setDocumentsSignedDisabled] = useState<boolean>(
+    !isPast(new Date(formData.appointmentDateTime)),
+  );
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setDocumentsSignedDisabled(!isPast(new Date(formData.appointmentDateTime)));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isDocumentsSignedDisabled, formData.appointmentDateTime]);
 
   return (
     <div data-testid="changeofname-new-tenancy-view">
@@ -158,8 +169,10 @@ export const NewTenancyView = ({
         ) &&
         !needAppointment && (
           <Button
-            disabled={!isPast(new Date(formData.appointmentDateTime))}
-            onClick={() => setSubmitted(true)}
+            disabled={isDocumentsSignedDisabled}
+            onClick={() =>
+              setSubmitted(isPast(new Date(formData.appointmentDateTime)) && true)
+            }
           >
             {views.tenureInvestigation.documentsSigned}
           </Button>
