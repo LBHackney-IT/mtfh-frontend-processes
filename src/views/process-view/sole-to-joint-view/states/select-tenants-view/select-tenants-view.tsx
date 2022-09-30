@@ -72,8 +72,6 @@ export const SelectTenantsView = ({
     (member) => !isUnderAge(member.dateOfBirth, 18) && !member.isResponsible,
   );
 
-  const tenant = tenure?.householdMembers?.find((e) => e.isResponsible);
-
   return (
     <div data-testid="soletojoint-SelectTenants">
       {globalError && (
@@ -92,7 +90,6 @@ export const SelectTenantsView = ({
               processName: process?.processName,
               etag: process.etag || "",
               formData: {
-                tenantId: tenant?.id,
                 incomingTenantId: data.tenant,
               },
               documents: [],
