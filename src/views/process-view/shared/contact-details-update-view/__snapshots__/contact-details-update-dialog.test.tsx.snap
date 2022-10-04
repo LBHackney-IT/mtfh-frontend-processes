@@ -64,7 +64,7 @@ exports[`it ContactDetailsUpdateDialog as expected when it is open 1`] = `
             <p
               class="lbh-body-s"
             >
-              Only the first phone and email address will be displayed with the MMH application e.g. for appointment bookings.
+              Only the first phone and email address will be displayed within the MMH application e.g. for appointment bookings.
             </p>
             <p
               class="lbh-body-s"

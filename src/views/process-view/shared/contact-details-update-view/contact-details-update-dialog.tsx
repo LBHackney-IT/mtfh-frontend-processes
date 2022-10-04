@@ -37,8 +37,8 @@ export const ContactDetailsUpdateDialog = ({ isDialogOpen, setDialogOpen, person
         address/phone number.
       </Text>
       <Text size="sm">
-        Only the first phone and email address will be displayed with the MMH application
-        e.g. for appointment bookings.
+        Only the first phone and email address will be displayed within the MMH
+        application e.g. for appointment bookings.
       </Text>
       <Text size="sm">
         You can 'Return to your application' once you have completed the updates. The new
