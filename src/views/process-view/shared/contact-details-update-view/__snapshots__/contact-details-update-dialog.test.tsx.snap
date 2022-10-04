@@ -64,6 +64,11 @@ exports[`it ContactDetailsUpdateDialog as expected when it is open 1`] = `
             <p
               class="lbh-body-s"
             >
+              Only the first phone and email address will be displayed with the MMH application e.g. for appointment bookings.
+            </p>
+            <p
+              class="lbh-body-s"
+            >
               You can 'Return to your application' once you have completed the updates. The new contact details will be displayed.
             </p>
             <fieldset
@@ -82,6 +87,7 @@ exports[`it ContactDetailsUpdateDialog as expected when it is open 1`] = `
                 >
                   <button
                     class="govuk-button lbh-button"
+                    data-testid="button-add-email"
                     type="button"
                   >
                     Add an email address
@@ -92,6 +98,7 @@ exports[`it ContactDetailsUpdateDialog as expected when it is open 1`] = `
                 >
                   <button
                     class="govuk-button lbh-button"
+                    data-testid="button-add-phone"
                     type="button"
                   >
                     Add a phone number
