@@ -1564,7 +1564,7 @@
 
 "@mtfh/personal-details@https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git":
   version "1.0.0"
-  resolved "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#d35981e556db7e1f46651ea834ddc81a52381693"
+  resolved "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#bf83f7f1b41e3c86be71dd1173f229a2234125a1"
   dependencies:
     "@mtfh/common" "https://github.com/LBHackney-IT/mtfh-frontend-common.git"
     "@mtfh/worktray" "https://github.com/LBHackney-IT/mtfh-frontend-worktray.git"
