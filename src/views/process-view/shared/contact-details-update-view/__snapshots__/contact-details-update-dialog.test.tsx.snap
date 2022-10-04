@@ -82,6 +82,7 @@ exports[`it ContactDetailsUpdateDialog as expected when it is open 1`] = `
                 >
                   <button
                     class="govuk-button lbh-button"
+                    data-testid="button-add-email"
                     type="button"
                   >
                     Add an email address
@@ -92,6 +93,7 @@ exports[`it ContactDetailsUpdateDialog as expected when it is open 1`] = `
                 >
                   <button
                     class="govuk-button lbh-button"
+                    data-testid="button-add-phone"
                     type="button"
                   >
                     Add a phone number
