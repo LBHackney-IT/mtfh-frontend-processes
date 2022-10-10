@@ -1,6 +1,6 @@
 import { IProcess, IStartProcess } from "../../types";
 import locale from "../locale";
-import { Process, Trigger } from "./types";
+import { Process, State, Status, Trigger } from "./types";
 
 import { Text } from "@mtfh/common/lib/components";
 
@@ -37,13 +37,13 @@ export const changeofname: IProcess = {
   startProcess,
   states: {
     enterNewName: {
-      state: "EnterNewName",
-      status: "Awaiting tenant's new name",
-      triggers: { enterNewName: "EnterNewName" },
+      state: State.EnterNewName,
+      status: Status.AwaitingTenantsNewName,
+      triggers: { enterNewName: Trigger.EnterNewName },
     },
     nameSubmitted: {
-      state: "NameSubmitted",
-      status: "Awaiting supporting documents through DES",
+      state: State.NameSubmitted,
+      status: Status.AwaitingSupportingDocumentsDES,
       triggers: {
         requestDocumentsDES: Trigger.RequestDocumentsDES,
         requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
@@ -51,8 +51,8 @@ export const changeofname: IProcess = {
       },
     },
     documentsRequestedDes: {
-      state: "DocumentsRequestedDes",
-      status: "Awaiting supporting documents through DES",
+      state: State.DocumentsRequestedDes,
+      status: Status.AwaitingSupportingDocumentsDES,
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
@@ -60,8 +60,8 @@ export const changeofname: IProcess = {
       },
     },
     documentsRequestedAppointment: {
-      state: "DocumentsRequestedAppointment",
-      status: "Awaiting supporting documents appointment",
+      state: State.DocumentsRequestedAppointment,
+      status: Status.AwaitingSupportingDocumentsAppointment,
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
@@ -69,8 +69,8 @@ export const changeofname: IProcess = {
       },
     },
     documentsAppointmentRescheduled: {
-      state: "DocumentsAppointmentRescheduled",
-      status: "Awaiting supporting documents appointment",
+      state: State.DocumentsAppointmentRescheduled,
+      status: Status.AwaitingSupportingDocumentsAppointment,
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
@@ -78,45 +78,45 @@ export const changeofname: IProcess = {
       },
     },
     documentChecksPassed: {
-      state: "DocumentChecksPassed",
-      status: "Submit for Tenure investigation",
+      state: State.DocumentChecksPassed,
+      status: Status.SubmitForTI,
       triggers: {
         submitApplication: Trigger.SubmitApplication,
         hOApproval: Trigger.HOApproval,
       },
     },
     applicationSubmitted: {
-      state: "ApplicationSubmitted",
-      status: "Awaiting Tenure investigation",
+      state: State.ApplicationSubmitted,
+      status: Status.AwaitingTI,
       triggers: { tenureInvestigation: Trigger.TenureInvestigation },
     },
     tenureInvestigationFailed: {
-      state: "TenureInvestigationFailed",
-      status: "Awaiting Housing Officer review",
+      state: State.TenureInvestigationFailed,
+      status: Status.AwaitingHOReview,
       triggers: {
         hOApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
       },
     },
     tenureInvestigationPassed: {
-      state: "TenureInvestigationPassed",
-      status: "Awaiting Housing Officer review",
+      state: State.TenureInvestigationPassed,
+      status: Status.AwaitingHOReview,
       triggers: {
         hOApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
       },
     },
     tenureInvestigationPassedWithInt: {
-      state: "TenureInvestigationPassedWithInt",
-      status: "Awaiting Housing Officer review",
+      state: State.TenureInvestigationPassedWithInt,
+      status: Status.AwaitingHOReview,
       triggers: {
         hOApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
       },
     },
     interviewScheduled: {
-      state: "InterviewScheduled",
-      status: "Awaiting Tenure Investigation Interview",
+      state: State.InterviewScheduled,
+      status: Status.AwaitingTIInterview,
       triggers: {
         hOApproval: Trigger.HOApproval,
         rescheduleInterview: Trigger.RescheduleInterview,
@@ -124,18 +124,18 @@ export const changeofname: IProcess = {
       },
     },
     interviewRescheduled: {
-      state: "InterviewRescheduled",
-      status: "Awaiting Tenure Investigation Interview",
+      state: State.InterviewRescheduled,
+      status: Status.AwaitingTIInterview,
       triggers: { hOApproval: Trigger.HOApproval, cancelProcess: Trigger.CancelProcess },
     },
     hoApprovalFailed: {
-      state: "HOApprovalFailed",
-      status: "Process Closed",
+      state: State.HOApprovalFailed,
+      status: Status.ProcessClosedNotify,
       triggers: { cancelProcess: Trigger.CancelProcess },
     },
     hoApprovalPassed: {
-      state: "HOApprovalPassed",
-      status: "Schedule new tenancy signing appointment",
+      state: State.HOApprovalPassed,
+      status: Status.ScheduleTenancySigningAppointment,
       triggers: {
         scheduleTenureAppointment: Trigger.ScheduleTenureAppointment,
         updateName: Trigger.UpdateName,
@@ -143,8 +143,8 @@ export const changeofname: IProcess = {
       },
     },
     tenureAppointmentScheduled: {
-      state: "TenureAppointmentScheduled",
-      status: "Awaiting new tenancy signing appointment",
+      state: State.TenureAppointmentScheduled,
+      status: Status.AwaitingTenancySigningAppointment,
       triggers: {
         rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
         updateTenure: Trigger.UpdateName,
@@ -152,8 +152,8 @@ export const changeofname: IProcess = {
       },
     },
     tenureAppointmentRescheduled: {
-      state: "TenureAppointmentRescheduled",
-      status: "Awaiting new tenancy signing appointment",
+      state: State.TenureAppointmentRescheduled,
+      status: Status.AwaitingTenancySigningAppointment,
       triggers: {
         rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
         updateTenure: Trigger.UpdateName,
@@ -161,18 +161,18 @@ export const changeofname: IProcess = {
       },
     },
     nameUpdated: {
-      state: "NameUpdated",
-      status: "Process completed",
+      state: State.NameUpdated,
+      status: Status.ProcessCompleted,
       triggers: {},
     },
     processClosed: {
-      state: "ProcessClosed",
-      status: "Process Closed",
+      state: State.ProcessClosed,
+      status: Status.ProcessClosed,
       triggers: {},
     },
     processCancelled: {
-      state: "ProcessCancelled",
-      status: "Process Cancelled",
+      state: State.ProcessCancelled,
+      status: Status.ProcessCancelled,
       triggers: {},
     },
   },
