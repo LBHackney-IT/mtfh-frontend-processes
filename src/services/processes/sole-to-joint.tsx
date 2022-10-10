@@ -1,6 +1,6 @@
 import { IProcess, IStartProcess } from "../../types";
 import locale from "../locale";
-import { Process, Trigger } from "./types";
+import { Process, State, Status, Trigger } from "./types";
 
 import { Heading, Link, List, Text } from "@mtfh/common/lib/components";
 
@@ -62,38 +62,38 @@ export const soletojoint: IProcess = {
   startProcess,
   states: {
     selectTenants: {
-      state: "SelectTenants",
-      status: "Awaiting proposed tenant selection",
+      state: State.SelectTenants,
+      status: Status.AwaitingProposedTenantSelection,
       triggers: { checkAutomatedEligibility: Trigger.CheckAutomatedEligibility },
     },
     automatedChecksFailed: {
-      state: "AutomatedChecksFailed",
-      status: "Process closed - notify resident",
+      state: State.AutomatedChecksFailed,
+      status: Status.ProcessClosedNotify,
       triggers: { closeProcess: Trigger.CloseProcess },
     },
     automatedChecksPassed: {
-      state: "AutomatedChecksPassed",
-      status: "Awaiting further eligibility checks",
+      state: State.AutomatedChecksPassed,
+      status: Status.AwaitingFurtherEligibilityChecks,
       triggers: { checkManualEligibility: Trigger.CheckManualEligibility },
     },
     manualChecksFailed: {
-      state: "ManualChecksFailed",
-      status: "Process closed - notify resident",
+      state: State.ManualChecksFailed,
+      status: Status.ProcessClosedNotify,
       triggers: { checkManualEligibility: Trigger.CheckManualEligibility },
     },
     manualChecksPassed: {
-      state: "ManualChecksPassed",
-      status: "Awaiting Housing Officer eligibility checks",
+      state: State.ManualChecksPassed,
+      status: Status.AwaitingHOEligibilityChecks,
       triggers: { checkTenancyBreach: Trigger.CheckTenancyBreach },
     },
     breachChecksFailed: {
-      state: "BreachChecksFailed",
-      status: "Process closed - notify resident",
+      state: State.BreachChecksFailed,
+      status: Status.ProcessClosedNotify,
       triggers: { cancelProcess: Trigger.CancelProcess },
     },
     breachChecksPassed: {
-      state: "BreachChecksPassed",
-      status: "Request supporting documents",
+      state: State.BreachChecksPassed,
+      status: Status.RequestSupportingDocuments,
       triggers: {
         requestDocumentsDes: Trigger.RequestDocumentsDes,
         requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
@@ -101,8 +101,8 @@ export const soletojoint: IProcess = {
       timeConstraint: 10,
     },
     documentsRequestedDes: {
-      state: "DocumentsRequestedDes",
-      status: "Awaiting supporting documents through DES",
+      state: State.DocumentsRequestedDes,
+      status: Status.AwaitingSupportingDocumentsDES,
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         requestDocumentsAppointment: Trigger.RequestDocumentsAppointment,
@@ -110,8 +110,8 @@ export const soletojoint: IProcess = {
       },
     },
     documentsRequestedAppointment: {
-      state: "DocumentsRequestedAppointment",
-      status: "Awaiting supporting documents appointment",
+      state: State.DocumentsRequestedAppointment,
+      status: Status.AwaitingSupportingDocumentsAppointment,
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
@@ -119,8 +119,8 @@ export const soletojoint: IProcess = {
       },
     },
     documentsAppointmentRescheduled: {
-      state: "DocumentsAppointmentRescheduled",
-      status: "Awaiting supporting documents appointment",
+      state: State.DocumentsAppointmentRescheduled,
+      status: Status.AwaitingSupportingDocumentsAppointment,
       triggers: {
         reviewDocuments: Trigger.ReviewDocuments,
         rescheduleDocumentsAppointment: Trigger.RescheduleDocumentsAppointment,
@@ -128,23 +128,23 @@ export const soletojoint: IProcess = {
       },
     },
     documentChecksPassed: {
-      state: "DocumentChecksPassed",
-      status: "Submit for Tenure investigation",
+      state: State.DocumentChecksPassed,
+      status: Status.SubmitForTI,
       triggers: {
         submitApplication: Trigger.SubmitApplication,
       },
     },
     applicationSubmitted: {
-      state: "ApplicationSubmitted",
-      status: "Awaiting Tenure investigation",
+      state: State.ApplicationSubmitted,
+      status: Status.AwaitingTI,
       triggers: {
         tenureInvestigation: Trigger.TenureInvestigation,
       },
       timeConstraint: 5,
     },
     tenureInvestigationFailed: {
-      state: "TenureInvestigationFailed",
-      status: "Awaiting Housing Officer review",
+      state: State.TenureInvestigationFailed,
+      status: Status.AwaitingHOReview,
       triggers: {
         hoApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
@@ -152,8 +152,8 @@ export const soletojoint: IProcess = {
       timeConstraint: 2,
     },
     tenureInvestigationPassed: {
-      state: "TenureInvestigationPassed",
-      status: "Awaiting Housing Officer review",
+      state: State.TenureInvestigationPassed,
+      status: Status.AwaitingHOReview,
       triggers: {
         hoApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
@@ -161,8 +161,8 @@ export const soletojoint: IProcess = {
       timeConstraint: 2,
     },
     tenureInvestigationPassedWithInt: {
-      state: "TenureInvestigationPassedWithInt",
-      status: "Awaiting Housing Officer review",
+      state: State.TenureInvestigationPassedWithInt,
+      status: Status.AwaitingHOReview,
       triggers: {
         hoApproval: Trigger.HOApproval,
         scheduleInterview: Trigger.ScheduleInterview,
@@ -170,8 +170,8 @@ export const soletojoint: IProcess = {
       timeConstraint: 2,
     },
     interviewScheduled: {
-      state: "InterviewScheduled",
-      status: "Awaiting Tenure Investigation Interview",
+      state: State.InterviewScheduled,
+      status: Status.AwaitingTIInterview,
       triggers: {
         hoApproval: Trigger.HOApproval,
         rescheduleInterview: Trigger.RescheduleInterview,
@@ -179,23 +179,23 @@ export const soletojoint: IProcess = {
       },
     },
     interviewRescheduled: {
-      state: "InterviewRescheduled",
-      status: "Awaiting Tenure Investigation Interview",
+      state: State.InterviewRescheduled,
+      status: Status.AwaitingTIInterview,
       triggers: {
         hoApproval: Trigger.HOApproval,
         cancelProcess: Trigger.CancelProcess,
       },
     },
     hoApprovalFailed: {
-      state: "HOApprovalFailed",
-      status: "Process Closed",
+      state: State.HOApprovalFailed,
+      status: Status.ProcessClosedNotify,
       triggers: {
         cancelProcess: Trigger.CancelProcess,
       },
     },
     hoApprovalPassed: {
-      state: "HOApprovalPassed",
-      status: "Schedule new tenancy signing appointment",
+      state: State.HOApprovalPassed,
+      status: Status.ScheduleTenancySigningAppointment,
       triggers: {
         scheduleTenureAppointment: Trigger.ScheduleTenureAppointment,
         cancelProcess: Trigger.CancelProcess,
@@ -203,8 +203,8 @@ export const soletojoint: IProcess = {
       timeConstraint: 2,
     },
     tenureAppointmentScheduled: {
-      state: "TenureAppointmentScheduled",
-      status: "Awaiting new tenancy signing appointment",
+      state: State.TenureAppointmentScheduled,
+      status: Status.AwaitingTenancySigningAppointment,
       triggers: {
         rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
         updateTenure: Trigger.UpdateTenure,
@@ -212,8 +212,8 @@ export const soletojoint: IProcess = {
       },
     },
     tenureAppointmentRescheduled: {
-      state: "TenureAppointmentRescheduled",
-      status: "Awaiting new tenancy signing appointment",
+      state: State.TenureAppointmentRescheduled,
+      status: Status.AwaitingTenancySigningAppointment,
       triggers: {
         rescheduleTenureAppointment: Trigger.RescheduleTenureAppointment,
         updateTenure: Trigger.UpdateTenure,
@@ -221,23 +221,23 @@ export const soletojoint: IProcess = {
       },
     },
     tenureUpdated: {
-      state: "TenureUpdated",
-      status: "Process completed - notify resident",
+      state: State.TenureUpdated,
+      status: Status.ProcessCompletedNotify,
       triggers: { completeProcess: Trigger.CompleteProcess },
     },
     processCompleted: {
-      state: "ProcessCompleted",
-      status: "Process completed",
+      state: State.ProcessCompleted,
+      status: Status.ProcessCompleted,
       triggers: {},
     },
     processClosed: {
-      state: "ProcessClosed",
-      status: "Process Closed",
+      state: State.ProcessClosed,
+      status: Status.ProcessClosed,
       triggers: {},
     },
     processCancelled: {
-      state: "ProcessCancelled",
-      status: "Process Cancelled",
+      state: State.ProcessCancelled,
+      status: Status.ProcessCancelled,
       triggers: {},
     },
   },
