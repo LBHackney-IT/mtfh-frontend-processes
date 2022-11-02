@@ -1,13 +1,34 @@
-import { postProcessV1, render, server } from "@hackney/mtfh-test-utils";
+import { render } from "@hackney/mtfh-test-utils";
 import { screen, waitFor } from "@testing-library/react";
 
 import { locale, processes } from "../../services";
 import { StartProcess } from "./start-process";
 
+import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
+import { Process } from "@mtfh/common/lib/api/process/v1";
+import * as processServiceV2 from "@mtfh/common/lib/api/process/v2/service";
+
 const targetId = "fee0914a-3e45-4a4f-95c7-a0adfd2026c9";
 const targetType = "tenure";
+const asset = {
+  patches: [
+    {
+      id: "e4504ef7-b971-44d9-9b9b-ef6ecbdeb51c",
+      name: "CL6",
+      responsibleEntities: [
+        {
+          id: "112681e0-c2a7-4349-9a18-847c69013e9a",
+          name: "Natasha Campbell",
+        },
+      ],
+    },
+  ],
+} as Asset;
 
 test("it enables form once checkbox is selected", async () => {
+  jest
+    .spyOn(processServiceV2, "addProcess")
+    .mockResolvedValue({ id: "6fbe024f-2316-4265-a6e8-d65a837e308a" } as Process);
   render(
     <StartProcess
       targetId={targetId}
@@ -15,6 +36,7 @@ test("it enables form once checkbox is selected", async () => {
       process={processes.soletojoint.startProcess}
       backLink="back-link"
       processName={processes.soletojoint.processName}
+      asset={asset}
     />,
   );
 
@@ -43,7 +65,9 @@ test("it enables form once checkbox is selected", async () => {
 });
 
 test("it displays an error if there is a bad response", async () => {
-  server.use(postProcessV1("error", 500));
+  jest.spyOn(processServiceV2, "addProcess").mockImplementation(() => {
+    throw new Error();
+  });
   render(
     <StartProcess
       targetId={targetId}
@@ -51,6 +75,7 @@ test("it displays an error if there is a bad response", async () => {
       process={processes.soletojoint.startProcess}
       backLink="back-link"
       processName={processes.soletojoint.processName}
+      asset={asset}
     />,
   );
 
@@ -85,6 +110,7 @@ test("Renders without third party content", async () => {
       process={rest}
       backLink="back-link"
       processName={processes.soletojoint.processName}
+      asset={asset}
     />,
   );
 
@@ -107,6 +133,7 @@ test("Renders without risk content", async () => {
       process={rest}
       backLink="back-link"
       processName={processes.soletojoint.processName}
+      asset={asset}
     />,
   );
   await waitFor(() => expect(container).toMatchSnapshot());
