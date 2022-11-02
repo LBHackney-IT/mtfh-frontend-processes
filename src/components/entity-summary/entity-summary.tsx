@@ -4,6 +4,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { locale } from "../../services";
 
 import { useAsset } from "@mtfh/common/lib/api/asset/v1";
+import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
@@ -25,11 +26,25 @@ interface ComponentProps {
   config?: Record<string, any>;
   // eslint-disable-next-line react/no-unused-prop-types
   setRelatedEntities?: (relatedEntities: RelatedEntity[]) => void;
+  // eslint-disable-next-line react/no-unused-prop-types
+  setAsset?: (asset: Asset) => void;
 }
 
-const TenureSummary = ({ id, config = {}, setRelatedEntities }: ComponentProps) => {
+const TenureSummary = ({
+  id,
+  config = {},
+  setRelatedEntities,
+  setAsset,
+}: ComponentProps) => {
   const { incomingTenant } = config;
   const { error, data: tenure } = useTenure(id);
+  const { data: asset } = useAsset(tenure?.tenuredAsset?.id || null);
+
+  useEffect(() => {
+    if (setAsset && asset) {
+      setAsset(asset);
+    }
+  }, [asset, setAsset]);
 
   const tenant = tenure?.householdMembers?.find((m) => m.isResponsible);
 
@@ -109,7 +124,7 @@ const TenureSummary = ({ id, config = {}, setRelatedEntities }: ComponentProps) 
   );
 };
 
-const AssetsSummary = ({ id }: ComponentProps) => {
+const AssetsSummary = ({ id, setAsset }: ComponentProps) => {
   const { error, data: asset } = useAsset(id);
 
   if (error) {
@@ -130,6 +145,10 @@ const AssetsSummary = ({ id }: ComponentProps) => {
     );
   }
 
+  if (setAsset) {
+    setAsset(asset);
+  }
+
   return (
     <h2 className="lbh-heading-h2">
       {components.entitySummary.address(asset.assetAddress)}
@@ -137,17 +156,25 @@ const AssetsSummary = ({ id }: ComponentProps) => {
   );
 };
 
-const PersonSummary = ({ id, setRelatedEntities }: ComponentProps) => {
+const PersonSummary = ({ id, setRelatedEntities, setAsset }: ComponentProps) => {
   const { error, data: person } = usePerson(id);
 
   const fullName = person ? `${person.firstName} ${person.surname}` : "";
+  const activeTenure = person?.tenures?.find((tenure) => tenure.isActive);
+
+  const { data: asset } = useAsset(activeTenure?.assetId || null);
+
+  useEffect(() => {
+    if (setAsset && asset) {
+      setAsset(asset);
+    }
+  }, [asset, setAsset]);
 
   useEffect(() => {
     if (setRelatedEntities) {
       const relatedEntities: RelatedEntity[] = [];
 
       if (person) {
-        const activeTenure = person.tenures.find((tenure) => tenure.isActive);
         if (activeTenure) {
           relatedEntities.push({
             id: person.id,
@@ -209,6 +236,7 @@ interface EntitySummaryProps {
   config?: Record<string, any>;
   type: "tenure" | "property" | "person";
   setRelatedEntities?: (relatedEntities: RelatedEntity[]) => void;
+  setAsset?: (asset: Asset) => void;
 }
 
 export const EntitySummary = ({
@@ -216,6 +244,7 @@ export const EntitySummary = ({
   type,
   config,
   setRelatedEntities,
+  setAsset,
 }: EntitySummaryProps) => {
   const Components = {
     tenure: TenureSummary,
@@ -226,5 +255,12 @@ export const EntitySummary = ({
 
   if (!Component) return null;
 
-  return <Component id={id} config={config} setRelatedEntities={setRelatedEntities} />;
+  return (
+    <Component
+      id={id}
+      config={config}
+      setRelatedEntities={setRelatedEntities}
+      setAsset={setAsset}
+    />
+  );
 };

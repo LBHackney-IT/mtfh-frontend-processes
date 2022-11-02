@@ -7,7 +7,9 @@ import * as Yup from "yup";
 import { locale } from "../../services";
 import { IStartProcess } from "../../types";
 
-import { RelatedEntity, addProcess } from "@mtfh/common/lib/api/process/v1";
+import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
+import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
+import { addProcess } from "@mtfh/common/lib/api/process/v2";
 import {
   Button,
   Checkbox,
@@ -27,6 +29,7 @@ interface StartProcessProps {
   targetId: string;
   targetType: string;
   relatedEntities?: RelatedEntity[];
+  asset?: Asset;
 }
 
 export const schema = Yup.object({
@@ -42,6 +45,7 @@ export const StartProcess = ({
   targetId,
   targetType,
   relatedEntities = [],
+  asset,
 }: StartProcessProps) => {
   const history = useHistory();
   const [globalError, setGlobalError] = useState<number>();
@@ -54,6 +58,7 @@ export const StartProcess = ({
     return <Component />;
   };
 
+  const patch = asset?.patches?.[0];
   return (
     <>
       {globalError && (
@@ -70,7 +75,17 @@ export const StartProcess = ({
         onSubmit={async () => {
           try {
             const response = await addProcess(
-              { targetID: targetId, targetType, relatedEntities },
+              {
+                targetID: targetId,
+                targetType,
+                relatedEntities,
+                patchAssignment: {
+                  patchId: patch?.id || "",
+                  patchName: patch?.name || "",
+                  responsibleEntityId: patch?.responsibleEntities?.[0].id || "",
+                  responsibleName: patch?.responsibleEntities?.[0].name || "",
+                },
+              },
               processName,
             );
             history.push(`/processes/${processName}/${response.id}`);
