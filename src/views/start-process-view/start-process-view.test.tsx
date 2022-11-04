@@ -13,7 +13,9 @@ test("it renders soletojoint start process view", async () => {
   await expect(
     screen.findByText(locale.components.entitySummary.tenurePaymentRef, { exact: false }),
   ).resolves.toBeInTheDocument();
-
+  await expect(
+    screen.findByText(locale.components.startProcess.buttonLabel),
+  ).resolves.toBeInTheDocument();
   await waitFor(() => {
     expect(container).toMatchSnapshot();
   });

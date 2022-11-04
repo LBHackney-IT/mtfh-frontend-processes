@@ -61,15 +61,17 @@ export const StartProcessView = () => {
           setRelatedEntities={setRelatedEntities}
           setAsset={setAsset}
         />
-        <StartProcess
-          targetId={targetId}
-          processName={processName}
-          process={startProcess}
-          backLink={backLink}
-          targetType={targetType}
-          relatedEntities={relatedEntities}
-          asset={asset}
-        />
+        {asset && relatedEntities && (
+          <StartProcess
+            targetId={targetId}
+            processName={processName}
+            process={startProcess}
+            backLink={backLink}
+            targetType={targetType}
+            relatedEntities={relatedEntities}
+            asset={asset}
+          />
+        )}
       </>
     </Layout>
   );
