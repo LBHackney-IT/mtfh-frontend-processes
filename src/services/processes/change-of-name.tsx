@@ -36,6 +36,11 @@ export const changeofname: IProcess = {
   title: locale.views.changeofname.title,
   startProcess,
   states: {
+    applicationInitialised: {
+      state: State.ApplicationInitialised,
+      status: Status.AwaitingTenantsNewName,
+      triggers: { enterNewName: Trigger.EnterNewName },
+    },
     enterNewName: {
       state: State.EnterNewName,
       status: Status.AwaitingTenantsNewName,
