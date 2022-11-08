@@ -61,6 +61,11 @@ export const soletojoint: IProcess = {
   title: locale.views.soleToJoint.title,
   startProcess,
   states: {
+    applicationInitialised: {
+      state: State.ApplicationInitialised,
+      status: Status.AwaitingProposedTenantSelection,
+      triggers: { checkAutomatedEligibility: Trigger.CheckAutomatedEligibility },
+    },
     selectTenants: {
       state: State.SelectTenants,
       status: Status.AwaitingProposedTenantSelection,

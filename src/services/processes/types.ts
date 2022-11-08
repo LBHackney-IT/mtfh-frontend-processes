@@ -4,6 +4,7 @@ export enum Process {
 }
 
 export enum State {
+  ApplicationInitialised = "ApplicationInitialised",
   EnterNewName = "EnterNewName",
   NameSubmitted = "NameSubmitted",
   DocumentsRequestedDes = "DocumentsRequestedDes",
