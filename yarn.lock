@@ -228,9 +228,9 @@
   integrity sha512-gvZnm1YAAxh13eJdkb9EWHBnF3eAub3XTLCZEehHT2kWxiKVRL64+ae5Y6Ivne0mVHmMYKT+xWgZO+gQhuLUBg==
 
 "@babel/helper-plugin-utils@^7.18.6", "@babel/helper-plugin-utils@^7.19.0":
-  version "7.19.0"
-  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.19.0.tgz#4796bb14961521f0f8715990bee2fb6e51ce21bf"
-  integrity sha512-40Ryx7I8mT+0gaNxm8JGTZFUITNqdLAgdg0hXzeVZxVD6nFsdhQvip6v8dqkRHzsz1VFpFAaOCHNn0vKBL7Czw==
+  version "7.20.2"
+  resolved "https://registry.yarnpkg.com/@babel/helper-plugin-utils/-/helper-plugin-utils-7.20.2.tgz#d1b9000752b18d0877cff85a5c376ce5c3121629"
+  integrity sha512-8RvlJG2mj4huQ4pZ+rU9lqKi9ZKiRmuvGuM2HlWmkmgOhbs6zEAw6IEiJ5cQqGbDzGZOhwuOQNtZMi/ENLjZoQ==
 
 "@babel/helper-remap-async-to-generator@^7.14.5", "@babel/helper-remap-async-to-generator@^7.15.4":
   version "7.15.4"
@@ -1172,9 +1172,9 @@
     to-fast-properties "^2.0.0"
 
 "@babel/types@^7.18.6", "@babel/types@^7.19.0":
-  version "7.20.0"
-  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.20.0.tgz#52c94cf8a7e24e89d2a194c25c35b17a64871479"
-  integrity sha512-Jlgt3H0TajCW164wkTOTzHkZb075tMQMULzrLUoUeKmO7eFL96GgDxf7/Axhc5CAuKE3KFyVW1p6ysKsi2oXAg==
+  version "7.20.2"
+  resolved "https://registry.yarnpkg.com/@babel/types/-/types-7.20.2.tgz#67ac09266606190f496322dbaff360fdaa5e7842"
+  integrity sha512-FnnvsNWgZCr232sqtXggapvlkk/tuwR/qhGzcmxI0GXLCjmPYQPzio2FbdlWuY6y1sHFfQKk+rRbUZ9VStQMog==
   dependencies:
     "@babel/helper-string-parser" "^7.19.4"
     "@babel/helper-validator-identifier" "^7.19.1"
@@ -1538,7 +1538,7 @@
 
 "@mtfh/common@https://github.com/LBHackney-IT/mtfh-frontend-common.git":
   version "0.0.1"
-  resolved "https://github.com/LBHackney-IT/mtfh-frontend-common.git#acc05116d67141cc9d537707ee5b2c523a4d40ea"
+  resolved "https://github.com/LBHackney-IT/mtfh-frontend-common.git#e3ed63a6507021c9e0e522e470b3179a6f4681bc"
   dependencies:
     "@babel/preset-react" "^7.13.13"
     "@radix-ui/react-polymorphic" "^0.0.12"
@@ -2043,7 +2043,12 @@
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.1.tgz#20f18294f797f2209b5f65c8e3b5c8e8261d127c"
   integrity sha512-Hl219/BT5fLAaz6NDkSuhzasy49dwQS/DSdu4MdggFB8zcXv7vflBI3xp7FEmkmdDkBUI2bPUNeMttp2knYdxw==
 
-"@types/systemjs@^6.1.0", "@types/systemjs@^6.1.1":
+"@types/systemjs@^6.1.0":
+  version "6.13.0"
+  resolved "https://registry.yarnpkg.com/@types/systemjs/-/systemjs-6.13.0.tgz#c46a6083488b095fc2e00270f28fb6fe9f420ec6"
+  integrity sha512-T7P3qWZmtAVNUrEkWXlT8Hm8ND0w7rVmMZu+HYmS38mrNyAyxIdoZQ23ySmClhWR1oq0E2RhOSmuI3Cs2By6nQ==
+
+"@types/systemjs@^6.1.1":
   version "6.1.1"
   resolved "https://registry.yarnpkg.com/@types/systemjs/-/systemjs-6.1.1.tgz#eae17f2a080e867d01a2dd614f524ab227cf5a41"
   integrity sha512-d1M6eDKBGWx7RbYy295VEFoOF9YDJkPI959QYnmzcmeaV+SP4D0xV7dEh3sN5XF3GvO3PhGzm+17Z598nvHQuQ==
@@ -7416,9 +7421,9 @@ react-fast-compare@^2.0.1:
   integrity sha512-suNP+J1VU1MWFKcyt7RtjiSWUjvidmQSlqu+eHslq+342xCbGTYmC0mEhPCOHxlW0CywylOC1u2DFAT+bv4dBw==
 
 react-focus-lock@^2.5.1:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/react-focus-lock/-/react-focus-lock-2.9.1.tgz#094cfc19b4f334122c73bb0bff65d77a0c92dd16"
-  integrity sha512-pSWOQrUmiKLkffPO6BpMXN7SNKXMsuOakl652IBuALAu1esk+IcpJyM+ALcYzPTTFz1rD0R54aB9A4HuP5t1Wg==
+  version "2.9.2"
+  resolved "https://registry.yarnpkg.com/react-focus-lock/-/react-focus-lock-2.9.2.tgz#a57dfd7c493e5a030d87f161c96ffd082bd920f2"
+  integrity sha512-5JfrsOKyA5Zn3h958mk7bAcfphr24jPoMoznJ8vaJF6fUrPQ8zrtEd3ILLOK8P5jvGxdMd96OxWNjDzATfR2qw==
   dependencies:
     "@babel/runtime" "^7.0.0"
     focus-lock "^0.11.2"
