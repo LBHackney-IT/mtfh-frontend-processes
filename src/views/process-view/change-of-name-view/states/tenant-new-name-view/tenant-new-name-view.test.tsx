@@ -86,9 +86,6 @@ describe("changeofname/tenant-new-name-view", () => {
       screen.queryByText(commonLocale.hooks.defaultErrorMessages.W56),
     ).not.toBeInTheDocument();
     await expect(
-      screen.queryByText(commonLocale.hooks.defaultErrorMessages.W58),
-    ).toBeInTheDocument();
-    await expect(
       screen.findByText(commonLocale.hooks.defaultErrorMessages.W57),
     ).resolves.toBeInTheDocument();
   });
