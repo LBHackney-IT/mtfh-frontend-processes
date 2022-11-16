@@ -238,6 +238,8 @@ const locale = {
     },
   },
   errors: {
+    errorLabel: "Error",
+    somethingWentWrongLabel: "Something went wrong. Please try again.",
     unableToFetchRecord: "There was a problem retrieving the record",
     unableToFetchRecordDescription:
       "Please try again. If the issue persists, please contact support.",

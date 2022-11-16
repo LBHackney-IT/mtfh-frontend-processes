@@ -3,18 +3,25 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { Form, Formik } from "formik";
 
+import { CommentsFormData } from "../../../../schemas/comments";
+import { locale } from "../../../../services";
+
 import { addComment } from "@mtfh/common/lib/api/comments/v2";
 import {
   Button,
+  Center,
   CommentList,
   Dialog,
   DialogActions,
+  ErrorSummary,
   Field,
   Heading,
   Input,
   Link,
+  Spinner,
   TextArea,
 } from "@mtfh/common/lib/components";
+import { useErrorCodes } from "@mtfh/common/lib/hooks";
 
 import "../../sole-to-joint-view/styles.scss";
 
@@ -22,7 +29,18 @@ export const CommentsView = ({ targetType, targetId, mutate }) => {
   const [addCommentOpen, setAddCommentOpen] = useState<boolean>(false);
   const [closeCommentOpen, setCloseCommentOpen] = useState<boolean>(false);
   const [refreshTargetId, setRefreshTargetId] = useState<string | undefined>();
+  const [error, setError] = useState<string | undefined>();
+  const errorMessages = useErrorCodes();
 
+  if (!errorMessages) {
+    return (
+      <Center>
+        <Spinner />
+      </Center>
+    );
+  }
+
+  const { W1: correctIndicatedErrorsText } = errorMessages;
   return (
     <>
       <Heading variant="h4" style={{ marginBottom: "0.5em" }}>
@@ -31,24 +49,42 @@ export const CommentsView = ({ targetType, targetId, mutate }) => {
 
       {addCommentOpen ? (
         <>
-          <Formik
-            initialValues={{ description: undefined, title: undefined }}
-            onSubmit={async (values) => {
+          <Formik<CommentsFormData>
+            initialValues={{ description: "", title: "" }}
+            onSubmit={async (values, { setErrors }) => {
               const { description, title } = values;
+              setError(undefined);
               try {
-                addComment({
-                  description: description!!,
-                  title: title || null,
+                await addComment({
+                  description,
+                  title,
                   targetType,
                   targetId,
                   highlight: false,
                 });
+                setAddCommentOpen(false);
                 mutate();
-              } catch (e: any) {
-                console.log(e.response?.status || 500);
+              } catch (error: any) {
+                if (typeof error === "object" && error.isAxiosError === true) {
+                  const errors: Record<string, string> = {};
+                  if (error.response.data.errors) {
+                    Object.entries(error.response.data.errors).forEach(([key, value]) => {
+                      errors[key.charAt(0).toLowerCase() + key.slice(1)] = JSON.parse(
+                        value as string,
+                      ).errorMessage;
+                    });
+                  }
+                  switch (error.response.status) {
+                    case 400:
+                    case 404:
+                      setErrors(errors);
+                      return setError("invalid");
+                    default:
+                      return setError("error");
+                  }
+                }
               } finally {
                 setRefreshTargetId("a-temp-id"); // to force CommentList refresh itself
-                setAddCommentOpen(false);
                 setRefreshTargetId(undefined);
               }
             }}
@@ -59,8 +95,21 @@ export const CommentsView = ({ targetType, targetId, mutate }) => {
                 handleBlur,
                 values: { description, title },
               } = props;
+              const hasFieldErrors = Object.keys(props.errors).length > 0;
               return (
                 <Form noValidate id="comment-form" className="comment-form">
+                  {(hasFieldErrors || error) && (
+                    <ErrorSummary
+                      id="add-comments-error"
+                      title={locale.errors.errorLabel}
+                    >
+                      <>
+                        {hasFieldErrors && <p>{correctIndicatedErrorsText}</p>}
+                        {error && <p>{locale.errors.somethingWentWrongLabel}</p>}
+                      </>
+                    </ErrorSummary>
+                  )}
+
                   <Field id="comment-title" name="title" label="Comment title" required>
                     <Input data-testid="comment-form:title" />
                   </Field>
