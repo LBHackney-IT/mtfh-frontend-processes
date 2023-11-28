@@ -3,19 +3,19 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { locale } from "../../services";
 
-import { useAsset } from "@mtfh/cm-new/lib/api/asset/v1";
-import { Asset } from "@mtfh/cm-new/lib/api/asset/v1/types";
-import { Patch } from "@mtfh/cm-new/lib/api/patch/v1/types";
-import { usePerson } from "@mtfh/cm-new/lib/api/person/v1";
-import { useTenure } from "@mtfh/cm-new/lib/api/tenure/v1";
+import { useAsset } from "@mtfh/common/lib/api/asset/v1";
+import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
+import { Patch } from "@mtfh/common/lib/api/patch/v1/types";
+import { usePerson } from "@mtfh/common/lib/api/person/v1";
+import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
+import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
 import {
   Center,
   ErrorSummary,
   Heading,
   Link,
   Spinner,
-} from "@mtfh/cm-new/lib/components";
-import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
+} from "@mtfh/common/lib/components";
 
 import "./styles.scss";
 

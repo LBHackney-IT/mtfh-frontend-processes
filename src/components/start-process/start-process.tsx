@@ -7,17 +7,17 @@ import * as Yup from "yup";
 import { locale } from "../../services";
 import { IStartProcess } from "../../types";
 
-import { Asset } from "@mtfh/cm-new/lib/api/asset/v1/types";
-import { Patch } from "@mtfh/cm-new/lib/api/patch/v1/types";
-import { PostProcessRequestData, RelatedEntity } from "@mtfh/cm-new/lib/api/process/v1";
-import { PostProcessRequestDataV2, addProcess } from "@mtfh/cm-new/lib/api/process/v2";
+import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
+import { Patch } from "@mtfh/common/lib/api/patch/v1/types";
+import { PostProcessRequestData, RelatedEntity } from "@mtfh/common/lib/api/process/v1";
+import { PostProcessRequestDataV2, addProcess } from "@mtfh/common/lib/api/process/v2";
 import {
   Button,
   Checkbox,
   InlineField,
   Link,
   StatusErrorSummary,
-} from "@mtfh/cm-new/lib/components";
+} from "@mtfh/common/lib/components";
 
 import "./styles.scss";
 

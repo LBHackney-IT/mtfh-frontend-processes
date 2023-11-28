@@ -5,10 +5,10 @@ import { EntitySummary, StartProcess } from "../../components";
 import { locale, processes } from "../../services";
 import { IProcess, TargetType } from "../../types";
 
-import { Asset } from "@mtfh/cm-new/lib/api/asset/v1/types";
-import { Patch } from "@mtfh/cm-new/lib/api/patch/v1/types";
-import { RelatedEntity } from "@mtfh/cm-new/lib/api/process/v1";
-import { ErrorSummary, Layout, Link } from "@mtfh/cm-new/lib/components";
+import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
+import { Patch } from "@mtfh/common/lib/api/patch/v1/types";
+import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
+import { ErrorSummary, Layout, Link } from "@mtfh/common/lib/components";
 
 interface ParamProps {
   targetId: string;

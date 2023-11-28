@@ -75,8 +75,8 @@
   },
   "dependencies": {
     "@hackney/mtfh-test-utils": "^1.8.9",
-    "@mtfh/common": "https://github.com/LBHackney-IT/mtfh-frontend-common.git",
-    "@mtfh/personal-details": "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git",
+    "@mtfh/common": "https://github.com/LBHackney-IT/mtfh-frontend-common.git#e796c4a55d233678fb82136cee4f29489e28e154",
+    "@mtfh/personal-details": "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#137908f69bc156e6508c214b05d71f1d67c41e7a",
     "date-fns": "2.23.0",
     "formik": "^2.2.9",
     "lbh-frontend": "^3.6.1",
@@ -87,8 +87,5 @@
     "single-spa": "^5.9.3",
     "single-spa-react": "4.4.0",
     "yup": "^0.32.11"
-  },
-  "resolutions": {
-    "@mtfh/common": "https://github.com/LBHackney-IT/mtfh-frontend-common.git#33dc26688c1a8f5cea5f12376376ee8caf9b3762"
   }
 }

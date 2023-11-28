@@ -1522,7 +1522,7 @@
     outvariant "^1.2.0"
     strict-event-emitter "^0.2.0"
 
-"@mtfh/common@https://github.com/LBHackney-IT/mtfh-common.git", "@mtfh/common@https://github.com/LBHackney-IT/mtfh-frontend-common.git", "@mtfh/common@https://github.com/LBHackney-IT/mtfh-frontend-common.git#33dc26688c1a8f5cea5f12376376ee8caf9b3762":
+"@mtfh/common@https://github.com/LBHackney-IT/mtfh-common.git", "@mtfh/common@https://github.com/LBHackney-IT/mtfh-frontend-common.git":
   version "0.0.1"
   resolved "https://github.com/LBHackney-IT/mtfh-frontend-common.git#33dc26688c1a8f5cea5f12376376ee8caf9b3762"
   dependencies:
@@ -1555,9 +1555,42 @@
     use-breakpoint "^2.0.1"
     uuid "^8.3.2"
 
-"@mtfh/personal-details@https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git":
+"@mtfh/common@https://github.com/LBHackney-IT/mtfh-frontend-common.git#e796c4a55d233678fb82136cee4f29489e28e154":
+  version "0.0.1"
+  resolved "https://github.com/LBHackney-IT/mtfh-frontend-common.git#e796c4a55d233678fb82136cee4f29489e28e154"
+  dependencies:
+    "@babel/preset-react" "^7.13.13"
+    "@radix-ui/react-polymorphic" "^0.0.12"
+    "@reach/dialog" "^0.15.0"
+    "@types/deep-diff" "^1.0.1"
+    "@types/jest" "^26.0.16"
+    "@types/js-cookie" "^2.2.6"
+    "@types/react" "17.0.20"
+    "@types/react-dom" "17.0.9"
+    "@types/react-router-dom" "5.1.9"
+    "@types/systemjs" "^6.1.0"
+    "@types/uuid" "^8.3.1"
+    "@types/webpack-env" "^1.16.0"
+    axios "^0.21.3"
+    classnames "^2.3.1"
+    date-fns "^2.23.0"
+    deep-diff "^1.0.2"
+    formik "^2.2.9"
+    js-cookie "^2.2.1"
+    jwt-decode "^3.1.2"
+    lbh-frontend "^3.6.1"
+    query-string "^7.0.1"
+    react-merge-refs "^1.1.0"
+    react-router-dom "5.2.0"
+    rxjs "^7.0.1"
+    single-spa "^5.9.3"
+    swr "1.0.1"
+    use-breakpoint "^2.0.1"
+    uuid "^8.3.2"
+
+"@mtfh/personal-details@https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#137908f69bc156e6508c214b05d71f1d67c41e7a":
   version "1.0.0"
-  resolved "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#bf83f7f1b41e3c86be71dd1173f229a2234125a1"
+  resolved "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#137908f69bc156e6508c214b05d71f1d67c41e7a"
   dependencies:
     "@mtfh/common" "https://github.com/LBHackney-IT/mtfh-frontend-common.git"
     "@mtfh/worktray" "https://github.com/LBHackney-IT/mtfh-frontend-worktray.git"
@@ -1565,7 +1598,7 @@
     classnames "2.3.1"
     date-fns "2.21.3"
     flat "5.0.2"
-    formik "2.2.9"
+    formik "2.4.5"
     history "5.0.0"
     lbh-frontend "^3.6.1"
     react "17.0.2"
@@ -1831,6 +1864,14 @@
   version "4.7.9"
   resolved "https://registry.yarnpkg.com/@types/history/-/history-4.7.9.tgz#1cfb6d60ef3822c589f18e70f8b12f9a28ce8724"
   integrity sha512-MUc6zSmU3tEVnkQ78q0peeEjKWPUADMlC/t++2bI8WnAG2tvYRPIgHG8lWkXwqc8MsUF6Z2MOf+Mh5sazOmhiQ==
+
+"@types/hoist-non-react-statics@^3.3.1":
+  version "3.3.5"
+  resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.5.tgz#dab7867ef789d87e2b4b0003c9d65c49cc44a494"
+  integrity sha512-SbcrWzkKBw2cdwRTwQAswfpB9g9LJWfjtUeW/jvNwbhC8cpmmNYVePa+ncbUe0rGTQ7G3Ff6mYUN2VMfLVr+Sg==
+  dependencies:
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
 
 "@types/html-minifier-terser@^6.0.0":
   version "6.0.0"
@@ -4595,7 +4636,21 @@ form-data@^3.0.0:
     combined-stream "^1.0.8"
     mime-types "^2.1.12"
 
-formik@2.2.9, formik@^2.2.9:
+formik@2.4.5:
+  version "2.4.5"
+  resolved "https://registry.yarnpkg.com/formik/-/formik-2.4.5.tgz#f899b5b7a6f103a8fabb679823e8fafc7e0ee1b4"
+  integrity sha512-Gxlht0TD3vVdzMDHwkiNZqJ7Mvg77xQNfmBRrNtvzcHZs72TJppSTDKHpImCMJZwcWPBJ8jSQQ95GJzXFf1nAQ==
+  dependencies:
+    "@types/hoist-non-react-statics" "^3.3.1"
+    deepmerge "^2.1.1"
+    hoist-non-react-statics "^3.3.0"
+    lodash "^4.17.21"
+    lodash-es "^4.17.21"
+    react-fast-compare "^2.0.1"
+    tiny-warning "^1.0.2"
+    tslib "^2.0.0"
+
+formik@^2.2.9:
   version "2.2.9"
   resolved "https://registry.yarnpkg.com/formik/-/formik-2.2.9.tgz#8594ba9c5e2e5cf1f42c5704128e119fc46232d0"
   integrity sha512-LQLcISMmf1r5at4/gyJigGn0gOwFbeEAlji+N9InZF6LIMXnFNkO42sCI8Jt84YZggpD4cPWObAZaxpEFtSzNA==
