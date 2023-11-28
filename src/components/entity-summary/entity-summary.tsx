@@ -5,6 +5,8 @@ import { locale } from "../../services";
 
 import { useAsset } from "@mtfh/common/lib/api/asset/v1";
 import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
+import { Patch } from "@mtfh/common/lib/api/patch/v1/types"
+import { usePatchOrArea } from "@mtfh/common/lib/api/patch/v1";
 import { usePerson } from "@mtfh/common/lib/api/person/v1";
 import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
 import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
@@ -28,6 +30,8 @@ interface ComponentProps {
   setRelatedEntities?: (relatedEntities: RelatedEntity[]) => void;
   // eslint-disable-next-line react/no-unused-prop-types
   setAsset?: (asset: Asset) => void;
+    // eslint-disable-next-line react/no-unused-prop-types
+  setPatch?: (patch: Patch) => void;
 }
 
 const TenureSummary = ({
@@ -237,6 +241,8 @@ interface EntitySummaryProps {
   type: "tenure" | "property" | "person";
   setRelatedEntities?: (relatedEntities: RelatedEntity[]) => void;
   setAsset?: (asset: Asset) => void;
+  setPatch?: (patch: Patch) => void;
+
 }
 
 export const EntitySummary = ({
@@ -245,6 +251,7 @@ export const EntitySummary = ({
   config,
   setRelatedEntities,
   setAsset,
+  setPatch,
 }: EntitySummaryProps) => {
   const Components = {
     tenure: TenureSummary,
@@ -261,6 +268,7 @@ export const EntitySummary = ({
       config={config}
       setRelatedEntities={setRelatedEntities}
       setAsset={setAsset}
+      setPatch={setPatch}
     />
   );
 };

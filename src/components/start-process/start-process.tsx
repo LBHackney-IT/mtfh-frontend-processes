@@ -7,6 +7,7 @@ import * as Yup from "yup";
 import { locale } from "../../services";
 import { IStartProcess } from "../../types";
 
+import { Patch } from "@mtfh/common/lib/api/patch/v1/types";
 import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
 import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
 import { addProcess } from "@mtfh/common/lib/api/process/v2";
@@ -29,7 +30,8 @@ interface StartProcessProps {
   targetId: string;
   targetType: string;
   relatedEntities?: RelatedEntity[];
-  asset?: Asset;
+  patches?: Patch[];
+  asset: Asset;
 }
 
 export const schema = Yup.object({
@@ -46,6 +48,7 @@ export const StartProcess = ({
   targetType,
   relatedEntities = [],
   asset,
+  patches,
 }: StartProcessProps) => {
   const history = useHistory();
   const [globalError, setGlobalError] = useState<number>();
@@ -58,7 +61,7 @@ export const StartProcess = ({
     return <Component />;
   };
 
-  const patch = asset?.patches?.[0];
+  const patch = patches?.[0];
   return (
     <>
       {globalError && (
