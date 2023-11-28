@@ -3,20 +3,19 @@ import { Link as RouterLink } from "react-router-dom";
 
 import { locale } from "../../services";
 
-import { useAsset } from "@mtfh/common/lib/api/asset/v1";
-import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
-import { Patch } from "@mtfh/common/lib/api/patch/v1/types"
-import { usePatchOrArea } from "@mtfh/common/lib/api/patch/v1";
-import { usePerson } from "@mtfh/common/lib/api/person/v1";
-import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
-import { useTenure } from "@mtfh/common/lib/api/tenure/v1";
+import { useAsset } from "@mtfh/cm-new/lib/api/asset/v1";
+import { Asset } from "@mtfh/cm-new/lib/api/asset/v1/types";
+import { Patch } from "@mtfh/cm-new/lib/api/patch/v1/types";
+import { usePerson } from "@mtfh/cm-new/lib/api/person/v1";
+import { useTenure } from "@mtfh/cm-new/lib/api/tenure/v1";
 import {
   Center,
   ErrorSummary,
   Heading,
   Link,
   Spinner,
-} from "@mtfh/common/lib/components";
+} from "@mtfh/cm-new/lib/components";
+import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
 
 import "./styles.scss";
 
@@ -30,7 +29,7 @@ interface ComponentProps {
   setRelatedEntities?: (relatedEntities: RelatedEntity[]) => void;
   // eslint-disable-next-line react/no-unused-prop-types
   setAsset?: (asset: Asset) => void;
-    // eslint-disable-next-line react/no-unused-prop-types
+  // eslint-disable-next-line react/no-unused-prop-types
   setPatch?: (patch: Patch) => void;
 }
 
@@ -242,7 +241,6 @@ interface EntitySummaryProps {
   setRelatedEntities?: (relatedEntities: RelatedEntity[]) => void;
   setAsset?: (asset: Asset) => void;
   setPatch?: (patch: Patch) => void;
-
 }
 
 export const EntitySummary = ({

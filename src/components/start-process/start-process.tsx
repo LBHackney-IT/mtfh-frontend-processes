@@ -7,17 +7,17 @@ import * as Yup from "yup";
 import { locale } from "../../services";
 import { IStartProcess } from "../../types";
 
-import { Patch } from "@mtfh/common/lib/api/patch/v1/types";
-import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
-import { RelatedEntity } from "@mtfh/common/lib/api/process/v1";
-import { addProcess } from "@mtfh/common/lib/api/process/v2";
+import { Asset } from "@mtfh/cm-new/lib/api/asset/v1/types";
+import { Patch } from "@mtfh/cm-new/lib/api/patch/v1/types";
+import { PostProcessRequestData, RelatedEntity } from "@mtfh/cm-new/lib/api/process/v1";
+import { PostProcessRequestDataV2, addProcess } from "@mtfh/cm-new/lib/api/process/v2";
 import {
   Button,
   Checkbox,
   InlineField,
   Link,
   StatusErrorSummary,
-} from "@mtfh/common/lib/components";
+} from "@mtfh/cm-new/lib/components";
 
 import "./styles.scss";
 
@@ -76,21 +76,29 @@ export const StartProcess = ({
         validateOnBlur={false}
         validationSchema={schema}
         onSubmit={async () => {
+          console.log("PATCH: ", patch);
+          if (!patch) {
+            console.error("No patch found");
+            return;
+          }
           try {
-            const response = await addProcess(
-              {
-                targetID: targetId,
-                targetType,
-                relatedEntities,
-                patchAssignment: {
-                  patchId: patch?.id || "",
-                  patchName: patch?.name || "",
-                  responsibleEntityId: patch?.responsibleEntities?.[0].id || "",
-                  responsibleName: patch?.responsibleEntities?.[0].name || "",
-                },
+            const ppReqData: PostProcessRequestData = {
+              targetType,
+              relatedEntities,
+              targetID: targetId,
+            };
+
+            const requestData: PostProcessRequestDataV2 = {
+              ...ppReqData,
+              patchAssignment: {
+                patchId: patch?.id || "",
+                patchName: patch?.name || "",
+                responsibleEntityId: patch?.responsibleEntities?.[0].id || "",
+                responsibleName: patch?.responsibleEntities?.[0].name || "",
               },
-              processName,
-            );
+            };
+
+            const response = await addProcess(requestData, processName);
             history.push(`/processes/${processName}/${response.id}`);
           } catch (e: any) {
             setGlobalError(e.response?.status || 500);

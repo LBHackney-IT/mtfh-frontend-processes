@@ -87,5 +87,8 @@
     "single-spa": "^5.9.3",
     "single-spa-react": "4.4.0",
     "yup": "^0.32.11"
+  },
+  "resolutions": {
+    "@mtfh/common": "https://github.com/LBHackney-IT/mtfh-frontend-common.git#33dc26688c1a8f5cea5f12376376ee8caf9b3762"
   }
 }

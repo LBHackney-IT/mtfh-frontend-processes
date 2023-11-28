@@ -11,7 +11,7 @@
 // const targetId = "fee0914a-3e45-4a4f-95c7-a0adfd2026c9";
 // const targetType = "tenure";
 // const responsibleEntity = {
-//   responsibleEntities: 
+//   responsibleEntities:
 //     {
 //       id: "112681e0-c2a7-4349-9a18-847c69013e9a",
 //       name: "FAKE_JANE FAKE_JOE",
