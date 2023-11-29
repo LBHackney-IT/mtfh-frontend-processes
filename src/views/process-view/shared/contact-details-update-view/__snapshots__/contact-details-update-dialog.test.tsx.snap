@@ -71,41 +71,51 @@ exports[`it ContactDetailsUpdateDialog as expected when it is open 1`] = `
             >
               You can 'Return to your application' once you have completed the updates. The new contact details will be displayed.
             </p>
-            <fieldset
-              class="govuk-fieldset lbh-fieldset"
+            <div
+              class="mtfh-center mtfh-center--horizontal mtfh-center--vertical"
             >
-              <legend
-                class="govuk-fieldset__legend govuk-fieldset__legend--m"
+              <svg
+                class="mtfh-icon"
+                focusable="false"
+                height="50"
+                stroke="#00703c"
+                viewBox="0 0 42 42"
+                width="50"
               >
-                
-              </legend>
-              <div
-                class="mtfh-fieldset__content"
-              >
-                <div
-                  class="mtfh-contact-details-form"
+                <title>
+                  Loading...
+                </title>
+                <g
+                  fill="none"
+                  fill-rule="evenodd"
                 >
-                  <button
-                    class="govuk-button lbh-button"
-                    data-testid="button-add-email"
-                    type="button"
+                  <g
+                    stroke-width="5"
+                    transform="translate(3 3)"
                   >
-                    Add an email address
-                  </button>
-                </div>
-                <div
-                  class="mtfh-contact-details-form"
-                >
-                  <button
-                    class="govuk-button lbh-button"
-                    data-testid="button-add-phone"
-                    type="button"
-                  >
-                    Add a phone number
-                  </button>
-                </div>
-              </div>
-            </fieldset>
+                    <circle
+                      cx="18"
+                      cy="18"
+                      r="18"
+                      stroke-opacity=".5"
+                    />
+                    <path
+                      d="M36 18c0-9.94-8.06-18-18-18"
+                      transform="rotate(112.708 18 18)"
+                    >
+                      <animatetransform
+                        attributeName="transform"
+                        dur="1s"
+                        from="0 18 18"
+                        repeatCount="indefinite"
+                        to="360 18 18"
+                        type="rotate"
+                      />
+                    </path>
+                  </g>
+                </g>
+              </svg>
+            </div>
             <button
               class="govuk-button lbh-button"
               data-testid="close-update-contact-details-modal"

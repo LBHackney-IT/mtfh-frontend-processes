@@ -72,7 +72,6 @@ export const StartProcessView = () => {
             backLink={backLink}
             targetType={targetType}
             relatedEntities={relatedEntities}
-            patches={[patch]}
             asset={asset}
           />
         )}

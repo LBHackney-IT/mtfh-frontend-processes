@@ -492,4 +492,4 @@ exports[`ho-review-view it renders ReviewApplication view correctly for HOApprov
 </div>
 `;
 
-exports[`ho-review-view it renders ReviewApplication view correctly for TenureInvestigationFailed state 1`] = `<div />`;
+exports[`ho-review-view it renders ReviewApplication view correctly for tenureInvestigationPassedWithInt state 1`] = `<div />`;

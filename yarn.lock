@@ -1588,9 +1588,9 @@
     use-breakpoint "^2.0.1"
     uuid "^8.3.2"
 
-"@mtfh/personal-details@https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#137908f69bc156e6508c214b05d71f1d67c41e7a":
+"@mtfh/personal-details@https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#cf0018ae90b92e36d8ebd73f0d4a808d2e0cdaef":
   version "1.0.0"
-  resolved "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#137908f69bc156e6508c214b05d71f1d67c41e7a"
+  resolved "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#cf0018ae90b92e36d8ebd73f0d4a808d2e0cdaef"
   dependencies:
     "@mtfh/common" "https://github.com/LBHackney-IT/mtfh-frontend-common.git"
     "@mtfh/worktray" "https://github.com/LBHackney-IT/mtfh-frontend-worktray.git"

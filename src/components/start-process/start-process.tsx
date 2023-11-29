@@ -7,8 +7,9 @@ import * as Yup from "yup";
 import { locale } from "../../services";
 import { IStartProcess } from "../../types";
 
+import { usePatchOrArea } from "@mtfh/common/lib/api/patch/v1";
+
 import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
-import { Patch } from "@mtfh/common/lib/api/patch/v1/types";
 import { PostProcessRequestData, RelatedEntity } from "@mtfh/common/lib/api/process/v1";
 import { PostProcessRequestDataV2, addProcess } from "@mtfh/common/lib/api/process/v2";
 import {
@@ -30,7 +31,6 @@ interface StartProcessProps {
   targetId: string;
   targetType: string;
   relatedEntities?: RelatedEntity[];
-  patches?: Patch[];
   asset: Asset;
 }
 
@@ -48,7 +48,6 @@ export const StartProcess = ({
   targetType,
   relatedEntities = [],
   asset,
-  patches,
 }: StartProcessProps) => {
   const history = useHistory();
   const [globalError, setGlobalError] = useState<number>();
@@ -61,7 +60,7 @@ export const StartProcess = ({
     return <Component />;
   };
 
-  const patch = patches?.[0];
+  const {data: patches} = usePatchOrArea(asset?.patchId);
   return (
     <>
       {globalError && (
@@ -76,11 +75,12 @@ export const StartProcess = ({
         validateOnBlur={false}
         validationSchema={schema}
         onSubmit={async () => {
-          console.log("PATCH: ", patch);
-          if (!patch) {
+          console.log("PATCH: ", patches);
+          if (!patches) {
             console.error("No patch found");
             return;
           }
+          const patch = patches[0]
           try {
             const ppReqData: PostProcessRequestData = {
               targetType,
