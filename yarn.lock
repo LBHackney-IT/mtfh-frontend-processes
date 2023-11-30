@@ -1555,9 +1555,9 @@
     use-breakpoint "^2.0.1"
     uuid "^8.3.2"
 
-"@mtfh/common@https://github.com/LBHackney-IT/mtfh-frontend-common.git#e796c4a55d233678fb82136cee4f29489e28e154":
+"@mtfh/common@https://github.com/LBHackney-IT/mtfh-frontend-common.git#5551e2eca7b27a2dfb6438eb45b3319d56ecf52e":
   version "0.0.1"
-  resolved "https://github.com/LBHackney-IT/mtfh-frontend-common.git#e796c4a55d233678fb82136cee4f29489e28e154"
+  resolved "https://github.com/LBHackney-IT/mtfh-frontend-common.git#5551e2eca7b27a2dfb6438eb45b3319d56ecf52e"
   dependencies:
     "@babel/preset-react" "^7.13.13"
     "@radix-ui/react-polymorphic" "^0.0.12"
@@ -1588,11 +1588,11 @@
     use-breakpoint "^2.0.1"
     uuid "^8.3.2"
 
-"@mtfh/personal-details@https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#cf0018ae90b92e36d8ebd73f0d4a808d2e0cdaef":
+"@mtfh/personal-details@https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#d99be8a11a8c179acdbeb967e3178f41e87efe77":
   version "1.0.0"
-  resolved "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#cf0018ae90b92e36d8ebd73f0d4a808d2e0cdaef"
+  resolved "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#d99be8a11a8c179acdbeb967e3178f41e87efe77"
   dependencies:
-    "@mtfh/common" "https://github.com/LBHackney-IT/mtfh-frontend-common.git"
+    "@mtfh/common" "https://github.com/LBHackney-IT/mtfh-frontend-common.git#5551e2eca7b27a2dfb6438eb45b3319d56ecf52e"
     "@mtfh/worktray" "https://github.com/LBHackney-IT/mtfh-frontend-worktray.git"
     "@types/flat" "5.0.1"
     classnames "2.3.1"

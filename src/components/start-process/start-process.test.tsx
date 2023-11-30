@@ -3,13 +3,14 @@ import { screen, waitFor } from "@testing-library/react";
 
 import { locale, processes } from "../../services";
 import { StartProcess } from "./start-process";
+
 import { Process } from "@mtfh/common/lib/api/process/v1";
 import * as processServiceV2 from "@mtfh/common/lib/api/process/v2/service";
 
 const targetId = "fee0914a-3e45-4a4f-95c7-a0adfd2026c9";
 const targetType = "tenure";
 
-const asset = {...mockAssetV1}
+const asset = { ...mockAssetV1 };
 asset["patchId"] = "fee0914a-3e45-4a4f-95c7-a0adfd2037d";
 
 test("it enables form once checkbox is selected", async () => {

@@ -7,9 +7,8 @@ import * as Yup from "yup";
 import { locale } from "../../services";
 import { IStartProcess } from "../../types";
 
-import { usePatchOrArea } from "@mtfh/common/lib/api/patch/v1";
-
 import { Asset } from "@mtfh/common/lib/api/asset/v1/types";
+import { usePatchOrArea } from "@mtfh/common/lib/api/patch/v1";
 import { PostProcessRequestData, RelatedEntity } from "@mtfh/common/lib/api/process/v1";
 import { PostProcessRequestDataV2, addProcess } from "@mtfh/common/lib/api/process/v2";
 import {
@@ -60,7 +59,7 @@ export const StartProcess = ({
     return <Component />;
   };
 
-  const {data: patches} = usePatchOrArea(asset?.patchId);
+  const { data: patch } = usePatchOrArea(asset.patchId);
   return (
     <>
       {globalError && (
@@ -75,12 +74,10 @@ export const StartProcess = ({
         validateOnBlur={false}
         validationSchema={schema}
         onSubmit={async () => {
-          console.log("PATCH: ", patches);
-          if (!patches) {
+          if (!patch) {
             console.error("No patch found");
             return;
           }
-          const patch = patches[0]
           try {
             const ppReqData: PostProcessRequestData = {
               targetType,
@@ -91,10 +88,10 @@ export const StartProcess = ({
             const requestData: PostProcessRequestDataV2 = {
               ...ppReqData,
               patchAssignment: {
-                patchId: patch?.id || "",
-                patchName: patch?.name || "",
-                responsibleEntityId: patch?.responsibleEntities?.[0].id || "",
-                responsibleName: patch?.responsibleEntities?.[0].name || "",
+                patchId: patch.id || "",
+                patchName: patch.name || "",
+                responsibleEntityId: patch.responsibleEntities?.[0].id || "",
+                responsibleName: patch.responsibleEntities?.[0].name || "",
               },
             };
 
