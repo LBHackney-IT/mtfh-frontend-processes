@@ -84,12 +84,6 @@ test("it displays an error if there is a bad response", async () => {
     throw new Error();
   });
 
-  // jest
-  // .spyOn(patchServiceV1, "usePatchOrArea")
-  // .mockReturnValue({
-  //   data: patch,
-  // } as AxiosSWRResponse<Patch>);
-
   render(
     <StartProcess
       targetId={targetId}
