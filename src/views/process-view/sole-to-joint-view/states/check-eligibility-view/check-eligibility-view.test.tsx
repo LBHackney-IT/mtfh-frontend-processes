@@ -35,158 +35,161 @@ const options = {
   url,
   path,
 };
+describe("check Eligibility View", () => {
 
-test("it renders CheckEligibility passed checks view correctly state=AutomatedChecksPassed", async () => {
-  server.use(getReferenceDataV1({}, 200));
-  const { container } = render(
-    <CheckEligibilityView
-      processConfig={processes.soletojoint}
-      process={mockProcessAutomatedChecksPassed}
-      mutate={() => {}}
-      optional={{ submitted, setSubmitted }}
-    />,
-    options,
-  );
-  await expect(
-    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.checkEligibility.passedChecks),
-  ).resolves.toBeInTheDocument();
-  expect(container).toMatchSnapshot();
-});
+  test("it renders CheckEligibility passed checks view correctly state=AutomatedChecksPassed", async () => {
+    server.use(getReferenceDataV1({}, 200));
+    const { container } = render(
+      <CheckEligibilityView
+        processConfig={processes.soletojoint}
+        process={mockProcessAutomatedChecksPassed}
+        mutate={() => { }}
+        optional={{ submitted, setSubmitted }}
+      />,
+      options,
+    );
+    await expect(
+      screen.findByText(locale.views.checkEligibility.autoCheckIntro),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(locale.views.checkEligibility.passedChecks),
+    ).resolves.toBeInTheDocument();
+    expect(container).toMatchSnapshot();
+  });
 
-test("it enables Next button when all required fields are selected", async () => {
-  const editProcessSpy = jest.spyOn(processV1, "editProcess");
-  server.use(patchProcessV1(mockProcessV1, 200));
-  render(
-    <CheckEligibilityView
-      processConfig={processes.soletojoint}
-      process={mockProcessAutomatedChecksPassed}
-      mutate={() => {}}
-      optional={{ submitted, setSubmitted }}
-    />,
-    options,
-  );
-  const next = await screen.findByText("Next");
-  expect(next).toBeDisabled();
-  await selectRadios(screen);
-  expect(next).toBeEnabled();
-  await userEvent.click(next);
-  expect(editProcessSpy).toBeCalled();
-});
+  test("it enables Next button when all required fields are selected", async () => {
+    const editProcessSpy = jest.spyOn(processV1, "editProcess");
+    server.use(patchProcessV1(mockProcessV1, 200));
+    render(
+      <CheckEligibilityView
+        processConfig={processes.soletojoint}
+        process={mockProcessAutomatedChecksPassed}
+        mutate={() => { }}
+        optional={{ submitted, setSubmitted }}
+      />,
+      options,
+    );
+    const next = await screen.findByText("Next");
+    expect(next).toBeDisabled();
+    await selectRadios(screen);
+    expect(next).toBeEnabled();
+    await userEvent.click(next);
+    expect(editProcessSpy).toBeCalled();
+  });
 
-test("it displays error when submit fails", async () => {
-  server.use(patchProcessV1("error", 500));
-  render(
-    <CheckEligibilityView
-      processConfig={processes.soletojoint}
-      process={mockProcessAutomatedChecksPassed}
-      mutate={() => {}}
-      optional={{ submitted, setSubmitted }}
-    />,
-    options,
-  );
-  const next = await screen.findByText("Next");
-  expect(next).toBeDisabled();
-  await selectRadios(screen);
-  expect(next).toBeEnabled();
-  await userEvent.click(next);
-  await expect(
-    screen.findByText(commonLocale.components.statusErrorSummary.statusTitle(500)),
-  ).resolves.toBeInTheDocument();
-});
+  test("it displays error when submit fails", async () => {
+    server.use(patchProcessV1("error", 500));
+    render(
+      <CheckEligibilityView
+        processConfig={processes.soletojoint}
+        process={mockProcessAutomatedChecksPassed}
+        mutate={() => { }}
+        optional={{ submitted, setSubmitted }}
+      />,
+      options,
+    );
+    const next = await screen.findByText("Next");
+    expect(next).toBeDisabled();
+    await selectRadios(screen);
+    expect(next).toBeEnabled();
+    await userEvent.click(next);
+    await expect(
+      screen.findByText(commonLocale.components.statusErrorSummary.statusTitle(500)),
+    ).resolves.toBeInTheDocument();
+  });
 
-test("it renders CheckEligibility correctly if there is an incoming tenant", async () => {
-  const incomingTenantId = "incomingTenantId";
-  const fullName = "IncomingTenant Test";
-  const tenure = {
-    householdMembers: [
-      {
-        fullName,
-        id: incomingTenantId,
-        isResponsible: true,
-      },
-    ],
+  test("it renders CheckEligibility correctly if there is an incoming tenant", async () => {
+    const incomingTenantId = "incomingTenantId";
+    const fullName = "IncomingTenant Test";
+    const tenure = {
+      householdMembers: [
+        {
+          fullName,
+          id: incomingTenantId,
+          isResponsible: true,
+        },
+      ],
+    };
+    server.use(getTenureV1(tenure));
+    const process = {
+      ...mockProcessV1,
+      currentState: { ...mockProcessV1.currentState, state: "AutomatedChecksPassed" },
+    };
+    process.currentState.processData.formData.incomingTenantId = incomingTenantId;
+    render(
+      <CheckEligibilityView
+        processConfig={processes.soletojoint}
+        process={process}
+        mutate={() => { }}
+        optional={{ submitted, setSubmitted }}
+      />,
+      options,
+    );
+    await expect(
+      screen.findByText(locale.views.checkEligibility.autoCheckIntro),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(locale.views.checkEligibility.passedChecks),
+    ).resolves.toBeInTheDocument();
+  });
+
+  test("it renders CheckEligibility failed checks view correctly", async () => {
+    render(
+      <SoleToJointView
+        processConfig={processes.soletojoint}
+        process={mockProcessAutomatedChecksFailed}
+        mutate={() => { }}
+        optional={{ submitted, setSubmitted }}
+      />,
+      options,
+    );
+    await expect(
+      screen.findByText(locale.views.checkEligibility.autoCheckIntro),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(locale.views.checkEligibility.failedChecks),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(locale.views.closeProcess.outcomeLetterSent),
+    ).resolves.toBeInTheDocument();
+  });
+
+  test("it renders CheckEligibility failed checks view correctly for process closed state", async () => {
+    render(
+      <SoleToJointView
+        processConfig={processes.soletojoint}
+        process={{
+          ...mockProcessV1,
+          currentState: { ...mockProcessV1.currentState, state: "ProcessClosed" },
+          previousStates: [
+            { ...mockProcessV1.currentState, state: "AutomatedChecksFailed" },
+          ],
+        }}
+        mutate={() => { }}
+        optional={{ submitted, setSubmitted }}
+      />,
+      options,
+    );
+    await expect(
+      screen.findByText(locale.views.checkEligibility.autoCheckIntro),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(locale.views.checkEligibility.failedChecks),
+    ).resolves.toBeInTheDocument();
+    await expect(
+      screen.findByText(locale.views.closeProcess.confirmationText),
+    ).resolves.toBeInTheDocument();
+  });
+
+  const selectRadios = async (screen) => {
+    await userEvent.click(screen.getAllByRole("radio")[0]);
+    await userEvent.click(screen.getAllByRole("radio")[3]);
+    await userEvent.click(screen.getAllByRole("radio")[5]);
+    await userEvent.click(screen.getAllByRole("radio")[7]);
+    await userEvent.click(screen.getAllByRole("radio")[9]);
+    await userEvent.click(screen.getAllByRole("radio")[11]);
+    await userEvent.click(screen.getAllByRole("radio")[13]);
+    await userEvent.click(screen.getAllByRole("radio")[15]);
   };
-  server.use(getTenureV1(tenure));
-  const process = {
-    ...mockProcessV1,
-    currentState: { ...mockProcessV1.currentState, state: "AutomatedChecksPassed" },
-  };
-  process.currentState.processData.formData.incomingTenantId = incomingTenantId;
-  render(
-    <CheckEligibilityView
-      processConfig={processes.soletojoint}
-      process={process}
-      mutate={() => {}}
-      optional={{ submitted, setSubmitted }}
-    />,
-    options,
-  );
-  await expect(
-    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.checkEligibility.passedChecks),
-  ).resolves.toBeInTheDocument();
-});
 
-test("it renders CheckEligibility failed checks view correctly", async () => {
-  render(
-    <SoleToJointView
-      processConfig={processes.soletojoint}
-      process={mockProcessAutomatedChecksFailed}
-      mutate={() => {}}
-      optional={{ submitted, setSubmitted }}
-    />,
-    options,
-  );
-  await expect(
-    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.checkEligibility.failedChecks),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.closeProcess.outcomeLetterSent),
-  ).resolves.toBeInTheDocument();
-});
-
-test("it renders CheckEligibility failed checks view correctly for process closed state", async () => {
-  render(
-    <SoleToJointView
-      processConfig={processes.soletojoint}
-      process={{
-        ...mockProcessV1,
-        currentState: { ...mockProcessV1.currentState, state: "ProcessClosed" },
-        previousStates: [
-          { ...mockProcessV1.currentState, state: "AutomatedChecksFailed" },
-        ],
-      }}
-      mutate={() => {}}
-      optional={{ submitted, setSubmitted }}
-    />,
-    options,
-  );
-  await expect(
-    screen.findByText(locale.views.checkEligibility.autoCheckIntro),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.checkEligibility.failedChecks),
-  ).resolves.toBeInTheDocument();
-  await expect(
-    screen.findByText(locale.views.closeProcess.confirmationText),
-  ).resolves.toBeInTheDocument();
-});
-
-const selectRadios = async (screen) => {
-  await userEvent.click(screen.getAllByRole("radio")[0]);
-  await userEvent.click(screen.getAllByRole("radio")[3]);
-  await userEvent.click(screen.getAllByRole("radio")[5]);
-  await userEvent.click(screen.getAllByRole("radio")[7]);
-  await userEvent.click(screen.getAllByRole("radio")[9]);
-  await userEvent.click(screen.getAllByRole("radio")[11]);
-  await userEvent.click(screen.getAllByRole("radio")[13]);
-  await userEvent.click(screen.getAllByRole("radio")[15]);
-};
+})
