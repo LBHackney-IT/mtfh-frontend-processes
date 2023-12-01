@@ -82,9 +82,16 @@ exports[`it ContactDetailsUpdateDialog as expected when it is open 1`] = `
               <div
                 class="mtfh-fieldset__content"
               >
-                <div
-                  class="mtfh-contact-details-form"
-                >
+                <div>
+                  <h3
+                    style="margin: 3rem 0px 0px; font-weight: normal;"
+                  >
+                    Email addresses
+                  </h3>
+                  <hr
+                    class="divider"
+                    style="margin: 1.5rem 0px 0px; border-top: 2px solid #b1b4b6;"
+                  />
                   <button
                     class="govuk-button lbh-button"
                     data-testid="button-add-email"
@@ -93,16 +100,24 @@ exports[`it ContactDetailsUpdateDialog as expected when it is open 1`] = `
                     Add an email address
                   </button>
                 </div>
-                <div
-                  class="mtfh-contact-details-form"
-                >
-                  <button
-                    class="govuk-button lbh-button"
-                    data-testid="button-add-phone"
-                    type="button"
+                <div>
+                  <h3
+                    style="margin: 3rem 0px 0px; font-weight: normal;"
                   >
-                    Add a phone number
-                  </button>
+                    Phone numbers
+                  </h3>
+                  <form
+                    action="#"
+                  >
+                    <button
+                      class="govuk-button lbh-button"
+                      data-testid="button-add-phone"
+                      style="display: block;"
+                      type="button"
+                    >
+                      Add a phone number
+                    </button>
+                  </form>
                 </div>
               </div>
             </fieldset>

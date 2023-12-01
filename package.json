@@ -11,7 +11,7 @@
     "format": "prettier --write .",
     "format-staged": "pretty-quick --staged",
     "check-format": "prettier --check .",
-    "test": "cross-env TZ=utc BABEL_ENV=test jest",
+    "test": "cross-env TZ=utc BABEL_ENV=test jest --runInBand",
     "watch-tests": "cross-env TZ=utc BABEL_ENV=test jest --watch",
     "coverage": "cross-env TZ=utc BABEL_ENV=test jest --coverage"
   },
@@ -75,8 +75,8 @@
   },
   "dependencies": {
     "@hackney/mtfh-test-utils": "^1.8.9",
-    "@mtfh/common": "https://github.com/LBHackney-IT/mtfh-frontend-common.git",
-    "@mtfh/personal-details": "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git",
+    "@mtfh/common": "https://github.com/LBHackney-IT/mtfh-frontend-common.git#5551e2eca7b27a2dfb6438eb45b3319d56ecf52e",
+    "@mtfh/personal-details": "https://github.com/LBHackney-IT/mtfh-frontend-personal-details.git#d99be8a11a8c179acdbeb967e3178f41e87efe77",
     "date-fns": "2.23.0",
     "formik": "^2.2.9",
     "lbh-frontend": "^3.6.1",

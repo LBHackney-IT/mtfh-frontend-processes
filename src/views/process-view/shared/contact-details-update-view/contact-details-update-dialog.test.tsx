@@ -26,5 +26,6 @@ test("it ContactDetailsUpdateDialog as expected when it is open", async () => {
   await expect(screen.findByText("Return to application")).resolves.toBeInTheDocument();
   expect(screen.queryByText("Next")).not.toBeInTheDocument();
   expect(screen.queryByText("Add a correspondence address")).not.toBeInTheDocument();
+  await screen.findByText("Email addresses");
   expect(baseElement).toMatchSnapshot();
 });

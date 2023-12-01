@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`it opens a modal when user click "Cancel comment" link 1`] = `
+exports[`CommentsView it opens a modal when user click "Cancel comment" link 1`] = `
 <div
   aria-hidden="true"
 >
@@ -92,7 +92,7 @@ exports[`it opens a modal when user click "Cancel comment" link 1`] = `
 </div>
 `;
 
-exports[`it renders comments by default 1`] = `
+exports[`CommentsView it renders comments by default 1`] = `
 <div>
   <h4
     class="lbh-heading-h4"
@@ -192,7 +192,7 @@ exports[`it renders comments by default 1`] = `
 </div>
 `;
 
-exports[`it renders inputs to add comments when user clicks Add Comment 1`] = `
+exports[`CommentsView it renders inputs to add comments when user clicks Add Comment 1`] = `
 <div>
   <h4
     class="lbh-heading-h4"

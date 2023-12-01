@@ -47,7 +47,6 @@ const TenureSummary = ({
   }, [asset, setAsset]);
 
   const tenant = tenure?.householdMembers?.find((m) => m.isResponsible);
-
   useEffect(() => {
     if (setRelatedEntities) {
       const relatedEntities: RelatedEntity[] = [];

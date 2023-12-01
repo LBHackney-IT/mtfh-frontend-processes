@@ -19,7 +19,6 @@ export const StartProcessView = () => {
   const { targetId, targetType, processName } = useParams<ParamProps>();
   const [relatedEntities, setRelatedEntities] = useState<RelatedEntity[]>([]);
   const [asset, setAsset] = useState<Asset>();
-
   const SideBar = () => {
     return null;
   };

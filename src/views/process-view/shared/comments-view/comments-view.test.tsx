@@ -84,125 +84,130 @@ afterEach(() => {
   jest.restoreAllMocks();
 });
 
-test("it renders comments by default", async () => {
-  const { container } = render(
-    <CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />,
-  );
-  await expect(screen.findByText("test description 1")).resolves.toBeInTheDocument();
-  expect(container).toMatchSnapshot();
-});
-
-test("it renders inputs to add comments when user clicks Add Comment", async () => {
-  server.use(postCommentV2("", 200));
-  const { container } = render(
-    <CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />,
-  );
-
-  await userEvent.click(screen.getByTestId("add-comment"));
-
-  await expect(screen.findByText("Comment title")).resolves.toBeInTheDocument();
-  await expect(screen.getByTestId("comment-form-submit")).toBeDisabled();
-
-  expect(container).toMatchSnapshot();
-
-  await userEvent.type(screen.getByTestId("comment-form:title"), "test");
-  await userEvent.type(screen.getByTestId("comment-form:description"), "test");
-
-  await expect(screen.getByTestId("comment-form-submit")).not.toBeDisabled();
-  await userEvent.click(screen.getByTestId("comment-form-submit"));
-
-  await expect(screen.findByText("Comment title")).resolves.not.toBeInTheDocument();
-});
-
-test(`it opens a modal when user click "Cancel comment" link`, async () => {
-  const { container } = render(
-    <CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />,
-  );
-
-  await userEvent.click(screen.getByTestId("add-comment"));
-  await userEvent.click(screen.getByText("Cancel comment"));
-
-  await expect(
-    screen.findByText("Do you want to cancel this comment? All progress will be lost"),
-  ).resolves.toBeInTheDocument();
-
-  expect(container).toMatchSnapshot();
-
-  await userEvent.click(screen.getByText("No"));
-  await expect(screen.queryByText("No")).toBeNull();
-  await expect(screen.getByTestId("comment-form:title")).toBeInTheDocument();
-
-  await userEvent.click(screen.getByText("Cancel comment"));
-  await expect(
-    screen.findByText("Do you want to cancel this comment? All progress will be lost"),
-  ).resolves.toBeInTheDocument();
-  await userEvent.click(screen.getByText("Close"));
-  await expect(screen.queryByText("No")).toBeNull();
-});
-
-test(`it opens a modal when user click "Cancel comment" link and closes on dismiss`, async () => {
-  render(<CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />);
-
-  await userEvent.click(screen.getByTestId("add-comment"));
-  await userEvent.click(screen.getByText("Cancel comment"));
-
-  await expect(
-    screen.findByText("Do you want to cancel this comment? All progress will be lost"),
-  ).resolves.toBeInTheDocument();
-
-  await userEvent.click(screen.getByText("Close"));
-  await expect(
-    screen.queryByText("Do you want to cancel this comment? All progress will be lost"),
-  ).toBeNull();
-});
-
-test(`it opens a modal when user click "Cancel comment" link and closes a modal when user click "Yes"`, async () => {
-  render(<CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />);
-
-  await userEvent.click(screen.getByTestId("add-comment"));
-  await userEvent.click(screen.getByText("Cancel comment"));
-
-  await expect(
-    screen.findByText("Do you want to cancel this comment? All progress will be lost"),
-  ).resolves.toBeInTheDocument();
-
-  await userEvent.click(screen.getByTestId("close-comment-modal-yes"));
-  await expect(screen.queryByTestId("close-comment-modal-yes")).toBeNull();
-});
-
-test("it shows an errors form response", async () => {
-  server.use(
-    postCommentV2(
-      {
-        errors: {
-          Description: '{\n  "errorCode": "W00",\n  "errorMessage": "Description error"}',
-        },
-      },
-      400,
-    ),
-  );
-
-  render(<CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />);
-  await userEvent.click(screen.getByTestId("add-comment"));
-  await userEvent.type(screen.getByTestId("comment-form:title"), "test");
-  await userEvent.type(screen.getByTestId("comment-form:description"), "test");
-  await userEvent.click(screen.getByTestId("comment-form-submit"));
-
-  await waitFor(() => {
-    expect(screen.queryByText("Description error")).toBeInTheDocument();
+describe("CommentsView", () => {
+  test("it renders comments by default", async () => {
+    const { container } = render(
+      <CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />,
+    );
+    await expect(screen.findByText("test description 1")).resolves.toBeInTheDocument();
+    expect(container).toMatchSnapshot();
   });
-});
 
-test("it shows an error if unable to post", async () => {
-  server.use(postCommentV2("error", 500));
+  test("it renders inputs to add comments when user clicks Add Comment", async () => {
+    server.use(postCommentV2("", 200));
+    const { container } = render(
+      <CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />,
+    );
 
-  render(<CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />);
-  await userEvent.click(screen.getByTestId("add-comment"));
-  await userEvent.type(screen.getByTestId("comment-form:title"), "test");
-  await userEvent.type(screen.getByTestId("comment-form:description"), "test");
-  await userEvent.click(screen.getByTestId("comment-form-submit"));
+    await userEvent.click(screen.getByTestId("add-comment"));
 
-  await waitFor(() => {
-    expect(screen.queryByText(locale.errors.somethingWentWrongLabel)).toBeInTheDocument();
+    await expect(screen.findByText("Comment title")).resolves.toBeInTheDocument();
+    await expect(screen.getByTestId("comment-form-submit")).toBeDisabled();
+
+    expect(container).toMatchSnapshot();
+
+    await userEvent.type(screen.getByTestId("comment-form:title"), "test");
+    await userEvent.type(screen.getByTestId("comment-form:description"), "test");
+
+    await expect(screen.getByTestId("comment-form-submit")).not.toBeDisabled();
+    await userEvent.click(screen.getByTestId("comment-form-submit"));
+
+    await expect(screen.findByText("Comment title")).resolves.not.toBeInTheDocument();
+  });
+
+  test(`it opens a modal when user click "Cancel comment" link`, async () => {
+    const { container } = render(
+      <CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />,
+    );
+
+    await userEvent.click(screen.getByTestId("add-comment"));
+    await userEvent.click(screen.getByText("Cancel comment"));
+
+    await expect(
+      screen.findByText("Do you want to cancel this comment? All progress will be lost"),
+    ).resolves.toBeInTheDocument();
+
+    expect(container).toMatchSnapshot();
+
+    await userEvent.click(screen.getByText("No"));
+    await expect(screen.queryByText("No")).toBeNull();
+    await expect(screen.getByTestId("comment-form:title")).toBeInTheDocument();
+
+    await userEvent.click(screen.getByText("Cancel comment"));
+    await expect(
+      screen.findByText("Do you want to cancel this comment? All progress will be lost"),
+    ).resolves.toBeInTheDocument();
+    await userEvent.click(screen.getByText("Close"));
+    await expect(screen.queryByText("No")).toBeNull();
+  });
+
+  test(`it opens a modal when user click "Cancel comment" link and closes on dismiss`, async () => {
+    render(<CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />);
+
+    await userEvent.click(screen.getByTestId("add-comment"));
+    await userEvent.click(screen.getByText("Cancel comment"));
+
+    await expect(
+      screen.findByText("Do you want to cancel this comment? All progress will be lost"),
+    ).resolves.toBeInTheDocument();
+
+    await userEvent.click(screen.getByText("Close"));
+    await expect(
+      screen.queryByText("Do you want to cancel this comment? All progress will be lost"),
+    ).toBeNull();
+  });
+
+  test(`it opens a modal when user click "Cancel comment" link and closes a modal when user click "Yes"`, async () => {
+    render(<CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />);
+
+    await userEvent.click(screen.getByTestId("add-comment"));
+    await userEvent.click(screen.getByText("Cancel comment"));
+
+    await expect(
+      screen.findByText("Do you want to cancel this comment? All progress will be lost"),
+    ).resolves.toBeInTheDocument();
+
+    await userEvent.click(screen.getByTestId("close-comment-modal-yes"));
+    await expect(screen.queryByTestId("close-comment-modal-yes")).toBeNull();
+  });
+
+  test("it shows an errors form response", async () => {
+    server.use(
+      postCommentV2(
+        {
+          errors: {
+            Description:
+              '{\n  "errorCode": "W00",\n  "errorMessage": "Description error"}',
+          },
+        },
+        400,
+      ),
+    );
+
+    render(<CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />);
+    await userEvent.click(screen.getByTestId("add-comment"));
+    await userEvent.type(screen.getByTestId("comment-form:title"), "test");
+    await userEvent.type(screen.getByTestId("comment-form:description"), "test");
+    await userEvent.click(screen.getByTestId("comment-form-submit"));
+
+    await waitFor(() => {
+      expect(screen.queryByText("Description error")).toBeInTheDocument();
+    });
+  });
+
+  test("it shows an error if unable to post", async () => {
+    server.use(postCommentV2("error", 500));
+
+    render(<CommentsView targetType={targetType} targetId={targetId} mutate={mutate} />);
+    await userEvent.click(screen.getByTestId("add-comment"));
+    await userEvent.type(screen.getByTestId("comment-form:title"), "test");
+    await userEvent.type(screen.getByTestId("comment-form:description"), "test");
+    await userEvent.click(screen.getByTestId("comment-form-submit"));
+
+    await waitFor(() => {
+      expect(
+        screen.queryByText(locale.errors.somethingWentWrongLabel),
+      ).toBeInTheDocument();
+    });
   });
 });
