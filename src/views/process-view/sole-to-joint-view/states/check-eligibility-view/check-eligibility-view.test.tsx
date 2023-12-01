@@ -36,14 +36,13 @@ const options = {
   path,
 };
 describe("check Eligibility View", () => {
-
   test("it renders CheckEligibility passed checks view correctly state=AutomatedChecksPassed", async () => {
     server.use(getReferenceDataV1({}, 200));
     const { container } = render(
       <CheckEligibilityView
         processConfig={processes.soletojoint}
         process={mockProcessAutomatedChecksPassed}
-        mutate={() => { }}
+        mutate={() => {}}
         optional={{ submitted, setSubmitted }}
       />,
       options,
@@ -64,7 +63,7 @@ describe("check Eligibility View", () => {
       <CheckEligibilityView
         processConfig={processes.soletojoint}
         process={mockProcessAutomatedChecksPassed}
-        mutate={() => { }}
+        mutate={() => {}}
         optional={{ submitted, setSubmitted }}
       />,
       options,
@@ -83,7 +82,7 @@ describe("check Eligibility View", () => {
       <CheckEligibilityView
         processConfig={processes.soletojoint}
         process={mockProcessAutomatedChecksPassed}
-        mutate={() => { }}
+        mutate={() => {}}
         optional={{ submitted, setSubmitted }}
       />,
       options,
@@ -120,7 +119,7 @@ describe("check Eligibility View", () => {
       <CheckEligibilityView
         processConfig={processes.soletojoint}
         process={process}
-        mutate={() => { }}
+        mutate={() => {}}
         optional={{ submitted, setSubmitted }}
       />,
       options,
@@ -138,7 +137,7 @@ describe("check Eligibility View", () => {
       <SoleToJointView
         processConfig={processes.soletojoint}
         process={mockProcessAutomatedChecksFailed}
-        mutate={() => { }}
+        mutate={() => {}}
         optional={{ submitted, setSubmitted }}
       />,
       options,
@@ -165,7 +164,7 @@ describe("check Eligibility View", () => {
             { ...mockProcessV1.currentState, state: "AutomatedChecksFailed" },
           ],
         }}
-        mutate={() => { }}
+        mutate={() => {}}
         optional={{ submitted, setSubmitted }}
       />,
       options,
@@ -191,5 +190,4 @@ describe("check Eligibility View", () => {
     await userEvent.click(screen.getAllByRole("radio")[13]);
     await userEvent.click(screen.getAllByRole("radio")[15]);
   };
-
-})
+});
