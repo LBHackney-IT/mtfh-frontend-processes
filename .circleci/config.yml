@@ -176,8 +176,8 @@ jobs:
       - run:
           name: Deploy to S3
           command: |
-            aws s3 sync dist s3://lbh-tl-housing-processes-frontend-production.hackney.gov.uk/ --exclude "*.json"
-            aws s3 sync dist s3://lbh-tl-housing-processes-frontend-production.hackney.gov.uk/ --include "*.json" --cache-control "public, must-revalidate, max-age=0"
+            aws s3 sync dist s3://lbh-tl-housing-processes-frontend-production-dr.hackney.gov.uk/ --exclude "*.json"
+            aws s3 sync dist s3://lbh-tl-housing-processes-frontend-production-dr.hackney.gov.uk/ --include "*.json" --cache-control "public, must-revalidate, max-age=0"
 
   assume-role-development:
     executor: docker-python
@@ -195,7 +195,7 @@ jobs:
     executor: docker-python
     steps:
       - assume-role-and-persist-workspace:
-          aws-account: $AWS_ACCOUNT_PRODUCTION
+          aws-account: $AWS_ACCOUNT_DISASTER_RECOVERY
 
   terraform-init-and-apply-to-development:
     executor: docker-terraform
@@ -243,7 +243,10 @@ workflows:
   continuous-delivery-development:
     when: << pipeline.parameters.run_development_workflow >>
     jobs:
-      - install-dependencies
+      - install-dependencies:
+          filters:
+              branches:
+                  only: main
       - lint-and-test:
           requires:
             - install-dependencies
@@ -320,47 +323,38 @@ workflows:
               only: main
 
   continuous-delivery-production:
-    when: << pipeline.parameters.run_production_workflow >>
     jobs:
-      - permit-production-terraform-release:
-          type: approval
-          filters:
-            branches:
-              only: main
-      - install-dependencies:
-          requires:
-            - permit-production-terraform-release
-      - lint-and-test:
-          requires:
-            - install-dependencies
-      - assume-role-production:
-          context: api-assume-role-housing-production-context
-          requires:
-            - lint-and-test
-          filters:
-            branches:
-              only: main
-      - terraform-init-and-apply-to-production:
-          requires:
-            - assume-role-production
-          filters:
-            branches:
-              only: main
-      - build-deploy-production:
-          stage: "production"
-          requires:
-            - terraform-init-and-apply-to-production
-          filters:
-            branches:
-              only: main
-      - trigger-e2e-pipeline:
-          context: mtfh-mfe-e2e-tests
-          stage: "production"
-          requires:
-            - build-deploy-production
-          filters:
-            branches:
-              only: main
+        - permit-production-terraform-release:
+              type: approval
+              filters:
+                  branches:
+                      only: disaster-recovery-test
+        - install-dependencies:
+              requires:
+                  - permit-production-terraform-release
+        # - lint-and-test:
+        #       requires:
+        #           - install-dependencies
+        - assume-role-production:
+              context: api-assume-role-disaster-recovery-context
+              requires:
+                  - install-dependencies
+              filters:
+                  branches:
+                      only: disaster-recovery-test
+        - terraform-init-and-apply-to-production:
+              requires:
+                  - assume-role-production
+              filters:
+                  branches:
+                      only: disaster-recovery-test
+        - build-deploy-production:
+              stage: "production"
+              requires:
+                  - terraform-init-and-apply-to-production
+              filters:
+                  branches:
+                      only: disaster-recovery-test
 
   e2e-tests-failure:
     when: << pipeline.parameters.e2e_test_failure >>
