@@ -16,14 +16,10 @@ resource "aws_s3_bucket" "frontend-bucket-production" {
   versioning {
     enabled = true
   }
-  website {
-    index_document = "index.html"
-    error_document = "error.html"
-  }
   cors_rule {
     allowed_headers = ["*"]
     allowed_methods = ["GET"]
-    allowed_origins = ["https://d3ppg9e4a4i9up.cloudfront.net"]
+    allowed_origins = ["*"]
     expose_headers  = ["x-amz-server-side-encryption","x-amz-request-id","x-amz-id-2"]
     max_age_seconds = 3000
   }
