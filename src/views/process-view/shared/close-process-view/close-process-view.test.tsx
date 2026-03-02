@@ -10,9 +10,7 @@ import {
 import { CloseProcessView } from "./close-process-view";
 
 describe("close-process-view", () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
+  beforeEach(() => {});
 
   test("it renders CloseProcessView correctly for state=ProcessClosed", async () => {
     const { container } = render(

@@ -8,9 +8,7 @@ import { mockDocumentsRequestedDes } from "../../test-utils";
 import { TenureUpdateForm } from "./tenure-update-form";
 
 describe("tenure-update-form-component", () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
+  beforeEach(() => {});
 
   test("it renders tenure update form correctly", async () => {
     server.use(getReferenceDataV1({}, 200));

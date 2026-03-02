@@ -23,7 +23,6 @@ const options = {
 
 describe("tenure-investigation-view", () => {
   beforeEach(() => {
-    jest.resetModules();
     submitted = false;
   });
 
@@ -41,7 +40,7 @@ describe("tenure-investigation-view", () => {
       />,
       options,
     );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    await waitForElementToBeRemoved(screen.queryAllByTitle(/Loading/));
     await expect(
       screen.findByText(locale.views.tenureInvestigation.tenureInvestigationCompleted, {
         exact: false,
@@ -172,6 +171,11 @@ describe("tenure-investigation-view", () => {
       screen.findByText(locale.views.tenureInvestigation.viewNewTenure),
     ).resolves.toBeInTheDocument();
     await expect(screen.findByText(`${locale.finalStep}:`)).resolves.toBeInTheDocument();
+    try {
+      await waitForElementToBeRemoved(() => screen.queryAllByTitle(/Loading/));
+    } catch (e) {
+      // ignore if already removed
+    }
     expect(container).toMatchSnapshot();
   });
 
@@ -223,6 +227,11 @@ describe("tenure-investigation-view", () => {
     await expect(
       screen.findByText(locale.views.closeProcess.thankYouForConfirmation),
     ).resolves.toBeInTheDocument();
+    try {
+      await waitForElementToBeRemoved(() => screen.queryAllByTitle(/Loading/));
+    } catch (e) {
+      // ignore if already removed
+    }
     expect(container).toMatchSnapshot();
   });
 });

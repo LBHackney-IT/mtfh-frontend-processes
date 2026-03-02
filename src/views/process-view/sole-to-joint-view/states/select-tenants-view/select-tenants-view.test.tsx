@@ -20,9 +20,7 @@ const tenureWithTenantsOver18 = {
 };
 
 describe("select-tenants-view", () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
+  beforeEach(() => {});
 
   test("it renders SelectTenantsView correctly", async () => {
     render(

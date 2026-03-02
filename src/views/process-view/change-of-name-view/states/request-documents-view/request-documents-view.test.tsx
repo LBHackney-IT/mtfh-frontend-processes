@@ -23,7 +23,6 @@ const options = {
 
 describe("changeofname/request-documents-view", () => {
   beforeEach(() => {
-    jest.resetModules();
     server.use(getReferenceDataV1());
   });
 

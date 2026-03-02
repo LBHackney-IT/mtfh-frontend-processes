@@ -13,9 +13,7 @@ import { locale, processes } from "../../../../services";
 import { ReviewApplicationView } from "../../sole-to-joint-view/states/review-application-view/review-application-view";
 
 describe("ho-review-failed-view", () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
+  beforeEach(() => {});
 
   test("it renders ReviewApplication view correctly for HOApprovalFailed state", async () => {
     server.use(getContactDetailsV2(mockContactDetailsV2));

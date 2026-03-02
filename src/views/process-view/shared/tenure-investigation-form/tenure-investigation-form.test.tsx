@@ -20,7 +20,6 @@ let mutate;
 
 describe("tenure-investigation-form", () => {
   beforeEach(() => {
-    jest.resetModules();
     setGlobalErrorStub = jest.fn();
     mutate = jest.fn();
   });

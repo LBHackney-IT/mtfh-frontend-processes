@@ -10,7 +10,6 @@ import * as errorMessages from "@mtfh/common/lib/hooks/use-error-codes";
 const setDialogOpen = jest.fn();
 
 beforeEach(() => {
-  jest.resetModules();
   jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
 });
 

@@ -11,9 +11,7 @@ import { AppointmentForm } from "./appointment-form";
 
 const setNeedAppointment = jest.fn();
 describe("appointment-form-component", () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
+  beforeEach(() => {});
 
   test("it renders appointment form correctly", async () => {
     server.use(getReferenceDataV1({}, 200));

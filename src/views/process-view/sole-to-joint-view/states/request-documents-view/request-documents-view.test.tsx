@@ -31,9 +31,7 @@ const options = {
 };
 
 describe("request-documents-view", () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
+  beforeEach(() => {});
 
   const contactDetailsResponse = {
     results: [
