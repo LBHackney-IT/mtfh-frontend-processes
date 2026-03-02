@@ -93,6 +93,11 @@
     "yup": "^0.32.11"
   },
   "resolutions": {
-    "webpack": "5.104.1"
+    "webpack": "5.104.1",
+    "@xmldom/xmldom": ">=0.7.7",
+    "loader-utils": ">=2.0.3",
+    "@babel/traverse": ">=7.23.2",
+    "minimist": ">=1.2.6",
+    "form-data": ">=3.0.4"
   }
 }
