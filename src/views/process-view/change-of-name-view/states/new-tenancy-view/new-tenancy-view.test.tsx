@@ -41,7 +41,6 @@ const mockTenureAppointmentSchedule = (appointmentDateTime) => {
 
 describe("tenure-investigation-view", () => {
   beforeEach(() => {
-    jest.resetModules();
     submitted = false;
   });
 

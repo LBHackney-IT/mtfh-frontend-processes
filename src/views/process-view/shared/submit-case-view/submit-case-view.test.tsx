@@ -15,7 +15,6 @@ const mockDocumentChecksPassedProcess = {
 
 describe("submit-case-view", () => {
   beforeEach(() => {
-    jest.resetModules();
     submitted = false;
   });
 

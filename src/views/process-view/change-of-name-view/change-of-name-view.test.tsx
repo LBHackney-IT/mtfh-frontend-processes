@@ -27,9 +27,7 @@ const setCancel = jest.fn();
 const setCloseProcessDialogOpen = jest.fn();
 
 describe("changeofname/change-of-name-view", () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
+  beforeEach(() => {});
 
   test("it renders ChangeOfNameView correctly on state EnterNewName", async () => {
     server.use(getPersonV1(mockPersonV1));

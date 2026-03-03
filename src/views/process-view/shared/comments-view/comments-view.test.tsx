@@ -112,7 +112,9 @@ describe("CommentsView", () => {
     await expect(screen.getByTestId("comment-form-submit")).not.toBeDisabled();
     await userEvent.click(screen.getByTestId("comment-form-submit"));
 
-    await expect(screen.findByText("Comment title")).resolves.not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryByText("Comment title")).not.toBeInTheDocument();
+    });
   });
 
   test(`it opens a modal when user click "Cancel comment" link`, async () => {

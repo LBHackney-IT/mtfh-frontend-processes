@@ -23,9 +23,7 @@ const options = {
 
 const setNeedAppointment = jest.fn();
 describe("appointment-details-component", () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
+  beforeEach(() => {});
 
   test("it renders scheduled appointment details correctly", async () => {
     const process = mockDocumentsRequestedAppointment({

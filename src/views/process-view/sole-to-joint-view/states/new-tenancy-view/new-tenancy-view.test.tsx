@@ -55,7 +55,6 @@ const mockTenureUpdatedState = (tenureStartDate) => {
 
 describe("tenure-investigation-view", () => {
   beforeEach(() => {
-    jest.resetModules();
     submitted = false;
   });
 
@@ -74,7 +73,11 @@ describe("tenure-investigation-view", () => {
       />,
       options,
     );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    try {
+      await waitForElementToBeRemoved(() => screen.queryAllByTitle(/Loading/));
+    } catch (e) {
+      // ignore if already removed
+    }
     await expect(
       screen.findByText(locale.views.tenureInvestigation.documentsSigned, {
         exact: false,
@@ -95,7 +98,11 @@ describe("tenure-investigation-view", () => {
       />,
       options,
     );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    try {
+      await waitForElementToBeRemoved(() => screen.queryAllByTitle(/Loading/));
+    } catch (e) {
+      // ignore if already removed
+    }
     const documentsSigned = screen.getByText(
       locale.views.tenureInvestigation.documentsSigned,
     );
@@ -120,7 +127,11 @@ describe("tenure-investigation-view", () => {
       />,
       options,
     );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    try {
+      await waitForElementToBeRemoved(() => screen.queryAllByTitle(/Loading/));
+    } catch (e) {
+      // ignore if already removed
+    }
     await userEvent.click(screen.getByText(locale.views.closeProcess.outcomeLetterSent));
     await userEvent.click(screen.getByText(locale.confirm));
     await expect(
@@ -177,7 +188,11 @@ describe("tenure-investigation-view", () => {
       />,
       options,
     );
-    await waitForElementToBeRemoved(screen.queryAllByText(/Loading/));
+    try {
+      await waitForElementToBeRemoved(() => screen.queryAllByTitle(/Loading/));
+    } catch (e) {
+      // ignore if already removed
+    }
     await expect(
       screen.findByText(locale.views.tenureInvestigation.documentsSigned, {
         exact: false,

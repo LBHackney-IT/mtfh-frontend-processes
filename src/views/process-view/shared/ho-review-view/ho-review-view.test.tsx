@@ -30,7 +30,6 @@ const setGlobalError = jest.fn();
 
 describe("ho-review-view", () => {
   beforeEach(() => {
-    jest.resetModules();
     submitted = false;
     jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
   });

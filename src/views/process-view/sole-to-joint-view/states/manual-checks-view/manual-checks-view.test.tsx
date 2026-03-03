@@ -8,9 +8,7 @@ import { mockManualChecksFailedState } from "../../../../../test-utils";
 import { SoleToJointView } from "../../sole-to-joint-view";
 
 describe("manual-checks-view", () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
+  beforeEach(() => {});
 
   test("it renders ManualChecksFailedView correctly, state=ManualChecksFailed", async () => {
     const { container } = render(

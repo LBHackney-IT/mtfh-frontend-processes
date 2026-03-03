@@ -26,9 +26,7 @@ const options = {
 };
 
 describe("review-documents-view", () => {
-  beforeEach(() => {
-    jest.resetModules();
-  });
+  beforeEach(() => {});
 
   test("it renders ReviewDocuments correctly on state DocumentsRequestedDes", async () => {
     jest.spyOn(errorMessages, "useErrorCodes").mockReturnValue({});
