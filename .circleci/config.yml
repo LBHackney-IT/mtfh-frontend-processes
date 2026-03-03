@@ -91,11 +91,6 @@ jobs:
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
-      # - run:
-      #     name: Force Git to use SSH
-      #     command:
-      #       git config --global url."ssh://git@github.com/".insteadOf
-      #       "https://github.com/"
       - run:
           name: Install dependencies
           command: yarn install
