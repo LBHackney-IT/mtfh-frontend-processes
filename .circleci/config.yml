@@ -67,11 +67,6 @@ commands:
       environment:
         type: string
     steps:
-      - run:
-          name: Configure SSH keys
-          command: |
-            ssh-add -D
-            ssh-add ~/.ssh/id_rsa_<rPzp7kChj9Z72jls470HfO0YvieTbdUiB+y8hlxJN8c>
       - *attach_workspace
       - checkout
       - run:
@@ -89,11 +84,6 @@ jobs:
   install-dependencies:
     executor: node-executor
     steps:
-      - run:
-          name: Configure SSH keys
-          command: |
-            ssh-add -D
-            ssh-add ~/.ssh/id_rsa_<E7JSrbxa1w1NLeMS99IHb/t6CcqirwR9beUQpFKMA/o>
       - *attach_workspace
       - checkout
       - restore_cache:
