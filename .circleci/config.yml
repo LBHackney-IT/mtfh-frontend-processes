@@ -67,6 +67,9 @@ commands:
       environment:
         type: string
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:rPzp7kChj9Z72jls470HfO0YvieTbdUiB+y8hlxJN8c"
       - *attach_workspace
       - checkout
       - run:
@@ -75,11 +78,11 @@ commands:
             cd ./terraform/<<parameters.environment>>/
             terraform get -update=true
             terraform init
-      - run:
-          name: apply
-          command: |
-            cd ./terraform/<<parameters.environment>>/
-            terraform apply -auto-approve
+      # - run:
+      #     name: apply
+      #     command: |
+      #       cd ./terraform/<<parameters.environment>>/
+      #       terraform apply -auto-approve
 jobs:
   install-dependencies:
     executor: node-executor
@@ -256,28 +259,28 @@ workflows:
             - lint-and-test
           filters:
             branches:
-              only: main
+              only: fix/ssi-813-update-ssh-key-handling
       - terraform-init-and-apply-to-development:
           requires:
             - assume-role-development
           filters:
             branches:
-              only: main
-      - build-deploy-development:
-          stage: "development"
-          requires:
-            - terraform-init-and-apply-to-development
-          filters:
-            branches:
-              only: main
-      - trigger-e2e-pipeline:
-          context: mtfh-mfe-e2e-tests
-          stage: "development"
-          requires:
-            - build-deploy-development
-          filters:
-            branches:
-              only: main
+              only: fix/ssi-813-update-ssh-key-handling
+      # - build-deploy-development:
+      #     stage: "development"
+      #     requires:
+      #       - terraform-init-and-apply-to-development
+      #     filters:
+      #       branches:
+      #         only: main
+      # - trigger-e2e-pipeline:
+      #     context: mtfh-mfe-e2e-tests
+      #     stage: "development"
+      #     requires:
+      #       - build-deploy-development
+      #     filters:
+      #       branches:
+      #         only: main
 
   continuous-delivery-staging:
     when: << pipeline.parameters.run_staging_workflow >>
