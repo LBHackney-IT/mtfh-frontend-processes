@@ -271,7 +271,7 @@ workflows:
       - build-deploy-development:
           stage: "development"
           requires:
-            - main
+            - terraform-init-and-apply-to-development
           filters:
             branches:
               only: main
