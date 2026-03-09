@@ -75,6 +75,7 @@ commands:
       - run:
           name: get and init
           command: |
+            export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_fd8f60bef9c59321b9e35fdf3e6a8175 -o IdentitiesOnly=yes"  
             cd ./terraform/<<parameters.environment>>/
             terraform get -update=true
             terraform init
