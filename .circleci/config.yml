@@ -84,9 +84,6 @@ jobs:
   install-dependencies:
     executor: node-executor
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "SHA256:E7JSrbxa1w1NLeMS99IHb/t6CcqirwR9beUQpFKMA/o"
       - *attach_workspace
       - checkout
       - restore_cache:
