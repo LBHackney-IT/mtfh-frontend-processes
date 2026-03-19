@@ -67,17 +67,22 @@ commands:
       environment:
         type: string
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:rPzp7kChj9Z72jls470HfO0YvieTbdUiB+y8hlxJN8c"
       - *attach_workspace
       - checkout
       - run:
           name: get and init
           command: |
+            export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_fd8f60bef9c59321b9e35fdf3e6a8175 -o IdentitiesOnly=yes"  
             cd ./terraform/<<parameters.environment>>/
             terraform get -update=true
             terraform init
       - run:
           name: apply
           command: |
+            export GIT_SSH_COMMAND="ssh -i ~/.ssh/id_rsa_fd8f60bef9c59321b9e35fdf3e6a8175 -o IdentitiesOnly=yes"  
             cd ./terraform/<<parameters.environment>>/
             terraform apply -auto-approve
 jobs:
